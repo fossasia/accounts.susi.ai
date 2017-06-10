@@ -1,5 +1,9 @@
-Fixes issue #[Add issue number here. If you do not solve the issue entirely, please change the message e.g. "First steps for issues #IssueNumber]
+Into the commit message, please add: A short info about the issue.
+
+In the description, add: Fixes issue #[Add issue number here]. If you do not solve the issue entirely, please change the message e.g. "First steps for issue [#IssueNumber].
 
 Changes: [Add here what changes were made in this issue and if possible provide links.]
 
-Screenshots for the change: 
+Test Setup: Add a link to your own deployment test set up for reviewers to quickly test the changes you made.
+
+Screenshots for the change: Whenever possible add a screenshot showing the changes you made.
