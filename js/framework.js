@@ -34,7 +34,7 @@ app.filter("reverse", function() {
 angular.element(document).ready(function () {
   var navString = "";
   var winLocation = window.location.href;
-  $.getJSON("/cms/topmenu.json", function(data) {
+  $.getJSON("http://api.susi.ai/cms/topmenu.json", function(data) {
     navItems = data.items;
     navItems = navItems.reverse();
     var count = 0;
