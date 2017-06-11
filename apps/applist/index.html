@@ -2,12 +2,18 @@
 <html lang="en" ng-app="appListApp">
   <head>
     <!--#include file="../../../ssi/common_head_front.include" -->
-    <meta name="description" content="SUSI provides an easy-to-extend app infrastructure. Here is a list of large-data evaluation applications.">
+        <meta charset="utf-8">
+    <meta name="robots" content="index,follow">
+    <meta http-equiv="cache-control" content="public">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Content-Language" content="en, english" />
     <link rel="icon" type="image/png" href="/artwork/favicon.png">
     <title>susi.ai - Application List</title>
     <script src="../../js/jquery.min.js"></script>
     <script src="../../js/angular-route.min.js"></script>
-    <!script src="../../js/angular-touch.min.js"></script>
+    <!--script src="../../js/angular-touch.min.js"></script-->
     <script src="../../js/framework.js"></script>
     <script src="../../js/angular.min.js"></script>
     <link href="../../css/dashboard.css" rel="stylesheet">
@@ -19,6 +25,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
 
     <!link href="css/animate.css" rel="stylesheet"/>
+    <!--script src="https://api.susi.ai/cms/apps.json?callback=JSON_CALLBACK"></script-->
     <script src="./app_list.js"></script>
     <!--#include file="../../../ssi/common_head_back.include" -->
     <!--#include file="../../../data/ssi/custom_head.include" -->
@@ -71,7 +78,7 @@
                   <div class="hidden">
                     <div class="caption">
                       <div class="centered">
-                        <p><a href='../{{ app.name }}'>{{ app.headline | uppercase}}</a></p>
+                        <p><a href='../../apps/{{ app.name }}'>{{ app.headline | uppercase}}</a></p>
                         <p>{{ app.alternativeHeadline }}</p>
                         <br/>
                         <p>Author: <a href='{{ app.author.url }}'>{{ app.author.name | uppercase }}</a></p>
@@ -93,9 +100,9 @@
     $(document).ready(function() {
       var headLocation = window.location;
       var pathName = headLocation.pathname;
-      if (pathName == "/apps/applist/") {
+      if (pathName == "../../apps/applist/") {
         console.log('Need to refresh');
-        window.location.replace("/apps/applist/index.html");
+        window.location.replace("../../apps/applist/index.html");
       }
     });
   </script>
