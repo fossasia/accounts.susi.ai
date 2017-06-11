@@ -1,6 +1,6 @@
 var app = angular.module("loklak", ['ngRoute']);
 app.controller("status", function($scope, $http) {
-  $http.get("/aggregation/status.json").
+  $http.get("http://api.susi.ai/aggregation/status.json").
     success(function(data, status, headers, config) {
       $scope.index = data.index;
     });
