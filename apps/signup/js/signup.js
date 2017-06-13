@@ -1,7 +1,7 @@
 $(document).ready(function()
 {
 	// get password parameters
-	$.ajax(	"/aaa/signup.json", {
+	$.ajax(	"http://api.susi.ai/aaa/signup.json", {
 		data: { getParameters: true },
 		dataType: "json",
 		success: function (response) {
