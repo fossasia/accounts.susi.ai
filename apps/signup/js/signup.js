@@ -170,7 +170,7 @@ $(document).ready(function()
 	$("#confirmpass").keyup(function(){checkConfirmPass();});
 
 	var options = {
-        url:        "/aaa/signup.json",
+        url:        "http://api.susi.ai/aaa/signup.json",
         type:       "get",
         dataType:   "json",
         success(response) {
