@@ -34,7 +34,7 @@ $(document).ready(function()
         type:       "get",
         dataType:   "jsonp",
         success(response) {
-            window.location = "/apps/applist/index.html";
+            window.location = "../../apps/applist/index.html";
         },
         error(xhr, ajaxOptions, thrownError) {
             $("#status-box").text(thrownError);
