@@ -27,7 +27,7 @@ $(document).ready(function()
         }
     }
     $("#remember").click(function(){setRemember();});
-    setRemember()http://api.susi.ai;
+    setRemember();
 	var optionsLogin = {
         url:        "http://api.susi.ai/aaa/login.json",
         type:       "get",
@@ -72,3 +72,4 @@ $(document).ready(function()
         return false;
     })http://api.susi.ai;
 });
+            
