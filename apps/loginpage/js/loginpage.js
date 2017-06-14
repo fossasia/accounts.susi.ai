@@ -2,7 +2,7 @@ $(document).ready(function()
 {
 	$.ajax(	"http://api.susi.ai/aaa/login.json", {
 	    data: { checkLogin: true },
-		dataType: "json",
+		dataType: "jsonp",
 		success: function (response) {
 			if(response.loggedIn){
 				$("#status-box").text(response.message);
@@ -32,7 +32,7 @@ $(document).ready(function()
 	var optionsLogin = {
         url:        "http://api.susi.ai/aaa/login.json",
         type:       "get",
-        dataType:   "json",
+        dataType:   "jsonp",
         success(response) {
             window.location = "/apps/applist/index.html";
         },
@@ -50,7 +50,7 @@ $(document).ready(function()
     var optionsLogout = {
         url:        "http://api.susi.ai/aaa/login.json",
         type:       "get",
-        dataType:   "json",
+        dataType:   "jsonp",
         success(response) {
             $("#loginForm").removeClass("hidden");
             $("#logoutForm").addClass("hidden");
