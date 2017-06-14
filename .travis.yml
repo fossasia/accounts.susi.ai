@@ -4,3 +4,8 @@ language: node_js
 node_js:
  "stable"
 
+script: bash ./deploy.sh
+env:
+  global:
+  - ENCRYPTION_LABEL: "<.... encryption label from previous step ....>"
+  - COMMIT_AUTHOR_EMAIL: ""
