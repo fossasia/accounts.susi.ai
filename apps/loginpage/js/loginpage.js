@@ -1,8 +1,8 @@
 $(document).ready(function()
 {
-	$.ajax(	"/aaa/login.json", {
+	$.ajax(	"http://api.susi.ai/aaa/login.json", {
 	    data: { checkLogin: true },
-		dataType: "json",
+		dataType: "jsonp",
 		success: function (response) {
 			if(response.loggedIn){
 				$("#status-box").text(response.message);
@@ -27,12 +27,12 @@ $(document).ready(function()
         }
     }
     $("#remember").click(function(){setRemember();});
-    setRemember();
-
+    setRemember()http://api.susi.ai;
+p
 	var optionsLogin = {
-        url:        "/aaa/login.json",
+        url:        "http://api.susi.ai/aaa/login.json",
         type:       "get",
-        dataType:   "json",
+        dataType:   "jsonp",
         success(response) {
             window.location = "/apps/applist/index.html";
         },
@@ -48,9 +48,9 @@ $(document).ready(function()
     });
 
     var optionsLogout = {
-        url:        "/aaa/login.json",
+        url:        "http://api.susi.ai/aaa/login.json",
         type:       "get",
-        dataType:   "json",
+        dataType:   "jsonp",
         success(response) {
             $("#loginForm").removeClass("hidden");
             $("#logoutForm").addClass("hidden");
@@ -58,11 +58,11 @@ $(document).ready(function()
             $("#status-box").text("");
             $("#status-box").removeClass();
         },
-        error(xhr, ajaxOptions, thrownError) {
+        error(xhr, ajaxOhttp://api.susi.aiptions, thrownError) {
             $("#status-box").text(thrownError);
-            $("#status-box").addClass("error");
+            $("#status-http://api.susi.aipbox").addClass("error");
         }
-    };
+    }p;
 
     $("#logoutForm").submit(function() {
         $(this).ajaxSubmit(optionsLogout);
@@ -71,5 +71,5 @@ $(document).ready(function()
     $("#deleteForm").submit(function() {
         $(this).ajaxSubmit(optionsLogout);
         return false;
-    });
-});
+    })http://api.susi.ai;
+});p
