@@ -1,6 +1,6 @@
 $(document).ready(function()
 {
-	$.ajax(	"/aaa/account-permissions.json", {
+	$.ajax(	"http://api.susi.ai/aaa/account-permissions.json", {
 		dataType: "json",
 		success (response) {
 		    $("#permissions").removeClass("hidden");
@@ -20,7 +20,7 @@ $(document).ready(function()
 		}
 	});
 
-	$.ajax(	"/aaa/account-permissions.json", {
+	$.ajax(	"http://api.susi.ai/aaa/account-permissions.json", {
 		data: { getServiceList: true },
 		dataType: "json",
 		success (response) {
@@ -36,7 +36,7 @@ $(document).ready(function()
 
 		if(child.attr("valueSet") === "false"){
 			child.hide();
-			$.ajax(	"/aaa/account-permissions.json", {
+			$.ajax(	"http://api.susi.ai/aaa/account-permissions.json", {
 				data: { getServicePermissions: obj.attr("id") },
 				dataType: "json",
 				success (response) {
