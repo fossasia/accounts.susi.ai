@@ -20,7 +20,15 @@ $(document).ready(function()
 			$("#pass").removeClass("hidden");
 			$("#confirmpass").removeClass("hidden");
 			$("#signup").removeClass("hidden");
-		}
+		},
+ -		error: function (xhr, ajaxOptions, thrownError) {
+ -			$("#status-box").text(thrownError);
+ -			$("#status-box").addClass("error");
+ -			$("#email").addClass("hidden");
+ -			$("#pass").addClass("hidden");
+ -			$("#confirmpass").addClass("hidden");
+ -			$("#signup").addClass("hidden");
+ -		},
 	});
 
 	function resetFields(){
