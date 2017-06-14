@@ -34,27 +34,5 @@ app.filter("reverse", function() {
 angular.element(document).ready(function () {
   var navString = "";
   var winLocation = window.location.href;
-  $.getJSON("http://api.susi.ai/cms/topmenu.json", function(data) {
-    navItems = data.items;
-    navItems = navItems.reverse();
-    var count = 0;
-    $.each( navItems, function(index, itemData) {
-      name = Object.keys(itemData);
-      link = itemData[name];
-      // Now construct the li items
-      liItem = "<li>";
-      if (winLocation.indexOf(link) != -1 && count != 1) {
-        liItem = "<li class='active'>";
-        count = count + 1;
-      }
-      if(name == "Blog") { // The Blog tab redirects to the loklak blog (http://blog.loklak.net/)
-        liItem += "<a href='"+link+"'>"+name+"</a></li>";
-      }
-      else {
-        liItem += "<a href='\/"+link+"'>"+name+"</a></li>";
-      }
-      liItem = $(liItem);
-      $('#navbar > ul').prepend(liItem);
-    });
-  });
+  
 });
