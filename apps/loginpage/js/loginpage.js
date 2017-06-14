@@ -1,6 +1,6 @@
 $(document).ready(function()
 {
-	$.ajax(	"/aaa/login.json", {
+	$.ajax(	"http://api.susi.ai/aaa/login.json", {
 	    data: { checkLogin: true },
 		dataType: "json",
 		success: function (response) {
@@ -30,7 +30,7 @@ $(document).ready(function()
     setRemember();
 
 	var optionsLogin = {
-        url:        "/aaa/login.json",
+        url:        "http://api.susi.ai/aaa/login.json",
         type:       "get",
         dataType:   "json",
         success(response) {
@@ -48,7 +48,7 @@ $(document).ready(function()
     });
 
     var optionsLogout = {
-        url:        "/aaa/login.json",
+        url:        "http://api.susi.ai/aaa/login.json",
         type:       "get",
         dataType:   "json",
         success(response) {
