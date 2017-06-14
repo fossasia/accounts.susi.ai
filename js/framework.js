@@ -34,5 +34,8 @@ app.filter("reverse", function() {
 angular.element(document).ready(function () {
   var navString = "";
   var winLocation = window.location.href;
-  
+  var navString = "";
+  var winLocation = window.location.href;
+  var navItems = [];
+  var count = 0;
 });
