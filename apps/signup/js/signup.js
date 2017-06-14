@@ -3,7 +3,7 @@ $(document).ready(function()
 	// get password parameters
 	$.ajax(	"http://api.susi.ai/aaa/signup.json", {
 		data: { getParameters: true },
-		dataType: "json",
+		dataType: "jsonp",
 		success: function (response) {
 			var regex = response.regex;
 			var regexTooltip = response.regexTooltip;
@@ -164,7 +164,7 @@ $(document).ready(function()
 	var options = {
         url:        "http://api.susi.ai/aaa/signup.json",
         type:       "get",
-        dataType:   "json",
+        dataType:   "jsonp",
         success(response) {
             resetFields();
             $("#status-box").text(response.message);
