@@ -57,7 +57,7 @@ $(document).ready(function()
             $("#status-box").text("");
             $("#status-box").removeClass();
         },
-        error(xhr, ajaxOhttp://api.susi.aiptions, thrownError) {
+        error(xhr, ajaxOptions, thrownError) {
             $("#status-box").text(thrownError);
             $("#status-http://api.susi.aipbox").addClass("error");
         }
