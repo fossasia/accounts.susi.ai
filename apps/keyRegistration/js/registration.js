@@ -15,7 +15,7 @@ $(document).ready(function()
 	var regex;
     $.ajax(	"http://api.susi.ai/aaa/pubkey_registration.json", {
         data: { getParameters: true },
-        dataType: 'json',
+        dataType: 'jsonp',
         success: function (response) {
             if(response.self){
                 $('#status-box').text("");
@@ -117,7 +117,7 @@ $(document).ready(function()
 
             $.ajax(	"http://api.susi.ai/aaa/pubkey_registration.json", {
                 data: data,
-                dataType: 'json',
+                dataType: 'jsonp',
                 success: function (response) {
                     //resetFields();
                     $('#status-box').text(response.message);
