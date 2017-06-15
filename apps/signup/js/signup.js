@@ -1,9 +1,9 @@
 $(document).ready(function()
 {
 	// get password parameters
-	$.ajax(	"/aaa/signup.json", {
+	$.ajax(	"http://api.susi.ai/aaa/signup.json", {
 		data: { getParameters: true },
-		dataType: "json",
+		dataType: "jsonp",
 		success: function (response) {
 			var regex = response.regex;
 			var regexTooltip = response.regexTooltip;
@@ -21,14 +21,14 @@ $(document).ready(function()
 			$("#confirmpass").removeClass("hidden");
 			$("#signup").removeClass("hidden");
 		},
-		error: function (xhr, ajaxOptions, thrownError) {
-			$("#status-box").text(thrownError);
-			$("#status-box").addClass("error");
-			$("#email").addClass("hidden");
-			$("#pass").addClass("hidden");
-			$("#confirmpass").addClass("hidden");
-			$("#signup").addClass("hidden");
-		},
+ -		error: function (xhr, ajaxOptions, thrownError) {
+ -			$("#status-box").text(thrownError);
+ -			$("#status-box").addClass("error");
+ -			$("#email").addClass("hidden");
+ -			$("#pass").addClass("hidden");
+ -			$("#confirmpass").addClass("hidden");
+ -			$("#signup").addClass("hidden");
+ -		},
 	});
 
 	function resetFields(){
@@ -170,9 +170,9 @@ $(document).ready(function()
 	$("#confirmpass").keyup(function(){checkConfirmPass();});
 
 	var options = {
-        url:        "/aaa/signup.json",
+        url:        "http://api.susi.ai/aaa/signup.json",
         type:       "get",
-        dataType:   "json",
+        dataType:   "jsonp",
         success(response) {
             resetFields();
             $("#status-box").text(response.message);
