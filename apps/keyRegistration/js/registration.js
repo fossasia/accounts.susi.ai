@@ -13,9 +13,9 @@ $(document).ready(function()
 
 	// get password parameters
 	var regex;
-    $.ajax(	"/aaa/pubkey_registration.json", {
+    $.ajax(	"http://api.susi.ai/aaa/pubkey_registration.json", {
         data: { getParameters: true },
-        dataType: 'json',
+        dataType: 'jsonp',
         success: function (response) {
             if(response.self){
                 $('#status-box').text("");
@@ -115,9 +115,9 @@ $(document).ready(function()
             }
             //console.log(data);
 
-            $.ajax(	"/aaa/pubkey_registration.json", {
+            $.ajax(	"http://api.susi.ai/aaa/pubkey_registration.json", {
                 data: data,
-                dataType: 'json',
+                dataType: 'jsonp',
                 success: function (response) {
                     //resetFields();
                     $('#status-box').text(response.message);
