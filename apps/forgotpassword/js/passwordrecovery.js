@@ -10,7 +10,8 @@ $(document).ready(function()
             var mail = $('#email').val();
             $.ajax( "/aaa/recoverpassword.json", {
                 data: { forgotemail: mail },
-                dataType: 'json',
+                dataType: 'jsonp',
+                
                 success: function (response) {
                     resetFields();
                     $('#status-box').text(response.message);
