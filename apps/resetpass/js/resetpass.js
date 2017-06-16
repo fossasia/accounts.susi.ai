@@ -6,9 +6,9 @@ $(document).ready(function()
 	var regex;
 	var urltoken = getParameter('token');
 
-	$.ajax(	"/aaa/recoverpassword.json", {
+	$.ajax(	"http://api.susi.ai/aaa/recoverpassword.json", {
 		data: { getParameters: true, token: urltoken },
-		dataType: 'json',
+		dataType: 'jsonp',
 		success: function (response) {
 			regex = response.regex;
 			var regexTooltip = response.regexTooltip;
@@ -73,9 +73,9 @@ $(document).ready(function()
 		if(!total){
 			var newpass = $('#pass').val();
 
-			$.ajax(	"/aaa/resetpassword.json", {
+			$.ajax(	"http://api.susi.ai/aaa/resetpassword.json", {
 				data: { token: urltoken, newpass: newpass },
-				dataType: 'json',
+				dataType: 'jsonp',
 				success: function (response) {
 					resetFields();
 					$('#status-box').text(response.message);
