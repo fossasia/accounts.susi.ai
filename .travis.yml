@@ -2,9 +2,31 @@ sudo: required
 dist: trusty
 language: node_js
 node_js:
- "stable"
+  - 'stable'
 
-script: bash ./deploy.sh
+addons:
+apt:
+  sources:
+    - google-chrome
+  packages:
+    - google-chrome-stable
+    - google-chrome-beta
+
+before_install:
+  - export CHROME_BIN=chromium-browser
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+
+before_script:
+- npm install -g angular
+- npm install -g karma
+- npm install
+- ng build
+
+script: 
+-karma start config/karma.conf.js --single-run
+-bash ./deploy.sh
+
 env:
   global:
   - ENCRYPTION_LABEL: "<.... encryption label from previous step ....>"
