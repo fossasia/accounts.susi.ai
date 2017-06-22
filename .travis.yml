@@ -1,11 +1,20 @@
 sudo: required
 dist: trusty
 language: node_js
-node_js:
- "stable"
 
-script: bash ./deploy.sh
-env:
-  global:
-  - ENCRYPTION_LABEL: "<.... encryption label from previous step ....>"
-  - COMMIT_AUTHOR_EMAIL: ""
+node_js:
+  - 6
+
+script:
+  - npm test
+
+deploy:
+  provider: script
+
+cache:
+  directories:
+    - node_modules
+
+branches:
+  only:
+    - development
