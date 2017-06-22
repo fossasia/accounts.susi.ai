@@ -1,24 +1,71 @@
-.App {
-  text-align: center;
+nav {
+	background-color: #000000;
+	overflow: hidden;
+	padding: 1em;
+  opacity: 0.85;
+	a {
+		color: #FFF;
+	}
+
+	a:visited {
+		color: #FFF;
+	}
+
+	border-bottom: 1px solid #000;
+
+	.navWide {
+		display: none;
+		margin: 0 auto;
+
+		.wideDiv {
+			text-align: center;
+
+			a {
+				text-decoration: none;
+				display: inline-block;
+				// Adjust padding to increase/decrease the space between links.
+				padding: 0 2em;
+			}
+		}
+	}
+
+	// Navbar is set to default with the "hamburger" and links on the left
+	// side of the screen. To move to the right of the screen, simply
+	// change the three "float: Left;" references to read "float: right;".
+	.navNarrow {
+
+		i {
+			float: left;
+			cursor: pointer;
+			color: #FFF;
+		}
+
+		.narrowLinks {
+			display: none;
+
+			a {
+				text-decoration: none;
+				display: block;
+				float: left;
+				clear: left;
+				padding: 0.5em 0;
+			}
+		}
+	}
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
+// Adjust breakpoint as desired to select when the "hamburger" menu is
+// replaced by just the links.
+@media (min-width: 480px) {
+	
+	nav {
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
+		.navWide {
+			display: block;
+		}
 
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+		.navNarrow {
+			display: none;
+		}
+	}
 }
