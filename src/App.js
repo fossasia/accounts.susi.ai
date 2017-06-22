@@ -6,17 +6,17 @@ const NavComponent = React.createClass({
       <nav>
         <div className="navWide">
           <div className="wideDiv">
-            <a href="#">test1</a>
-            <a href="#">test2</a>
-            <a href="#">test3</a>
+            <a href="http://accounts.susi.ai/index.html" onClick={this.burgerToggle}>Home</a>
+            <a href="http://accounts.susi.ai/api/html" onClick={this.burgerToggle}>API</a>
+            <a href="http://accounts.susi.ai/apps/applist/index.html" onClick={this.burgerToggle}>Accounts </a>
           </div>
         </div>
         <div className="navNarrow">
           <i className="fa fa-bars fa-2x" onClick={this.burgerToggle}></i>
           <div className="narrowLinks">
-            <a href="#" onClick={this.burgerToggle}>Link 1</a>
-            <a href="#" onClick={this.burgerToggle}>Link 2</a>
-            <a href="#" onClick={this.burgerToggle}>Link 3</a>
+            <a href="http://accounts.susi.ai/index.html" onClick={this.burgerToggle}>Home</a>
+            <a href="http://accounts.susi.ai/api/html" onClick={this.burgerToggle}>API</a>
+            <a href="http://accounts.susi.ai/apps/applist/index.html" onClick={this.burgerToggle}>Accounts </a>
           </div>
         </div>
       </nav>
