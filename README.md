@@ -1,4 +1,16 @@
-# accounts.susi.ai
+# chat.susi.ai
+
+[![Build Status](https://travis-ci.org/fossasia/chat.susi.ai.svg?branch=master)](https://travis-ci.org/fossasia/chat.susi.ai)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/fossasia/susi_webchat?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Twitter Follow](https://img.shields.io/twitter/follow/asksusi.svg?style=social&label=Follow&maxAge=2592000?style=flat-square)](https://twitter.com/asksusi)
+
+Susi is an artificial intelligence combining pattern matching, internet data, data flow principles and inference engine principles. It will have some reflection abilities and it will be able to remember the users input to produce deductions and a personalized feed-back. Its purpose is to explore the abilities of an artificial companion and to answer the remaining unanswered questions. The SUSI.AI web chat is a front-end that is developed for web access of SUSI.
+
+## Communication
+
+Please join our mailing list to discuss questions regarding the project: https://groups.google.com/group/susiai/
+
+Our chat channel is on gitter here: https://gitter.im/fossasia/susi_webchat
 
 ## Technology Stack
 
@@ -9,9 +21,8 @@
 * ReactJS - Structure for deployment of the web page.
 
 ## Requirements
-* nodejs
-* npm 
-* React
+* node --version >= 6
+* npm --version >= 3
 
 ## How to deploy?
 
@@ -22,3 +33,4 @@
 * **Step 4:** Run on http://localhost:3000 by running :```$ npm run start```
 * **Step 5:** Build locally by running : ```$ npm run build ```
 * **Step 6:** To deploy at a url use : ```$ npm run deploy ```
+
