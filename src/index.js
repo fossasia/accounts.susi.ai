@@ -1,6 +1,7 @@
 import SignUp from './components/Auth/SignUp/SignUp.react';
 import Logout from './components/Auth/Logout.react';
 import ChatApp from './components/ChatApp/ChatApp.react';
+import Login from './components/Auth/Login/Login.react'
 import ForgotPassword from
 	'./components/Auth/ForgotPassword/ForgotPassword.react';
 import NotFound from './components/NotFound/NotFound.react'
@@ -25,7 +26,7 @@ const App = () => (
 	<Router history={hashHistory}>
 		<MuiThemeProvider>
 			<Switch>
-				<Route exact path="/" component={ChatApp} />
+				<Route exact path="/" component={Login} />
 				<Route exact path="/signup" component={SignUp} />
 				<Route exact path="/logout" component={Logout} />
 				<Route exact path="/forgotpwd" component={ForgotPassword} />
