@@ -271,7 +271,7 @@ class Login extends Component {
 							</Link>
 						</div>
 						<div>
-						<h4>If you dont have a Account, Please SignUp</h4>
+						<h4>If you do not have an account, Please SignUp</h4>
 						<Link to={'/signup'} >
 									<RaisedButton
 										label='SignUp'
