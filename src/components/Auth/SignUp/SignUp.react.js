@@ -326,7 +326,7 @@ export default class SignUp extends Component {
                         </div>
                         <h1>OR</h1>
                         <div>
-                            <h4>If you have an Account Please Login</h4>
+                            <h4>If you have an account Please Login</h4>
                             <Link to={'/'} >
                             <RaisedButton
                                 //onTouchTap={this.handleOpen}
