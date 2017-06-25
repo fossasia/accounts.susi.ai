@@ -78,6 +78,9 @@ class Login extends Component {
 					state.time = time;
 					this.setState(state);
 					this.handleOnSubmit(accessToken, time);
+					let msg = 'You are loggedin';
+					state.msg = msg;
+					this.setState(state);
 				}.bind(this),
 				error: function (errorThrown) {
 					let msg = 'Login Failed. Try Again';
@@ -162,7 +165,8 @@ class Login extends Component {
 		if (state.success) {
 			cookies.set('loggedIn', loggedIn, { path: '/', maxAge: time });
 			this.props.history.push('/', { showLogin: false });
-			window.location.reload();
+			//window.location.reload();
+
 		}
 		else {
 			this.setState({
@@ -172,6 +176,9 @@ class Login extends Component {
 			});
 		}
 	}
+	handleOpen = () => {
+			this.setState({ open: true });
+	};
 
 	render() {
 		const serverURL = <TextField name="serverUrl"
@@ -264,13 +271,16 @@ class Login extends Component {
 							</Link>
 						</div>
 						<div>
-							<Link to={'/logout'} >
-								<RaisedButton
-									label='Chat Anonymously'
-									backgroundColor={
-										UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
-									labelColor="#fff" />
-							</Link>
+						<h4>If you do not have an account, Please SignUp</h4>
+						<Link to={'/signup'} >
+									<RaisedButton
+										label='SignUp'
+										backgroundColor={
+												UserPreferencesStore.getTheme()==='light'
+												? '#607D8B' : '#19314B'}
+										labelColor="#fff" />
+										<h3></h3>
+						</Link>
 						</div>
 					</form>
 				</Paper>
