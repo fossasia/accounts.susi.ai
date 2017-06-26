@@ -187,9 +187,10 @@ class Login extends Component {
 		const hidden = this.state.checked ? serverURL : '';
 
 		const styles = {
-			'width': '100%',
-			'textAlign': 'center',
-			'padding': '10px'
+			'margin': '60px auto',
+            'width': '100%',
+            'padding': '20px',
+            'textAlign': 'center'
 		}
 		const fieldStyle={
 			'width':'256px'
@@ -204,17 +205,18 @@ class Login extends Component {
 		  },
 		};
 		return (
-			<div className="loginForm">
+			<div>
 				<div>
-            		<header	className='message-thread-heading'>
-              			<AppBar
-                			className="app-bar"
-                			style={{ backgroundColor : '#607D8B',
-                				height: '46px' }}
-                			titleStyle={{height:'46px'}}
-              			/>
-            		</header>
+                	<header className='message-thread-heading'>
+                    	<AppBar
+                        	className="app-bar"
+                        	style={{ backgroundColor : '#607D8B',
+                        	    height: '46px' }}
+                        	titleStyle={{height:'46px'}}
+                    	/>
+                	</header>
             	</div>
+            	<div className="loginForm">
 				<Paper zDepth={0}style={styles}>	
             		<h1>Login to SUSI</h1>
 					<form onSubmit={this.handleSubmit}>
@@ -293,7 +295,9 @@ class Login extends Component {
 						</div>
 					</form>
 				</Paper>
-			</div>);
+			</div>
+		</div>
+		);
 
 	};
 }
