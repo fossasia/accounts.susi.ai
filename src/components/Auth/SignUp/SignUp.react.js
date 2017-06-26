@@ -329,7 +329,6 @@ export default class SignUp extends Component {
                             <h4>If you have an account, Please Login</h4>
                             <Link to={'/'} >
                             <RaisedButton
-                                //onTouchTap={this.handleOpen}
                                 label='Login'
 
                                 backgroundColor={

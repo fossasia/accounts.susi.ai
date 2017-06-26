@@ -166,8 +166,6 @@ class Login extends Component {
 		if (state.success) {
 			cookies.set('loggedIn', loggedIn, { path: '/', maxAge: time });
 			this.props.history.push('/', { showLogin: false });
-			//window.location.reload();
-
 		}
 		else {
 			this.setState({
@@ -217,7 +215,7 @@ class Login extends Component {
               			/>
             		</header>
             	</div>
-				<Paper zDepth={0} style={styles}>	
+				<Paper zDepth={0}style={styles}>	
             		<h1>Login to SUSI</h1>
 					<form onSubmit={this.handleSubmit}>
 						<div>
