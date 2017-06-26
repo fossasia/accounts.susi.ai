@@ -6,6 +6,13 @@
 .loginForm{
 	margin: 0 auto;
 }
+.app-bar{
+  background-image: url('../../images/susi-white.svg');
+  margin: 0 auto;
+  background-size: 100px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
 .sty{
 	width: 256px;
 }

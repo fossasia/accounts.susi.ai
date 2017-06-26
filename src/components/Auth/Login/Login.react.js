@@ -7,6 +7,7 @@ import './Login.css';
 import PasswordField from 'material-ui-password-field'
 import $ from 'jquery';
 import PropTypes  from 'prop-types';
+import AppBar from 'material-ui/AppBar';
 import Cookies from 'universal-cookie';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
@@ -207,7 +208,17 @@ class Login extends Component {
 		return (
 			<div className="loginForm">
 				<Paper zDepth={0} style={styles}>
-					<h1>Login to SUSI</h1>
+					<div>
+            			<header	className='message-thread-heading'>
+              			<AppBar
+                			className="app-bar"
+                			style={{ backgroundColor : '#607D8B',
+                				height: '46px' }}
+                			titleStyle={{height:'46px'}}
+              			/>
+            			</header>
+            		</div>	
+            		<h1>Login to SUSI</h1>
 					<form onSubmit={this.handleSubmit}>
 						<div>
 							<TextField name="email"
