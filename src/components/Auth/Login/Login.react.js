@@ -207,17 +207,17 @@ class Login extends Component {
 		};
 		return (
 			<div className="loginForm">
-				<Paper zDepth={0} style={styles}>
-					<div>
-            			<header	className='message-thread-heading'>
+				<div>
+            		<header	className='message-thread-heading'>
               			<AppBar
                 			className="app-bar"
                 			style={{ backgroundColor : '#607D8B',
                 				height: '46px' }}
                 			titleStyle={{height:'46px'}}
               			/>
-            			</header>
-            		</div>	
+            		</header>
+            	</div>
+				<Paper zDepth={0} style={styles}>	
             		<h1>Login to SUSI</h1>
 					<form onSubmit={this.handleSubmit}>
 						<div>
