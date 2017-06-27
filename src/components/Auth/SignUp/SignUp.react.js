@@ -4,6 +4,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import $ from 'jquery';
 import './SignUp.css';
+import AppBar from 'material-ui/AppBar';
 import PasswordField from 'material-ui-password-field';
 import { Link } from 'react-router-dom';
 import Dialog from 'material-ui/Dialog';
@@ -257,6 +258,18 @@ export default class SignUp extends Component {
             />;
 
         return (
+        <div>
+            <div>
+                <header className='message-thread-heading'>
+                    <AppBar
+                        className="app-bar"
+                        iconElementLeft={<iconButton></iconButton>}
+                        style={{ backgroundColor : '#607D8B',
+                            height: '46px' }}
+                        titleStyle={{height:'46px'}}
+                    />
+                </header>
+            </div>
             <div className="signUpForm">
                 <Paper zDepth={1} style={styles}>
                     <h1>Sign Up with SUSI</h1>
@@ -329,7 +342,7 @@ export default class SignUp extends Component {
                             <h4>If you have an account, Please Login</h4>
                             <Link to={'/'} >
                             <RaisedButton
-                                //onTouchTap={this.handleOpen}
+                                // onTouchTap={this.handleOpen}
                                 label='Login'
 
                                 backgroundColor={
@@ -361,6 +374,7 @@ export default class SignUp extends Component {
                     <div><Login {...this.props} /></div>
                 </Dialog>
             </div>
+        </div>
         );
     };
 }
