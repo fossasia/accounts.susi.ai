@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 
-export default class SignUp extends Component {
+export default class ResetPassword extends Component {
     constructor(props) {
         super(props);
 
@@ -236,7 +236,7 @@ export default class SignUp extends Component {
             />;
 
         return (
-            <div className="ResetForm">
+            <div className="resetForm">
                 <Paper zDepth={1} style={styles}>
                     <h1>Reset Password with SUSI</h1>
                     <form onSubmit={this.handleSubmit}>
