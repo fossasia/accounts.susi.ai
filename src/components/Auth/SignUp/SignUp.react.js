@@ -263,6 +263,7 @@ export default class SignUp extends Component {
                 <header className='message-thread-heading'>
                     <AppBar
                         className="app-bar"
+                        iconElementLeft={<iconButton></iconButton>}
                         style={{ backgroundColor : '#607D8B',
                             height: '46px' }}
                         titleStyle={{height:'46px'}}
@@ -341,7 +342,7 @@ export default class SignUp extends Component {
                             <h4>If you have an account, Please Login</h4>
                             <Link to={'/'} >
                             <RaisedButton
-                                //onTouchTap={this.handleOpen}
+                                // onTouchTap={this.handleOpen}
                                 label='Login'
 
                                 backgroundColor={
@@ -373,7 +374,7 @@ export default class SignUp extends Component {
                     <div><Login {...this.props} /></div>
                 </Dialog>
             </div>
-        </div>    
+        </div>
         );
     };
 }

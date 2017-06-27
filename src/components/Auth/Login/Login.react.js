@@ -210,6 +210,7 @@ class Login extends Component {
                 	<header className='message-thread-heading'>
                     	<AppBar
                         	className="app-bar"
+                        	iconElementLeft={<iconButton></iconButton>}
                         	style={{ backgroundColor : '#607D8B',
                         	    height: '46px' }}
                         	titleStyle={{height:'46px'}}
@@ -217,7 +218,7 @@ class Login extends Component {
                 	</header>
             	</div>
             	<div className="loginForm">
-				<Paper zDepth={0}style={styles}>	
+				<Paper zDepth={0}style={styles}>
             		<h1>Login to SUSI</h1>
 					<form onSubmit={this.handleSubmit}>
 						<div>
