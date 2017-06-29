@@ -7,6 +7,7 @@ import './Login.css';
 import PasswordField from 'material-ui-password-field'
 import $ from 'jquery';
 import PropTypes  from 'prop-types';
+import AppBar from 'material-ui/AppBar';
 import Cookies from 'universal-cookie';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
@@ -165,8 +166,6 @@ class Login extends Component {
 		if (state.success) {
 			cookies.set('loggedIn', loggedIn, { path: '/', maxAge: time });
 			this.props.history.push('/', { showLogin: false });
-			//window.location.reload();
-
 		}
 		else {
 			this.setState({
@@ -188,9 +187,10 @@ class Login extends Component {
 		const hidden = this.state.checked ? serverURL : '';
 
 		const styles = {
-			'width': '100%',
-			'textAlign': 'center',
-			'padding': '10px'
+			'margin': '60px auto',
+            'width': '100%',
+            'padding': '20px',
+            'textAlign': 'center'
 		}
 		const fieldStyle={
 			'width':'256px'
@@ -205,9 +205,21 @@ class Login extends Component {
 		  },
 		};
 		return (
-			<div className="loginForm">
-				<Paper zDepth={0} style={styles}>
-					<h1>Login to SUSI</h1>
+			<div>
+				<div>
+                	<header className='message-thread-heading'>
+                    	<AppBar
+                        	className="app-bar"
+                        	iconElementLeft={<iconButton></iconButton>}
+                        	style={{ backgroundColor : '#607D8B',
+                        	    height: '46px' }}
+                        	titleStyle={{height:'46px'}}
+                    	/>
+                	</header>
+            	</div>
+            	<div className="loginForm">
+				<Paper zDepth={0}style={styles}>
+            		<h1>Login to SUSI</h1>
 					<form onSubmit={this.handleSubmit}>
 						<div>
 							<TextField name="email"
@@ -284,7 +296,9 @@ class Login extends Component {
 						</div>
 					</form>
 				</Paper>
-			</div>);
+			</div>
+		</div>
+		);
 
 	};
 }
