@@ -1,6 +1,7 @@
 {
   "name": "chat.susi.ai",
   "version": "0.1.0",
+  "homepage": "http://accounts.susi.ai",
   "private": true,
   "dependencies": {
     "axios": "^0.16.1",
@@ -44,13 +45,18 @@
     "react-test-renderer": "^15.5.4"
   },
   "peerDependencies": {
-     "react": "^0.14.0 || ^15.0.1",
-     "react-dom": "^0.14.0 || ^15.0.1"
-   },
-   "jest": {
-     "setupFiles": ["./src/setupTests.js", "./src/node_modules/react-scripts/config/polyfills.js"]
-   },
+    "react": "^0.14.0 || ^15.0.1",
+    "react-dom": "^0.14.0 || ^15.0.1"
+  },
+  "jest": {
+    "setupFiles": [
+      "./src/setupTests.js",
+      "./src/node_modules/react-scripts/config/polyfills.js"
+    ]
+  },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "lint-js": "eslint *.js \"src/**/*.js\"",
@@ -58,8 +64,6 @@
     "precommit": "npm run lint",
     "prepush": "npm run lint",
     "test": "npm run lint && react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "surge"
+    "eject": "react-scripts eject"
   }
 }
