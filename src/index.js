@@ -1,6 +1,7 @@
 import SignUp from './components/Auth/SignUp/SignUp.react';
 import Logout from './components/Auth/Logout.react';
-import Login from './components/Auth/Login/Login.react'
+import Login from './components/Auth/Login/Login.react';
+import Sidebar from './components/Sidebar/Sidebar'
 import ForgotPassword from
 	'./components/Auth/ForgotPassword/ForgotPassword.react';
 import NotFound from './components/NotFound/NotFound.react'
@@ -21,9 +22,21 @@ ChatWebAPIUtils.getLocation();
 ChatWebAPIUtils.getHistory();
 ChatWebAPIUtils.getAllMessages();
 
+
+const styles = {
+    app: {
+        width: '100%',
+        height: '100%',
+    }
+};
+
+
+
 const App = () => (
 	<Router history={hashHistory}>
 		<MuiThemeProvider>
+		<div style={styles.app}>
+		  <Sidebar />
 			<Switch>
 				<Route exact path="/" component={Login} />
 				<Route exact path="/signup" component={SignUp} />
@@ -32,6 +45,7 @@ const App = () => (
 				<Route exact path="*" component={NotFound} />
 
 			</Switch>
+		</div>
 		</MuiThemeProvider>
 	</Router>
 );
