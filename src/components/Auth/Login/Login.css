@@ -7,6 +7,7 @@
 	padding: 10px;
 	width: 400px;
 	margin: 0 auto;
+
 }
 .app-bar{
   background-image: url('../../images/susi-white.svg');
@@ -22,4 +23,64 @@
 	.loginForm h1{
 		font-size: 16px;
 	}
+}
+
+.bm-burger-button {
+  position: fixed;
+  width: 36px;
+  height: 30px;
+  left: 36px;
+  top: 48px;
+}
+
+.bm-burger-bars {
+  background: #373a47;
+}
+
+
+.bm-cross-button {
+  height: 24px;
+  width: 24px;
+	top: 55px;
+}
+
+.bm-cross {
+  background: #bdc3c7;
+}
+
+.bm-menu {
+  background: #373a47;
+  padding: 2.5em 1.5em 0;
+  font-size: 1.15em;
+}
+
+.bm-morph-shape {
+  fill: #373a47;
+}
+
+.bm-item-list {
+  color: #b8b7ad;
+  padding: 0.8em;
+}
+
+.bm-overlay {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.menu-item {
+  color: #999;
+  border: none;
+  padding: 0.6em 0 0.6em 0.6em;
+}
+
+.menu-new ul{
+    border-top: 1px solid #333;
+}
+.menu-new a:hover,
+.menu-new a:focus {
+  color: #000;
+  }
+
+.menu-new a {
+    color: #fff;
 }

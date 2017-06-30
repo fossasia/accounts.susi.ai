@@ -11,6 +11,7 @@ import AppBar from 'material-ui/AppBar';
 import Cookies from 'universal-cookie';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
+import { slide as Menu } from 'react-burger-menu'
 
 const cookies = new Cookies();
 
@@ -217,6 +218,18 @@ class Login extends Component {
                     	/>
                 	</header>
             	</div>
+							<div>
+							<Menu customBurgerIcon={ <img src="img/icon.svg" /> } />
+				  	 	 <Menu customCrossIcon={ <img src="img/cross.svg" /> } />
+							<Menu className="menu-new">
+							<li>
+				        <ul> <a id="Applist" className="menu-item" href="">Applist</a></ul>
+				        <ul> <a id="Chat" className="menu-item" href="http://chat.susi.ai">Chat with susi</a></ul>
+								<ul><a id="ForgotPassword" className="menu-item" href="/signup/">Sign Up</a></ul>
+								 </li>
+							 </Menu>
+
+						 </div>
             	<div className="loginForm">
 				<Paper zDepth={0}style={styles}>
             		<h1>Login to SUSI</h1>

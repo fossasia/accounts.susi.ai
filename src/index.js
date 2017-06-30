@@ -1,7 +1,6 @@
 import SignUp from './components/Auth/SignUp/SignUp.react';
 import Logout from './components/Auth/Logout.react';
 import Login from './components/Auth/Login/Login.react';
-import Sidebar from './components/Sidebar/Sidebar'
 import ForgotPassword from
 	'./components/Auth/ForgotPassword/ForgotPassword.react';
 import NotFound from './components/NotFound/NotFound.react'
@@ -11,6 +10,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import * as ChatWebAPIUtils from './utils/ChatWebAPIUtils';
+
 import {
 	BrowserRouter as Router,
 	Route,
@@ -36,7 +36,10 @@ const App = () => (
 	<Router history={hashHistory}>
 		<MuiThemeProvider>
 		<div style={styles.app}>
-		  <Sidebar />
+		<div id="outer-container">
+		 <main id="page-wrap">
+		 </main>
+	   </div>
 			<Switch>
 				<Route exact path="/" component={Login} />
 				<Route exact path="/signup" component={SignUp} />
