@@ -18,7 +18,7 @@ The response from the memory servlet is of the form:
 A sample susi response is of the form :
 ```
 {
-	"query" : 
+	"query" :
 	"answers" : [ {
 		"data" : [],
 		"actions" : []
@@ -34,4 +34,3 @@ The conversation log is NOT stored for a particular IP. It’s stored for an Ide
 That identity can be represented with an email address, or there can be others.
 
 Thus the synchronisation of history across all chat platforms is maintained.
-

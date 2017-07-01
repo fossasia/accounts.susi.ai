@@ -16,7 +16,7 @@
 * [Date/Time](#datetime)
 * [Wikipedia](#wikipedia)
 * [Quora](#quora)
-* 
+*
 ###General
 
 - `<random>` Hello `<random>`. <br>
@@ -73,7 +73,7 @@ _example:_  How many tweets did melaniatrump post at 6 PM ?
 _example:_  How many tweets did melaniatrump post on Saturdays ?
 
 - `<random>` the `<query-frequency> (yearwise / hourwise / daywise)` tweet frequency chart of `<query-username>` ?<br>
-_example:_  Show me the yearwise tweet frequency chart of melaniatrump 
+_example:_  Show me the yearwise tweet frequency chart of melaniatrump
 
 - `<random>` did `<query-username>` post a `<query-tweet-type>` ?<br>
 _example:_  How many times did melaniatrump post a video ?
@@ -106,7 +106,7 @@ _example:_  What is the average number of retweets that melaniatrump gets ?
 _example:_  How many times did melaniatrump get 0 retweets ?
 
 - `<random>` retweet frequency chart `<random>` `<query-username>`<br>
-_example:_  Show me the retweet frequency chart of melaniatrump 
+_example:_  Show me the retweet frequency chart of melaniatrump
 
 - `<random>` hashtags has `<query-username>` used `<random>` ?<br>
 _example:_  How many hashtags has melaniatrump used in all ?
@@ -243,4 +243,3 @@ _example:_ Susi, What are the Quora profile stats of Mark-Zuckerberg
 _example:_ Susi, View/Read the Quora profile of Mark-Zuckerberg
 
 ***
-
