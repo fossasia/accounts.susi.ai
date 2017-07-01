@@ -20,7 +20,7 @@ before_install:
 before_script:
   - npm install -g karma
   - npm install
-  - npm build package.json
+  - npm run build
 
 script:
   - npm test
