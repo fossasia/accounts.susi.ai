@@ -18,7 +18,17 @@ export default class ResetPassword extends Component{
 	constructor(props){
 		super(props);
 
-		this.state={};
+		this.state={
+			email: '',
+			msg: '',
+			success: false,
+			serverUrl: '',
+			checked:false,
+			serverFieldError: false,
+			emailError: true,
+			validEmail:true,
+			validForm:false
+		};
 	}
 	handleSubmit = (event) => {
 		event.preventDefault();
@@ -46,7 +56,7 @@ export default class ResetPassword extends Component{
 						<h1>Reset Password!!</h1>
 						<br/>
 						<div>
-							<Link to={'/login'}>
+							<Link to={'/'}>
 								<RaisedButton
 									label="Cancel"
 									backgroundColor={
