@@ -11,7 +11,8 @@ import AppBar from 'material-ui/AppBar';
 import Cookies from 'universal-cookie';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
-
+import { slide as Menu } from 'react-burger-menu';
+/* eslint-disable */
 const cookies = new Cookies();
 
 class Login extends Component {
@@ -206,21 +207,34 @@ class Login extends Component {
 		};
 		return (
 			<div>
-				<div>
-          <header className='message-thread-heading'>
-          	<AppBar
-          		className="app-bar"
-              iconElementLeft={<iconButton></iconButton>}
-              style={{ backgroundColor : '#607D8B',
-                	    height: '46px' }}
-              titleStyle={{height:'46px'}}
-            />
-          </header>
-        </div>
-        <div className="loginForm">
-					<Paper zDepth={0}style={styles}>
-          	<h1>Login to SUSI</h1>
-						<form onSubmit={this.handleSubmit}>
+				<div className="app-bar-div">
+                    	<AppBar
+											iconElementLeft= {<iconButton></iconButton>}
+                        	className="app-bar"
+                        	style={{ backgroundColor : '#607D8B',
+                        	     height: '46px'}}
+                        	titleStyle={{height:'46px'}}
+
+                    	/>
+
+            	</div>
+							<div>
+							<Menu  customBurgerIcon={ <img key="icon" src="img/icon.svg" />} />
+				  	 	 <Menu customCrossIcon={ <img key="cross" src="img/cross.svg" /> } />
+							<Menu className="menu-new">
+							<li>
+				        <ul> <a id="Applist" className="menu-item" href="">Applist</a></ul>
+				        <ul> <a id="Chat" className="menu-item" href="http://chat.susi.ai">Chat with susi</a></ul>
+								<ul><Link to={'/signup'} ><a id="SignUp" className="menu-item" >Sign Up</a></Link></ul>
+								 </li>
+							 </Menu>
+
+						 </div>
+            	<div className="loginForm">
+				<Paper zDepth={0}style={styles}>
+            		<h1>Login to SUSI</h1>
+					<form onSubmit={this.handleSubmit}>
+
 						<div>
 							<TextField name="email"
 								value={this.state.email}
