@@ -234,6 +234,7 @@ class Login extends Component {
 				<Paper zDepth={0}style={styles}>
             		<h1>Login to SUSI</h1>
 					<form onSubmit={this.handleSubmit}>
+
 						<div>
 							<TextField name="email"
 								value={this.state.email}
@@ -253,26 +254,26 @@ class Login extends Component {
 						</div>
 						<div>
 							<div>
-							<RadioButtonGroup style={{display: 'flex',
-							  marginTop: '10px',
-							  maxWidth:'200px',
-							  flexWrap: 'wrap',
-							  margin: 'auto'}}
-							 name="server" onChange={this.handleChange}
-							 defaultSelected="standardServer">
-							<RadioButton
-							       value="customServer"
-							       label="Custom Server"
-							       labelPosition="left"
-							       style={radioButtonStyles.radioButton}
-							     />
-							<RadioButton
-							       value="standardServer"
-							       label="Standard Server"
-							       labelPosition="left"
-							       style={radioButtonStyles.radioButton}
-							     />
-							</RadioButtonGroup>
+								<RadioButtonGroup style={{display: 'flex',
+							  	marginTop: '10px',
+							  	maxWidth:'200px',
+							  	flexWrap: 'wrap',
+							  	margin: 'auto'}}
+							 		name="server" onChange={this.handleChange}
+							 		defaultSelected="standardServer">
+										<RadioButton
+							 				value="customServer"
+							  			label="Custom Server"
+							  			labelPosition="left"
+							  			style={radioButtonStyles.radioButton}
+										/>
+										<RadioButton
+							 				value="standardServer"
+							  			label="Standard Server"
+							  			labelPosition="left"
+							  			style={radioButtonStyles.radioButton}
+										/>
+								</RadioButtonGroup>
 							</div>
 						</div>
 						<div>
@@ -293,6 +294,17 @@ class Login extends Component {
 							<Link to='/forgotpwd'
 								className="forgotpwdlink">
 								<b>Forgot Password?</b>
+							</Link>
+						</div>
+						<div>
+							<Link to={'/resetpassword'}>
+							<RaisedButton
+								label='reset password'
+								backgroundColor={
+									UserPreferencesStore.getTheme()==='light'
+									? '#607D8B' : '#19314B'}
+									labelColor='#fff'/>
+							<h3></h3>
 							</Link>
 						</div>
 						<div>
