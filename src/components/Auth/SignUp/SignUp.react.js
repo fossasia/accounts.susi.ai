@@ -14,7 +14,7 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 import Login from '../Login/Login.react';
 import { slide as Menu } from 'react-burger-menu';
-
+/* eslint-disable */
 export default class SignUp extends Component {
     constructor(props) {
         super(props);
