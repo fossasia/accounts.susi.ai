@@ -64,6 +64,7 @@ export default class ResetPassword extends Component{
 									name="email"
 									floatingLabelText="Email"
 									errorText={this.emailErrorMessage}
+									style={{width:350}}
 									// value={this.state.email}
 									onChange={this.handleChange} />
 							</div>
@@ -72,6 +73,7 @@ export default class ResetPassword extends Component{
 									name="currentPassword"
 									floatingLabelText="Current Password"
 									errorText={this.emailErrorMessage}
+									style={{width:350}}
 									// value={this.state.email}
 									onChange={this.handleChange} />
 							</div>
@@ -81,6 +83,7 @@ export default class ResetPassword extends Component{
 									name="newPassword"
 									floatingLabelText="New Password"
 									errorText={this.emailErrorMessage}
+									style={{width:350}}
 									// value={this.state.email}
 									onChange={this.handleChange} />
 							</div>
@@ -89,6 +92,7 @@ export default class ResetPassword extends Component{
 									name="confirmPassword"
 									floatingLabelText="Confirm Password"
 									errorText={this.emailErrorMessage}
+									style={{width:350}}
 									// value={this.state.email}
 									onChange={this.handleChange} />
 							</div>
