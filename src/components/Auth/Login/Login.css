@@ -9,22 +9,32 @@
 	margin: 0 auto;
 
 }
-.bm-burger-button {
-  position: absolute;
-  width: 36px;
-  height: 30px;
-  left: 36px;
-  top: 24px;
-}
 
 .app-bar{
   background-image: url('../../images/susi-white.svg');
-  margin: 0 auto;
   background-size: 100px;
   background-repeat: no-repeat;
   background-position: center;
-
+	position: absolute;
 }
+.app-bar-div{
+	z-index: 0;
+	position: relative;
+}
+
+
+.bm-burger-button {
+	position: absolute;
+  width: 36px;
+  height: 30px;
+  left: 36px;
+  top: 8px;
+	z-index: 1;
+}
+.bm-burger-button{
+	background: #607D8B;
+}
+
 .sty{
 	width: 256px;
 }
@@ -36,7 +46,7 @@
 
 
 .bm-burger-bars {
-  background: #373a47;
+  background: #ffffff;
 }
 
 

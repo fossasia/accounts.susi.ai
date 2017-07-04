@@ -22,15 +22,12 @@ ChatWebAPIUtils.getLocation();
 ChatWebAPIUtils.getHistory();
 ChatWebAPIUtils.getAllMessages();
 
-
 const styles = {
     app: {
         width: '100%',
         height: '100%',
     }
 };
-
-
 
 const App = () => (
 	<Router history={hashHistory}>
@@ -46,8 +43,7 @@ const App = () => (
 				<Route exact path="/logout" component={Logout} />
 				<Route exact path="/forgotpwd" component={ForgotPassword} />
 				<Route exact path="*" component={NotFound} />
-
-			</Switch>
+				</Switch>
 		</div>
 		</MuiThemeProvider>
 	</Router>
