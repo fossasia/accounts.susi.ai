@@ -18,13 +18,11 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 
 before_script:
-  - npm install -g karma
   - npm install
   - npm run build
 
 script:
   - npm test
-  - karma start config/karma.conf.js --single-run
 
 deploy:
   provider: script
