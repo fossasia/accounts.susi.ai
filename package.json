@@ -43,6 +43,7 @@
     "eslint-plugin-babel": "^4.1.1",
     "eslint-plugin-jsx": "0.0.2",
     "eslint-plugin-react": "^7.0.1",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
     "gh-pages": "^1.0.0",
     "react-scripts": "0.9.5",
     "react-test-renderer": "^15.5.4"

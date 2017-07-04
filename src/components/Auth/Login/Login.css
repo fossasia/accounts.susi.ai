@@ -9,12 +9,21 @@
 	margin: 0 auto;
 
 }
+.bm-burger-button {
+  position: absolute;
+  width: 36px;
+  height: 30px;
+  left: 36px;
+  top: 24px;
+}
+
 .app-bar{
   background-image: url('../../images/susi-white.svg');
   margin: 0 auto;
   background-size: 100px;
   background-repeat: no-repeat;
   background-position: center;
+
 }
 .sty{
 	width: 256px;
@@ -25,13 +34,6 @@
 	}
 }
 
-.bm-burger-button {
-  position: fixed;
-  width: 36px;
-  height: 30px;
-  left: 36px;
-  top: 48px;
-}
 
 .bm-burger-bars {
   background: #373a47;
