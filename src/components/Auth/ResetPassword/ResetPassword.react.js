@@ -7,7 +7,7 @@ import './ResetPassword.css';
 import AppBar from 'material-ui/AppBar';
 import PasswordField from 'material-ui-password-field';
 import { Link } from 'react-router-dom';
-import Dialog from 'material-ui/Dialog';
+// import Dialog from 'material-ui/Dialog';
 // import PropTypes from 'prop-types';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
