@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "antd": "^2.11.1",
     "axios": "^0.16.1",
     "bootstrap": "^3.3.7",
     "classnames": "^2.2.5",
+    "eslint-config-react-app": "^0.6.2",
+    "eslint-plugin-react": "^7.1.0",
     "flux": "^3.1.2",
     "history": "^4.6.1",
     "html-entities": "^1.2.1",
@@ -18,6 +21,7 @@
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-bootstrap": "^0.31.0",
+    "react-burger-menu": "^2.1.1",
     "react-color": "^2.12.1",
     "react-cookie": "^2.0.7",
     "react-dom": "^15.5.4",
@@ -39,17 +43,21 @@
     "eslint-plugin-babel": "^4.1.1",
     "eslint-plugin-jsx": "0.0.2",
     "eslint-plugin-react": "^7.0.1",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
     "gh-pages": "^1.0.0",
     "react-scripts": "0.9.5",
     "react-test-renderer": "^15.5.4"
   },
   "peerDependencies": {
-     "react": "^0.14.0 || ^15.0.1",
-     "react-dom": "^0.14.0 || ^15.0.1"
-   },
-   "jest": {
-     "setupFiles": ["./src/setupTests.js", "./src/node_modules/react-scripts/config/polyfills.js"]
-   },
+    "react": "^0.14.0 || ^15.0.1",
+    "react-dom": "^0.14.0 || ^15.0.1"
+  },
+  "jest": {
+    "setupFiles": [
+      "./src/setupTests.js",
+      "./src/node_modules/react-scripts/config/polyfills.js"
+    ]
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

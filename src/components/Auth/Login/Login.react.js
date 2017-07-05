@@ -11,7 +11,8 @@ import AppBar from 'material-ui/AppBar';
 import Cookies from 'universal-cookie';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
-
+import { slide as Menu } from 'react-burger-menu';
+/* eslint-disable */
 const cookies = new Cookies();
 
 class Login extends Component {
@@ -206,21 +207,34 @@ class Login extends Component {
 		};
 		return (
 			<div>
-				<div>
-                	<header className='message-thread-heading'>
+				<div className="app-bar-div">
                     	<AppBar
+											iconElementLeft= {<iconButton></iconButton>}
                         	className="app-bar"
-                        	iconElementLeft={<iconButton></iconButton>}
                         	style={{ backgroundColor : '#607D8B',
-                        	    height: '46px' }}
+                        	     height: '46px'}}
                         	titleStyle={{height:'46px'}}
+
                     	/>
-                	</header>
+
             	</div>
+							<div>
+							<Menu  customBurgerIcon={ <img key="icon" src="img/icon.svg" />} />
+				  	 	 <Menu customCrossIcon={ <img key="cross" src="img/cross.svg" /> } />
+							<Menu className="menu-new">
+							<li>
+				        <ul> <a id="Applist" className="menu-item" href="">Applist</a></ul>
+				        <ul> <a id="Chat" className="menu-item" href="http://chat.susi.ai">Chat with susi</a></ul>
+								<ul><Link to={'/signup'} ><a id="SignUp" className="menu-item" >Sign Up</a></Link></ul>
+								 </li>
+							 </Menu>
+
+						 </div>
             	<div className="loginForm">
 				<Paper zDepth={0}style={styles}>
             		<h1>Login to SUSI</h1>
 					<form onSubmit={this.handleSubmit}>
+
 						<div>
 							<TextField name="email"
 								value={this.state.email}
@@ -240,26 +254,26 @@ class Login extends Component {
 						</div>
 						<div>
 							<div>
-							<RadioButtonGroup style={{display: 'flex',
-							  marginTop: '10px',
-							  maxWidth:'200px',
-							  flexWrap: 'wrap',
-							  margin: 'auto'}}
-							 name="server" onChange={this.handleChange}
-							 defaultSelected="standardServer">
-							<RadioButton
-							       value="customServer"
-							       label="Custom Server"
-							       labelPosition="left"
-							       style={radioButtonStyles.radioButton}
-							     />
-							<RadioButton
-							       value="standardServer"
-							       label="Standard Server"
-							       labelPosition="left"
-							       style={radioButtonStyles.radioButton}
-							     />
-							</RadioButtonGroup>
+								<RadioButtonGroup style={{display: 'flex',
+							  	marginTop: '10px',
+							  	maxWidth:'200px',
+							  	flexWrap: 'wrap',
+							  	margin: 'auto'}}
+							 		name="server" onChange={this.handleChange}
+							 		defaultSelected="standardServer">
+										<RadioButton
+							 				value="customServer"
+							  			label="Custom Server"
+							  			labelPosition="left"
+							  			style={radioButtonStyles.radioButton}
+										/>
+										<RadioButton
+							 				value="standardServer"
+							  			label="Standard Server"
+							  			labelPosition="left"
+							  			style={radioButtonStyles.radioButton}
+										/>
+								</RadioButtonGroup>
 							</div>
 						</div>
 						<div>
@@ -280,6 +294,17 @@ class Login extends Component {
 							<Link to='/forgotpwd'
 								className="forgotpwdlink">
 								<b>Forgot Password?</b>
+							</Link>
+						</div>
+						<div>
+							<Link to={'/resetpassword'}>
+							<RaisedButton
+								label='reset password'
+								backgroundColor={
+									UserPreferencesStore.getTheme()==='light'
+									? '#607D8B' : '#19314B'}
+									labelColor='#fff'/>
+							<h3></h3>
 							</Link>
 						</div>
 						<div>

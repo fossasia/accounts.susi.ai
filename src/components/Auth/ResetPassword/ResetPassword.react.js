@@ -1,0 +1,127 @@
+import React, { Component } from 'react';
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+// import $ from 'jquery';
+import './ResetPassword.css';
+import AppBar from 'material-ui/AppBar';
+import PasswordField from 'material-ui-password-field';
+import { Link } from 'react-router-dom';
+// import Dialog from 'material-ui/Dialog';
+// import FlatButton from 'material-ui/FlatButton';
+// import PropTypes from 'prop-types';
+// import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import UserPreferencesStore from '../../../stores/UserPreferencesStore';
+// import Login from '../Login/Login.react';
+
+export default class ResetPassword extends Component{
+	constructor(props){
+		super(props);
+
+		this.state={
+			email: '',
+			msg: '',
+			currentPassword:'',
+			newPassword:'',
+			confirmPassword:'',
+			success: false,
+			serverUrl: '',
+			checked:false,
+			serverFieldError: false,
+			emailError: true,
+			validEmail:true,
+			validForm:false
+		};
+	}
+	handleSubmit = (event) => {
+		event.preventDefault();
+	}
+
+	render(){
+		const styles = {
+			'margin': '60px auto',
+			'padding': '10px',
+			'textAlign': 'center'
+		}
+		return(
+			<div>
+				<div>
+					<AppBar
+						className="app-bar"
+						iconElementLeft={<iconButton></iconButton>}
+						style={{ backgroundColor : '#607D8B',
+							height: '46px' }}
+							titleStyle={{height:'46px'}}
+					/>
+				</div>
+				<div className = "resetPasswordForm">
+					<Paper zDepth={1} style={styles}>
+						<h1>Reset Password!!</h1>
+						<br/>
+						<form onSubmit={this.handleSubmit}>
+							<div>
+								<TextField
+									name="email"
+									floatingLabelText="Email"
+									errorText={this.emailErrorMessage}
+									style={{width:350}}
+									// value={this.state.email}
+									onChange={this.handleChange} />
+							</div>
+							<div>
+								<PasswordField
+									name="currentPassword"
+									floatingLabelText="Current Password"
+									errorText={this.emailErrorMessage}
+									style={{width:350}}
+									// value={this.state.email}
+									onChange={this.handleChange} />
+							</div>
+
+							<div>
+								<PasswordField
+									name="newPassword"
+									floatingLabelText="New Password"
+									errorText={this.emailErrorMessage}
+									style={{width:350}}
+									// value={this.state.email}
+									onChange={this.handleChange} />
+							</div>
+							<div>
+								<PasswordField
+									name="confirmPassword"
+									floatingLabelText="Confirm Password"
+									errorText={this.emailErrorMessage}
+									style={{width:350}}
+									// value={this.state.email}
+									onChange={this.handleChange} />
+							</div>
+						</form>
+						<br/>
+						<div>
+							<Link to={'/'}>
+								<RaisedButton
+									label="submit"
+									backgroundColor={
+										UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
+									labelColor="#fff"
+									keyboardFocused={true}
+								/>
+								&nbsp;
+						</Link>
+							<Link to={'/'}>
+								<RaisedButton
+									label="Cancel"
+									backgroundColor={
+										UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
+									labelColor="#fff"
+									keyboardFocused={true}
+					   		/>
+							</Link>
+						</div>
+					</Paper>
+				</div>
+			</div>
+		);
+	}
+}
