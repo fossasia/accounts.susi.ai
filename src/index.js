@@ -3,6 +3,7 @@ import Logout from './components/Auth/Logout.react';
 import ResetPassword from
 './components/Auth/ResetPassword/ResetPassword.react';
 import Login from './components/Auth/Login/Login.react'
+import ViewPermission from './components/Auth/ViewPermissions/ViewPermission.react'
 import ForgotPassword from
 	'./components/Auth/ForgotPassword/ForgotPassword.react';
 import NotFound from './components/NotFound/NotFound.react'
@@ -45,6 +46,7 @@ const App = () => (
 				<Route exact path="/signup" component={SignUp} />
 				<Route exact path="/logout" component={Logout} />
 				<Route exact path="/forgotpwd" component={ForgotPassword} />
+				<Route exact path="/viewpermission" component={ViewPermission} />
 				<Route exact path="*" component={NotFound} />
 				</Switch>
 		</div>
