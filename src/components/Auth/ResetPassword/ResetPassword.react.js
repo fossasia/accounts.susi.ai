@@ -162,7 +162,7 @@ export default class ResetPassword extends Component{
 							titleStyle={{height:'46px'}}
 					/>
 				</div>
-				<div className = "resetPasswordForm">
+				<div className="resetPasswordForm">
 					<Paper zDepth={1} style={styles}>
 						<h1>Reset Password!!</h1>
 						<br/>
