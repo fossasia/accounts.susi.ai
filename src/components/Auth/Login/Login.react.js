@@ -297,9 +297,9 @@ class Login extends Component {
 							</Link>
 						</div>
 						<div>
-							<Link to={'/resetpassword'}>
+							<Link to={'/changepassword'}>
 							<RaisedButton
-								label='reset password'
+								label='change password'
 								backgroundColor={
 									UserPreferencesStore.getTheme()==='light'
 									? '#607D8B' : '#19314B'}
