@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 // import Dialog from 'material-ui/Dialog';
 // import FlatButton from 'material-ui/FlatButton';
 // import PropTypes from 'prop-types';
-// import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 // import Login from '../Login/Login.react';
 
@@ -153,7 +153,7 @@ export default class ResetPassword extends Component{
 				</div>
 				<div className="resetPasswordForm">
 					<Paper zDepth={1} style={styles}>
-						<h1>Change Password!!</h1>
+						<h1>Reset Password</h1>
 						<br/>
 						<form onSubmit={this.handleSubmit}>
 							<div>
