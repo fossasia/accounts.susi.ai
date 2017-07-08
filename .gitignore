@@ -14,6 +14,7 @@
 .env
 npm-debug.log*
 package-log.json*
+package-lock.json*
 yarn-debug.log*
 yarn-error.log*
 jest
