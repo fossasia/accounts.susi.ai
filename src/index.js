@@ -3,6 +3,7 @@ import Logout from './components/Auth/Logout.react';
 import ChangePassword from
 './components/Auth/ChangePassword/ChangePassword.react';
 import Login from './components/Auth/Login/Login.react'
+import LoggedIn from './components/Auth/LoggedIn/LoggedIn.react'
 import ForgotPassword from
 	'./components/Auth/ForgotPassword/ForgotPassword.react';
 import NotFound from './components/NotFound/NotFound.react'
@@ -43,6 +44,7 @@ const App = () => (
 				<Route exact path="/" component={Login} />
 				<Route exact path="/changepassword" component={ChangePassword} />
 				<Route exact path="/signup" component={SignUp} />
+				<Route exact path="/userhome" component={LoggedIn}/>
 				<Route exact path="/logout" component={Logout} />
 				<Route exact path="/forgotpwd" component={ForgotPassword} />
 				<Route exact path="*" component={NotFound} />

@@ -166,7 +166,7 @@ class Login extends Component {
 		let state = this.state;
 		if (state.success) {
 			cookies.set('loggedIn', loggedIn, { path: '/', maxAge: time });
-			this.props.history.push('/', { showLogin: false });
+			this.props.history.push('/userhome', { showLogin: false });
 		}
 		else {
 			this.setState({
