@@ -279,7 +279,6 @@ export default class SignUp extends Component {
              <Menu customCrossIcon={ <img key="cross" src="img/cross.svg" /> } />
             <Menu className="menu-new">
             <li>
-              <ul> <a id="Applist" className="menu-item" href="">Applist</a></ul>
               <ul> <a id="Chat" className="menu-item" href="http://chat.susi.ai">Chat with susi</a></ul>
               <ul><Link to={'/'} ><a id="LogIn" className="menu-item" >Log In</a></Link></ul>
                </li>

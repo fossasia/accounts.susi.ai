@@ -223,10 +223,9 @@ class Login extends Component {
 				  	 	 <Menu customCrossIcon={ <img key="cross" src="img/cross.svg" /> } />
 							<Menu className="menu-new">
 							<li>
-				        <ul> <a id="Applist" className="menu-item" href="">Applist</a></ul>
 				        <ul> <a id="Chat" className="menu-item" href="http://chat.susi.ai">Chat with susi</a></ul>
 								<ul><Link to={'/signup'} ><a id="SignUp" className="menu-item" >Sign Up</a></Link></ul>
-								 </li>
+							</li>
 							 </Menu>
 
 						 </div>
