@@ -3,7 +3,7 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 // import $ from 'jquery';
-import './ResetPassword.css';
+import './ChangePassword.css';
 import AppBar from 'material-ui/AppBar';
 import PasswordField from 'material-ui-password-field';
 import { Link } from 'react-router-dom';
@@ -13,7 +13,7 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 // import Login from '../Login/Login.react';
 
-export default class ResetPassword extends Component{
+export default class ChangePassword extends Component{
 	constructor(props){
 		super(props);
 
@@ -162,9 +162,9 @@ export default class ResetPassword extends Component{
 							titleStyle={{height:'46px'}}
 					/>
 				</div>
-				<div className="resetPasswordForm">
+				<div className="changePasswordForm">
 					<Paper zDepth={1} style={styles}>
-						<h1>Reset Password!!</h1>
+						<h1>Change Password!!</h1>
 						<br/>
 						<form onSubmit={this.handleSubmit}>
 							<div>
