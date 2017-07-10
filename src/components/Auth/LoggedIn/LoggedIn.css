@@ -1,0 +1,11 @@
+.app-bar{
+  background-image: url('../../images/susi-white.svg');
+  background-size: 100px;
+  background-repeat: no-repeat;
+  background-position: center;
+	position: absolute;
+}
+.app-bar-div{
+	z-index: 0;
+	position: relative;
+}
