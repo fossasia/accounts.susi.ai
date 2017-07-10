@@ -3,7 +3,6 @@ import './LoggedIn.css';
 import AppBar from 'material-ui/AppBar';
 import { slide as Menu } from 'react-burger-menu';
 
-/* eslint-disable */
 class LoggedIn extends Component {
   /* constructor(props){
     super(props);
@@ -22,8 +21,8 @@ class LoggedIn extends Component {
       </div>
 
       <div>
-      <Menu  customBurgerIcon={ <img key="icon" src="img/icon.svg" />} />
-       <Menu customCrossIcon={ <img key="cross" src="img/cross.svg" /> } />
+      <Menu  customBurgerIcon={ <img alt="" key="sidebar-icon" src="img/icon.svg" />} />
+       <Menu customCrossIcon={ <img alt="sidebar-cross" key="cross" src="img/cross.svg" /> } />
       <Menu className="menu-new">
       <li>
         <ul><a id="Chat" className="menu-item" href="http://chat.susi.ai">Chat with susi</a></ul>
