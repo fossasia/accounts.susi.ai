@@ -22,7 +22,8 @@ class LoggedIn extends Component {
 
       <div>
       <Menu  customBurgerIcon={ <img alt="" key="sidebar-icon" src="img/icon.svg" />} />
-       <Menu customCrossIcon={ <img alt="sidebar-cross" key="cross" src="img/cross.svg" /> } />
+       <Menu customCrossIcon={ <img alt="sidebar-cross"
+                            key="cross" src="img/cross.svg" /> } />
       <Menu className="menu-new">
       <li>
         <ul><a id="Chat" className="menu-item" href="http://chat.susi.ai">Chat with susi</a></ul>
