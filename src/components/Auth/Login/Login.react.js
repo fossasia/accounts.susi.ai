@@ -35,6 +35,12 @@ class Login extends Component {
         this.customServerMessage = '';
 	}
 
+	componentDidMount() {
+		if(cookies.get('loggedIn')) {
+			this.props.history.push('/userhome', { showLogin: false });
+		}
+	}
+
 	handleSubmit = (e) => {
 		e.preventDefault();
 
@@ -296,17 +302,17 @@ class Login extends Component {
 								<b>Forgot Password?</b>
 							</Link>
 						</div>
-						<div>
-							<Link to={'/changepassword'}>
-							<RaisedButton
-								label='change password'
-								backgroundColor={
-									UserPreferencesStore.getTheme()==='light'
-									? '#607D8B' : '#19314B'}
-									labelColor='#fff'/>
-							<h3></h3>
-							</Link>
-						</div>
+						{/* <div>
+													<Link to={'/changepassword'}>
+													<RaisedButton
+														label='change password'
+														backgroundColor={
+															UserPreferencesStore.getTheme()==='light'
+															? '#607D8B' : '#19314B'}
+															labelColor='#fff'/>
+													<h3></h3>
+													</Link>
+												</div> */}
 						<div>
 						<h4>If you do not have an account, Please SignUp</h4>
 						<Link to={'/signup'} >
