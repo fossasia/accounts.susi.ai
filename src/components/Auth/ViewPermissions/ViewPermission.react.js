@@ -1,19 +1,8 @@
 import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
-// import $ from 'jquery';
 import './ViewPermission.css';
 import AppBar from 'material-ui/AppBar';
-import PasswordField from 'material-ui-password-field';
-import { Link } from 'react-router-dom';
 import $ from 'jquery';
-// import Dialog from 'material-ui/Dialog';
-// import FlatButton from 'material-ui/FlatButton';
-// import PropTypes from 'prop-types';
-// import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
-import UserPreferencesStore from '../../../stores/UserPreferencesStore';
-// import Login from '../Login/Login.react';
 
 export default class ResetPassword extends Component{
 	constructor(props){
@@ -66,16 +55,13 @@ export default class ResetPassword extends Component{
 			'padding': '0px',
 			'textAlign': 'center'
 		}
-		const styles2 = {
-			'textAlign': 'left'
-		}
 
 		return(
 			<div>
 			<div className="app-bar-div">
 			<header className='message-thread-heading'>
 										<AppBar className="app-bar"
-										iconElementLeft= {<iconButton></iconButton>}
+										iconElementLeft={<iconButton></iconButton>}
 												style={{ backgroundColor : '#607D8B',
 														 height: '46px'}}
 												titleStyle={{height:'46px'}}
