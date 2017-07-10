@@ -226,6 +226,7 @@ class Login extends Component {
 				        <ul> <a id="Applist" className="menu-item" href="">Applist</a></ul>
 				        <ul> <a id="Chat" className="menu-item" href="http://chat.susi.ai">Chat with susi</a></ul>
 								<ul><Link to={'/signup'} ><a id="SignUp" className="menu-item" >Sign Up</a></Link></ul>
+								<ul><Link to={'/viewpermission'} ><a id="ViewPermission" className="menu-item" >View Permissions</a></ul>
 								 </li>
 							 </Menu>
 
