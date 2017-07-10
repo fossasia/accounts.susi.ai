@@ -3,6 +3,7 @@ import './LoggedIn.css';
 import AppBar from 'material-ui/AppBar';
 import { slide as Menu } from 'react-burger-menu';
 
+/* eslint-disable */
 class LoggedIn extends Component {
   /* constructor(props){
     super(props);
