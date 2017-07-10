@@ -71,7 +71,7 @@ export default class ResetPassword extends Component{
 				<Paper zDepth={0}style={styles}>
 				<div className="permissions">
 						<h1>View Permissions</h1>
-						<div class="user-permission" id="userSpecific">
+						<div className="user-permission" id="userSpecific">
 						<h2>Account information</h2>
 						<h4>User name: </h4>
 						<h4>User specific permissions:</h4>
@@ -80,7 +80,7 @@ export default class ResetPassword extends Component{
 						<h4>User role specific permissions:</h4>
 						<br/>
 					  </div>
-						<div class="user-services" id="userSpecific">
+						<div className="user-services" id="userSpecific">
 						<h2>List of services</h2>
 						<h4>StatusService: </h4>
 						<h4>AppsService: </h4>
