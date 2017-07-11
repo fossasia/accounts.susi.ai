@@ -253,54 +253,53 @@ export default class ChangePassword extends Component{
 									value={this.state.confirmPassword}
 									onChange={this.handleChange} />
 							</div>
+							<br/>
+							<div>
+								<RadioButtonGroup style={{display: 'flex',
+									marginTop: '10px',
+									maxWidth:'200px',
+									flexWrap: 'wrap',
+									margin: 'auto'}}
+									name="server" onChange={this.handleChange}
+									defaultSelected="standardServer">
+									<RadioButton
+										value="customServer"
+										label="Custom Server"
+										labelPosition="left"
+										style={radioButtonStyles.radioButton}
+									/>
+									<RadioButton
+										 value="standardServer"
+										 label="Standard Server"
+										 labelPosition="left"
+										 style={radioButtonStyles.radioButton}
+									/>
+								</RadioButtonGroup>
+							</div>
+							<div>
+								{hidden}
+							</div>
+							<div>
+									<RaisedButton
+										label="submit"
+										type='submit'
+										backgroundColor={
+											UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
+										labelColor="#fff"
+										keyboardFocused={true}
+									/>
+									&nbsp;
+								<Link to={'/'}>
+									<RaisedButton
+										label="Cancel"
+										backgroundColor={
+											UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
+										labelColor="#fff"
+										keyboardFocused={true}
+						   		/>
+								</Link>
+							</div>
 						</form>
-						<br/>
-						<div>
-							<RadioButtonGroup style={{display: 'flex',
-								marginTop: '10px',
-								maxWidth:'200px',
-								flexWrap: 'wrap',
-								margin: 'auto'}}
-								name="server" onChange={this.handleChange}
-								defaultSelected="standardServer">
-								<RadioButton
-									value="customServer"
-									label="Custom Server"
-									labelPosition="left"
-									style={radioButtonStyles.radioButton}
-								/>
-								<RadioButton
-									 value="standardServer"
-									 label="Standard Server"
-									 labelPosition="left"
-									 style={radioButtonStyles.radioButton}
-								/>
-							</RadioButtonGroup>
-						</div>
-						<div>
-							{hidden}
-						</div>
-						<div>
-							{/* <Link to={'/'}> */}
-								<RaisedButton
-									label="submit"
-									backgroundColor={
-										UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
-									labelColor="#fff"
-									keyboardFocused={true}
-								/>
-								&nbsp;
-						{/* </Link> */}
-							<Link to={'/'}>
-								<RaisedButton
-									label="Cancel"
-									backgroundColor={
-										UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
-									labelColor="#fff"
-									keyboardFocused={true}
-					   		/>
-							</Link>
-						</div>
 					</Paper>
 				</div>
 			</div>
