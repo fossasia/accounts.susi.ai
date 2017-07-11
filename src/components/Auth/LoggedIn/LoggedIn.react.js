@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import RaisedButton from 'material-ui/RaisedButton';
 import './LoggedIn.css';
+import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 import AppBar from 'material-ui/AppBar';
 import { slide as Menu } from 'react-burger-menu';
 import { Link } from 'react-router-dom';
@@ -36,6 +39,7 @@ class LoggedIn extends Component {
 
       />
       </div>
+<<<<<<< 9e3f5600671b61380e92a1966fc222bf34e08808
 
       <div>
       <Menu  customBurgerIcon={ <img alt="" key="sidebar-icon" src="img/icon.svg" />} />
@@ -51,6 +55,20 @@ class LoggedIn extends Component {
        </Menu>
        </div>
        </div>
+=======
+      <div>
+                    <Link to={'/changepassword'}>
+                    <RaisedButton
+                      label='change password'
+                      backgroundColor={
+                        UserPreferencesStore.getTheme()==='light'
+                        ? '#607D8B' : '#19314B'}
+                        labelColor='#fff'/>
+                    <h3></h3>
+                    </Link>
+                  </div>
+      </div>
+>>>>>>> change password ajax call
     )
   }
 }

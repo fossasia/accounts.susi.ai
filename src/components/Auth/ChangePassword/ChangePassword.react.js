@@ -2,16 +2,20 @@ import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-// import $ from 'jquery';
+import $ from 'jquery';
 import './ChangePassword.css';
 import AppBar from 'material-ui/AppBar';
 import PasswordField from 'material-ui-password-field';
 import { Link } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 // import Dialog from 'material-ui/Dialog';
 // import PropTypes from 'prop-types';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 // import Login from '../Login/Login.react';
+
+const cookies = new Cookies();
+
 
 export default class ChangePassword extends Component{
 	constructor(props){
@@ -34,6 +38,52 @@ export default class ChangePassword extends Component{
 	}
 	handleSubmit = (event) => {
 		event.preventDefault();
+		var password = this.state.password.trim();
+		var newPassword = this.state.newPassword.trim();
+
+		let defaults = UserPreferencesStore.getPreferences();
+		let BASE_URL = defaults.Server;
+
+		let serverUrl = this.state.serverUrl;
+		if(serverUrl.slice(-1) === '/'){
+			serverUrl = serverUrl.slice(0,-1);
+		}
+		if(serverUrl !== ''){
+			BASE_URL = serverUrl;
+		}
+		console.log(BASE_URL);
+
+		if(!newPassword || !password) {return this.state.isFilled}
+		var email = '';
+		if(cookies.get('email')) {email = cookies.get('email')}
+		let changePasswordEndPoint =
+			BASE_URL+'/aaa/changepassword.json?changepassword=' + email
+			 + '&password=' + password + '&newpassword=' + newPassword;
+			 if(password && newPassword)
+			 {
+				 $.ajax({
+					 url:changePasswordEndPoint,
+					 dataType:'jsonp',
+					 jsonpCallback:'p',
+					 crossDomain:true,
+					 success: function (response) {
+						 let state = this.state;
+						 state.isFilled = true;
+						 state.success = true;
+						 state.msg = response.message;
+						 this.setState(state);
+						 let msg = 'Password Changed Successfully';
+	 					state.msg = msg;
+	 					this.setState(state);
+					 }.bind(this),
+					 error: function (errorThrown) {
+						 let msg = 'Password Change Failed';
+						 let state = this.state;
+						 state.msg = msg;
+						 this.setState(state)
+					 }.bind(this)
+				 });
+			 }
 	}
 	handleChange = (event) => {
 			let email;
@@ -167,7 +217,7 @@ export default class ChangePassword extends Component{
 						<h1>Change Password!!</h1>
 						<br/>
 						<form onSubmit={this.handleSubmit}>
-							<div>
+							{/* <div>
 								<TextField
 									name="email"
 									floatingLabelText="Email"
@@ -175,14 +225,14 @@ export default class ChangePassword extends Component{
 									style={{width:350}}
 									// value={this.state.email}
 									onChange={this.handleChange} />
-							</div>
+							</div> */}
 							<div>
 								<PasswordField
 									name="currentPassword"
 									floatingLabelText="Current Password"
 									errorText={this.emailErrorMessage}
 									style={{width:350}}
-									// value={this.state.email}
+									value={this.state.currentPassword}
 									onChange={this.handleChange} />
 							</div>
 							<div>
@@ -191,7 +241,7 @@ export default class ChangePassword extends Component{
 									floatingLabelText="New Password"
 									errorText={this.emailErrorMessage}
 									style={{width:350}}
-									// value={this.state.email}
+									value={this.state.newPassword}
 									onChange={this.handleChange} />
 							</div>
 							<div>
@@ -200,7 +250,7 @@ export default class ChangePassword extends Component{
 									floatingLabelText="Confirm Password"
 									errorText={this.emailErrorMessage}
 									style={{width:350}}
-									// value={this.state.email}
+									value={this.state.confirmPassword}
 									onChange={this.handleChange} />
 							</div>
 						</form>
@@ -231,7 +281,7 @@ export default class ChangePassword extends Component{
 							{hidden}
 						</div>
 						<div>
-							<Link to={'/'}>
+							{/* <Link to={'/'}> */}
 								<RaisedButton
 									label="submit"
 									backgroundColor={
@@ -240,7 +290,7 @@ export default class ChangePassword extends Component{
 									keyboardFocused={true}
 								/>
 								&nbsp;
-						</Link>
+						{/* </Link> */}
 							<Link to={'/'}>
 								<RaisedButton
 									label="Cancel"

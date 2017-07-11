@@ -85,7 +85,7 @@ class Login extends Component {
 					state.msg = response.message;
 					state.time = time;
 					this.setState(state);
-					this.handleOnSubmit(accessToken, time);
+					this.handleOnSubmit(email, accessToken, time);
 					let msg = 'You are loggedin';
 					state.msg = msg;
 					this.setState(state);
@@ -168,10 +168,11 @@ class Login extends Component {
 		this.setState(state);
 	}
 
-	handleOnSubmit = (loggedIn, time) => {
+	handleOnSubmit = (email, loggedIn, time) => {
 		let state = this.state;
 		if (state.success) {
 			cookies.set('loggedIn', loggedIn, { path: '/', maxAge: time });
+			cookies.set('emailId', loggedIn, { path: '/', maxAge: time });
 			this.props.history.push('/userhome', { showLogin: false });
 		}
 		else {
