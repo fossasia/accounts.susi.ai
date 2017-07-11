@@ -5,10 +5,11 @@
   background-position: center;
 	position: absolute;
 }
-.app-bar-div{
-	z-index: 0;
-	position: relative;
-}
-.IconMenu{
-  z-index: 1;
+.logout-btn{
+  	position: absolute;
+    width: 72px;
+    height: 30px;
+    top: 0px;
+    color:white;
+
 }
