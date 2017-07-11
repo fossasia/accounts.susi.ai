@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './LoggedIn.css';
 import AppBar from 'material-ui/AppBar';
+import { slide as Menu } from 'react-burger-menu';
 
 class LoggedIn extends Component {
   /* constructor(props){
@@ -8,6 +9,7 @@ class LoggedIn extends Component {
   } */
   render () {
     return(
+      <div>
       <div className='app-bar-div'>
         <AppBar
         iconElementLeft={<iconButton></iconButton>}
@@ -17,6 +19,21 @@ class LoggedIn extends Component {
             titleStyle={{height:'46px'}}
         />
       </div>
+
+      <div>
+      <Menu  customBurgerIcon={ <img alt="" key="sidebar-icon" src="img/icon.svg" />} />
+       <Menu customCrossIcon={ <img alt="sidebar-cross"
+                            key="cross" src="img/cross.svg" /> } />
+      <Menu className="menu-new">
+      <li>
+        <ul><a id="Chat" className="menu-item" href="http://chat.susi.ai">Chat with susi</a></ul>
+        <ul><a id="SusiSkillCMS" className="menu-item" href="">Susi skill CMS</a></ul>
+        <ul><a id="ViewPermission" className="menu-item" >View Permissions</a></ul>
+        <ul><a id="ChangePassword" className="menu-item" >Change Password</a></ul>
+        </li>
+       </Menu>
+       </div>
+       </div>
     )
   }
 }
