@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
+// import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import $ from 'jquery';
 import './ChangePassword.css';
@@ -8,11 +8,8 @@ import AppBar from 'material-ui/AppBar';
 import PasswordField from 'material-ui-password-field';
 import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-// import Dialog from 'material-ui/Dialog';
-// import PropTypes from 'prop-types';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
-// import Login from '../Login/Login.react';
+
 
 const cookies = new Cookies();
 
@@ -22,44 +19,49 @@ export default class ChangePassword extends Component{
 		super(props);
 
 		this.state={
-			email: '',
 			msg: '',
 			currentPassword:'',
 			newPassword:'',
 			confirmPassword:'',
-			success: false,
 			serverUrl: '',
-			checked:false,
+			success: false,
 			serverFieldError: false,
-			emailError: true,
-			validEmail:true,
+			currentPasswordError: true,
+			newPasswordError: true,
+			confirmPasswordError: true,
 			validForm:false
 		};
+		this.currentPasswordErrorMessage = '';
+ 		this.newPasswordErrorMessage = '';
+    this.confirmPasswordErrorMessage = '';
 	}
+
 	handleSubmit = (event) => {
 		event.preventDefault();
 		var password = this.state.password.trim();
 		var newPassword = this.state.newPassword.trim();
 
 		let defaults = UserPreferencesStore.getPreferences();
-		let BASE_URL = defaults.Server;
-
-		let serverUrl = this.state.serverUrl;
-		if(serverUrl.slice(-1) === '/'){
-			serverUrl = serverUrl.slice(0,-1);
-		}
-		if(serverUrl !== ''){
-			BASE_URL = serverUrl;
-		}
+		let defaultServer = defaults.Server;
+		let BASE_URL = '';
+		if(cookies.get('serverUrl')===defaultServer||
+		cookies.get('serverUrl')===null||
+		cookies.get('serverUrl')=== undefined) {
+				BASE_URL = defaultServer;
+		} else {
+				BASE_URL= cookies.get('serverUrl');
+			}
 		console.log(BASE_URL);
 
 		if(!newPassword || !password) {return this.state.isFilled}
 		var email = '';
-		if(cookies.get('email')) {email = cookies.get('email')}
+		if(cookies.get('email')) {
+			email = cookies.get('email')
+		}
 		let changePasswordEndPoint =
 			BASE_URL+'/aaa/changepassword.json?changepassword=' + email
 			 + '&password=' + password + '&newpassword=' + newPassword;
-			 if(password && newPassword)
+			 if(!this.state.currentPasswordError && !this.state.newPasswordError)
 			 {
 				 $.ajax({
 					 url:changePasswordEndPoint,
@@ -68,16 +70,13 @@ export default class ChangePassword extends Component{
 					 crossDomain:true,
 					 success: function (response) {
 						 let state = this.state;
-						 state.isFilled = true;
 						 state.success = true;
-						 state.msg = response.message;
-						 this.setState(state);
-						 let msg = 'Password Changed Successfully';
-	 					state.msg = msg;
-	 					this.setState(state);
+						 let msg = response.message
+						 state.msg = msg;
+	 					 this.setState(state);
 					 }.bind(this),
 					 error: function (errorThrown) {
-						 let msg = 'Password Change Failed';
+						 let msg = 'Password Change Failed' + errorThrown.message;
 						 let state = this.state;
 						 state.msg = msg;
 						 this.setState(state)
@@ -86,92 +85,64 @@ export default class ChangePassword extends Component{
 			 }
 	}
 	handleChange = (event) => {
-			let email;
-			let password;
+			let currentPassword;
+			let newPassword;
 			let confirmPassword;
-			let serverUrl;
 			let state = this.state
-			if (event.target.name === 'email') {
-					email = event.target.value.trim();
-					let validEmail =
-							/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
-					state.email = email;
-					state.isEmail = validEmail;
-					state.emailError = !(email && validEmail)
+			if (event.target.name === 'currentPassword') {
+					currentPassword = event.target.value;
+					let validPassword = currentPassword.length >= 6;
+					state.currentPassword = currentPassword;
+					state.currentPasswordError = !(currentPassword && validPassword);
 			}
-			else if (event.target.name === 'password') {
-					password = event.target.value;
-					let validPassword = password.length >= 6;
-					state.passwordValue = password;
-					state.passwordError = !(password && validPassword);
+			else if (event.target.name === 'newPassword') {
+					newPassword = event.target.value;
+					let validPassword = newPassword.length >=6;
+					state.newPassword = newPassword;
+					state.newPasswordError = !(validPassword && newPassword);
 			}
-			else if (event.target.name === 'confirmPassword') {
-					password = this.state.passwordValue;
-					confirmPassword = event.target.value;
-					let validPassword = confirmPassword === password;
-					state.confirmPasswordValue = confirmPassword;
-					state.passwordConfirmError = !(validPassword && confirmPassword);
-			}
-			else if (event.target.value === 'customServer') {
-					state.checked = true;
-					state.serverFieldError = true;
-			}
-			else if (event.target.value === 'standardServer') {
-					state.checked = false;
-					state.serverFieldError = false;
-			}
-			else if (event.target.name === 'serverUrl'){
-					serverUrl = event.target.value;
-					let validServerUrl =
-/(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:~+#-]*[\w@?^=%&amp;~+#-])?/i
-					.test(serverUrl);
-					state.serverUrl = serverUrl;
-					state.serverFieldError = !(serverUrl && validServerUrl);
+			else if (event.target.value === 'confirmPassword') {
+				confirmPassword = event.target.value;
+				newPassword = this.state.newPassword;
+				let validConfirmPassword = newPassword === confirmPassword;
+				state.confirmPassword = confirmPassword;
+				state.confirmPasswordError = !(validConfirmPassword && confirmPassword)
 			}
 
-			if (!this.state.emailError
-					&& !this.state.passwordError
-					&& !this.state.passwordConfirmError) {
+			if (!this.state.currentPasswordError
+					&& !this.state.newPasswordError
+					&& !this.state.confirmPasswordError) {
 					state.validForm = true;
 			}
 			else {
 					state.validForm = false;
 			}
-
 			this.setState(state);
-
-			if (this.state.emailError) {
-					this.emailErrorMessage = 'Enter a valid Email Address';
-			}
-			else if (this.state.passwordError) {
-					this.emailErrorMessage = '';
-					this.passwordErrorMessage
-							= 'Minimum 6 characters required';
-					this.passwordConfirmErrorMessage = '';
+			if (this.state.currentPasswordError) {
+					this.currentPasswordErrorMessage = 'Minimum 6 characters required';
+					this.newPasswordErrorMessage = '';
+					this.confirmPasswordErrorMessage = '';
 
 			}
-			else if (this.state.passwordConfirmError) {
-					this.emailErrorMessage = '';
-					this.passwordErrorMessage = '';
-					this.passwordConfirmErrorMessage = 'Check your password again';
+			else if (this.state.newPasswordError) {
+				this.currentPasswordErrorMessage = '';
+				this.newPasswordErrorMessage = 'Minimum 6 characters required';
+				this.confirmPasswordErrorMessage = '';
+			}
+			else if(this.state.confirmPasswordError){
+				this.currentPasswordErrorMessage = '';
+				this.newPasswordErrorMessage = '';
+				this.confirmPasswordErrorMessage = 'Minimum 6 characters required';
 			}
 			else {
-					this.emailErrorMessage = '';
-					this.passwordErrorMessage = '';
-					this.passwordConfirmErrorMessage = '';
+				this.currentPasswordErrorMessage = '';
+				this.newPasswordErrorMessage = '';
+				this.confirmPasswordErrorMessage = '';
 			}
 
-			if (this.state.serverFieldError) {
-					this.customServerMessage = 'Enter a valid URL';
-			}
-			else{
-					this.customServerMessage = '';
-			}
-
-			if(this.state.emailError||
-			this.state.passwordError||
-			this.state.passwordConfirmError||
-			this.state.serverFieldError){
+			if(this.state.currentPasswordError
+				|| this.state.newPasswordError
+				|| this.state.confirmPasswordError) {
 					this.setState({validForm: false});
 			}
 			else{
@@ -180,22 +151,6 @@ export default class ChangePassword extends Component{
 	}
 
 	render(){
-		const serverURL = <TextField name="serverUrl"
-												onChange={this.handleChange}
-												value={this.state.serverUrl}
-												errorText={this.customServerMessage}
-												floatingLabelText="Custom URL" />;
-
-		const hidden = this.state.checked ? serverURL : '';
-
-		const radioButtonStyles = {
-			block: {
-				maxWidth: 250,
-			},
-			radioButton: {
-				marginBottom: 16,
-			},
-		};
 		const styles = {
 			'margin': '60px auto',
 			'padding': '10px',
@@ -217,20 +172,11 @@ export default class ChangePassword extends Component{
 						<h1>Change Password!!</h1>
 						<br/>
 						<form onSubmit={this.handleSubmit}>
-							{/* <div>
-								<TextField
-									name="email"
-									floatingLabelText="Email"
-									errorText={this.emailErrorMessage}
-									style={{width:350}}
-									// value={this.state.email}
-									onChange={this.handleChange} />
-							</div> */}
 							<div>
 								<PasswordField
 									name="currentPassword"
 									floatingLabelText="Current Password"
-									errorText={this.emailErrorMessage}
+									errorText={this.currentPasswordErrorMessage}
 									style={{width:350}}
 									value={this.state.currentPassword}
 									onChange={this.handleChange} />
@@ -239,7 +185,7 @@ export default class ChangePassword extends Component{
 								<PasswordField
 									name="newPassword"
 									floatingLabelText="New Password"
-									errorText={this.emailErrorMessage}
+									errorText={this.newPasswordErrorMessage}
 									style={{width:350}}
 									value={this.state.newPassword}
 									onChange={this.handleChange} />
@@ -248,37 +194,12 @@ export default class ChangePassword extends Component{
 								<PasswordField
 									name="confirmPassword"
 									floatingLabelText="Confirm Password"
-									errorText={this.emailErrorMessage}
+									errorText={this.confirmPasswordErrorMessage}
 									style={{width:350}}
 									value={this.state.confirmPassword}
 									onChange={this.handleChange} />
 							</div>
 							<br/>
-							<div>
-								<RadioButtonGroup style={{display: 'flex',
-									marginTop: '10px',
-									maxWidth:'200px',
-									flexWrap: 'wrap',
-									margin: 'auto'}}
-									name="server" onChange={this.handleChange}
-									defaultSelected="standardServer">
-									<RadioButton
-										value="customServer"
-										label="Custom Server"
-										labelPosition="left"
-										style={radioButtonStyles.radioButton}
-									/>
-									<RadioButton
-										 value="standardServer"
-										 label="Standard Server"
-										 labelPosition="left"
-										 style={radioButtonStyles.radioButton}
-									/>
-								</RadioButtonGroup>
-							</div>
-							<div>
-								{hidden}
-							</div>
 							<div>
 									<RaisedButton
 										label="submit"
