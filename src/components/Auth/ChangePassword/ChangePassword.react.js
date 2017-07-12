@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
-// import TextField from 'material-ui/TextField';
+import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
 import $ from 'jquery';
 import './ChangePassword.css';
+import FlatButton from 'material-ui/FlatButton'
+import PropTypes from 'prop-types';
 import AppBar from 'material-ui/AppBar';
 import PasswordField from 'material-ui-password-field';
 import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 
 
 const cookies = new Cookies();
-
+injectTapEventPlugin();
 
 export default class ChangePassword extends Component{
 	constructor(props){
@@ -23,6 +26,7 @@ export default class ChangePassword extends Component{
 			currentPassword:'',
 			newPassword:'',
 			confirmPassword:'',
+			showDialog: false,
 			serverUrl: '',
 			success: false,
 			serverFieldError: false,
@@ -35,6 +39,11 @@ export default class ChangePassword extends Component{
  		this.newPasswordErrorMessage = '';
     this.confirmPasswordErrorMessage = '';
 	}
+
+	handleClose = (event) => {
+		this.setState({showDialog: false})
+		this.props.history.push('/userhome')
+	};
 
 	handleSubmit = (event) => {
 		event.preventDefault();
@@ -75,13 +84,15 @@ export default class ChangePassword extends Component{
 						 state.success = true;
 						 let msg = response.message
 						 state.msg = msg;
+						 state.showDialog = true;
 	 					 this.setState(state);
 						 console.log(response.message);
 					 }.bind(this),
 					 error: function (errorThrown) {
-						 let msg = 'Password Change Failed' + errorThrown.message;
+						 let msg = 'Failed' + errorThrown.message;
 						 let state = this.state;
 						 state.msg = msg;
+						 state.showDialog = true;
 						 this.setState(state)
 					 }.bind(this)
 				 });
@@ -159,6 +170,14 @@ export default class ChangePassword extends Component{
 			'padding': '10px',
 			'textAlign': 'center'
 		}
+    const actions =
+           <FlatButton
+               label="OK"
+               backgroundColor={
+                   UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
+               labelStyle={{ color: '#fff' }}
+               onTouchTap={this.handleClose}
+           />;
 		return(
 			<div>
 				<div>
@@ -225,8 +244,19 @@ export default class ChangePassword extends Component{
 							</div>
 						</form>
 					</Paper>
+					{this.state.msg && (
+							<div><Dialog
+											actions={actions}
+											modal={false}
+											open={this.state.showDialog}
+											onRequestClose={this.handleClose} >
+									 	{this.state.msg}
+										</Dialog>
+							</div>
+)}
 				</div>
 			</div>
 		);
 	}
 }
+ChangePassword.propTypes={history: PropTypes.object}
