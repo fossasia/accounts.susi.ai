@@ -38,7 +38,7 @@ export default class ChangePassword extends Component{
 
 	handleSubmit = (event) => {
 		event.preventDefault();
-		var password = this.state.password.trim();
+		var password = this.state.currentPassword.trim();
 		var newPassword = this.state.newPassword.trim();
 
 		let defaults = UserPreferencesStore.getPreferences();
@@ -55,12 +55,14 @@ export default class ChangePassword extends Component{
 
 		if(!newPassword || !password) {return this.state.isFilled}
 		var email = '';
-		if(cookies.get('email')) {
-			email = cookies.get('email')
+		if(cookies.get('emailId')) {
+			email = cookies.get('emailId')
 		}
 		let changePasswordEndPoint =
 			BASE_URL+'/aaa/changepassword.json?changepassword=' + email
-			 + '&password=' + password + '&newpassword=' + newPassword;
+			 + '&password=' + password + '&newpassword=' +
+			 newPassword + '&access_token='+cookies.get('loggedIn');
+			 // console.log(changePasswordEndPoint);
 			 if(!this.state.currentPasswordError && !this.state.newPasswordError)
 			 {
 				 $.ajax({
@@ -74,6 +76,7 @@ export default class ChangePassword extends Component{
 						 let msg = response.message
 						 state.msg = msg;
 	 					 this.setState(state);
+						 console.log(response.message);
 					 }.bind(this),
 					 error: function (errorThrown) {
 						 let msg = 'Password Change Failed' + errorThrown.message;
@@ -101,7 +104,7 @@ export default class ChangePassword extends Component{
 					state.newPassword = newPassword;
 					state.newPasswordError = !(validPassword && newPassword);
 			}
-			else if (event.target.value === 'confirmPassword') {
+			else if (event.target.name === 'confirmPassword') {
 				confirmPassword = event.target.value;
 				newPassword = this.state.newPassword;
 				let validConfirmPassword = newPassword === confirmPassword;

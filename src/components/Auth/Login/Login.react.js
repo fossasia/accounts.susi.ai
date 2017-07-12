@@ -172,7 +172,7 @@ class Login extends Component {
 		let state = this.state;
 		if (state.success) {
 			cookies.set('loggedIn', loggedIn, { path: '/', maxAge: time });
-			cookies.set('emailId', loggedIn, { path: '/', maxAge: time });
+			cookies.set('emailId', email, { path: '/', maxAge: time });
 			this.props.history.push('/userhome', { showLogin: false });
 		}
 		else {
