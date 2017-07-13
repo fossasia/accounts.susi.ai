@@ -99,7 +99,7 @@ class ResetPassword extends Component{
 			BASE_URL+'/aaa/resetpassword.json?token=' + resetToken
 			 + '&newpass=' + newPassword;
 			 // console.log(changePasswordEndPoint);
-			 if(!this.state.currentPasswordError && !this.state.newPasswordError)
+			 if(!this.state.confirmPasswordError && !this.state.newPasswordError)
 			 {
 				 $.ajax({
 					 url:resetPasswordEndPoint,
@@ -132,25 +132,25 @@ class ResetPassword extends Component{
   }
 
 	handleChange = (event) => {
-			let password;
+			let newPassword;
 			let confirmPassword;
 			let state = this.state
-			if (event.target.name === 'password') {
-					password = event.target.value;
-					let validPassword = password.length >= 6;
-					state.passwordValue = password;
-					state.passwordError = !(password && validPassword);
+			if (event.target.name === 'newPassword') {
+					newPassword = event.target.value;
+					let validPassword = newPassword.length >= 6;
+					state.newPasswordValue = newPassword;
+					state.newPasswordError = !(newPassword && validPassword);
 			}
 			else if (event.target.name === 'confirmPassword') {
-					password = this.state.passwordValue;
+					newPassword = this.state.newPasswordValue;
 					confirmPassword = event.target.value;
-					let validPassword = confirmPassword === password;
+					let validPassword = confirmPassword === newPassword;
 					state.confirmPasswordValue = confirmPassword;
-					state.passwordConfirmError = !(validPassword && confirmPassword);
+					state.confirmPasswordError = !(validPassword && confirmPassword);
 			}
 
-			if (!this.state.passwordError
-					&& !this.state.passwordConfirmError) {
+			if (!this.state.newPasswordError
+					&& !this.state.confirmPasswordError) {
 					state.validForm = true;
 			}
 			else {
@@ -159,24 +159,24 @@ class ResetPassword extends Component{
 
 			this.setState(state);
 
-			if (this.state.passwordError) {
-					this.passwordErrorMessage
+			if (this.state.newPasswordError) {
+					this.newPasswordErrorMessage
 							= 'Minimum 6 characters required';
-					this.passwordConfirmErrorMessage = '';
+					this.confirmPasswordErrorMessage = '';
 
 			}
-			else if (this.state.passwordConfirmError) {
-					this.passwordErrorMessage = '';
-					this.passwordConfirmErrorMessage = 'Check your password again';
+			else if (this.state.confirmPasswordError) {
+					this.newPasswordErrorMessage = '';
+					this.confirmPasswordErrorMessage = 'Check your password again';
 			}
 			else {
-					this.passwordErrorMessage = '';
-					this.passwordConfirmErrorMessage = '';
+					this.newPasswordErrorMessage = '';
+					this.confirmPasswordErrorMessage = '';
 			}
 
 
-			if(this.state.passwordError||
-			this.state.passwordConfirmError){
+			if(this.state.newPasswordError||
+			this.state.confirmPasswordError){
 					this.setState({validForm: false});
 			}
 			else{
@@ -241,20 +241,20 @@ class ResetPassword extends Component{
 									style={{width:350}}
 									onChange={this.handleChange} />
 							</div>
+              <div>
+  								<RaisedButton
+  									label="submit"
+                    type='submit'
+  									backgroundColor={
+  										UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
+  									labelColor="#fff"
+  									keyboardFocused={true}
+  								/>
+  								&nbsp;
+  						</div>
 						</form>
 						<br/>
-						<div>
-								<RaisedButton
-									label="submit"
-                  type='submit'
-									backgroundColor={
-										UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
-									labelColor="#fff"
-									keyboardFocused={true}
-								/>
-								&nbsp;
-						</div>
-					</Paper>
+						</Paper>
           {this.state.msg && (
 							<div><Dialog
 											actions={actions}
