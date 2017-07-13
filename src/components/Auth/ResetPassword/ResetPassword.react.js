@@ -5,16 +5,34 @@ import RaisedButton from 'material-ui/RaisedButton';
 // import $ from 'jquery';
 import './ResetPassword.css';
 import AppBar from 'material-ui/AppBar';
+import { addUrlProps, UrlQueryParamTypes } from 'react-url-query';
 import PasswordField from 'material-ui-password-field';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 // import Dialog from 'material-ui/Dialog';
 // import FlatButton from 'material-ui/FlatButton';
-// import PropTypes from 'prop-types';
- import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 // import Login from '../Login/Login.react';
 
-export default class ResetPassword extends Component{
+
+const urlPropsQueryConfig = {
+  token: { type: UrlQueryParamTypes.string },
+};
+
+class ResetPassword extends Component{
+  static propTypes = {
+    // URL props are automatically decoded and passed in based on the config
+    token: PropTypes.string,
+    // change handlers are automatically generated when given a config.
+    // By default they update that single query parameter and maintain existing
+    // values in the other parameters.
+    onChangeToken: PropTypes.func,
+  }
+
+  static defaultProps = {
+    token: '',
+  }
 	constructor(props){
 		super(props);
 
@@ -33,6 +51,14 @@ export default class ResetPassword extends Component{
 			validForm:false
 		};
 	}
+
+  componentDidMount() {
+    const {
+      token
+    } = this.props;
+    console.log(token)
+  }
+
 	handleSubmit = (event) => {
 		event.preventDefault();
 	}
@@ -119,6 +145,9 @@ export default class ResetPassword extends Component{
 	}
 
 	render(){
+
+    const { token } = this.props;
+    console.log(token)
 		const serverURL = <TextField name="serverUrl"
 												onChange={this.handleChange}
 												value={this.state.serverUrl}
@@ -156,6 +185,12 @@ export default class ResetPassword extends Component{
 						<h1>Reset Password</h1>
 						<br/>
 						<form onSubmit={this.handleSubmit}>
+              <div className="email">
+              <TextField
+                disabled={true}
+                style={{width:350}}
+                value='no token specified'/>
+              </div>
 							<div>
 								<PasswordField
 									name="newPassword"
@@ -167,6 +202,7 @@ export default class ResetPassword extends Component{
 							<div>
 								<PasswordField
 									name="confirmPassword"
+                  disabled={true}
 									floatingLabelText="Confirm Password"
 									errorText={this.emailErrorMessage}
 									style={{width:350}}
@@ -217,3 +253,4 @@ export default class ResetPassword extends Component{
 		);
 	}
 }
+export default addUrlProps({ urlPropsQueryConfig })(ResetPassword);
