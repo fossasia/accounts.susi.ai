@@ -42,9 +42,9 @@ class ResetPassword extends Component{
 			newPassword:'',
 			confirmPassword:'',
 			success: false,
-      showDialog: false,
+      		showDialog: false,
 			checked:false,
-      newPasswordError: true,
+      		newPasswordError: true,
 			confirmPasswordError: true,
 			validForm:false
 		};
@@ -86,8 +86,9 @@ class ResetPassword extends Component{
 
 	handleSubmit = (event) => {
 		event.preventDefault();
-    console.log('test')
-    var newPassword = this.state.newPassword.trim();
+    	console.log('test');
+    	var newPassword = this.state.newPassword.trim();
+    	console.log(newPassword);
 
     let BASE_URL = 'http://api.susi.ai';
 		if(!newPassword) {return this.state.isFilled}
@@ -98,7 +99,7 @@ class ResetPassword extends Component{
 		let resetPasswordEndPoint =
 			BASE_URL+'/aaa/resetpassword.json?token=' + resetToken
 			 + '&newpass=' + newPassword;
-			 // console.log(changePasswordEndPoint);
+			 console.log(resetPasswordEndPoint);
 			 if(!this.state.confirmPasswordError && !this.state.newPasswordError)
 			 {
 				 $.ajax({
@@ -120,32 +121,33 @@ class ResetPassword extends Component{
 						 let state = this.state;
 						 state.msg = msg;
 						 state.showDialog = true;
-						 this.setState(state)
+						 this.setState(state);
+						 console.log(this.state);
 					 }.bind(this)
 				 });
 			 }
 	}
 
   handleClose = (event) => {
-    this.setState({showDialog: false})
+  		this.setState({showDialog: false})
 		this.props.history.push('/')
   }
 
 	handleChange = (event) => {
-			let newPassword;
+			let password;
 			let confirmPassword;
 			let state = this.state
 			if (event.target.name === 'newPassword') {
-					newPassword = event.target.value;
-					let validPassword = newPassword.length >= 6;
-					state.newPasswordValue = newPassword;
-					state.newPasswordError = !(newPassword && validPassword);
+					password = event.target.value;
+					let validPassword = password.length >= 6;
+					state.newPassword = password;
+					state.newPasswordError = !(password && validPassword);
 			}
 			else if (event.target.name === 'confirmPassword') {
-					newPassword = this.state.newPasswordValue;
+					password = this.state.newPassword;
 					confirmPassword = event.target.value;
-					let validPassword = confirmPassword === newPassword;
-					state.confirmPasswordValue = confirmPassword;
+					let validPassword = confirmPassword === password;
+					state.confirmPassword = confirmPassword;
 					state.confirmPasswordError = !(validPassword && confirmPassword);
 			}
 
@@ -165,7 +167,7 @@ class ResetPassword extends Component{
 					this.confirmPasswordErrorMessage = '';
 
 			}
-			else if (this.state.confirmPasswordError) {
+			else if (this.state.confirmPasswordErrorMessage) {
 					this.newPasswordErrorMessage = '';
 					this.confirmPasswordErrorMessage = 'Check your password again';
 			}
@@ -176,7 +178,7 @@ class ResetPassword extends Component{
 
 
 			if(this.state.newPasswordError||
-			this.state.confirmPasswordError){
+			this.state.confirmPasswordErrorMessage){
 					this.setState({validForm: false});
 			}
 			else{
@@ -217,17 +219,17 @@ class ResetPassword extends Component{
 						<h1>Reset Password</h1>
 						<br/>
 						<form onSubmit={this.handleSubmit}>
-              <div className="email">
-              <TextField
-                disabled={!this.state.success}
-                style={{width:350}}
-                value={this.state.msg}/>
-              </div>
+              				<div className="email">
+              					<TextField
+				                disabled={!this.state.success}
+				                style={{width:350}}
+				                value={this.state.msg}/>
+			              	</div>
 							<div>
 								<PasswordField
 									name="newPassword"
 									floatingLabelText="New Password"
-                  disabled={!this.state.success}
+                  					disabled={!this.state.success}
 									errorText={this.emailErrorMessage}
 									style={{width:350}}
 									onChange={this.handleChange} />
@@ -235,40 +237,44 @@ class ResetPassword extends Component{
 							<div>
 								<PasswordField
 									name="confirmPassword"
-                  disabled={!this.state.success}
+                  					disabled={!this.state.success}
 									floatingLabelText="Confirm Password"
 									errorText={this.emailErrorMessage}
 									style={{width:350}}
 									onChange={this.handleChange} />
 							</div>
-              <div>
-  								<RaisedButton
-  									label="submit"
-                    type='submit'
-  									backgroundColor={
-  										UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
-  									labelColor="#fff"
-  									keyboardFocused={true}
-  								/>
-  								&nbsp;
-  						</div>
-						</form>
 						<br/>
-						</Paper>
-          {this.state.msg && (
+						<div>
+								<RaisedButton
+									label="submit"
+                  					type='submit'
+									backgroundColor={
+										UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
+									labelColor="#fff"
+									keyboardFocused={true}
+								/>
+								&nbsp;
+						</div>
+						</form>
+					</Paper>
+          			{this.state.msg && (
 							<div><Dialog
-											actions={actions}
-											modal={false}
-											open={this.state.showDialog}
-											onRequestClose={this.handleClose} >
-									 	{this.state.msg}
-										</Dialog>
+									actions={actions}
+									modal={false}
+									open={this.state.showDialog}
+									onRequestClose={this.handleClose} >
+							 	{this.state.msg}
+								</Dialog>
 							</div>
-          )}
+          			)}
 				</div>
 			</div>
 		);
 	}
 }
+
 export default addUrlProps({ urlPropsQueryConfig })(ResetPassword);
-ResetPassword.propTypes={history: PropTypes.object}
+
+ResetPassword.propTypes={
+	history: PropTypes.object
+}
