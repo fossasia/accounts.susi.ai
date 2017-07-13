@@ -2,19 +2,18 @@ import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-// import $ from 'jquery';
 import './ResetPassword.css';
 import AppBar from 'material-ui/AppBar';
+import $ from 'jquery';
 import { addUrlProps, UrlQueryParamTypes } from 'react-url-query';
 import PasswordField from 'material-ui-password-field';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-// import Dialog from 'material-ui/Dialog';
-// import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 // import Login from '../Login/Login.react';
-
 
 const urlPropsQueryConfig = {
   token: { type: UrlQueryParamTypes.string },
@@ -39,11 +38,11 @@ class ResetPassword extends Component{
 		this.state={
 			email: '',
 			msg: '',
-			currentPassword:'',
 			newPassword:'',
 			confirmPassword:'',
 			success: false,
 			serverUrl: '',
+      showDialog: false,
 			checked:false,
 			serverFieldError: false,
 			emailError: true,
@@ -57,11 +56,47 @@ class ResetPassword extends Component{
       token
     } = this.props;
     console.log(token)
+    let defaults = UserPreferencesStore.getPreferences();
+    let BASE_URL = defaults.Server;
+
+		let serverUrl = this.state.serverUrl;
+		if(serverUrl.slice(-1) === '/'){
+			serverUrl = serverUrl.slice(0,-1);
+		}
+		if(serverUrl !== ''){
+			BASE_URL = serverUrl;
+		}
+    let resetPasswordEndPoint = BASE_URL +
+    '/aaa/recoverpassword.json?getParameters=true&' +
+    'token=' + token;
+    $.ajax({
+        url: resetPasswordEndPoint,
+        dataType: 'jsonp',
+        jsonpCallback: 'p',
+        jsonp: 'callback',
+        crossDomain: true,
+        success: function (response) {
+          let state = this.state
+          state.msg = response.message
+          this.setState(state)
+        }.bind(this),
+        error: function (errorThrown) {
+          let state = this.state
+          state.msg = errorThrown.message
+          state.showDialog = true
+          this.setState(state)
+        }.bind(this)
+    })
   }
 
 	handleSubmit = (event) => {
 		event.preventDefault();
 	}
+
+  handleClose = (event) => {
+    this.setState({showDialog: false})
+		this.props.history.push('/userhome')
+  }
 
 	handleChange = (event) => {
 			let password;
@@ -169,6 +204,14 @@ class ResetPassword extends Component{
 			'padding': '10px',
 			'textAlign': 'center'
 		}
+    const actions =
+           <FlatButton
+               label="OK"
+               backgroundColor={
+                   UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
+               labelStyle={{ color: '#fff' }}
+               onTouchTap={this.handleClose}
+           />;
 		return(
 			<div>
 				<div>
@@ -248,9 +291,20 @@ class ResetPassword extends Component{
 							</Link>
 						</div>
 					</Paper>
+          {this.state.msg && (
+							<div><Dialog
+											actions={actions}
+											modal={false}
+											open={this.state.showDialog}
+											onRequestClose={this.handleClose} >
+									 	{this.state.msg}
+										</Dialog>
+							</div>
+          )}
 				</div>
 			</div>
 		);
 	}
 }
 export default addUrlProps({ urlPropsQueryConfig })(ResetPassword);
+ResetPassword.propTypes={history: PropTypes.object}
