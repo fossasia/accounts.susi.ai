@@ -78,11 +78,12 @@ class ResetPassword extends Component{
         success: function (response) {
           let state = this.state
           state.msg = response.message
+          state.success = true
           this.setState(state)
         }.bind(this),
         error: function (errorThrown) {
           let state = this.state
-          state.msg = errorThrown.message
+          state.msg = 'Invalid token!'
           state.showDialog = true
           this.setState(state)
         }.bind(this)
@@ -230,7 +231,7 @@ class ResetPassword extends Component{
 						<form onSubmit={this.handleSubmit}>
               <div className="email">
               <TextField
-                disabled={true}
+                disabled={!this.state.success}
                 style={{width:350}}
                 value='no token specified'/>
               </div>
@@ -238,6 +239,7 @@ class ResetPassword extends Component{
 								<PasswordField
 									name="newPassword"
 									floatingLabelText="New Password"
+                  disabled={!this.state.success}
 									errorText={this.emailErrorMessage}
 									style={{width:350}}
 									onChange={this.handleChange} />
@@ -245,7 +247,7 @@ class ResetPassword extends Component{
 							<div>
 								<PasswordField
 									name="confirmPassword"
-                  disabled={true}
+                  disabled={!this.state.success}
 									floatingLabelText="Confirm Password"
 									errorText={this.emailErrorMessage}
 									style={{width:350}}
