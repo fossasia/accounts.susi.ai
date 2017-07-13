@@ -1,5 +1,5 @@
 {
-  "name": "chat.susi.ai",
+  "name": "accounts.susi.ai",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -34,6 +34,7 @@
     "react-slick": "^0.14.11",
     "react-tap-event-plugin": "^2.0.1",
     "react-text-highlight": "^0.2.0",
+    "react-toolbox": "^2.0.0-beta.12",
     "react-url-query": "^1.1.4",
     "surge": "^0.19.0",
     "universal-cookie": "^2.0.8"
