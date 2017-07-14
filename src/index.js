@@ -3,6 +3,7 @@ import Logout from './components/Auth/Logout.react';
 import LoggedIn from './components/Auth/LoggedIn/LoggedIn.react'
 import ChangePassword from
 './components/Auth/ChangePassword/ChangePassword.react';
+import ResetPassword from './components/Auth/ResetPassword/ResetPassword.react'
 import Login from './components/Auth/Login/Login.react'
 import ForgotPassword from
 	'./components/Auth/ForgotPassword/ForgotPassword.react';
@@ -46,6 +47,7 @@ const App = () => (
 				<Route exact path="/changepassword" component={ChangePassword} />
 				<Route exact path="/signup" component={SignUp} />
 				<Route exact path="/logout" component={Logout} />
+				<Route exact path="/resetpass" component={ResetPassword} />
 				<Route exact path="/forgotpwd" component={ForgotPassword} />
 				<Route exact path="*" component={NotFound} />
 				</Switch>

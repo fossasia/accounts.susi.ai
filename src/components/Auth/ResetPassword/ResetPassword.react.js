@@ -2,79 +2,157 @@ import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-// import $ from 'jquery';
 import './ResetPassword.css';
 import AppBar from 'material-ui/AppBar';
+import $ from 'jquery';
+import { addUrlProps, UrlQueryParamTypes } from 'react-url-query';
 import PasswordField from 'material-ui-password-field';
-import { Link } from 'react-router-dom';
-// import Dialog from 'material-ui/Dialog';
-// import FlatButton from 'material-ui/FlatButton';
-// import PropTypes from 'prop-types';
- import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import Cookies from 'universal-cookie'
+import PropTypes from 'prop-types';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 // import Login from '../Login/Login.react';
 
-export default class ResetPassword extends Component{
+const urlPropsQueryConfig = {
+  token: { type: UrlQueryParamTypes.string },
+};
+
+const cookies = new Cookies();
+
+class ResetPassword extends Component{
+  static propTypes = {
+    // URL props are automatically decoded and passed in based on the config
+    token: PropTypes.string,
+    // change handlers are automatically generated when given a config.
+    // By default they update that single query parameter and maintain existing
+    // values in the other parameters.
+    onChangeToken: PropTypes.func,
+  }
+
+  static defaultProps = {
+    token: '',
+  }
 	constructor(props){
 		super(props);
 
 		this.state={
 			email: '',
-			msg: '',
-			currentPassword:'',
+			msg: 'no token specified',
 			newPassword:'',
 			confirmPassword:'',
 			success: false,
-			serverUrl: '',
+      		showDialog: false,
 			checked:false,
-			serverFieldError: false,
-			emailError: true,
-			validEmail:true,
+      		newPasswordError: true,
+			confirmPasswordError: true,
 			validForm:false
 		};
+    this.newPasswordErrorMessage = '';
+    this.confirmPasswordErrorMessage = '';
 	}
+
+  componentDidMount() {
+    const {
+      token
+    } = this.props;
+    console.log(token)
+    let BASE_URL = 'http://api.susi.ai';
+    let resetPasswordEndPoint = BASE_URL +
+    '/aaa/recoverpassword.json?getParameters=true&' +
+    'token=' + token;
+    $.ajax({
+        url: resetPasswordEndPoint,
+        dataType: 'jsonp',
+        jsonpCallback: 'p',
+        jsonp: 'callback',
+        crossDomain: true,
+        success: function (response) {
+          cookies.set('resetPassword', token, { path: '/', maxAge: 7*24*60*60 });
+          // console.log(response)
+          let state = this.state
+          state.msg = response.message
+          state.success = true
+          this.setState(state)
+        }.bind(this),
+        error: function (errorThrown) {
+          let state = this.state
+          state.msg = 'Invalid token!'
+          state.showDialog = true
+          this.setState(state)
+        }.bind(this)
+    })
+  }
+
 	handleSubmit = (event) => {
 		event.preventDefault();
+    	console.log('test');
+    	var newPassword = this.state.newPassword.trim();
+    	console.log(newPassword);
+
+    let BASE_URL = 'http://api.susi.ai';
+		if(!newPassword) {return this.state.isFilled}
+		var resetToken = '';
+		if(cookies.get('resetPassword')) {
+			resetToken = cookies.get('resetPassword')
+		}
+		let resetPasswordEndPoint =
+			BASE_URL+'/aaa/resetpassword.json?token=' + resetToken
+			 + '&newpass=' + newPassword;
+			 console.log(resetPasswordEndPoint);
+			 if(!this.state.confirmPasswordError && !this.state.newPasswordError)
+			 {
+				 $.ajax({
+					 url:resetPasswordEndPoint,
+					 dataType:'jsonp',
+					 jsonpCallback:'p',
+					 crossDomain:true,
+					 success: function (response) {
+						 let state = this.state;
+						 state.success = true;
+						 let msg = response.message
+						 state.msg = msg;
+						 state.showDialog = true;
+	 					 this.setState(state);
+						 console.log(response.message);
+					 }.bind(this),
+					 error: function (errorThrown) {
+						 let msg = 'Failed' + errorThrown.message;
+						 let state = this.state;
+						 state.msg = msg;
+						 state.showDialog = true;
+						 this.setState(state);
+						 console.log(this.state);
+					 }.bind(this)
+				 });
+			 }
 	}
+
+  handleClose = (event) => {
+  		this.setState({showDialog: false})
+		this.props.history.push('/')
+  }
 
 	handleChange = (event) => {
 			let password;
 			let confirmPassword;
-			let serverUrl;
 			let state = this.state
-			if (event.target.name === 'password') {
+			if (event.target.name === 'newPassword') {
 					password = event.target.value;
 					let validPassword = password.length >= 6;
-					state.passwordValue = password;
-					state.passwordError = !(password && validPassword);
+					state.newPassword = password;
+					state.newPasswordError = !(password && validPassword);
 			}
 			else if (event.target.name === 'confirmPassword') {
-					password = this.state.passwordValue;
+					password = this.state.newPassword;
 					confirmPassword = event.target.value;
 					let validPassword = confirmPassword === password;
-					state.confirmPasswordValue = confirmPassword;
-					state.passwordConfirmError = !(validPassword && confirmPassword);
-			}
-			else if (event.target.value === 'customServer') {
-					state.checked = true;
-					state.serverFieldError = true;
-			}
-			else if (event.target.value === 'standardServer') {
-					state.checked = false;
-					state.serverFieldError = false;
-			}
-			else if (event.target.name === 'serverUrl'){
-					serverUrl = event.target.value;
-					let validServerUrl =
-/(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:~+#-]*[\w@?^=%&amp;~+#-])?/i
-					.test(serverUrl);
-					state.serverUrl = serverUrl;
-					state.serverFieldError = !(serverUrl && validServerUrl);
+					state.confirmPassword = confirmPassword;
+					state.confirmPasswordError = !(validPassword && confirmPassword);
 			}
 
-			if (!this.state.emailError
-					&& !this.state.passwordError
-					&& !this.state.passwordConfirmError) {
+			if (!this.state.newPasswordError
+					&& !this.state.confirmPasswordError) {
 					state.validForm = true;
 			}
 			else {
@@ -83,34 +161,24 @@ export default class ResetPassword extends Component{
 
 			this.setState(state);
 
-			if (this.state.passwordError) {
-					this.emailErrorMessage = '';
-					this.passwordErrorMessage
+			if (this.state.newPasswordError) {
+					this.newPasswordErrorMessage
 							= 'Minimum 6 characters required';
-					this.passwordConfirmErrorMessage = '';
+					this.confirmPasswordErrorMessage = '';
 
 			}
-			else if (this.state.passwordConfirmError) {
-					this.emailErrorMessage = '';
-					this.passwordErrorMessage = '';
-					this.passwordConfirmErrorMessage = 'Check your password again';
+			else if (this.state.confirmPasswordErrorMessage) {
+					this.newPasswordErrorMessage = '';
+					this.confirmPasswordErrorMessage = 'Check your password again';
 			}
 			else {
-					this.emailErrorMessage = '';
-					this.passwordErrorMessage = '';
-					this.passwordConfirmErrorMessage = '';
+					this.newPasswordErrorMessage = '';
+					this.confirmPasswordErrorMessage = '';
 			}
 
-			if (this.state.serverFieldError) {
-					this.customServerMessage = 'Enter a valid URL';
-			}
-			else{
-					this.customServerMessage = '';
-			}
 
-			if(this.state.passwordError||
-			this.state.passwordConfirmError||
-			this.state.serverFieldError){
+			if(this.state.newPasswordError||
+			this.state.confirmPasswordErrorMessage){
 					this.setState({validForm: false});
 			}
 			else{
@@ -119,27 +187,22 @@ export default class ResetPassword extends Component{
 	}
 
 	render(){
-		const serverURL = <TextField name="serverUrl"
-												onChange={this.handleChange}
-												value={this.state.serverUrl}
-												errorText={this.customServerMessage}
-												floatingLabelText="Custom URL" />;
 
-		const hidden = this.state.checked ? serverURL : '';
-
-		const radioButtonStyles = {
-			block: {
-				maxWidth: 250,
-			},
-			radioButton: {
-				marginBottom: 16,
-			},
-		};
+    const { token } = this.props;
+    console.log(token)
 		const styles = {
 			'margin': '60px auto',
 			'padding': '10px',
 			'textAlign': 'center'
 		}
+    const actions =
+           <FlatButton
+               label="OK"
+               backgroundColor={
+                   UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
+               labelStyle={{ color: '#fff' }}
+               onTouchTap={this.handleClose}
+           />;
 		return(
 			<div>
 				<div>
@@ -156,10 +219,17 @@ export default class ResetPassword extends Component{
 						<h1>Reset Password</h1>
 						<br/>
 						<form onSubmit={this.handleSubmit}>
+              				<div className="email">
+              					<TextField
+				                disabled={!this.state.success}
+				                style={{width:350}}
+				                value={this.state.msg}/>
+			              	</div>
 							<div>
 								<PasswordField
 									name="newPassword"
 									floatingLabelText="New Password"
+                  					disabled={!this.state.success}
 									errorText={this.emailErrorMessage}
 									style={{width:350}}
 									onChange={this.handleChange} />
@@ -167,53 +237,44 @@ export default class ResetPassword extends Component{
 							<div>
 								<PasswordField
 									name="confirmPassword"
+                  					disabled={!this.state.success}
 									floatingLabelText="Confirm Password"
 									errorText={this.emailErrorMessage}
 									style={{width:350}}
 									onChange={this.handleChange} />
 							</div>
-						</form>
 						<br/>
 						<div>
-							<RadioButtonGroup style={{display: 'flex',
-								marginTop: '10px',
-								maxWidth:'200px',
-								flexWrap: 'wrap',
-								margin: 'auto'}}
-								name="server" onChange={this.handleChange}
-								defaultSelected="standardServer">
-								<RadioButton
-									value="customServer"
-									label="Custom Server"
-									labelPosition="left"
-									style={radioButtonStyles.radioButton}
-								/>
-								<RadioButton
-									 value="standardServer"
-									 label="Standard Server"
-									 labelPosition="left"
-									 style={radioButtonStyles.radioButton}
-								/>
-							</RadioButtonGroup>
-						</div>
-						<div>
-							{hidden}
-						</div>
-						<div>
-							<Link to={'/'}>
 								<RaisedButton
 									label="submit"
+                  					type='submit'
 									backgroundColor={
 										UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
 									labelColor="#fff"
 									keyboardFocused={true}
 								/>
 								&nbsp;
-							</Link>
 						</div>
+						</form>
 					</Paper>
+          			{this.state.msg && (
+							<div><Dialog
+									actions={actions}
+									modal={false}
+									open={this.state.showDialog}
+									onRequestClose={this.handleClose} >
+							 	{this.state.msg}
+								</Dialog>
+							</div>
+          			)}
 				</div>
 			</div>
 		);
 	}
+}
+
+export default addUrlProps({ urlPropsQueryConfig })(ResetPassword);
+
+ResetPassword.propTypes={
+	history: PropTypes.object
 }
