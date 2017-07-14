@@ -8,6 +8,7 @@ import PasswordField from 'material-ui-password-field'
 import $ from 'jquery';
 import PropTypes  from 'prop-types';
 import AppBar from 'material-ui/AppBar';
+import { addUrlProps, UrlQueryParamTypes } from 'react-url-query';
 import Cookies from 'universal-cookie';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
@@ -15,7 +16,23 @@ import { slide as Menu } from 'react-burger-menu';
 /* eslint-disable */
 const cookies = new Cookies();
 
+const urlPropsQueryConfig = {
+  token: { type: UrlQueryParamTypes.string },
+};
+
 class Login extends Component {
+	static propTypes = {
+    // URL props are automatically decoded and passed in based on the config
+    token: PropTypes.string,
+    // change handlers are automatically generated when given a config.
+    // By default they update that single query parameter and maintain existing
+    // values in the other parameters.
+    onChangeToken: PropTypes.func,
+  }
+
+  static defaultProps = {
+    token: "null",
+  }
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -36,6 +53,13 @@ class Login extends Component {
 	}
 
 	componentDidMount() {
+		const {
+      token
+    } = this.props;
+		console.log(token)
+		if(token !== "null") {
+			this.props.history.push('/resetpass/?token='+token);
+		}
 		if(cookies.get('loggedIn')) {
 			this.props.history.push('/userhome', { showLogin: false });
 		}
@@ -188,6 +212,7 @@ class Login extends Component {
 	};
 
 	render() {
+		const { token } = this.props;
 		const serverURL = <TextField name="serverUrl"
 							onChange={this.handleChange}
 							errorText={this.customServerMessage}
@@ -340,4 +365,5 @@ Login.propTypes = {
 };
 
 
-export default Login;
+// export default addUrlProps(Login)({ urlPropsQueryConfig });
+export default addUrlProps({ urlPropsQueryConfig })(Login);
