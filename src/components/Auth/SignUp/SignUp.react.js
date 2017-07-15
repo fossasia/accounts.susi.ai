@@ -6,7 +6,6 @@ import $ from 'jquery';
 import './SignUp.css';
 import AppBar from 'material-ui/AppBar';
 import PasswordField from 'material-ui-password-field';
-import { Link } from 'react-router-dom';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import PropTypes from 'prop-types';
@@ -14,7 +13,37 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 import Login from '../Login/Login.react';
 import { slide as Menu } from 'react-burger-menu';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/IconMenu';
+import { Link } from 'react-router-dom';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 /* eslint-disable */
+const ListMenu = () => (
+					<IconMenu className='IconMenu'
+											tooltip="Options"
+											iconButtonElement={
+													<IconButton
+													className='menu-icon'
+													iconStyle={{ fill : 'white',}}>
+															<MoreVertIcon /></IconButton>
+											}
+											targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+											anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+										 >
+                     <MenuItem primaryText="Chat With Susi"
+ 										href="http://chat.susi.ai" />
+										 <MenuItem primaryText="Forgot Password"
+													 containerElement={<Link to="/forgotpwd" />} />
+										<MenuItem primaryText="Log In"
+										containerElement={<Link to="/" />} />
+
+									</IconMenu>
+
+);
+
+
+
 export default class SignUp extends Component {
     constructor(props) {
         super(props);
@@ -269,6 +298,7 @@ export default class SignUp extends Component {
                                   style={{ backgroundColor : '#607D8B',
                                        height: '46px'}}
                                   titleStyle={{height:'46px'}}
+                                  iconElementRight={<ListMenu />}
 
                               />
                   </div>

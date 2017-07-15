@@ -26,6 +26,13 @@
 	position: relative;
 }
 
+.menu-icon{
+	top: -5px;
+  height: 24px;
+  width: 24px;
+  transform-origin: 50% 50% 0px;
+}
+
 
 .bm-burger-button {
 	position: absolute;

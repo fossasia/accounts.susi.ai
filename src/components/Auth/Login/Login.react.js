@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/IconMenu';
 import { Link } from 'react-router-dom';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import './Login.css';
 import PasswordField from 'material-ui-password-field'
 import $ from 'jquery';
@@ -14,6 +18,28 @@ import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 import { slide as Menu } from 'react-burger-menu';
 /* eslint-disable */
 const cookies = new Cookies();
+
+const ListMenu = () => (
+					<IconMenu className='IconMenu'
+											tooltip="Options"
+											iconButtonElement={
+													<IconButton
+													className='menu-icon'
+													iconStyle={{ fill : 'white',}}>
+															<MoreVertIcon /></IconButton>
+											}
+											targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+											anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+										 >
+										 <MenuItem primaryText="Chat With Susi"
+ 										href="http://chat.susi.ai" />
+										 <MenuItem primaryText="Forgot Password"
+													 containerElement={<Link to="/forgotpwd" />} />
+										<MenuItem primaryText="Sign Up"
+										containerElement={<Link to="/signup" />} />
+									</IconMenu>
+
+);
 
 class Login extends Component {
 	constructor(props) {
@@ -217,6 +243,7 @@ class Login extends Component {
 				<div className="app-bar-div">
                     	<AppBar
 											iconElementLeft= {<iconButton></iconButton>}
+											iconElementRight={<ListMenu />}
                         	className="app-bar"
                         	style={{ backgroundColor : '#607D8B',
                         	     height: '46px'}}
