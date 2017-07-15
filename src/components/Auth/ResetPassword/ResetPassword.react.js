@@ -42,9 +42,9 @@ class ResetPassword extends Component{
 			newPassword:'',
 			confirmPassword:'',
 			success: false,
-      		showDialog: false,
+      showDialog: false,
 			checked:false,
-      		newPasswordError: true,
+      newPasswordError: true,
 			confirmPasswordError: true,
 			validForm:false
 		};
@@ -134,19 +134,19 @@ class ResetPassword extends Component{
   }
 
 	handleChange = (event) => {
-			let password;
+			let newPassword;
 			let confirmPassword;
 			let state = this.state
 			if (event.target.name === 'newPassword') {
-					password = event.target.value;
-					let validPassword = password.length >= 6;
-					state.newPassword = password;
-					state.newPasswordError = !(password && validPassword);
+					newPassword = event.target.value;
+					let validPassword = newPassword.length >= 6;
+					state.newPassword = newPassword;
+					state.newPasswordError = !(newPassword && validPassword);
 			}
 			else if (event.target.name === 'confirmPassword') {
-					password = this.state.newPassword;
+					newPassword = this.state.newPassword;
 					confirmPassword = event.target.value;
-					let validPassword = confirmPassword === password;
+					let validPassword = newPassword === confirmPassword;
 					state.confirmPassword = confirmPassword;
 					state.confirmPasswordError = !(validPassword && confirmPassword);
 			}
@@ -161,15 +161,16 @@ class ResetPassword extends Component{
 
 			this.setState(state);
 
-			if (this.state.newPasswordError) {
+			if (this.state.newPasswordError && event.target.name === 'newPassword') {
 					this.newPasswordErrorMessage
 							= 'Minimum 6 characters required';
 					this.confirmPasswordErrorMessage = '';
 
 			}
-			else if (this.state.confirmPasswordErrorMessage) {
+			else if (this.state.confirmPasswordError &&
+        event.target.name === 'confirmPassword') {
 					this.newPasswordErrorMessage = '';
-					this.confirmPasswordErrorMessage = 'Check your password again';
+					this.confirmPasswordErrorMessage = 'Password did not match';
 			}
 			else {
 					this.newPasswordErrorMessage = '';
@@ -230,7 +231,7 @@ class ResetPassword extends Component{
 									name="newPassword"
 									floatingLabelText="New Password"
                   					disabled={!this.state.success}
-									errorText={this.emailErrorMessage}
+									errorText={this.newPasswordErrorMessage}
 									style={{width:350}}
 									onChange={this.handleChange} />
 							</div>
@@ -239,7 +240,7 @@ class ResetPassword extends Component{
 									name="confirmPassword"
                   					disabled={!this.state.success}
 									floatingLabelText="Confirm Password"
-									errorText={this.emailErrorMessage}
+									errorText={this.confirmPasswordErrorMessage}
 									style={{width:350}}
 									onChange={this.handleChange} />
 							</div>
