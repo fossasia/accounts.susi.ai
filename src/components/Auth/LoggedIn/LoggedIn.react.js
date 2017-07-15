@@ -24,7 +24,7 @@ const ListMenu = () => (
                      <MenuItem primaryText="Change Password"
                            containerElement={<Link to="/changepassword" />} />
                     <MenuItem primaryText="Logout"
-                    containerElement={<Link to="/" />} />
+                    containerElement={<Link to="/logout" />} />
 
                   </IconMenu>
 
