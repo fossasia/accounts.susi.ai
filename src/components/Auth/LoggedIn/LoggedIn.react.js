@@ -25,13 +25,9 @@ const ListMenu = () => (
                            containerElement={<Link to="/changepassword" />} />
                     <MenuItem primaryText="Logout"
                     containerElement={<Link to="/logout" />} />
-
                   </IconMenu>
 
-
 );
-
-
 class LoggedIn extends Component {
 
 

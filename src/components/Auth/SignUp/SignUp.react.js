@@ -37,12 +37,9 @@ const ListMenu = () => (
 													 containerElement={<Link to="/forgotpwd" />} />
 										<MenuItem primaryText="Log In"
 										containerElement={<Link to="/" />} />
-
 									</IconMenu>
 
 );
-
-
 
 export default class SignUp extends Component {
     constructor(props) {

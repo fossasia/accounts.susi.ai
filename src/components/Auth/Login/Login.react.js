@@ -18,7 +18,6 @@ import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 import { slide as Menu } from 'react-burger-menu';
 /* eslint-disable */
 const cookies = new Cookies();
-
 const ListMenu = () => (
 					<IconMenu className='IconMenu'
 											tooltip="Options"
@@ -40,7 +39,6 @@ const ListMenu = () => (
 									</IconMenu>
 
 );
-
 class Login extends Component {
 	constructor(props) {
 		super(props);
