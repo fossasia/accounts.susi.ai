@@ -10,7 +10,6 @@ import PropTypes  from 'prop-types';
 import AppBar from 'material-ui/AppBar';
 import { addUrlProps, UrlQueryParamTypes } from 'react-url-query';
 import Cookies from 'universal-cookie';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 import { slide as Menu } from 'react-burger-menu';
 /* eslint-disable */
@@ -38,18 +37,14 @@ class Login extends Component {
 		this.state = {
 			email: '',
 			password: '',
-			serverUrl: '',
 			isFilled: false,
 			success: false,
 			validForm: false,
 			emailError: true,
-            passwordError: true,
-            serverFieldError: false,
             checked: false
 		};
 		this.emailErrorMessage = '';
         this.passwordErrorMessage = '';
-        this.customServerMessage = '';
 	}
 
 	componentDidMount() {
@@ -71,17 +66,7 @@ class Login extends Component {
 		var email = this.state.email.trim();
 		var password = this.state.password.trim();
 
-		let defaults = UserPreferencesStore.getPreferences();
-		let BASE_URL = defaults.Server;
-
-		let serverUrl = this.state.serverUrl;
-		if(serverUrl.slice(-1) === '/'){
-			serverUrl = serverUrl.slice(0,-1);
-		}
-		if(serverUrl !== ''){
-			BASE_URL = serverUrl;
-		}
-		console.log(BASE_URL);
+		let BASE_URL = 'http://api.susi.ai';
 
 		if (!email || !password) { return this.state.isFilled; }
 
@@ -127,7 +112,6 @@ class Login extends Component {
 	handleChange = (event) => {
 		let email;
         let password;
-        let serverUrl;
         let state = this.state;
 
         if (event.target.name === 'email') {
@@ -142,22 +126,6 @@ class Login extends Component {
             let validPassword = password.length >= 6;
             state.password = password;
             state.passwordError = !(password && validPassword);
-        }
-        else if (event.target.value === 'customServer') {
-        	state.checked = true;
-        	state.serverFieldError = true;
-        }
-		else if (event.target.value === 'standardServer') {
-			state.checked = false;
-			state.serverFieldError = false;
-		}
-		else if (event.target.name === 'serverUrl'){
-        	serverUrl = event.target.value;
-        	let validServerUrl =
-/(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:~+#-]*[\w@?^=%&amp;~+#-])?/i
-        	.test(serverUrl);
-			state.serverUrl = serverUrl;
-			state.serverFieldError = !(serverUrl && validServerUrl);
         }
 
 		if (this.state.emailError) {
@@ -174,14 +142,7 @@ class Login extends Component {
         else{
         	this.passwordErrorMessage='';
         }
-        if (this.state.serverFieldError) {
-        	this.customServerMessage
-        	= 'Enter a valid URL';
-        }
-        else{
-        	this.customServerMessage = '';
-        }
-	    if (!state.emailError && !state.passwordError && !state.serverFieldError)
+	    if (!state.emailError && !state.passwordError)
 	    {
 	    	state.validForm = true;
 	    }
@@ -213,11 +174,7 @@ class Login extends Component {
 
 	render() {
 		const { token } = this.props;
-		const serverURL = <TextField name="serverUrl"
-							onChange={this.handleChange}
-							errorText={this.customServerMessage}
-							floatingLabelText="Custom URL" />;
-		const hidden = this.state.checked ? serverURL : '';
+
 
 		const styles = {
 			'margin': '60px auto',
@@ -229,14 +186,7 @@ class Login extends Component {
 			'width':'256px'
 		}
 
-		const radioButtonStyles = {
-		  block: {
-		    maxWidth: 250,
-		  },
-		  radioButton: {
-		    marginBottom: 16,
-		  },
-		};
+
 		return (
 			<div>
 				<div className="app-bar-div">
@@ -283,33 +233,6 @@ class Login extends Component {
 								onChange={this.handleChange}
 								errorText={this.passwordErrorMessage}
 								floatingLabelText='Password' />
-						</div>
-						<div>
-							<div>
-								<RadioButtonGroup style={{display: 'flex',
-							  	marginTop: '10px',
-							  	maxWidth:'200px',
-							  	flexWrap: 'wrap',
-							  	margin: 'auto'}}
-							 		name="server" onChange={this.handleChange}
-							 		defaultSelected="standardServer">
-										<RadioButton
-							 				value="customServer"
-							  			label="Custom Server"
-							  			labelPosition="left"
-							  			style={radioButtonStyles.radioButton}
-										/>
-										<RadioButton
-							 				value="standardServer"
-							  			label="Standard Server"
-							  			labelPosition="left"
-							  			style={radioButtonStyles.radioButton}
-										/>
-								</RadioButtonGroup>
-							</div>
-						</div>
-						<div>
-						{hidden}
 						</div>
 						<div>
 							<RaisedButton
