@@ -206,7 +206,7 @@ class ResetPassword extends Component{
            />;
 		return(
 			<div>
-				<div>
+				<div className="app-bar-div">
 					<AppBar
 						className="app-bar"
 						iconElementLeft={<iconButton></iconButton>}

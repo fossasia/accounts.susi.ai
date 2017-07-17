@@ -4,6 +4,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import AppBar from 'material-ui/AppBar';
 import './ForgotPassword.css';
 import $ from 'jquery';
 import PropTypes from 'prop-types'
@@ -186,77 +187,90 @@ class ForgotPassword extends Component {
 			/>;
 
 		return (
-			<div className="forgotPwdForm">
-				<Paper zDepth={1} style={styles}>
-					<h1>Forgot Password?</h1>
-					<form onSubmit={this.handleSubmit}>
-						<div>
-							<TextField
-								name="email"
-								floatingLabelText="Email"
-								errorText={this.emailErrorMessage}
-								value={this.state.email}
-								onChange={this.handleChange} />
-						</div>
-						<br/>
-						<div>
+			<div>
+				<div className="app-bar-div">
+											<AppBar
+													iconElementLeft={<iconButton></iconButton>}
+													className="app-bar"
+													style={{ backgroundColor : '#607D8B',
+														 	height: '46px'}}
+													titleStyle={{height:'46px'}}
+											/>
+				</div>
+				<div className="forgotPwdForm">
+					<Paper zDepth={1} style={styles}>
+						<h1>Forgot Password?</h1>
+						<form onSubmit={this.handleSubmit}>
 							<div>
-							<RadioButtonGroup style={{display: 'flex',
-							  marginTop: '10px',
-							  maxWidth:'200px',
-							  flexWrap: 'wrap',
-							  margin: 'auto'}}
-							 name="server" onChange={this.handleChange}
-							 defaultSelected="standardServer">
-							<RadioButton
-							       value="customServer"
-							       label="Custom Server"
-							       labelPosition="left"
-							       style={radioButtonStyles.radioButton}
-							     />
-							<RadioButton
-							       value="standardServer"
-							       label="Standard Server"
-							       labelPosition="left"
-							       style={radioButtonStyles.radioButton}
-							     />
-							</RadioButtonGroup>
+								<TextField
+									name="email"
+									floatingLabelText="Email"
+									errorText={this.emailErrorMessage}
+									value={this.state.email}
+									onChange={this.handleChange} />
 							</div>
-						</div>
-						<div>
-						{hidden}
-						</div>
-						<div>
-							<RaisedButton
-								type="submit"
-								label="Reset"
+							<br/>
+							<div>
+								<div>
+									<RadioButtonGroup style={{display: 'flex',
+										marginTop: '10px',
+										maxWidth:'200px',
+										flexWrap: 'wrap',
+										margin: 'auto'}}
+							 			name="server" onChange={this.handleChange}
+							 			defaultSelected="standardServer">
+											<RadioButton
+										 		value="customServer"
+										 		label="Custom Server"
+										 		labelPosition="left"
+										 		style={radioButtonStyles.radioButton}
+									 		/>
+											<RadioButton
+										 		value="standardServer"
+										 		label="Standard Server"
+										 		labelPosition="left"
+										 		style={radioButtonStyles.radioButton}
+									 		/>
+									</RadioButtonGroup>
+								</div>
+							</div>
+							<div>
+							{hidden}
+							</div>
+							<div>
+								<RaisedButton
+									type="submit"
+									label="Reset"
+									backgroundColor={
+										UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
+										labelColor="#fff"
+										disabled={!this.state.validForm} />
+							</div>
+						</form>
+						<br/>
+						<RaisedButton
+								label="Cancel"
 								backgroundColor={
 									UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
 								labelColor="#fff"
-								disabled={!this.state.validForm} />
-						</div>
-					</form>
-					<br/>
-					<RaisedButton
-				      label="Cancel"
-				      backgroundColor={
-				        UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
-				      labelColor="#fff"
-				      keyboardFocused={true}
-				      onTouchTap={this.handleCancel}
-				    />
-				</Paper>
-				{this.state.msg && (
-					<div><Dialog
-						actions={actions}
-						modal={false}
-						open={true}
-						onRequestClose={this.handleClose}
-					>
-						{this.state.msg}
-					</Dialog></div>
-				)
-				}
+								keyboardFocused={true}
+								onTouchTap={this.handleCancel}
+						/>
+					</Paper>
+						{
+							this.state.msg && (
+								<div>
+									<Dialog
+										actions={actions}
+										modal={false}
+										open={true}
+										onRequestClose={this.handleClose} >
+										{this.state.msg}
+									</Dialog>
+								</div>
+							)
+						}
+				</div>
 			</div>
 		);
 	};
