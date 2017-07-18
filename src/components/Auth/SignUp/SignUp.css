@@ -34,6 +34,13 @@
   -webkit-user-select: none;
 }
 
+.menu-icon{
+	top: -7px;
+  height: 24px;
+  width: 24px;
+  transform-origin: 50% 50% 0px;
+}
+
 
 .bm-burger-button {
 	position: absolute;
