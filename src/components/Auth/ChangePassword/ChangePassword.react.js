@@ -132,21 +132,21 @@ export default class ChangePassword extends Component{
 					state.validForm = false;
 			}
 			this.setState(state);
-			if (this.state.currentPasswordError) {
+			if (this.state.currentPasswordError && event.target.name === 'currentPassword') {
 					this.currentPasswordErrorMessage = 'Minimum 6 characters required';
 					this.newPasswordErrorMessage = '';
 					this.confirmPasswordErrorMessage = '';
 
 			}
-			else if (this.state.newPasswordError) {
+			else if (this.state.newPasswordError && event.target.name === 'newPassword') {
 				this.currentPasswordErrorMessage = '';
 				this.newPasswordErrorMessage = 'Minimum 6 characters required';
 				this.confirmPasswordErrorMessage = '';
 			}
-			else if(this.state.confirmPasswordError){
+			else if(this.state.confirmPasswordError && event.target.name === 'confirmPassword'){
 				this.currentPasswordErrorMessage = '';
 				this.newPasswordErrorMessage = '';
-				this.confirmPasswordErrorMessage = 'Minimum 6 characters required';
+				this.confirmPasswordErrorMessage = 'Password does not matches new Password';
 			}
 			else {
 				this.currentPasswordErrorMessage = '';
