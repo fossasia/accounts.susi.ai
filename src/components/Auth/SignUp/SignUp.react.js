@@ -9,7 +9,6 @@ import PasswordField from 'material-ui-password-field';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import PropTypes from 'prop-types';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 import Login from '../Login/Login.react';
 import { slide as Menu } from 'react-burger-menu';
@@ -57,15 +56,12 @@ export default class SignUp extends Component {
             success: false,
             open: false,
             validForm: false,
-            serverUrl: '',
             checked:false,
-            serverFieldError: false,
         };
 
         this.emailErrorMessage = '';
         this.passwordErrorMessage = '';
         this.passwordConfirmErrorMessage = '';
-        this.customServerMessage = '';
 
         if (document.cookie.split('=')[0] === 'loggedIn') {
             this.props.history.push('/');
@@ -92,9 +88,7 @@ export default class SignUp extends Component {
                 msg: '',
                 success: false,
                 validForm: false,
-                serverUrl: '',
                 checked:false,
-                serverFieldError: false,
                 open: false
             });
         }
@@ -104,7 +98,6 @@ export default class SignUp extends Component {
         let email;
         let password;
         let confirmPassword;
-        let serverUrl;
         let state = this.state
         if (event.target.name === 'email') {
             email = event.target.value.trim();
@@ -127,22 +120,7 @@ export default class SignUp extends Component {
             state.confirmPasswordValue = confirmPassword;
             state.passwordConfirmError = !(validPassword && confirmPassword);
         }
-        else if (event.target.value === 'customServer') {
-            state.checked = true;
-            state.serverFieldError = true;
-        }
-        else if (event.target.value === 'standardServer') {
-            state.checked = false;
-            state.serverFieldError = false;
-        }
-        else if (event.target.name === 'serverUrl'){
-            serverUrl = event.target.value;
-            let validServerUrl =
-/(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:~+#-]*[\w@?^=%&amp;~+#-])?/i
-            .test(serverUrl);
-            state.serverUrl = serverUrl;
-            state.serverFieldError = !(serverUrl && validServerUrl);
-        }
+
 
         if (!this.state.emailError
             && !this.state.passwordError
@@ -176,17 +154,10 @@ export default class SignUp extends Component {
             this.passwordConfirmErrorMessage = '';
         }
 
-        if (this.state.serverFieldError) {
-            this.customServerMessage = 'Enter a valid URL';
-        }
-        else{
-            this.customServerMessage = '';
-        }
 
         if(this.state.emailError||
         this.state.passwordError||
-        this.state.passwordConfirmError||
-        this.state.serverFieldError){
+        this.state.passwordConfirmError){
             this.setState({validForm: false});
         }
         else{
@@ -197,23 +168,12 @@ export default class SignUp extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
 
-        let defaults = UserPreferencesStore.getPreferences();
-        let BASE_URL = defaults.Server;
-
-        let serverUrl = this.state.serverUrl;
-        if(serverUrl.slice(-1) === '/'){
-            serverUrl = serverUrl.slice(0,-1);
-        }
-        if(serverUrl !== ''){
-            BASE_URL = serverUrl;
-        }
-        console.log(BASE_URL);
+        let BASE_URL = 'http://api.susi.ai'
         let signupEndPoint =
             BASE_URL+'/aaa/signup.json?signup=' + this.state.email +
             '&password=' + this.state.passwordValue;
 
-        if (!this.state.emailError && !this.state.passwordConfirmError
-            && !this.state.serverFieldError) {
+        if (!this.state.emailError && !this.state.passwordConfirmError) {
             $.ajax({
                 url: signupEndPoint,
                 dataType: 'jsonp',
@@ -247,22 +207,6 @@ export default class SignUp extends Component {
 
     render() {
 
-        const serverURL = <TextField name="serverUrl"
-                            onChange={this.handleChange}
-                            value={this.state.serverUrl}
-                            errorText={this.customServerMessage}
-                            floatingLabelText="Custom URL" />;
-
-        const hidden = this.state.checked ? serverURL : '';
-
-        const radioButtonStyles = {
-          block: {
-            maxWidth: 250,
-          },
-          radioButton: {
-            marginBottom: 16,
-          },
-        };
 
         const styles = {
             'margin': '60px auto',
@@ -342,33 +286,6 @@ export default class SignUp extends Component {
                                 onChange={this.handleChange}
                                 errorText={this.passwordConfirmErrorMessage}
                                 floatingLabelText="Confirm Password" />
-                        </div>
-                        <div>
-                            <div>
-                            <RadioButtonGroup style={{display: 'flex',
-                              marginTop: '10px',
-                              maxWidth:'200px',
-                              flexWrap: 'wrap',
-                              margin: 'auto'}}
-                             name="server" onChange={this.handleChange}
-                             defaultSelected="standardServer">
-                            <RadioButton
-                                   value="customServer"
-                                   label="Custom Server"
-                                   labelPosition="left"
-                                   style={radioButtonStyles.radioButton}
-                                 />
-                            <RadioButton
-                                   value="standardServer"
-                                   label="Standard Server"
-                                   labelPosition="left"
-                                   style={radioButtonStyles.radioButton}
-                                 />
-                            </RadioButtonGroup>
-                            </div>
-                        </div>
-                        <div>
-                        {hidden}
                         </div>
                         <div>
                             <RaisedButton
