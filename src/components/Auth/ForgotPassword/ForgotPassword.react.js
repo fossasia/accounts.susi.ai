@@ -61,7 +61,7 @@ class ForgotPassword extends Component {
 			state.validEmail = validEmail;
 			state.emailError = !(validEmail && email);
 		}
-		
+
         if(state.emailError){
         	if (!state.email) {
 				this.emailErrorMessage = 'This Field Is Required';
@@ -74,7 +74,6 @@ class ForgotPassword extends Component {
 			this.emailErrorMessage = '';
 		}
 
-        
         if (!state.emailError) {
 			state.validForm = true;
 		}
@@ -118,7 +117,7 @@ class ForgotPassword extends Component {
 
 	render() {
 
-		
+
 		const styles = {
 			'margin': '60px auto',
 			'padding': '10px',
