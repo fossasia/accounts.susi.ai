@@ -8,7 +8,6 @@ import AppBar from 'material-ui/AppBar';
 import './ForgotPassword.css';
 import $ from 'jquery';
 import PropTypes from 'prop-types'
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 
 class ForgotPassword extends Component {
@@ -20,16 +19,13 @@ class ForgotPassword extends Component {
 			email: '',
 			msg: '',
 			success: false,
-			serverUrl: '',
 			checked:false,
-			serverFieldError: false,
 			emailError: true,
 			validEmail:true,
 			validForm:false
 		};
 
 		this.emailErrorMessage = '';
-		this.customServerMessage = '';
 	}
 
 	handleCancel = () => {
@@ -47,9 +43,7 @@ class ForgotPassword extends Component {
 				email: '',
 				msg: '',
 				success: false,
-				serverUrl: '',
 				checked:false,
-				serverFieldError: false,
 				emailError: true,
 				validEmail:false,
 				validForm: false,
@@ -59,7 +53,6 @@ class ForgotPassword extends Component {
 
 	handleChange = (event) => {
 		let email;
-        let serverUrl;
         let state = this.state;
 		if (event.target.name === 'email') {
 			email = event.target.value.trim();
@@ -68,22 +61,6 @@ class ForgotPassword extends Component {
 			state.validEmail = validEmail;
 			state.emailError = !(validEmail && email);
 		}
-		else if (event.target.value === 'customServer') {
-        	state.checked = true;
-        	state.serverFieldError = true;
-        }
-		else if (event.target.value === 'standardServer') {
-			state.checked = false;
-			state.serverFieldError = false;
-		}
-		else if (event.target.name === 'serverUrl'){
-        	serverUrl = event.target.value;
-        	let validServerUrl =
-/(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:~+#-]*[\w@?^=%&amp;~+#-])?/i
-        	.test(serverUrl);
-			state.serverUrl = serverUrl;
-			state.serverFieldError = !(serverUrl && validServerUrl);
-        }
 
         if(state.emailError){
         	if (!state.email) {
@@ -97,15 +74,7 @@ class ForgotPassword extends Component {
 			this.emailErrorMessage = '';
 		}
 
-        if (state.serverFieldError) {
-        	this.customServerMessage
-        	= 'Enter a valid URL';
-        }
-        else{
-        	this.customServerMessage = '';
-        }
-
-        if (!state.emailError && !state.serverFieldError) {
+        if (!state.emailError) {
 			state.validForm = true;
 		}
 		else {
@@ -120,17 +89,8 @@ class ForgotPassword extends Component {
 		let email = this.state.email.trim();
 		let validEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
 
-		let defaults = UserPreferencesStore.getPreferences();
-		let BASE_URL = defaults.Server;
+		let BASE_URL = 'http://api.susi.ai';
 
-		let serverUrl = this.state.serverUrl;
-		if(serverUrl.slice(-1) === '/'){
-            serverUrl = serverUrl.slice(0,-1);
-        }
-		if(serverUrl !== ''){
-			BASE_URL = serverUrl;
-		}
-		console.log(BASE_URL);
 		if (email && validEmail) {
 			$.ajax({
 				url: BASE_URL+'/aaa/recoverpassword.json?forgotemail=' + email,
@@ -157,20 +117,6 @@ class ForgotPassword extends Component {
 
 	render() {
 
-		const serverURL = <TextField name="serverUrl"
-							onChange={this.handleChange}
-							errorText={this.customServerMessage}
-							floatingLabelText="Custom URL" />;
-		const hidden = this.state.checked ? serverURL : '';
-
-		const radioButtonStyles = {
-		  block: {
-		    maxWidth: 250,
-		  },
-		  radioButton: {
-		    marginBottom: 16,
-		  },
-		};
 
 		const styles = {
 			'margin': '60px auto',
@@ -208,34 +154,6 @@ class ForgotPassword extends Component {
 									errorText={this.emailErrorMessage}
 									value={this.state.email}
 									onChange={this.handleChange} />
-							</div>
-							<br/>
-							<div>
-								<div>
-									<RadioButtonGroup style={{display: 'flex',
-										marginTop: '10px',
-										maxWidth:'200px',
-										flexWrap: 'wrap',
-										margin: 'auto'}}
-							 			name="server" onChange={this.handleChange}
-							 			defaultSelected="standardServer">
-											<RadioButton
-										 		value="customServer"
-										 		label="Custom Server"
-										 		labelPosition="left"
-										 		style={radioButtonStyles.radioButton}
-									 		/>
-											<RadioButton
-										 		value="standardServer"
-										 		label="Standard Server"
-										 		labelPosition="left"
-										 		style={radioButtonStyles.radioButton}
-									 		/>
-									</RadioButtonGroup>
-								</div>
-							</div>
-							<div>
-							{hidden}
 							</div>
 							<div>
 								<RaisedButton
