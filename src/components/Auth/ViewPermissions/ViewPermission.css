@@ -1,0 +1,34 @@
+.app-bar{
+  background-image: url('../../images/susi-white.svg');
+  background-size: 100px;
+  background-repeat: no-repeat;
+  background-position: center;
+	position: absolute;
+}
+.app-bar-div{
+	z-index: 0;
+	position: relative;
+}
+.permission{
+	padding: 10px;
+	width: 400px;
+	margin: 0 auto;
+}
+.permissions h4 {
+  display: block;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin: 0 0 10px 0;
+  text-decoration: none;
+  color: black;
+	border-collapse: separate;
+}
+.permissions h4:hover {
+  background: #eee;
+}
+.permissions h4 span {
+  margin: 0 2px;
+}
+.permissions h4 span:first-child {
+  font-weight: 900;
+}
