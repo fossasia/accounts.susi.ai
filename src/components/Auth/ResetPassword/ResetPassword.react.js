@@ -98,7 +98,7 @@ class ResetPassword extends Component{
 		}
 		let resetPasswordEndPoint =
 			BASE_URL+'/aaa/resetpassword.json?token=' + resetToken
-			 + '&newpass=' + newPassword;
+			 + '&newpass=' + encodeURIComponent(newPassword);
 			 console.log(resetPasswordEndPoint);
 			 if(!this.state.confirmPasswordError && !this.state.newPasswordError)
 			 {
@@ -107,6 +107,10 @@ class ResetPassword extends Component{
 					 dataType:'jsonp',
 					 jsonpCallback:'p',
 					 crossDomain:true,
+					 headers: {
+					 	'Accept': 'application/json, application/xml, text/play, text/html',
+					 	'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+					 },
 					 success: function (response) {
 						 let state = this.state;
 						 state.success = true;

@@ -69,8 +69,9 @@ export default class ChangePassword extends Component{
 		}
 		let changePasswordEndPoint =
 			BASE_URL+'/aaa/changepassword.json?changepassword=' + email
-			 + '&password=' + password + '&newpassword=' +
-			 newPassword + '&access_token='+cookies.get('loggedIn');
+			 + '&password=' + encodeURIComponent(password) + '&newpassword=' +
+			 encodeURIComponent(newPassword) +
+			 '&access_token='+cookies.get('loggedIn');
 			 // console.log(changePasswordEndPoint);
 			 if(!this.state.currentPasswordError && !this.state.newPasswordError)
 			 {
@@ -79,6 +80,10 @@ export default class ChangePassword extends Component{
 					 dataType:'jsonp',
 					 jsonpCallback:'p',
 					 crossDomain:true,
+					 headers: {
+					 	'Accept': 'application/json, application/xml, text/play, text/html',
+					 	'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+					 },
 					 success: function (response) {
 						 let state = this.state;
 						 state.success = true;
