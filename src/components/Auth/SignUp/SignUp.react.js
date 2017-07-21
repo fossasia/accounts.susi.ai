@@ -171,7 +171,7 @@ export default class SignUp extends Component {
         let BASE_URL = 'http://api.susi.ai'
         let signupEndPoint =
             BASE_URL+'/aaa/signup.json?signup=' + this.state.email +
-            '&password=' + this.state.passwordValue;
+            '&password=' + encodeURIComponent(this.state.passwordValue);
 
         if (!this.state.emailError && !this.state.passwordConfirmError) {
             $.ajax({
