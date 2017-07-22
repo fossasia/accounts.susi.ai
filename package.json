@@ -21,7 +21,6 @@
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-bootstrap": "^0.31.0",
-    "react-burger-menu": "^2.1.1",
     "react-color": "^2.12.1",
     "react-cookie": "^2.0.7",
     "react-dom": "^15.5.4",
