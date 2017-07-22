@@ -15,7 +15,6 @@ import AppBar from 'material-ui/AppBar';
 import { addUrlProps, UrlQueryParamTypes } from 'react-url-query';
 import Cookies from 'universal-cookie';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
-import { slide as Menu } from 'react-burger-menu';
 /* eslint-disable */
 const cookies = new Cookies();
 const ListMenu = () => (
@@ -77,8 +76,7 @@ class Login extends Component {
 		const {
       token
     } = this.props;
-		console.log(token)
-		if(token !== "null") {
+				if(token !== "null") {
 			this.props.history.push('/resetpass/?token='+token);
 		}
 		if(cookies.get('loggedIn')) {
@@ -227,18 +225,6 @@ class Login extends Component {
                     	/>
 
             	</div>
-							<div>
-							<Menu  customBurgerIcon={ <img key="icon" src="img/icon.svg" />} />
-				  	 	 <Menu customCrossIcon={ <img key="cross" src="img/cross.svg" /> } />
-							<Menu className="menu-new">
-							<li>
-				        <ul> <a id="Applist" className="menu-item" href="">Applist</a></ul>
-				        <ul> <a id="Chat" className="menu-item" href="http://chat.susi.ai">Chat with susi</a></ul>
-								<ul><Link to={'/signup'} ><a id="SignUp" className="menu-item" >Sign Up</a></Link></ul>
-								 </li>
-							 </Menu>
-
-						 </div>
             	<div className="loginForm">
 				<Paper zDepth={0}style={styles}>
             		<h1>Login to SUSI</h1>
