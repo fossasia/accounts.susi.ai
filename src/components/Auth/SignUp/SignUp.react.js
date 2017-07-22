@@ -11,7 +11,6 @@ import FlatButton from 'material-ui/FlatButton';
 import PropTypes from 'prop-types';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 import Login from '../Login/Login.react';
-import { slide as Menu } from 'react-burger-menu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
@@ -245,18 +244,6 @@ export default class SignUp extends Component {
                   </div>
                 </header>
             </div>
-            <div>
-            <Menu  customBurgerIcon={ <img key="icon" src="img/icon.svg" />} />
-             <Menu customCrossIcon={ <img key="cross" src="img/cross.svg" /> } />
-            <Menu className="menu-new">
-            <li>
-              <ul> <a id="Applist" className="menu-item" href="">Applist</a></ul>
-              <ul> <a id="Chat" className="menu-item" href="http://chat.susi.ai">Chat with susi</a></ul>
-              <ul><Link to={'/'} ><a id="LogIn" className="menu-item" >Log In</a></Link></ul>
-               </li>
-             </Menu>
-
-           </div>
             <div className="signUpForm">
                 <Paper zDepth={1} style={styles}>
                     <h1>Sign Up with SUSI</h1>
