@@ -11,7 +11,6 @@ import PasswordField from 'material-ui-password-field';
 import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 
 
 const cookies = new Cookies();
@@ -50,18 +49,7 @@ export default class ChangePassword extends Component{
 		var password = this.state.currentPassword.trim();
 		var newPassword = this.state.newPassword.trim();
 
-		let defaults = UserPreferencesStore.getPreferences();
-		let defaultServer = defaults.Server;
-		let BASE_URL = '';
-		if(cookies.get('serverUrl')===defaultServer||
-		cookies.get('serverUrl')===null||
-		cookies.get('serverUrl')=== undefined) {
-				BASE_URL = defaultServer;
-		} else {
-				BASE_URL= cookies.get('serverUrl');
-			}
-		console.log(BASE_URL);
-
+		let BASE_URL = 'http://api.susi.ai';
 		if(!newPassword || !password) {return this.state.isFilled}
 		var email = '';
 		if(cookies.get('emailId')) {
@@ -178,8 +166,7 @@ export default class ChangePassword extends Component{
     const actions =
            <FlatButton
                label="OK"
-               backgroundColor={
-                   UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
+               backgroundColor={'#607D8B'}
                labelStyle={{ color: '#fff' }}
                onTouchTap={this.handleClose}
            />;
@@ -189,7 +176,7 @@ export default class ChangePassword extends Component{
 					<AppBar
 						className="app-bar"
 						iconElementLeft={<iconButton></iconButton>}
-						style={{ backgroundColor : '#607D8B',
+						style={{ backgroundColor : '#4285F4',
 							height: '46px' }}
 							titleStyle={{height:'46px'}}
 					/>
@@ -231,8 +218,7 @@ export default class ChangePassword extends Component{
 									<RaisedButton
 										label="submit"
 										type='submit'
-										backgroundColor={
-											UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
+										backgroundColor={'#4285F4'}
 										labelColor="#fff"
 										keyboardFocused={true}
 									/>
@@ -240,8 +226,7 @@ export default class ChangePassword extends Component{
 								<Link to={'/'}>
 									<RaisedButton
 										label="Cancel"
-										backgroundColor={
-											UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
+										backgroundColor={'#4285F4'}
 										labelColor="#fff"
 										keyboardFocused={true}
 						   		/>

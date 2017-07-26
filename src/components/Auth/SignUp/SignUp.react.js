@@ -222,7 +222,7 @@ export default class SignUp extends Component {
             <FlatButton
                 label="OK"
                 backgroundColor={
-                    UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
+                    UserPreferencesStore.getTheme()==='light' ? '#4285F4' : '#4285F4'}
                 labelStyle={{ color: '#fff' }}
                 onTouchTap={this.handleClose}
             />;
@@ -235,7 +235,7 @@ export default class SignUp extends Component {
                               <AppBar
                               iconElementLeft= {<iconButton></iconButton>}
                                   className="app-bar"
-                                  style={{ backgroundColor : '#607D8B',
+                                  style={{ backgroundColor : '#4285F4',
                                        height: '46px'}}
                                   titleStyle={{height:'46px'}}
                                   iconElementRight={<ListMenu />}
@@ -281,7 +281,7 @@ export default class SignUp extends Component {
                                 disabled={!this.state.validForm}
                                 backgroundColor={
                                     UserPreferencesStore.getTheme()==='light'
-                                    ? '#607D8B' : '#19314B'}
+                                    ? '#4285F4' : '#4285F4'}
                                 labelColor="#fff" />
                         </div>
                         <h1>OR</h1>
@@ -294,7 +294,7 @@ export default class SignUp extends Component {
 
                                 backgroundColor={
                                     UserPreferencesStore.getTheme()==='light'
-                                    ? '#607D8B' : '#19314B'}
+                                    ? '#4285F4' : '#4285F4'}
                                 labelColor="#fff" />
                               </Link>
                         </div>

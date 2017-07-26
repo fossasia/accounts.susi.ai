@@ -204,7 +204,7 @@ class ResetPassword extends Component{
            <FlatButton
                label="OK"
                backgroundColor={
-                   UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
+                   UserPreferencesStore.getTheme()==='light' ? '#4285F4' : '#4285F4'}
                labelStyle={{ color: '#fff' }}
                onTouchTap={this.handleClose}
            />;
@@ -214,7 +214,7 @@ class ResetPassword extends Component{
 					<AppBar
 						className="app-bar"
 						iconElementLeft={<iconButton></iconButton>}
-						style={{ backgroundColor : '#607D8B',
+						style={{ backgroundColor : '#4285F4',
 							height: '46px' }}
 							titleStyle={{height:'46px'}}
 					/>
@@ -254,7 +254,7 @@ class ResetPassword extends Component{
 									label="submit"
                   					type='submit'
 									backgroundColor={
-										UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
+										UserPreferencesStore.getTheme()==='light' ? '#4285F4' : '#4285F4'}
 									labelColor="#fff"
 									keyboardFocused={true}
 								/>

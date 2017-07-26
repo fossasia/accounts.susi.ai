@@ -37,7 +37,7 @@ class LoggedIn extends Component {
       <AppBar
       iconElementLeft={<iconButton ></iconButton>}
           className="app-bar"
-          style={{ backgroundColor : '#607D8B',
+          style={{ backgroundColor : '#4285F4',
                height: '46px'}}
           titleStyle={{height:'46px'}}
         iconElementRight={<ListMenu />}
