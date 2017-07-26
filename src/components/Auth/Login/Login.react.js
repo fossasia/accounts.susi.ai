@@ -218,7 +218,7 @@ class Login extends Component {
 											iconElementLeft= {<iconButton></iconButton>}
 											iconElementRight={<ListMenu />}
                         	className="app-bar"
-                        	style={{ backgroundColor : '#607D8B',
+                        	style={{ backgroundColor : '#4285F4',
                         	     height: '46px'}}
                         	titleStyle={{height:'46px'}}
 
@@ -252,7 +252,7 @@ class Login extends Component {
 								label="Login"
 								type="submit"
 								backgroundColor={
-									UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
+									UserPreferencesStore.getTheme()==='light' ? '#4285F4' : '#4285F4'}
 								labelColor="#fff"
 								disabled={!this.state.validForm} />
 						</div>
@@ -282,7 +282,7 @@ class Login extends Component {
 										label='SignUp'
 										backgroundColor={
 												UserPreferencesStore.getTheme()==='light'
-												? '#607D8B' : '#19314B'}
+												? '#4285F4' : '#4285F4'}
 										labelColor="#fff" />
 										<h3></h3>
 						</Link>

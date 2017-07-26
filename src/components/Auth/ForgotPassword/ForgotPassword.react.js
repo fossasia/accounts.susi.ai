@@ -127,7 +127,7 @@ class ForgotPassword extends Component {
 			<FlatButton
 				label="OK"
 				backgroundColor={
-					UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
+					UserPreferencesStore.getTheme()==='light' ? '#4285F4' : '#4285F4'}
 				labelStyle={{ color: '#fff' }}
 				onTouchTap={this.handleClose}
 			/>;
@@ -138,7 +138,7 @@ class ForgotPassword extends Component {
 											<AppBar
 													iconElementLeft={<iconButton></iconButton>}
 													className="app-bar"
-													style={{ backgroundColor : '#607D8B',
+													style={{ backgroundColor : '#4285F4',
 														 	height: '46px'}}
 													titleStyle={{height:'46px'}}
 											/>
@@ -160,7 +160,7 @@ class ForgotPassword extends Component {
 									type="submit"
 									label="Reset"
 									backgroundColor={
-										UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
+										UserPreferencesStore.getTheme()==='light' ? '#4285F4' : '#4285F4'}
 										labelColor="#fff"
 										disabled={!this.state.validForm} />
 							</div>
@@ -169,7 +169,7 @@ class ForgotPassword extends Component {
 						<RaisedButton
 								label="Cancel"
 								backgroundColor={
-									UserPreferencesStore.getTheme()==='light' ? '#607D8B' : '#19314B'}
+									UserPreferencesStore.getTheme()==='light' ? '#4285F4' : '#4285F4'}
 								labelColor="#fff"
 								keyboardFocused={true}
 								onTouchTap={this.handleCancel}
