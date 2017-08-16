@@ -3,8 +3,11 @@ import Paper from 'material-ui/Paper';
 import AppBar from 'material-ui/AppBar';
 import PasswordField from 'material-ui-password-field'
 import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
 import $ from 'jquery'
 import Cookies from 'universal-cookie'
+import  Dialog from 'material-ui/Dialog'
+import PropTypes from 'prop-types'
 
 const cookies = new Cookies()
 
@@ -16,10 +19,34 @@ class DeleteAccount extends Component {
 
     this.state = {
       password:'',
+      dialogMessage:'',
+      showDialog:false,
       passwordError:false,
       validFirm:false,
     };
     this.passwordErrorMessage = '';
+  }
+
+  componentDidMount() {
+    let state = this.state;
+    if(cookies.get('loggedIn')) {
+      let url = 'http://api.susi.ai/aaa/account-permissions.json?access_token='
+                  + cookies.get('loggedIn');
+      $.ajax({
+        url: url,
+        dataType: 'jsonp',
+        jsonpCallback: 'p',
+        crossDomain: true,
+        success: function(response) {
+          console.log(response.accepted)
+        }
+      })
+    }
+    else {
+      state.dialogMessage = 'Not logged In!';
+      state.showDialog = true;
+      this.setState(state);
+    }
   }
 
   handleChange = (event) => {
@@ -44,7 +71,8 @@ class DeleteAccount extends Component {
   handleSubmit = (event)  => {
     console.log('here')
     var password = this.state.password.trim();
-    let url = 'http://api.susi.ai/aaa/login.json?delete=true';
+    let url = 'http://api.susi.ai/aaa/login.json?type=check_password&login='
+                + cookies.get('emailId') + 'password=' + password;
     $.ajax({
       url:url,
       dataType:'jsonp',
@@ -52,8 +80,28 @@ class DeleteAccount extends Component {
       crossDomain:true,
       success: function(response) {
         console.log(response.accepted)
+        if(response.accepted) {
+          let deleteUrl = 'http://api.susi.ai/aaa/login.json?delete=true&access_token='
+                          + cookies.get('loggedIn')
+          $.ajax({
+            url: deleteUrl,
+            dataType: 'jsonp',
+            jsonpCallback: 'p',
+            crossDomain: true,
+            success: function(deleteResponse) {
+              this.props.history.push('/logout', { showLogin: true });
+            }.bind(this),
+            error: function(errorThrown) {
+              console.log(errorThrown)
+            }
+          })
+        }
       },
     })
+  }
+
+  handleClose = (event) => {
+    this.props.history.push('/', { showLogin: true });
   }
 
   render() {
@@ -81,6 +129,15 @@ class DeleteAccount extends Component {
       paddingRight:10,
       textAlign:'right'
     }
+    const actions =
+			<FlatButton
+				label="OK"
+				backgroundColor={
+					'#4285F4'}
+				labelStyle={{ color: '#fff' }}
+				onTouchTap={this.handleClose}
+			/>;
+
     return(
       <div>
       <div className="app-bar-div">
@@ -126,9 +183,22 @@ class DeleteAccount extends Component {
           </Paper>
       	</div>
       </div>
+      <div>
+      <Dialog
+        actions={actions}
+        modal={false}
+        open={this.state.showDialog}
+        onRequestClose={this.handleClose} >
+        {this.state.dialogMessage}
+      </Dialog>
+      </div>
       </div>
     )
   }
 }
+
+DeleteAccount.propTypes = {
+	history: PropTypes.object
+};
 
 export default DeleteAccount
