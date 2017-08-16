@@ -50,7 +50,7 @@ const App = () => (
 				<Route exact path="/signup" component={SignUp} />
 				<Route exact path="/logout" component={Logout} />
 				<Route exact path="/resetpass" component={ResetPassword} />
-				<Route exact path="/delete" component={DeleteAccount} />
+				<Route exact path="/delete-account" component={DeleteAccount} />
 				<Route exact path="/forgotpwd" component={ForgotPassword} />
 				<Route exact path="*" component={NotFound} />
 				</Switch>
