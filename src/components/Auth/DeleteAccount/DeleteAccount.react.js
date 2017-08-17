@@ -39,7 +39,12 @@ class DeleteAccount extends Component {
         crossDomain: true,
         success: function(response) {
           console.log(response.accepted)
-        }
+        },
+        error: function(errorThrown) {
+          state.dialogMessage = 'Not logged In!';
+          state.showDialog = true;
+          this.setState(state);
+        }.bind(this),
       })
     }
     else {
@@ -89,8 +94,9 @@ class DeleteAccount extends Component {
             jsonpCallback: 'p',
             crossDomain: true,
             success: function(deleteResponse) {
-              this.props.history.push('/logout', { showLogin: true });
-            }.bind(this),
+              console.log(deleteResponse)
+               this.props.history.push('/logout', { showLogin: true });
+            },
             error: function(errorThrown) {
               console.log(errorThrown)
             }
