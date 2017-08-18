@@ -77,7 +77,7 @@ class DeleteAccount extends Component {
     console.log('here')
     var password = this.state.password.trim();
     let url = 'http://api.susi.ai/aaa/login.json?type=check_password&login='
-                + cookies.get('emailId') + 'password=' + password;
+                + cookies.get('emailId') + '&password=' + password;
     $.ajax({
       url:url,
       dataType:'jsonp',
