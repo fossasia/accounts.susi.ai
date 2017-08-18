@@ -95,19 +95,32 @@ class DeleteAccount extends Component {
             crossDomain: true,
             success: function(deleteResponse) {
               console.log(deleteResponse)
-               this.props.history.push('/logout', { showLogin: true });
-            },
+               let state;
+               state.dialogMessage = 'Account deleted successfully';
+               state.showDialog = true;
+               this.setState(state)
+            }.bind(this),
             error: function(errorThrown) {
               console.log(errorThrown)
-            }
+              let state;
+              state.dialogMessage='Account deletion failed! Please try again in some time'
+              state.showDialog=true;
+              this.setState(state)
+            }.bind(this)
           })
         }
-      },
+      }.bind(this),
+      error: function(errorThrown) {
+        let state
+        state.dialogMessage='Please login again. Token expired!'
+        state.showDialog=true;
+        this.setState(state)
+      }.bind(this)
     })
   }
 
   handleClose = (event) => {
-    this.props.history.push('/', { showLogin: true });
+    this.props.history.push('/logout', { showLogin: true });
   }
 
   render() {
