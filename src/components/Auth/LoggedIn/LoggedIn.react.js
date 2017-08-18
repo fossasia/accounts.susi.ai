@@ -23,6 +23,8 @@ const ListMenu = () => (
  										href="http://chat.susi.ai" />
                      <MenuItem primaryText="Change Password"
                            containerElement={<Link to="/changepassword" />} />
+                           <MenuItem primaryText="delete account"
+                           containerElement={<Link to = "/delete-account" />} />
                     <MenuItem primaryText="Logout"
                     containerElement={<Link to="/logout" />} />
                   </IconMenu>
