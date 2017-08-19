@@ -128,6 +128,10 @@ class DeleteAccount extends Component {
     this.props.history.push('/', { showLogin: true });
   }
 
+  handleCancel = (event) => {
+    this.props.history.push('/', { showLogin: true});
+  }
+
   render() {
     const style = {
   		height: 250,
@@ -149,7 +153,7 @@ class DeleteAccount extends Component {
 			'width':'256px'
 		}
     const submitButton={
-      marginTop: 20,
+      marginTop: 10,
       paddingRight:10,
       textAlign:'right'
     }
@@ -200,6 +204,14 @@ class DeleteAccount extends Component {
               labelColor="#fff"
               onTouchTap={this.handleSubmit}
               disabled={!this.state.validForm}
+              />
+              </div>
+              <div style={submitButton}>
+              <RaisedButton
+              label='Cancel'
+              backgroundColor='#4285F4'
+              labelColor="#fff"
+              onTouchTap={this.handleCancel}
               />
               </div>
               </form>
