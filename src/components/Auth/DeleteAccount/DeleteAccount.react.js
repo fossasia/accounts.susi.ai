@@ -11,6 +11,9 @@ import PropTypes from 'prop-types'
 
 const cookies = new Cookies()
 
+var deleteCookie = function(name) {
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+};
 
 class DeleteAccount extends Component {
 
@@ -94,10 +97,10 @@ class DeleteAccount extends Component {
             crossDomain: true,
             success: function(deleteResponse) {
               console.log(deleteResponse)
-               let state;
-               state.dialogMessage = 'Account deleted successfully';
-               state.showDialog = true;
-               this.setState(state)
+               this.setState({
+                 showDialog: true,
+                 dialogMessage: 'Account deleted successfully',
+               })
                console.log(deleteResponse)
             }.bind(this),
             error: function(errorThrown) {
@@ -120,6 +123,8 @@ class DeleteAccount extends Component {
   }
 
   handleClose = (event) => {
+    deleteCookie('emailId');
+    deleteCookie('loggedIn');
     this.props.history.push('/', { showLogin: true });
   }
 
