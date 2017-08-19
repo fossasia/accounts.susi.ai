@@ -61,7 +61,6 @@ class DeleteAccount extends Component {
     let validPassword = password.length >= 6;
     state.password = password;
     state.passwordError = !(password && validPassword);
-    console.log(state.passwordError)
     if(this.state.passwordError) {
       this.passwordErrorMessage = 'Minimum 6 characters required'
       state.validForm = false;
@@ -99,6 +98,7 @@ class DeleteAccount extends Component {
                state.dialogMessage = 'Account deleted successfully';
                state.showDialog = true;
                this.setState(state)
+               console.log(deleteResponse)
             }.bind(this),
             error: function(errorThrown) {
               console.log(errorThrown)
@@ -120,7 +120,7 @@ class DeleteAccount extends Component {
   }
 
   handleClose = (event) => {
-    this.props.history.push('/logout', { showLogin: true });
+    this.props.history.push('/', { showLogin: true });
   }
 
   render() {
@@ -193,7 +193,7 @@ class DeleteAccount extends Component {
               label='Yes, Delete My Account'
               backgroundColor='#4285F4'
               labelColor="#fff"
-              type="submit"
+              onTouchTap={this.handleSubmit}
               disabled={!this.state.validForm}
               />
               </div>
