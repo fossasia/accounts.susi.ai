@@ -25,7 +25,7 @@ class VerifyAccount extends Component {
   static propTypes = {
     accessToken: PropTypes.string,
     validateEmail: PropTypes.string,
-    requestSession: PropTypes.string,
+    requestSession: PropTypes.boolean,
     onChangeAccessToken: PropTypes.func,
     onChangeValidateEmail: PropTypes.func,
     onChangeRequestSession: PropTypes.func,
@@ -34,7 +34,7 @@ class VerifyAccount extends Component {
   static defaultProps = {
     token: 'null',
     validateEmail: 'null',
-    requestSession: 'null',
+    requestSession: false,
   }
 
   handleClose = (event) => {
@@ -52,9 +52,9 @@ class VerifyAccount extends Component {
             && accessToken.length !== 0 &&validateEmail.length !== 0) {
               let BASE_URL = 'http://api.susi.ai';
               let accountVerificationEndPoint = BASE_URL +
-              '/aaa/signup.json.json?access_token=' + accessToken
-              'token=' + accessToken + 'validateEmail='+validateEmail
-              + 'request_session=' + requestSession;
+              '/aaa/signup.json?access_token=' + accessToken
+               +'&validateEmail='+validateEmail
+              + '&request_session=' + requestSession;
 			$.ajax({
         url: accountVerificationEndPoint,
         dataType: 'jsonp',
@@ -64,17 +64,21 @@ class VerifyAccount extends Component {
         success: function(response) {
           if(response.accepted === true) {
             this.setState({
-              message: 'Account Verified Successfully!! Please login to continue!!'
+              message: 'Account Verified Successfully!! Please login to continue!!',
+              showDialog: true,
             })
+            console.log(accountVerificationEndPoint)
           }
         }.bind(this),
         error: function(errorThrown) {
           this.setState({
-            message: 'Some error occured!! Please try again latter!',
+            message: 'Some error occured!! Please try again latter. Maybe you are'
+             + ' already registered!',
             showDialog: true,
           })
-        }
-      }).bind(this)
+          console.log(accountVerificationEndPoint)
+        }.bind(this),
+      })
 		}
     else {
       this.setState({
