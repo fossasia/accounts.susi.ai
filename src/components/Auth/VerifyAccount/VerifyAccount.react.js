@@ -72,8 +72,8 @@ class VerifyAccount extends Component {
         }.bind(this),
         error: function(errorThrown) {
           this.setState({
-            message: 'Some error occured!! Please try again latter. Maybe you are'
-             + ' already registered!',
+            message: 'Some error occured!! Please try again latter.'
+             + ' Already registered?',
             showDialog: true,
           })
           console.log(accountVerificationEndPoint)
