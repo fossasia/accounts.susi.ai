@@ -64,7 +64,7 @@ class VerifyAccount extends Component {
         success: function(response) {
           if(response.accepted === true) {
             this.setState({
-              message: 'Account Verified Successfully!! Please login to continue!!',
+              message: 'Thank you, your account is now verified. Please login to continue.',
               showDialog: true,
             })
             console.log(accountVerificationEndPoint)
@@ -72,8 +72,7 @@ class VerifyAccount extends Component {
         }.bind(this),
         error: function(errorThrown) {
           this.setState({
-            message: 'Some error occured!! Please try again latter.'
-             + ' Already registered?',
+            message: 'An error occurred. Please try again',
             showDialog: true,
           })
           console.log(accountVerificationEndPoint)
