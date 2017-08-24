@@ -6,6 +6,7 @@ import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import { Link } from 'react-router-dom';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import Paper from 'material-ui/Paper';
 
 const ListMenu = () => (
           <IconMenu className='IconMenu'
@@ -34,18 +35,44 @@ class LoggedIn extends Component {
 
 
   render (){
-    return(
-      <div className='app-bar-div'>
-      <AppBar
-      iconElementLeft={<iconButton ></iconButton>}
-          className="app-bar"
-          style={{ backgroundColor : '#4285F4',
-               height: '46px'}}
-          titleStyle={{height:'46px'}}
-        iconElementRight={<ListMenu />}
 
-      />
-      </div>
+  const style = {
+  height: 200,
+  width: 200,
+  margin: 100,
+  textAlign: 'center',
+  display: 'inline-block',
+};
+const heading = {
+  fontSize: 50,
+}
+    return(
+      <div>
+        <div className='app-bar-div'>
+          <AppBar
+            iconElementLeft={<iconButton ></iconButton>}
+            className="app-bar"
+            style={{ backgroundColor : '#4285F4',
+               height: '46px'}}
+            titleStyle={{height:'46px'}}
+            iconElementRight={<ListMenu />}
+          />
+        </div>
+        <div id="parent">
+	         <div className="child1">
+              <Paper style={style} zDepth={4} circle={true} />
+              <div style={heading}>
+                <h2>iOS</h2>
+              </div>
+	         </div>
+	         <div className="child2">
+              <Paper style={style} zDepth={4} circle={true} />
+	         </div>
+	         <div className="child3">
+              <Paper style={style} zDepth={4} circle={true} />
+	         </div>
+        </div>
+    </div>
     )
   }
 }
