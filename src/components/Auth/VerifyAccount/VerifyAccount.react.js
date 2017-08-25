@@ -73,7 +73,7 @@ class VerifyAccount extends Component {
         }.bind(this),
         error: function(errorThrown) {
           this.setState({
-            message: 'An error occurred. Please try again',
+            message: 'An error occurred. Please try again.',
             showDialog: true,
           })
           console.log(accountVerificationEndPoint)
