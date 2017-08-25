@@ -39,12 +39,22 @@ class LoggedIn extends Component {
   const style = {
   height: 200,
   width: 200,
-  margin: 100,
+  marginTop: 100,
+  marginLeft: 100,
   textAlign: 'center',
   display: 'inline-block',
 };
-const heading = {
-  fontSize: 50,
+const heading1 = {
+  fontSize: 30,
+  marginLeft: 150,
+}
+const heading2 = {
+  fontSize: 30,
+  marginLeft: 115,
+}
+const heading3 = {
+  fontSize: 30,
+  marginLeft: 110,
 }
     return(
       <div>
@@ -61,15 +71,21 @@ const heading = {
         <div id="parent">
 	         <div className="child1">
               <Paper style={style} zDepth={4} circle={true} />
-              <div style={heading}>
+              <div style={heading1}>
                 <h2>iOS</h2>
               </div>
 	         </div>
 	         <div className="child2">
               <Paper style={style} zDepth={4} circle={true} />
+              <div style={heading2}>
+                <h2>Android</h2>
+              </div>
 	         </div>
 	         <div className="child3">
               <Paper style={style} zDepth={4} circle={true} />
+              <div style={heading3}>
+                <h2>Web-chat</h2>
+              </div>
 	         </div>
         </div>
     </div>
