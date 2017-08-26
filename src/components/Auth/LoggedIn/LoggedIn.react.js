@@ -48,7 +48,7 @@ class LoggedIn extends Component {
   marginLeft: 100,
   textAlign: 'center',
   display: 'inline-block',
-  backgroundColor: '#4285F4',
+  backgroundColor: '#f7f7f7',
 };
 const heading1 = {
   fontSize: 30,
