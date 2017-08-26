@@ -18,7 +18,7 @@ ENCRYPTED_KEY_VAR="encrypted_${ENCRYPTION_LABEL}_key"
 ENCRYPTED_IV_VAR="encrypted_${ENCRYPTION_LABEL}_iv"
 ENCRYPTED_KEY=${!ENCRYPTED_KEY_VAR}
 ENCRYPTED_IV=${!ENCRYPTED_IV_VAR}
-openssl aes-256-cbc -K $encrypted_1cc96214ae7e_key -iv $encrypted_1cc96214ae7e_iv -in deploy_key.enc -out ../deploy_key -d
+openssl aes-256-cbc -K $encrypted_8de7f111ae22_key -iv $encrypted_8de7f111ae22_iv -in deploy_key.enc -out ../deploy_key -d
 
 
 
