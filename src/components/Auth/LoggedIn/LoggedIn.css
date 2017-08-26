@@ -71,33 +71,27 @@
     color: #fff;
 }
 #parent {
-    padding-top: 100px;
+  display: -webkit-flex;
+  float: left;
+    padding-top: 125px;
     height: 500px;
     margin: 5px;
 }
 .child1 {
-
-
-    float:left;
     width: 33%;
     height: 99%;
-    margin: 2px;
 }
 
 .child2 {
-
-
-    float:left;
     width: 33%;
     height: 99%;
-    margin: 2px;
 }
 
 .child3 {
-
-
-    float:left;
     width: 33%;
     height: 99%;
-    margin: 2px;
+}
+.child4 {
+    width: 33%;
+    height: 99%;
 }

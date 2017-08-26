@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import iOS from '../../images/ios.png'
 import android from '../../images/android.png'
 import web from '../../images/network-icon.png'
+import cms from '../../images/cms.png'
 
 const ListMenu = () => (
           <IconMenu className='IconMenu'
@@ -51,7 +52,6 @@ class LoggedIn extends Component {
 const heading1 = {
   fontSize: 30,
   marginLeft: 160,
-  backgroundImage:'',
 }
 const heading2 = {
   fontSize: 30,
@@ -74,7 +74,8 @@ const heading3 = {
           />
         </div>
         <div id="parent">
-	         <div className="child1">
+	         <Link to="/settings">
+           <div className="child1">
               <Paper style={style} zDepth={4} circle={true}>
               <img style={{margin: '50px 10px'}} src={iOS}
               alt="ios-logo" className="siteTitle"  />
@@ -83,7 +84,9 @@ const heading3 = {
                 <h2>iOS</h2>
               </div>
 	         </div>
-	         <div className="child2">
+           </Link>
+	         <Link to="/settings">
+           <div className="child2">
               <Paper style={style} zDepth={4} circle={true}>
               <img style={{margin: '30', height: '70%'}} src={android}
                alt="android-logo" className="siteTitle"  />
@@ -92,7 +95,9 @@ const heading3 = {
                 <h2>Android</h2>
               </div>
 	         </div>
-	         <div className="child3">
+           </Link>
+	         <Link to="/settings">
+           <div className="child3">
               <Paper style={style} zDepth={4} circle={true}>
               <img style={{margin: '35'}} src={web}
                alt="web-logo" className="siteTitle" />
@@ -101,6 +106,18 @@ const heading3 = {
                 <h2>Web</h2>
               </div>
 	         </div>
+           </Link>
+           <Link to="/settings">
+           <div className="child4">
+              <Paper style={style} zDepth={4} circle={true}>
+              <img style={{margin: '35', height: '65%'}} src={cms}
+               alt="web-logo" className="siteTitle" />
+              </Paper>
+              <div style={heading3}>
+                <h2>CMS</h2>
+              </div>
+	         </div>
+           </Link>
         </div>
     </div>
     )
