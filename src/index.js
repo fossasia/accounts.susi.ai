@@ -50,7 +50,7 @@ const App = () => (
 				<Route exact path="/changepassword" component={ChangePassword} />
 				<Route exact path="/signup" component={SignUp} />
 				<Route exact path="/logout" component={Logout} />
-				<Route exact path="settings" component={Settings} />
+				<Route exact path="/settings" component={Settings} />
 				<Route exact path="/verify-account" component={VerifyAccount} />
 				<Route exact path="/resetpass" component={ResetPassword} />
 				<Route exact path="/delete-account" component={DeleteAccount} />

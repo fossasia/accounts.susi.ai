@@ -7,6 +7,10 @@ import IconMenu from 'material-ui/IconMenu';
 import { Link } from 'react-router-dom';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Paper from 'material-ui/Paper';
+import PropTypes from 'prop-types';
+import iOS from '../../images/ios.png'
+import android from '../../images/android.png'
+import web from '../../images/network-icon.png'
 
 const ListMenu = () => (
           <IconMenu className='IconMenu'
@@ -46,7 +50,8 @@ class LoggedIn extends Component {
 };
 const heading1 = {
   fontSize: 30,
-  marginLeft: 150,
+  marginLeft: 160,
+  backgroundImage:'',
 }
 const heading2 = {
   fontSize: 30,
@@ -54,7 +59,7 @@ const heading2 = {
 }
 const heading3 = {
   fontSize: 30,
-  marginLeft: 110,
+  marginLeft: 148,
 }
     return(
       <div>
@@ -70,21 +75,30 @@ const heading3 = {
         </div>
         <div id="parent">
 	         <div className="child1">
-              <Paper style={style} zDepth={4} circle={true} />
+              <Paper style={style} zDepth={4} circle={true}>
+              <img style={{margin: '50px 10px'}} src={iOS}
+              alt="ios-logo" className="siteTitle"  />
+              </Paper>
               <div style={heading1}>
                 <h2>iOS</h2>
               </div>
 	         </div>
 	         <div className="child2">
-              <Paper style={style} zDepth={4} circle={true} />
+              <Paper style={style} zDepth={4} circle={true}>
+              <img style={{margin: '30', height: '70%'}} src={android}
+               alt="android-logo" className="siteTitle"  />
+              </Paper>
               <div style={heading2}>
                 <h2>Android</h2>
               </div>
 	         </div>
 	         <div className="child3">
-              <Paper style={style} zDepth={4} circle={true} />
+              <Paper style={style} zDepth={4} circle={true}>
+              <img style={{margin: '35'}} src={web}
+               alt="web-logo" className="siteTitle" />
+              </Paper>
               <div style={heading3}>
-                <h2>Web-chat</h2>
+                <h2>Web</h2>
               </div>
 	         </div>
         </div>
@@ -92,4 +106,9 @@ const heading3 = {
     )
   }
 }
+
+LoggedIn.propTypes = {
+  history: PropTypes.object
+};
+
 export default LoggedIn;
