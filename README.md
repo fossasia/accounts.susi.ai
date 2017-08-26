@@ -1,6 +1,6 @@
 # accounts.susi.ai
 
-[![Build Status](https://travis-ci.org/fossasia/chat.susi.ai.svg?branch=master)](https://travis-ci.org/fossasia/chat.susi.ai)
+[![Build Status](https://travis-ci.org/fossasia/accounts.susi.ai.svg?branch=master)](https://travis-ci.org/fossasia/accounts.susi.ai)
 [![Twitter Follow](https://img.shields.io/twitter/follow/asksusi.svg?style=social&label=Follow&maxAge=2592000?style=flat-square)](https://twitter.com/asksusi)
 
 Susi is an artificial intelligence combining pattern matching, internet data, data flow principles and inference engine principles. It will have some reflection abilities and it will be able to remember the users input to produce deductions and a personalized feed-back. Its purpose is to explore the abilities of an artificial companion and to answer the remaining unanswered questions. The accounts.susi.ai repo is a front-end that is developed for managing user accounts of susi.
@@ -26,9 +26,9 @@ Our chat channel is on gitter here: https://gitter.im/fossasia/susi_server
 ## How to deploy?
 
 ### Running on localhost:
-* **Step 1:** Fork chat.susi.ai repository and clone it to your desktop
+* **Step 1:** Fork accounts.susi.ai repository and clone it to your desktop
 * **Step 2:** Then cd into that cloned folder
-* **Step 3:** Install all the dependencies by running :```$ npm install```
+* **Step 3:** Install all the dependencies by running :```$ sudo npm install```
 * **Step 4:** Run on http://localhost:3000 by running :```$ npm run start```
 * **Step 5:** Build locally by running : ```$ npm run build ```
 * **Step 6:** To deploy at a url use : ```$ npm run deploy ```
