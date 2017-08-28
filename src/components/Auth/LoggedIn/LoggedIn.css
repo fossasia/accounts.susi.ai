@@ -70,3 +70,28 @@
 .menu-new a {
     color: #fff;
 }
+#parent {
+  display: -webkit-flex;
+  float: left;
+    padding-top: 125px;
+    height: 500px;
+    margin: 5px;
+}
+.child1 {
+    width: 33%;
+    height: 99%;
+}
+
+.child2 {
+    width: 33%;
+    height: 99%;
+}
+
+.child3 {
+    width: 33%;
+    height: 99%;
+}
+.child4 {
+    width: 33%;
+    height: 99%;
+}
