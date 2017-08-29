@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/fossasia/accounts.susi.ai.svg?branch=master)](https://travis-ci.org/fossasia/accounts.susi.ai)
 [![Twitter Follow](https://img.shields.io/twitter/follow/asksusi.svg?style=social&label=Follow&maxAge=2592000?style=flat-square)](https://twitter.com/asksusi)
 
-Susi is an artificial intelligence combining pattern matching, internet data, data flow principles and inference engine principles. It will have some reflection abilities and it will be able to remember the users input to produce deductions and a personalized feed-back. Its purpose is to explore the abilities of an artificial companion and to answer the remaining unanswered questions. The accounts.susi.ai repo is a front-end web application that is developed for managing user accounts of susi.
+Susi is an artificial intelligence combining pattern matching, internet data, data flow principles and inference engine principles. It will have some reflection abilities and it will be able to remember the users input to produce deductions and a personalized feed-back. Its purpose is to explore the abilities of an artificial companion and to answer the remaining unanswered questions. The accounts.susi.ai repo is a front-end web application that is developed for managing user accounts of susi. The project is hosted on gh-pages at http://accounts.susi.ai.
 
 ## Communication
 
