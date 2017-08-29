@@ -28,7 +28,7 @@ const ListMenu = () => (
                      <MenuItem primaryText="Chat With Susi"
  										href="http://chat.susi.ai" />
  					<MenuItem primaryText="Browse Skills"
- 										href="http://skills.susi.ai/" />					
+ 										href="http://skills.susi.ai/" />
                      <MenuItem primaryText="Change Password"
                            containerElement={<Link to="/changepassword" />} />
                            <MenuItem primaryText="delete account"
