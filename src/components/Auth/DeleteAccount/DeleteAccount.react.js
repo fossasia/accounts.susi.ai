@@ -33,7 +33,7 @@ class DeleteAccount extends Component {
   componentDidMount() {
     let state = this.state;
     if(cookies.get('loggedIn')) {
-      let url = 'http://api.susi.ai/aaa/account-permissions.json?access_token='
+      let url = 'https://api.susi.ai/aaa/account-permissions.json?access_token='
                   + cookies.get('loggedIn');
       $.ajax({
         url: url,
@@ -78,7 +78,7 @@ class DeleteAccount extends Component {
   handleSubmit = (event)  => {
     console.log('here')
     var password = this.state.password.trim();
-    let url = 'http://api.susi.ai/aaa/login.json?type=check_password&login='
+    let url = 'https://api.susi.ai/aaa/login.json?type=check_password&login='
                 + cookies.get('emailId') + '&password=' + password;
     $.ajax({
       url:url,
@@ -88,7 +88,7 @@ class DeleteAccount extends Component {
       success: function(response) {
         console.log(response.accepted)
         if(response.accepted) {
-          let deleteUrl = 'http://api.susi.ai/aaa/login.json?delete=true&access_token='
+          let deleteUrl = 'https://api.susi.ai/aaa/login.json?delete=true&access_token='
                           + cookies.get('loggedIn')
           $.ajax({
             url: deleteUrl,
