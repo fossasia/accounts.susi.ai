@@ -50,7 +50,7 @@ class VerifyAccount extends Component {
     } = this.props;
 				if(accessToken !== 'null' && validateEmail !== 'null'
             && accessToken.length !== 0 &&validateEmail.length !== 0) {
-              let BASE_URL = 'http://api.susi.ai';
+              let BASE_URL = 'https://api.susi.ai';
               let accountVerificationEndPoint = BASE_URL +
               '/aaa/signup.json?access_token=' + accessToken
                +'&validateEmail='+validateEmail

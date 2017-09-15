@@ -167,7 +167,7 @@ export default class SignUp extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
 
-        let BASE_URL = 'http://api.susi.ai'
+        let BASE_URL = 'https://api.susi.ai'
         let signupEndPoint =
             BASE_URL+'/aaa/signup.json?signup=' + this.state.email +
             '&password=' + encodeURIComponent(this.state.passwordValue);

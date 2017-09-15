@@ -49,7 +49,7 @@ export default class ChangePassword extends Component{
 		var password = this.state.currentPassword.trim();
 		var newPassword = this.state.newPassword.trim();
 
-		let BASE_URL = 'http://api.susi.ai';
+		let BASE_URL = 'https://api.susi.ai';
 		if(!newPassword || !password) {return this.state.isFilled}
 		var email = '';
 		if(cookies.get('emailId')) {

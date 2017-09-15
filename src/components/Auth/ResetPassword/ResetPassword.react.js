@@ -57,7 +57,7 @@ class ResetPassword extends Component{
       token
     } = this.props;
     console.log(token)
-    let BASE_URL = 'http://api.susi.ai';
+    let BASE_URL = 'https://api.susi.ai';
     let resetPasswordEndPoint = BASE_URL +
     '/aaa/recoverpassword.json?getParameters=true&' +
     'token=' + token;
@@ -90,7 +90,7 @@ class ResetPassword extends Component{
     	var newPassword = this.state.newPassword.trim();
     	console.log(newPassword);
 
-    let BASE_URL = 'http://api.susi.ai';
+    let BASE_URL = 'https://api.susi.ai';
 		if(!newPassword) {return this.state.isFilled}
 		var resetToken = '';
 		if(cookies.get('resetPassword')) {
