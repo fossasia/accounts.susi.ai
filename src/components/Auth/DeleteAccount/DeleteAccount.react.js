@@ -155,7 +155,7 @@ class DeleteAccount extends Component {
     const submitButton={
       marginTop: 10,
       paddingRight:10,
-      textAlign:'right'
+      textAlign:'center'
     }
     const actions =
 			<FlatButton
@@ -188,32 +188,32 @@ class DeleteAccount extends Component {
             </div>
             <div>
               <form onSubmit={this.handleSubmit}>
-              <div>
-              <PasswordField
-                name='password'
-            style={fieldStyle}
-                value={this.state.password}
-            onChange={this.handleChange}
-            errorText={this.passwordErrorMessage}
-            floatingLabelText='Password' />
-              </div>
-              <div style={submitButton}>
-              <RaisedButton
-              label='Yes, Delete My Account'
-              backgroundColor='#4285F4'
-              labelColor="#fff"
-              onTouchTap={this.handleSubmit}
-              disabled={!this.state.validForm}
-              />
-              </div>
-              <div style={submitButton}>
-              <RaisedButton
-              label='Cancel'
-              backgroundColor='#4285F4'
-              labelColor="#fff"
-              onTouchTap={this.handleCancel}
-              />
-              </div>
+                <div>
+                  <PasswordField
+                    name='password'
+                     style={fieldStyle}
+                    value={this.state.password}
+                    onChange={this.handleChange}
+                    errorText={this.passwordErrorMessage}
+                    floatingLabelText='Password' />
+                </div>
+                <div style={submitButton}>
+                  <RaisedButton
+                    label='Yes, Delete My Account'
+                    backgroundColor='#4285F4'
+                    labelColor="#fff"
+                    onTouchTap={this.handleSubmit}
+                    disabled={!this.state.validForm}
+                  />
+                </div>
+                <div style={submitButton}>
+                  <RaisedButton
+                    label='Cancel'
+                    backgroundColor='#4285F4'
+                    labelColor="#fff"
+                    onTouchTap={this.handleCancel}
+                  />
+                </div>
               </form>
             </div>
           </Paper>

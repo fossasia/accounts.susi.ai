@@ -15,54 +15,55 @@ import cms from '../../images/edit-icon-png-24.png'
 
 const ListMenu = () => (
           <IconMenu className='IconMenu'
-                      tooltip="Options"
-                      iconButtonElement={
-                          <IconButton
-                          className='menu-icon'
-                          iconStyle={{ fill : 'white',}}>
-                              <MoreVertIcon /></IconButton>
-                      }
-                      targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-                      anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-                     >
-                     <MenuItem primaryText="Chat With Susi"
- 										href="http://chat.susi.ai" />
- 					<MenuItem primaryText="Browse Skills"
- 										href="http://skills.susi.ai/" />
-                     <MenuItem primaryText="Change Password"
-                           containerElement={<Link to="/changepassword" />} />
-                           <MenuItem primaryText="delete account"
-                           containerElement={<Link to="/delete-account" />} />
-                    <MenuItem primaryText="Logout"
-                    containerElement={<Link to="/logout" />} />
-                  </IconMenu>
+            tooltip="Options"
+            iconButtonElement={
+                <IconButton
+                className='menu-icon'
+                iconStyle={{ fill : 'white',}}>
+                    <MoreVertIcon /></IconButton>
+            }
+            targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+            anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+          >
+           <MenuItem primaryText="Chat With Susi"
+            href="http://chat.susi.ai" />
+            <MenuItem primaryText="Browse Skills"
+              href="http://skills.susi.ai/" />
+           <MenuItem primaryText="Change Password"
+             containerElement={<Link to="/changepassword" />} />
+           <MenuItem primaryText="Delete Account"
+             containerElement={<Link to="/delete-account" />} />
+            <MenuItem primaryText="Logout"
+              containerElement={<Link to="/logout" />} />
+        </IconMenu>
 
 );
+
+
 class LoggedIn extends Component {
 
-
-  render (){
+  render () {
 
   const style = {
-  height: 200,
-  width: 200,
-  marginTop: 100,
-  marginLeft: 100,
-  textAlign: 'center',
-  display: 'inline-block',
-  backgroundColor: '#f7f7f7',
-};
-const heading1 = {
-  fontSize: 30,
-  marginLeft: 160,
-}
-const heading2 = {
-  fontSize: 30,
-  marginLeft: 115,
-}
-const heading3 = {
-  fontSize: 30,
-  marginLeft: 148,
+    height: 200,
+    width: 200,
+    marginTop: 100,
+    marginLeft: 100,
+    textAlign: 'center',
+    display: 'inline-block',
+    backgroundColor: '#f7f7f7',
+  };
+  const heading1 = {
+    fontSize: 30,
+    marginLeft: 160,
+  }
+  const heading2 = {
+    fontSize: 30,
+    marginLeft: 115,
+  }
+  const heading3 = {
+    fontSize: 30,
+    marginLeft: 148,
 }
     return(
       <div>
