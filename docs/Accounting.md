@@ -11,7 +11,7 @@ The users can interact with SUSI and try out its features like changing themes a
 #### **Logged In**
 Users can register in the app and login to use SUSI with all its features.
 Users can choose either the standard server or a personal server for SUSI.
->- Standard Server :  http://api.susi.ai/ 
+>- Standard Server :  https://api.susi.ai/ 
 >- Custom Server / Personal Server : URL of the users hosting of SUSI 
 
 Users can modify and host their own version of [SUSI](https://github.com/fossasia/susi_server) and use that as their Personal Server.
