@@ -226,9 +226,11 @@ class ResetPassword extends Component{
 						<form onSubmit={this.handleSubmit}>
               				<div className="email">
               					<TextField
-				                disabled={!this.state.success}
-				                style={{width:350}}
-				                value={this.state.msg}/>
+              						floatingLabelText="Email"
+				                	disabled={!this.state.success}
+				                	style={{width:350}}
+				                	value={this.state.msg.split(':')[1]}
+				                />
 			              	</div>
 							<div>
 								<PasswordField
@@ -250,27 +252,28 @@ class ResetPassword extends Component{
 							</div>
 						<br/>
 						<div>
-								<RaisedButton
-									label="submit"
-                  					type='submit'
-									backgroundColor={
-										UserPreferencesStore.getTheme()==='light' ? '#4285F4' : '#4285F4'}
-									labelColor="#fff"
-									keyboardFocused={true}
-								/>
-								&nbsp;
+							<RaisedButton
+								label="submit"
+              					type='submit'
+								backgroundColor={
+									UserPreferencesStore.getTheme()==='light' ? '#4285F4' : '#4285F4'}
+								labelColor="#fff"
+								keyboardFocused={true}
+							/>
+							&nbsp;
 						</div>
 						</form>
 					</Paper>
           			{this.state.msg && (
-							<div><Dialog
-									actions={actions}
-									modal={false}
-									open={this.state.showDialog}
-									onRequestClose={this.handleClose} >
-							 	{this.state.msg}
-								</Dialog>
-							</div>
+						<div>
+							<Dialog
+								actions={actions}
+								modal={false}
+								open={this.state.showDialog}
+								onRequestClose={this.handleClose} >
+						 		{this.state.msg}
+							</Dialog>
+						</div>
           			)}
 				</div>
 			</div>
