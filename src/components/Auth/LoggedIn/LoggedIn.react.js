@@ -36,33 +36,33 @@ const ListMenu = () => (
                     <MenuItem primaryText="Logout"
                     containerElement={<Link to="/logout" />} />
                   </IconMenu>
-
 );
+
+
 class LoggedIn extends Component {
 
-
-  render (){
+  render () {
 
   const style = {
-  height: 200,
-  width: 200,
-  marginTop: 100,
-  marginLeft: 100,
-  textAlign: 'center',
-  display: 'inline-block',
-  backgroundColor: '#f7f7f7',
-};
-const heading1 = {
-  fontSize: 30,
-  marginLeft: 160,
-}
-const heading2 = {
-  fontSize: 30,
-  marginLeft: 115,
-}
-const heading3 = {
-  fontSize: 30,
-  marginLeft: 148,
+    height: 200,
+    width: 200,
+    marginTop: 100,
+    marginLeft: 100,
+    textAlign: 'center',
+    display: 'inline-block',
+    backgroundColor: '#f7f7f7',
+  };
+  const heading1 = {
+    fontSize: 30,
+    marginLeft: 160,
+  }
+  const heading2 = {
+    fontSize: 30,
+    marginLeft: 115,
+  }
+  const heading3 = {
+    fontSize: 30,
+    marginLeft: 148,
 }
     return(
       <div>
