@@ -134,14 +134,14 @@ class DeleteAccount extends Component {
 
   render() {
     const style = {
-  		height: 250,
-  		width: 750,
-  		margin: 20,
-  		textAlign: 'center',
-  		display: 'inline-block',
-		};
+      height: 280,
+      width: 750,
+      margin: 20,
+      textAlign: 'center',
+      display: 'inline-block',
+    };
     const body = {
-    	marginTop: 10,
+      marginTop: 10,
       textAlign: 'center'
     };
     const test = {
@@ -150,48 +150,48 @@ class DeleteAccount extends Component {
       textAlign: 'center'
     }
     const fieldStyle={
-			'width':'256px'
-		}
+      'width':'256px'
+    }
     const submitButton={
       marginTop: 10,
       paddingRight:10,
-      textAlign:'center'
+      textAlign:'right'
     }
     const actions =
-			<FlatButton
-				label="OK"
-				backgroundColor={
-					'#4285F4'}
-				labelStyle={{ color: '#fff' }}
-				onTouchTap={this.handleClose}
-			/>;
+      <FlatButton
+        label="OK"
+        backgroundColor={
+          '#4285F4'}
+        labelStyle={{ color: '#fff' }}
+        onTouchTap={this.handleClose}
+      />;
 
     return(
       <div>
-      <div className="app-bar-div">
-        <AppBar
-          className="app-bar"
-          iconElementLeft={<iconButton></iconButton>}
-          style={{ backgroundColor : '#4285F4',
-            height: '46px' }}
-            titleStyle={{height:'46px'}}
-        />
-      </div>
+        <div className="app-bar-div">
+          <AppBar
+            className="app-bar"
+            iconElementLeft={<iconButton></iconButton>}
+            style={{ backgroundColor : '#4285F4',
+              height: '46px' }}
+              titleStyle={{height:'46px'}}
+          />
+        </div>
       <div>
-      <div style={test}>
-        <h2>Delete Account</h2>
-      </div>
-      	<div style={body}>
-      		<Paper style={style} zDepth={5}>
+        <div style={test}>
+          <h2>Delete Account</h2>
+        </div>
+        <div style={body}>
+          <Paper style={style} zDepth={5}>
             <div>
-            <h2>Please enter your password to confirm deletion :</h2>
+              <h2>Please enter your password to confirm deletion :</h2>
             </div>
             <div>
               <form onSubmit={this.handleSubmit}>
                 <div>
                   <PasswordField
                     name='password'
-                     style={fieldStyle}
+                    style={fieldStyle}
                     value={this.state.password}
                     onChange={this.handleChange}
                     errorText={this.passwordErrorMessage}
@@ -199,42 +199,42 @@ class DeleteAccount extends Component {
                 </div>
                 <div style={submitButton}>
                   <RaisedButton
-                    label='Yes, Delete My Account'
-                    backgroundColor='#4285F4'
-                    labelColor="#fff"
-                    onTouchTap={this.handleSubmit}
-                    disabled={!this.state.validForm}
+                  label='Yes, Delete My Account'
+                  backgroundColor='#4285F4'
+                  labelColor="#fff"
+                  onTouchTap={this.handleSubmit}
+                  disabled={!this.state.validForm}
                   />
                 </div>
                 <div style={submitButton}>
                   <RaisedButton
-                    label='Cancel'
-                    backgroundColor='#4285F4'
-                    labelColor="#fff"
-                    onTouchTap={this.handleCancel}
+                  label='Cancel'
+                  backgroundColor='#4285F4'
+                  labelColor="#fff"
+                  onTouchTap={this.handleCancel}
                   />
                 </div>
               </form>
             </div>
           </Paper>
-      	</div>
+        </div>
       </div>
-      <div>
-      <Dialog
-        actions={actions}
-        modal={false}
-        open={this.state.showDialog}
-        onRequestClose={this.handleClose} >
-        {this.state.dialogMessage}
-      </Dialog>
-      </div>
+        <div>
+          <Dialog
+            actions={actions}
+            modal={false}
+            open={this.state.showDialog}
+            onRequestClose={this.handleClose} >
+            {this.state.dialogMessage}
+          </Dialog>
+        </div>
       </div>
     )
   }
 }
 
 DeleteAccount.propTypes = {
-	history: PropTypes.object
+  history: PropTypes.object
 };
 
 export default DeleteAccount
