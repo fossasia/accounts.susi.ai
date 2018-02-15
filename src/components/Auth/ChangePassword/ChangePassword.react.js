@@ -82,7 +82,7 @@ export default class ChangePassword extends Component{
 						 console.log(response.message);
 					 }.bind(this),
 					 error: function (errorThrown) {
-						 let msg = 'Failed' + errorThrown.message;
+						 let msg = 'Incorrect Password! Try again.';
 						 let state = this.state;
 						 state.msg = msg;
 						 state.showDialog = true;
