@@ -31,7 +31,7 @@ const ListMenu = () => (
  										href="https://skills.susi.ai/" />
                      <MenuItem primaryText="Change Password"
                            containerElement={<Link to="/changepassword" />} />
-                           <MenuItem primaryText="delete account"
+                           <MenuItem primaryText="Delete Account"
                            containerElement={<Link to="/delete-account" />} />
                     <MenuItem primaryText="Logout"
                     containerElement={<Link to="/logout" />} />
