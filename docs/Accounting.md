@@ -40,7 +40,7 @@ User is then sent a verification link to confirm the sign up. And upon verifying
 Login endpoint : `BASE_URL+'/aaa/login.json?type=access-token&login=EMAIL&password=PASSWORD';`
 
 #### **Password Recovery**
-Incase the user forgets his password, he can use the `Forgot Password` option to reset his password.
+In case the user forgets his password, he can use the `Forgot Password` option to reset his password.
 The Password recovery service uses :
 >- Email
 >- SUSI Server
