@@ -12,7 +12,8 @@ import iOS from '../../images/ios.png'
 import android from '../../images/android1.png'
 import web from '../../images/network-icon.png'
 import cms from '../../images/edit-icon-png-24.png'
-
+import Cookies from 'universal-cookie';
+const c = new Cookies();
 const ListMenu = () => (
           <IconMenu className='IconMenu'
                       tooltip="Options"
@@ -75,6 +76,7 @@ class LoggedIn extends Component {
             titleStyle={{height:'46px'}}
             iconElementRight={<ListMenu />}
           />
+          <h1 style={{margin:'30px 20px',fontSize:'40'}}>Welcome {c.get('emailId')}</h1>
         </div>
         <div id="parent">
            <div className="child1">
