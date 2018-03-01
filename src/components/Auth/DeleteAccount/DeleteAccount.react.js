@@ -118,7 +118,7 @@ class DeleteAccount extends Component {
       error: function(errorThrown) {
         this.setState({
           showDialog: true,
-          dialogMessage: 'Account deletion failed! Please try again in some time',
+          dialogMessage: 'Account deletion failed! Incorrect password.',
         })
       }.bind(this)
     })
