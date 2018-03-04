@@ -252,7 +252,7 @@ class Login extends Component {
 									labelColor="#fff"
 									disabled={!this.state.validForm} />
 							</div>
-							<span>{this.state.msg}</span>
+							<div id="message"><span>{this.state.msg}</span></div>
 							<h1>OR</h1>
 							<div>
 								<Link to='/forgotpwd'
