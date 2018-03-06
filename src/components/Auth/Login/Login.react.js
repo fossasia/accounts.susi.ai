@@ -202,7 +202,8 @@ class Login extends Component {
 			'margin': '60px auto',
             'width': '100%',
             'padding': '20px',
-            'textAlign': 'center'
+            'textAlign': 'center',
+			'box-shadow': ['rgba(0, 0, 0, 0.12) 0px 1px 6px', 'rgba(0, 0, 0, 0.12) 0px 1px 4px']
 		}
 		const fieldStyle={
 			'width':'256px'
