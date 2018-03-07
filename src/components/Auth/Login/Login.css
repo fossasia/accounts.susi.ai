@@ -109,3 +109,7 @@
 .menu-new a {
     color: #fff;
 }
+#message{
+	padding:10px;
+	color:red;
+}
