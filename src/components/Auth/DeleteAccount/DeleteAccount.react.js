@@ -200,7 +200,7 @@ class DeleteAccount extends Component {
                 <div style={submitButton}>
                   <RaisedButton
                   label='Yes, Delete My Account'
-                  backgroundColor='#4285F4'
+                  backgroundColor='red'
                   labelColor="#fff"
                   onTouchTap={this.handleSubmit}
                   disabled={!this.state.validForm}
