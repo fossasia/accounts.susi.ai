@@ -262,10 +262,10 @@ class Login extends Component {
 								</Link>
 							</div>
 							<div>
-								<h4>If you do not have an account, Please SignUp</h4>
+								<h4>If you do not have an account, please Sign Up.</h4>
 								<Link to={'/signup'} >
 									<RaisedButton
-										label='SignUp'
+										label='Sign Up'
 										backgroundColor={
 												UserPreferencesStore.getTheme()==='light'
 												? '#4285F4' : '#4285F4'}
