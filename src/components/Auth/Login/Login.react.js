@@ -221,7 +221,6 @@ class Login extends Component {
 						height: '46px'}}
 						titleStyle={{height:'46px'}}
 					/>
-
             	</div>
             	<div className="loginForm">
 					<Paper zDepth={0}style={styles}>

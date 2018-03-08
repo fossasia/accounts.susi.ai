@@ -34,7 +34,7 @@ export default class NotFound extends Component {
             <div>
                 <div className='container-fluid not-found-banner'>
                     <h2 >
-                        <a className='susilogo'  >
+                        <a className='susilogo' >
                             <img
                                 src={LogoImg}
                                 to={'/'}

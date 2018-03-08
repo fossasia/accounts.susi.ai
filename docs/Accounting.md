@@ -35,20 +35,20 @@ User is then sent a verification link to confirm the sign up. And upon verifying
  Once the user has registered with the server, he can directly login using :
  >- Email
  >- Password
->- SUSI Server
+ >- SUSI Server
  
 Login endpoint : `BASE_URL+'/aaa/login.json?type=access-token&login=EMAIL&password=PASSWORD';`
 
 #### **Password Recovery**
-Incase the user forgets his password, he can use the `Forgot Password` option to reset his password.
+In case the user forgets his password, he can use the `Forgot Password` option to reset his password.
 The Password recovery service uses :
->- Email
->- SUSI Server
+ >- Email
+ >- SUSI Server
 
 Password Recovery endpoint : `BASE_URL+'/aaa/recoverpassword.json?forgotemail=EMAIL'`
 
 A confirmation link is sent to the provided email with a link to `Reset Password` service.
 Upon clicking that link, the user is redirected to a reset password service app where the user is asked for :
->- New Password
+ >- New Password
 
 Reset password Redirect : `BASE_URL+'/apps/resetpass/index.html?token=TOKEN'`
