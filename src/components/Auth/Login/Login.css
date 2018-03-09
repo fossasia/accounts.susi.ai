@@ -4,9 +4,9 @@
 	margin-bottom: 20px;
 }
 .loginForm{
-	width: 100%;
+	padding: 10px;
+	width: 400px;
 	margin: 0 auto;
-
 }
 
 .app-bar{
@@ -54,6 +54,10 @@
 @media screen and (max-width: 768px) {
 	.loginForm h1{
 		font-size: 16px;
+	}
+	.loginForm {
+		width: 320px;
+		margin: 0 auto;
 	}
 }
 
