@@ -172,10 +172,12 @@ class Login extends Component {
         }
 	    if (!state.emailError && !state.passwordError)
 	    {
-	    	state.validForm = true;
+	    	state.validForm1 = true;
+	    	state.validForm2 = false;
 	    }
         else {
-        	state.validForm = false;
+        	state.validForm1 = false;
+	    	state.validForm2 = true;
         }
 
 		this.setState(state);
@@ -257,7 +259,16 @@ class Login extends Component {
 									backgroundColor={
 										UserPreferencesStore.getTheme()==='light' ? '#4285F4' : '#4285F4'}
 									labelColor="#fff"
-									disabled={!this.state.validForm} />
+									disabled={!this.state.validForm1} />
+	<Link to={'/signup'} >
+									<RaisedButton
+										label='SignUp'
+										backgroundColor={
+												UserPreferencesStore.getTheme()==='light'
+												? '#4285F4' : '#4285F4'}
+										labelColor="#fff"
+									disabled={!this.state.validForm2} />
+								</Link>
 							</div>
 							<div id="message"><span>{this.state.msg}</span></div>
 							<h1>OR</h1>
@@ -267,17 +278,7 @@ class Login extends Component {
 									<b>Forgot Password?</b>
 								</Link>
 							</div>
-							<div>
-								<h4>If you do not have an account, Please SignUp</h4>
-								<Link to={'/signup'} >
-									<RaisedButton
-										label='SignUp'
-										backgroundColor={
-												UserPreferencesStore.getTheme()==='light'
-												? '#4285F4' : '#4285F4'}
-										labelColor="#fff" />
-								</Link>
-							</div>
+							
 						</form>
 				</Paper>
 			</div>
