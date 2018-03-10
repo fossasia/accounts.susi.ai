@@ -15,6 +15,9 @@ import AppBar from 'material-ui/AppBar';
 import { addUrlProps, UrlQueryParamTypes } from 'react-url-query';
 import Cookies from 'universal-cookie';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
+import Chat from 'material-ui/svg-icons/communication/chat';
+import Help from 'material-ui/svg-icons/action/help';
+import SignUp from 'material-ui/svg-icons/social/person-add';
 /* eslint-disable */
 const cookies = new Cookies();
 const ListMenu = () => (
@@ -29,12 +32,15 @@ const ListMenu = () => (
 						targetOrigin={{ horizontal: 'right', vertical: 'top' }}
 						anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
 					>
-					<MenuItem primaryText="Chat With Susi"
-						href="http://chat.susi.ai" />
+					<MenuItem primaryText="Chat"
+						href="http://chat.susi.ai"
+						rightIcon={<Chat/>} />
 					<MenuItem primaryText="Forgot Password"
-						 containerElement={<Link to="/forgotpwd" />} />
+						 containerElement={<Link to="/forgotpwd" />}
+					rightIcon={<Help/>} />
 					<MenuItem primaryText="Sign Up"
-						containerElement={<Link to="/signup" />} />
+						containerElement={<Link to="/signup" />} 
+						rightIcon={<SignUp/>}/>
 					</IconMenu>
 
 
@@ -166,10 +172,12 @@ class Login extends Component {
         }
 	    if (!state.emailError && !state.passwordError)
 	    {
-	    	state.validForm = true;
+	    	state.validForm1 = true;
+	    	state.validForm2 = false;
 	    }
         else {
-        	state.validForm = false;
+        	state.validForm1 = false;
+	    	state.validForm2 = true;
         }
 
 		this.setState(state);
@@ -222,7 +230,6 @@ class Login extends Component {
 						height: '46px'}}
 						titleStyle={{height:'46px'}}
 					/>
-
             	</div>
             	<div className="loginForm">
 					<Paper zDepth={0}style={styles}>
@@ -252,7 +259,16 @@ class Login extends Component {
 									backgroundColor={
 										UserPreferencesStore.getTheme()==='light' ? '#4285F4' : '#4285F4'}
 									labelColor="#fff"
-									disabled={!this.state.validForm} />
+									disabled={!this.state.validForm1} />
+	<Link to={'/signup'} >
+									<RaisedButton
+										label='SignUp'
+										backgroundColor={
+												UserPreferencesStore.getTheme()==='light'
+												? '#4285F4' : '#4285F4'}
+										labelColor="#fff"
+									disabled={!this.state.validForm2} />
+								</Link>
 							</div>
 							<div id="message"><span>{this.state.msg}</span></div>
 							<h1>OR</h1>
@@ -262,17 +278,7 @@ class Login extends Component {
 									<b>Forgot Password?</b>
 								</Link>
 							</div>
-							<div>
-								<h4>If you do not have an account, Please SignUp</h4>
-								<Link to={'/signup'} >
-									<RaisedButton
-										label='SignUp'
-										backgroundColor={
-												UserPreferencesStore.getTheme()==='light'
-												? '#4285F4' : '#4285F4'}
-										labelColor="#fff" />
-								</Link>
-							</div>
+							
 						</form>
 				</Paper>
 			</div>
