@@ -13,7 +13,10 @@ import android from '../../images/android1.png'
 import web from '../../images/network-icon.png'
 import cms from '../../images/edit-icon-png-24.png'
 import Footer from '../Footer/Footer.react';
-
+import Settings from 'material-ui/svg-icons/action/settings';
+import Exit from 'material-ui/svg-icons/action/exit-to-app';
+import Dashboard from 'material-ui/svg-icons/action/dashboard';
+import Chat from 'material-ui/svg-icons/communication/chat';
 const ListMenu = () => (
           <IconMenu className='IconMenu'
                       tooltip="Options"
@@ -26,21 +29,25 @@ const ListMenu = () => (
                       targetOrigin={{ horizontal: 'right', vertical: 'top' }}
                       anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
                      >
-                     <MenuItem primaryText="Chat With Susi"
- 										href="https://chat.susi.ai" />
- 					<MenuItem primaryText="Browse Skills"
- 										href="https://skills.susi.ai/" />
+                     <MenuItem primaryText="Chat"
+ 										href="https://chat.susi.ai"
+                     rightIcon={<Chat/>}/>
+ 					<MenuItem primaryText="Skills"
+ 										href="https://skills.susi.ai/"
+                     rightIcon={<Dashboard/>}/>
                      <MenuItem
-                        primaryText="Accounts Settings"
+                        primaryText="Settings"
                         menuItems={[
                           <MenuItem key="1" primaryText="Change Password"
                           containerElement={<Link to="/changepassword" />} />,
                           <MenuItem key="2" primaryText="Delete Account"
                           containerElement={<Link to="/delete-account" />} />
                         ]}
+                        rightIcon={<Settings/>}
                       />
                     <MenuItem primaryText="Logout"
-                    containerElement={<Link to="/logout" />} />
+                    containerElement={<Link to="/logout" />}
+                    rightIcon={<Exit />}/>
                   </IconMenu>
 );
 
