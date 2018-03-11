@@ -1,12 +1,15 @@
 .forgotpwdlink{
 	text-decoration: none;
 	color: #999999;
-	margin-bottom: 20px;
+	margin-bottom: 30px;
+}
+
+.signupbtn{
+  padding-left: 15px;
 }
 .loginForm{
 	width: 100%;
 	margin: 0 auto;
-
 }
 
 .app-bar{
