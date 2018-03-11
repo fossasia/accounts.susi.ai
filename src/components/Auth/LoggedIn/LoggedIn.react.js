@@ -12,6 +12,7 @@ import iOS from '../../images/ios.png'
 import android from '../../images/android1.png'
 import web from '../../images/network-icon.png'
 import cms from '../../images/edit-icon-png-24.png'
+import Footer from '../Footer/Footer.react';
 
 const ListMenu = () => (
           <IconMenu className='IconMenu'
@@ -126,7 +127,7 @@ class LoggedIn extends Component {
                 <h2>CMS</h2>
               </div>
 	         </div>
-        </div>
+        </div><Footer />
     </div>
     )
   }
