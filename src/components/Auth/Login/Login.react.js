@@ -15,6 +15,8 @@ import AppBar from 'material-ui/AppBar';
 import { addUrlProps, UrlQueryParamTypes } from 'react-url-query';
 import Cookies from 'universal-cookie';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
 import Chat from 'material-ui/svg-icons/communication/chat';
 import Help from 'material-ui/svg-icons/action/help';
 import SignUp from 'material-ui/svg-icons/social/person-add';
@@ -72,11 +74,16 @@ class Login extends Component {
 			success: false,
 			validForm: false,
 			emailError: true,
+			showDialog: false,
             checked: false
 		};
 		this.emailErrorMessage = '';
         this.passwordErrorMessage = '';
 	}
+
+	handleClose = (event) => {
+		this.setState({showDialog: false})
+	};
 
 	componentDidMount() {
 		const { token } = this.props;
@@ -128,10 +135,11 @@ class Login extends Component {
 					this.setState(state);
 				}.bind(this),
 				error: function (errorThrown) {
-					let msg = 'Login Failed. Try Again';
-					let state = this.state;
-					state.msg = msg;
-					this.setState(state);
+					let msg1 = 'Login Failed.Try Again.';
+						 let state = this.state;
+						 state.msg1 = msg1;
+						 state.showDialog = true;
+						 this.setState(state)
 				}.bind(this)
 			});
 		}
@@ -205,7 +213,14 @@ class Login extends Component {
 	render() {
 		const { token } = this.props;
 
-
+		const actions =
+           <FlatButton
+               label="OK"
+               backgroundColor={'#607D8B'}
+               labelStyle={{ color: '#fff' }}
+               onTouchTap={this.handleClose}
+		   />;
+		   
 		const styles = {
 			'margin': '60px auto',
 			'width':'80%',
@@ -292,6 +307,15 @@ class Login extends Component {
 							</div>
 						</form>
 				</Paper>
+			</div>
+			<div>
+				<Dialog
+					actions={actions}
+					modal={false}
+					open={this.state.showDialog}
+					onRequestClose={this.handleClose} >
+					{this.state.msg1}
+					</Dialog>
 			</div>
 		</div>
 		);
