@@ -40,7 +40,7 @@ export default class ChangePassword extends Component{
 	}
 
 	handleClose = (event) => {
-		this.setState({showDialog: false})
+		this.setState({showDialog: false});
 		this.props.history.push('/userhome')
 	};
 
@@ -95,7 +95,7 @@ export default class ChangePassword extends Component{
 			let currentPassword;
 			let newPassword;
 			let confirmPassword;
-			let state = this.state
+			let state = this.state;
 			if (event.target.name === 'currentPassword') {
 					currentPassword = event.target.value;
 					let validPassword = currentPassword.length >= 6;
@@ -155,14 +155,14 @@ export default class ChangePassword extends Component{
 			else{
 					this.setState({validForm: true});
 			}
-	}
+	};
 
 	render(){
 		const styles = {
 			'margin': '60px auto',
 			'padding': '10px',
 			'textAlign': 'center'
-		}
+		};
     const actions =
            <FlatButton
                label="OK"
@@ -220,7 +220,6 @@ export default class ChangePassword extends Component{
 										type='submit'
 										backgroundColor={'#4285F4'}
 										labelColor="#fff"
-										keyboardFocused={true}
 									/>
 									&nbsp;
 								<Link to={'/'}>
@@ -228,8 +227,7 @@ export default class ChangePassword extends Component{
 										label="Cancel"
 										backgroundColor={'#4285F4'}
 										labelColor="#fff"
-										keyboardFocused={true}
-						   		/>
+								/>
 								</Link>
 							</div>
 						</form>
@@ -249,4 +247,4 @@ export default class ChangePassword extends Component{
 		);
 	}
 }
-ChangePassword.propTypes={history: PropTypes.object}
+ChangePassword.propTypes={history: PropTypes.object};

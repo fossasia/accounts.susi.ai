@@ -16,6 +16,10 @@ import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import { Link } from 'react-router-dom';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import Chat from 'material-ui/svg-icons/communication/chat';
+import Help from 'material-ui/svg-icons/action/help';
+import LogIn from 'material-ui/svg-icons/action/account-circle';
+
 /* eslint-disable */
 const ListMenu = () => (
 					<IconMenu className='IconMenu'
@@ -29,12 +33,15 @@ const ListMenu = () => (
 											targetOrigin={{ horizontal: 'right', vertical: 'top' }}
 											anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
 										 >
-                     <MenuItem primaryText="Chat With Susi"
- 										href="http://chat.susi.ai" />
+                     <MenuItem primaryText="Chat"
+ 										href="http://chat.susi.ai" 
+                                         rightIcon={<Chat/>}/>
 										 <MenuItem primaryText="Forgot Password"
-													 containerElement={<Link to="/forgotpwd" />} />
+													 containerElement={<Link to="/forgotpwd" />} 
+                                                     rightIcon={<Help/>}/>
 										<MenuItem primaryText="Log In"
-										containerElement={<Link to="/" />} />
+                                        containerElement={<Link to="/" />}
+                                        rightIcon={<LogIn/>}/>
 									</IconMenu>
 
 );

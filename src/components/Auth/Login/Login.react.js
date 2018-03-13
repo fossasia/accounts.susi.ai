@@ -15,6 +15,11 @@ import AppBar from 'material-ui/AppBar';
 import { addUrlProps, UrlQueryParamTypes } from 'react-url-query';
 import Cookies from 'universal-cookie';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
+import Chat from 'material-ui/svg-icons/communication/chat';
+import Help from 'material-ui/svg-icons/action/help';
+import SignUp from 'material-ui/svg-icons/social/person-add';
 /* eslint-disable */
 const cookies = new Cookies();
 const ListMenu = () => (
@@ -29,12 +34,15 @@ const ListMenu = () => (
 						targetOrigin={{ horizontal: 'right', vertical: 'top' }}
 						anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
 					>
-					<MenuItem primaryText="Chat With Susi"
-						href="http://chat.susi.ai" />
+					<MenuItem primaryText="Chat"
+						href="http://chat.susi.ai"
+						rightIcon={<Chat/>} />
 					<MenuItem primaryText="Forgot Password"
-						 containerElement={<Link to="/forgotpwd" />} />
+						 containerElement={<Link to="/forgotpwd" />}
+					rightIcon={<Help/>} />
 					<MenuItem primaryText="Sign Up"
-						containerElement={<Link to="/signup" />} />
+						containerElement={<Link to="/signup" />} 
+						rightIcon={<SignUp/>}/>
 					</IconMenu>
 
 
@@ -66,11 +74,16 @@ class Login extends Component {
 			success: false,
 			validForm: false,
 			emailError: true,
+			showDialog: false,
             checked: false
 		};
 		this.emailErrorMessage = '';
         this.passwordErrorMessage = '';
 	}
+
+	handleClose = (event) => {
+		this.setState({showDialog: false})
+	};
 
 	componentDidMount() {
 		const { token } = this.props;
@@ -122,10 +135,11 @@ class Login extends Component {
 					this.setState(state);
 				}.bind(this),
 				error: function (errorThrown) {
-					let msg = 'Login Failed. Try Again';
-					let state = this.state;
-					state.msg = msg;
-					this.setState(state);
+					let msg1 = 'Login Failed.Try Again.';
+						 let state = this.state;
+						 state.msg1 = msg1;
+						 state.showDialog = true;
+						 this.setState(state)
 				}.bind(this)
 			});
 		}
@@ -166,10 +180,12 @@ class Login extends Component {
         }
 	    if (!state.emailError && !state.passwordError)
 	    {
-	    	state.validForm = true;
+	    	state.validForm1 = true;
+	    	state.validForm2 = false;
 	    }
         else {
-        	state.validForm = false;
+        	state.validForm1 = false;
+	    	state.validForm2 = true;
         }
 
 		this.setState(state);
@@ -197,12 +213,21 @@ class Login extends Component {
 	render() {
 		const { token } = this.props;
 
-
+		const actions =
+           <FlatButton
+               label="OK"
+               backgroundColor={'#607D8B'}
+               labelStyle={{ color: '#fff' }}
+               onTouchTap={this.handleClose}
+		   />;
+		   
 		const styles = {
 			'margin': '60px auto',
-            'width': '100%',
+			'width':'80%',
+			'max-width':'400px',
             'padding': '20px',
-            'textAlign': 'center'
+            'textAlign': 'center',
+			'box-shadow': ['rgba(0, 0, 0, 0.12) 0px 1px 6px', 'rgba(0, 0, 0, 0.12) 0px 1px 4px']
 		}
 		const fieldStyle={
 			'width':'256px'
@@ -220,7 +245,6 @@ class Login extends Component {
 						height: '46px'}}
 						titleStyle={{height:'46px'}}
 					/>
-
             	</div>
             	<div className="loginForm">
 					<Paper zDepth={0}style={styles}>
@@ -250,9 +274,18 @@ class Login extends Component {
 									backgroundColor={
 										UserPreferencesStore.getTheme()==='light' ? '#4285F4' : '#4285F4'}
 									labelColor="#fff"
-									disabled={!this.state.validForm} />
+									disabled={!this.state.validForm1} />
+	<Link to={'/signup'} >
+									<RaisedButton
+										label='SignUp'
+										backgroundColor={
+												UserPreferencesStore.getTheme()==='light'
+												? '#4285F4' : '#4285F4'}
+										labelColor="#fff"
+									disabled={!this.state.validForm2} />
+								</Link>
 							</div>
-							<span>{this.state.msg}</span>
+							<div id="message"><span>{this.state.msg}</span></div>
 							<h1>OR</h1>
 							<div>
 								<Link to='/forgotpwd'
@@ -260,11 +293,12 @@ class Login extends Component {
 									<b>Forgot Password?</b>
 								</Link>
 							</div>
+
 							<div>
-								<h4>If you do not have an account, Please SignUp</h4>
+								<h4>If you do not have an account, please Sign Up.</h4>
 								<Link to={'/signup'} >
 									<RaisedButton
-										label='SignUp'
+										label='Sign Up'
 										backgroundColor={
 												UserPreferencesStore.getTheme()==='light'
 												? '#4285F4' : '#4285F4'}
@@ -273,6 +307,15 @@ class Login extends Component {
 							</div>
 						</form>
 				</Paper>
+			</div>
+			<div>
+				<Dialog
+					actions={actions}
+					modal={false}
+					open={this.state.showDialog}
+					onRequestClose={this.handleClose} >
+					{this.state.msg1}
+					</Dialog>
 			</div>
 		</div>
 		);

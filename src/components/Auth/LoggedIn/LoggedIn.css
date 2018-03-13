@@ -72,7 +72,7 @@
 }
 #parent {
   display: -webkit-flex;
-  float: left;
+  
     padding-top: 125px;
     height: 500px;
     margin: 5px;
