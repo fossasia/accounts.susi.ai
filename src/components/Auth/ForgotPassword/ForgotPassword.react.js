@@ -171,7 +171,6 @@ class ForgotPassword extends Component {
 								backgroundColor={
 									UserPreferencesStore.getTheme()==='light' ? '#4285F4' : '#4285F4'}
 								labelColor="#fff"
-								keyboardFocused={true}
 								onTouchTap={this.handleCancel}
 						/>
 					</Paper>

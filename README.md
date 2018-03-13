@@ -15,7 +15,7 @@ Our chat channel is on gitter here: https://gitter.im/fossasia/susi_server
 
 ### Components
 * HTML - Structure of the web page generated.
-* CSS - Styling options and details ofthe web page.
+* CSS - Styling options and details of the web page.
 * Javascript(JSON) - Used to store information for deploying the application such as dependencies.
 * ReactJS - Structure for deployment of the web page.
 

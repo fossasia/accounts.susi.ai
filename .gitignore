@@ -11,6 +11,7 @@
 
 # misc
 .DS_Store
+.idea
 .env
 npm-debug.log*
 package-log.json*
@@ -18,4 +19,5 @@ package-lock.json*
 yarn-debug.log*
 yarn-error.log*
 jest
+.idea
 ..env.swp

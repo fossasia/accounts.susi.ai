@@ -17,27 +17,33 @@ import Cookies from 'universal-cookie';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
+import Chat from 'material-ui/svg-icons/communication/chat';
+import Help from 'material-ui/svg-icons/action/help';
+import SignUp from 'material-ui/svg-icons/social/person-add';
 /* eslint-disable */
 const cookies = new Cookies();
 const ListMenu = () => (
 					<IconMenu className='IconMenu'
-											tooltip="Options"
-											iconButtonElement={
-													<IconButton
-													className='menu-icon'
-													iconStyle={{ fill : 'white',}}>
-															<MoreVertIcon /></IconButton>
-											}
-											targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-											anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-										 >
-										 <MenuItem primaryText="Chat With Susi"
- 										href="http://chat.susi.ai" />
-										 <MenuItem primaryText="Forgot Password"
-													 containerElement={<Link to="/forgotpwd" />} />
-										<MenuItem primaryText="Sign Up"
-										containerElement={<Link to="/signup" />} />
-									</IconMenu>
+						tooltip="Options"
+						iconButtonElement={
+								<IconButton
+								className='menu-icon'
+								iconStyle={{ fill : 'white',}}>
+										<MoreVertIcon /></IconButton>
+						}
+						targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+						anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+					>
+					<MenuItem primaryText="Chat"
+						href="http://chat.susi.ai"
+						rightIcon={<Chat/>} />
+					<MenuItem primaryText="Forgot Password"
+						 containerElement={<Link to="/forgotpwd" />}
+					rightIcon={<Help/>} />
+					<MenuItem primaryText="Sign Up"
+						containerElement={<Link to="/signup" />} 
+						rightIcon={<SignUp/>}/>
+					</IconMenu>
 
 
 );
@@ -80,10 +86,8 @@ class Login extends Component {
 	};
 
 	componentDidMount() {
-		const {
-      token
-    } = this.props;
-				if(token !== "null") {
+		const { token } = this.props;
+		if(token !== "null") {
 			this.props.history.push('/resetpass/?token='+token);
 		}
 		if(cookies.get('loggedIn')) {
@@ -176,10 +180,12 @@ class Login extends Component {
         }
 	    if (!state.emailError && !state.passwordError)
 	    {
-	    	state.validForm = true;
+	    	state.validForm1 = true;
+	    	state.validForm2 = false;
 	    }
         else {
-        	state.validForm = false;
+        	state.validForm1 = false;
+	    	state.validForm2 = true;
         }
 
 		this.setState(state);
@@ -217,9 +223,11 @@ class Login extends Component {
 		   
 		const styles = {
 			'margin': '60px auto',
-            'width': '100%',
+			'width':'80%',
+			'max-width':'400px',
             'padding': '20px',
-            'textAlign': 'center'
+            'textAlign': 'center',
+			'box-shadow': ['rgba(0, 0, 0, 0.12) 0px 1px 6px', 'rgba(0, 0, 0, 0.12) 0px 1px 4px']
 		}
 		const fieldStyle={
 			'width':'256px'
@@ -229,80 +237,75 @@ class Login extends Component {
 		return (
 			<div>
 				<div className="app-bar-div">
-                    	<AppBar
-											iconElementLeft= {<iconButton></iconButton>}
-											iconElementRight={<ListMenu />}
-                        	className="app-bar"
-                        	style={{ backgroundColor : '#4285F4',
-                        	     height: '46px'}}
-                        	titleStyle={{height:'46px'}}
-
-                    	/>
-
+					<AppBar
+						iconElementLeft= {<iconButton></iconButton>}
+						iconElementRight={<ListMenu />}
+						className="app-bar"
+						style={{ backgroundColor : '#4285F4',
+						height: '46px'}}
+						titleStyle={{height:'46px'}}
+					/>
             	</div>
             	<div className="loginForm">
-				<Paper zDepth={0}style={styles}>
-            		<h1>Login to SUSI</h1>
-					<form onSubmit={this.handleSubmit}>
+					<Paper zDepth={0}style={styles}>
+	            		<h1>Login to SUSI</h1>
+						<form onSubmit={this.handleSubmit}>
+							<div>
+								<TextField name="email"
+									value={this.state.email}
+									onChange={this.handleChange}
+									errorText={this.emailErrorMessage}
+									floatingLabelText="Email" />
+							</div>
+							<div>
+						        <PasswordField
+							        name='password'
+									style={fieldStyle}
+							        value={this.state.password}
 
-						<div>
-							<TextField name="email"
-								value={this.state.email}
-								onChange={this.handleChange}
-								errorText={this.emailErrorMessage}
-								floatingLabelText="Email" />
-						</div>
-						<div>
-					        <PasswordField
-						        name='password'
-								style={fieldStyle}
-						        value={this.state.password}
-
-								onChange={this.handleChange}
-								errorText={this.passwordErrorMessage}
-								floatingLabelText='Password' />
-						</div>
-						<div>
-							<RaisedButton
-								label="Login"
-								type="submit"
-								backgroundColor={
-									UserPreferencesStore.getTheme()==='light' ? '#4285F4' : '#4285F4'}
-								labelColor="#fff"
-								disabled={!this.state.validForm} />
-						</div>
-						<span>{this.state.msg}</span>
-						<h1>OR</h1>
-						<div>
-							<Link to='/forgotpwd'
-								className="forgotpwdlink">
-								<b>Forgot Password?</b>
-							</Link>
-						</div>
-						{/* <div>
-													<Link to={'/changepassword'}>
-													<RaisedButton
-														label='change password'
-														backgroundColor={
-															UserPreferencesStore.getTheme()==='light'
-															? '#607D8B' : '#19314B'}
-															labelColor='#fff'/>
-													<h3></h3>
-													</Link>
-												</div> */}
-						<div>
-						<h4>If you do not have an account, Please SignUp</h4>
-						<Link to={'/signup'} >
+									onChange={this.handleChange}
+									errorText={this.passwordErrorMessage}
+									floatingLabelText='Password' />
+							</div>
+							<div>
+								<RaisedButton
+									label="Login"
+									type="submit"
+									backgroundColor={
+										UserPreferencesStore.getTheme()==='light' ? '#4285F4' : '#4285F4'}
+									labelColor="#fff"
+									disabled={!this.state.validForm1} />
+	<Link to={'/signup'} >
 									<RaisedButton
 										label='SignUp'
 										backgroundColor={
 												UserPreferencesStore.getTheme()==='light'
 												? '#4285F4' : '#4285F4'}
+										labelColor="#fff"
+									disabled={!this.state.validForm2} />
+								</Link>
+							</div>
+							<div id="message"><span>{this.state.msg}</span></div>
+							<h1>OR</h1>
+							<div>
+								<Link to='/forgotpwd'
+									className="forgotpwdlink">
+									<b>Forgot Password?</b>
+								</Link>
+							</div>
+
+							<div>
+								<h4>If you do not have an account, please Sign Up.</h4>
+								<Link to={'/signup'} >
+									<RaisedButton
+										label='Sign Up'
+										backgroundColor={
+												UserPreferencesStore.getTheme()==='light'
+												? '#4285F4' : '#4285F4'}
 										labelColor="#fff" />
-										<h3></h3>
-						</Link>
-						</div>
-					</form>
+								</Link>
+							</div>
+						</form>
 				</Paper>
 			</div>
 			<div>
