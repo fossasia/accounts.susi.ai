@@ -13,6 +13,9 @@ import android from '../../images/android1.png'
 import web from '../../images/network-icon.png'
 import cms from '../../images/edit-icon-png-24.png'
 import Footer from '../Footer/Footer.react';
+import Grid from 'react-bootstrap/lib/Grid';
+import Row from 'react-bootstrap/lib/Row';
+import Col from 'react-bootstrap/lib/Col';
 import Settings from 'material-ui/svg-icons/action/settings';
 import Exit from 'material-ui/svg-icons/action/exit-to-app';
 import Dashboard from 'material-ui/svg-icons/action/dashboard';
@@ -90,7 +93,10 @@ class LoggedIn extends Component {
           />
         </div>
         <div id="parent">
-           <div className="child1">
+        <Grid>
+        <Row>
+            <Col xs={12} sm={6} style={{'float':'left'}}>
+                { <div className="child1">
             <Link to="/settings">
               <Paper style={style} zDepth={1} circle={true}>
               <img style={{margin: '25px 10px', height: '70%'}} src={iOS}
@@ -100,8 +106,10 @@ class LoggedIn extends Component {
               <div style={heading1}>
                 <h2>iOS</h2>
               </div>
-	         </div>
-           <div className="child2">
+	         </div>}
+            </Col>
+            <Col xs={12} sm={6} style={{'float':'left'}}>
+                {<div className="child2">
             <Link to="/settings">
               <Paper style={style} zDepth={1} circle={true}>
               <img style={{margin: '30', height: '70%'}} src={android}
@@ -111,8 +119,10 @@ class LoggedIn extends Component {
               <div style={heading2}>
                 <h2>Android</h2>
               </div>
-	         </div>
-           <div className="child3">
+	         </div>}
+            </Col>
+            <Col xs={12} sm={6} style={{'float':'left'}}>
+                {<div className="child3">
             <Link to="/settings">
               <Paper style={style} zDepth={1} circle={true}>
               <img style={{margin: '35'}} src={web}
@@ -122,8 +132,10 @@ class LoggedIn extends Component {
               <div style={heading3}>
                 <h2>Web</h2>
               </div>
-	         </div>
-           <div className="child4">
+	         </div>}
+            </Col>
+            <Col xs={12} sm={6} style={{'float':'left'}}>
+                {<div className="child4">
             <Link to="/settings">
               <Paper style={style} zDepth={1} circle={true}>
               <img style={{margin: '35', height: '65%'}} src={cms}
@@ -133,9 +145,12 @@ class LoggedIn extends Component {
               <div style={heading3}>
                 <h2>CMS</h2>
               </div>
-	         </div>
+	         </div>}
+            </Col>
+        </Row>
+        </Grid>
         </div><Footer />
-    </div>
+      </div>
     )
   }
 }
