@@ -208,7 +208,8 @@ class Login extends Component {
 
 		const styles = {
 			'margin': '60px auto',
-            'width': '100%',
+			'width':'80%',
+			'max-width':'400px',
             'padding': '20px',
             'textAlign': 'center',
 			'box-shadow': ['rgba(0, 0, 0, 0.12) 0px 1px 6px', 'rgba(0, 0, 0, 0.12) 0px 1px 4px']
