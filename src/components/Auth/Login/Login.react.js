@@ -278,7 +278,18 @@ class Login extends Component {
 									<b>Forgot Password?</b>
 								</Link>
 							</div>
-							
+
+							<div>
+								<h4>If you do not have an account, please Sign Up.</h4>
+								<Link to={'/signup'} >
+									<RaisedButton
+										label='Sign Up'
+										backgroundColor={
+												UserPreferencesStore.getTheme()==='light'
+												? '#4285F4' : '#4285F4'}
+										labelColor="#fff" />
+								</Link>
+							</div>
 						</form>
 				</Paper>
 			</div>
