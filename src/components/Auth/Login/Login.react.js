@@ -180,12 +180,10 @@ class Login extends Component {
         }
 	    if (!state.emailError && !state.passwordError)
 	    {
-	    	state.validForm1 = true;
-	    	state.validForm2 = false;
+	    	state.validForm = true;
 	    }
         else {
-        	state.validForm1 = false;
-	    	state.validForm2 = true;
+        	state.validForm = false;
         }
 
 		this.setState(state);
@@ -228,6 +226,7 @@ class Login extends Component {
             'padding': '20px',
             'textAlign': 'center',
 			'box-shadow': ['rgba(0, 0, 0, 0.12) 0px 1px 6px', 'rgba(0, 0, 0, 0.12) 0px 1px 4px']
+			
 		}
 		const fieldStyle={
 			'width':'256px'
@@ -267,6 +266,14 @@ class Login extends Component {
 									errorText={this.passwordErrorMessage}
 									floatingLabelText='Password' />
 							</div>
+							<br />
+							<div>
+								<Link to='/forgotpwd'
+									className="forgotpwdlink">
+									<b>Forgot Password?</b>
+								</Link>
+							</div>
+							<br /><br />
 							<div>
 								<RaisedButton
 									label="Login"
@@ -274,37 +281,17 @@ class Login extends Component {
 									backgroundColor={
 										UserPreferencesStore.getTheme()==='light' ? '#4285F4' : '#4285F4'}
 									labelColor="#fff"
-									disabled={!this.state.validForm1} />
-	<Link to={'/signup'} >
+									disabled={!this.state.validForm} />
+								<Link to={'/signup'} className='signupbtn'>
 									<RaisedButton
 										label='SignUp'
-										backgroundColor={
-												UserPreferencesStore.getTheme()==='light'
-												? '#4285F4' : '#4285F4'}
-										labelColor="#fff"
-									disabled={!this.state.validForm2} />
-								</Link>
-							</div>
-							<div id="message"><span>{this.state.msg}</span></div>
-							<h1>OR</h1>
-							<div>
-								<Link to='/forgotpwd'
-									className="forgotpwdlink">
-									<b>Forgot Password?</b>
-								</Link>
-							</div>
-
-							<div>
-								<h4>If you do not have an account, please Sign Up.</h4>
-								<Link to={'/signup'} >
-									<RaisedButton
-										label='Sign Up'
 										backgroundColor={
 												UserPreferencesStore.getTheme()==='light'
 												? '#4285F4' : '#4285F4'}
 										labelColor="#fff" />
 								</Link>
 							</div>
+							<div id="message"><span>{this.state.msg}</span></div>
 						</form>
 				</Paper>
 			</div>
