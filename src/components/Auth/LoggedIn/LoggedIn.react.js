@@ -12,6 +12,7 @@ import iOS from '../../images/ios.png'
 import android from '../../images/android1.png'
 import web from '../../images/network-icon.png'
 import cms from '../../images/edit-icon-png-24.png'
+import Footer from '../Footer/Footer.react';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
@@ -148,7 +149,7 @@ class LoggedIn extends Component {
             </Col>
         </Row>
         </Grid>
-        </div>
+        </div><Footer />
       </div>
     )
   }
