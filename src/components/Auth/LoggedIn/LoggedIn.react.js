@@ -14,6 +14,7 @@ import web from '../../images/network-icon.png'
 import cms from '../../images/edit-icon-png-24.png'
 import Cookies from 'universal-cookie';
 const c = new Cookies();
+import Footer from '../Footer/Footer.react';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
@@ -151,7 +152,7 @@ class LoggedIn extends Component {
             </Col>
         </Row>
         </Grid>
-        </div>
+        </div><Footer />
       </div>
     )
   }
