@@ -20,6 +20,9 @@ import Dialog from 'material-ui/Dialog';
 import Chat from 'material-ui/svg-icons/communication/chat';
 import Help from 'material-ui/svg-icons/action/help';
 import SignUp from 'material-ui/svg-icons/social/person-add';
+import CommunicationEmail from 'material-ui/svg-icons/communication/email';
+import ActionLock from 'material-ui/svg-icons/action/lock'
+
 /* eslint-disable */
 const cookies = new Cookies();
 const ListMenu = () => (
@@ -41,12 +44,16 @@ const ListMenu = () => (
 						 containerElement={<Link to="/forgotpwd" />}
 					rightIcon={<Help/>} />
 					<MenuItem primaryText="Sign Up"
-						containerElement={<Link to="/signup" />} 
+						containerElement={<Link to="/signup" />}
 						rightIcon={<SignUp/>}/>
 					</IconMenu>
 
 
 );
+
+const iconStyles = {
+  marginRight: 10,
+};
 
 const urlPropsQueryConfig = {
   token: { type: UrlQueryParamTypes.string },
@@ -218,7 +225,7 @@ class Login extends Component {
                labelStyle={{ color: '#fff' }}
                onTouchTap={this.handleClose}
 		   />;
-		   
+
 		const styles = {
 			'margin': '60px auto',
 			'width':'80%',
@@ -226,7 +233,7 @@ class Login extends Component {
             'padding': '20px',
             'textAlign': 'center',
 			'box-shadow': ['rgba(0, 0, 0, 0.12) 0px 1px 6px', 'rgba(0, 0, 0, 0.12) 0px 1px 4px']
-			
+
 		}
 		const fieldStyle={
 			'width':'256px'
@@ -250,6 +257,7 @@ class Login extends Component {
 	            		<h1>Login to SUSI</h1>
 						<form onSubmit={this.handleSubmit}>
 							<div>
+							<CommunicationEmail style={iconStyles} />
 								<TextField name="email"
 									value={this.state.email}
 									onChange={this.handleChange}
@@ -257,6 +265,7 @@ class Login extends Component {
 									floatingLabelText="Email" />
 							</div>
 							<div>
+							<ActionLock style={iconStyles} />
 						        <PasswordField
 							        name='password'
 									style={fieldStyle}
