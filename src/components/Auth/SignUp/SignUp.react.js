@@ -19,6 +19,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Chat from 'material-ui/svg-icons/communication/chat';
 import Help from 'material-ui/svg-icons/action/help';
 import LogIn from 'material-ui/svg-icons/action/account-circle';
+import Dashboard from 'material-ui/svg-icons/action/dashboard';
 
 /* eslint-disable */
 const ListMenu = () => (
@@ -34,10 +35,13 @@ const ListMenu = () => (
 											anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
 										 >
                      <MenuItem primaryText="Chat"
- 										href="http://chat.susi.ai" 
+ 										href="http://chat.susi.ai"
                                          rightIcon={<Chat/>}/>
+										<MenuItem primaryText="Skills"
+									 				href="https://skills.susi.ai"
+									 				rightIcon={<Dashboard/>} />
 										 <MenuItem primaryText="Forgot Password"
-													 containerElement={<Link to="/forgotpwd" />} 
+													 containerElement={<Link to="/forgotpwd" />}
                                                      rightIcon={<Help/>}/>
 										<MenuItem primaryText="Log In"
                                         containerElement={<Link to="/" />}
