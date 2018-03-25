@@ -105,3 +105,51 @@
 .menu-new a {
     color: #fff;
 }
+
+.ReactPasswordStrength-strength-bar {
+  box-sizing: border-box;
+  height: 2px;
+  position: relative; top: 1px; right: 1px;
+  transition: width 300ms ease-out;
+}
+
+.is-strength--1 .ReactPasswordStrength-strength-bar {
+  background: #D1462F;
+  display: none;
+	left: 20%
+}
+
+.is-strength-0 .ReactPasswordStrength-strength-bar {
+  background: #D1462F;
+  width: 50px;
+  display: block;
+	left: 20%
+}
+
+.is-strength-1 .ReactPasswordStrength-strength-bar {
+  background: #D1462F;
+  width: 70px;
+  display: block;
+	left: 40%
+}
+
+.is-strength-2 .ReactPasswordStrength-strength-bar {
+  background: #57B8FF;
+  width: 141px;
+  display: block;
+	left: 30%
+}
+
+.is-strength-3 .ReactPasswordStrength-strength-bar {
+  background: #57B8FF;
+  width: 192px;
+  display: block;
+	left: 20%
+}
+
+.is-strength-4 .ReactPasswordStrength-strength-bar {
+  background: #2FBF71;
+  width: 256px;
+  display: block;
+	left: 14%
+}

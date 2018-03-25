@@ -20,6 +20,8 @@ import Chat from 'material-ui/svg-icons/communication/chat';
 import Help from 'material-ui/svg-icons/action/help';
 import LogIn from 'material-ui/svg-icons/action/account-circle';
 import Dashboard from 'material-ui/svg-icons/action/dashboard';
+import zxcvbn from 'zxcvbn';
+
 
 /* eslint-disable */
 const ListMenu = () => (
@@ -94,6 +96,7 @@ export default class SignUp extends Component {
                 passwordError: true,
                 passwordConfirmError: true,
                 passwordValue: '',
+								passwordScore: -1,
                 confirmPasswordValue: '',
                 msg: '',
                 success: false,
@@ -122,6 +125,13 @@ export default class SignUp extends Component {
             let validPassword = password.length >= 6;
             state.passwordValue = password;
             state.passwordError = !(password && validPassword);
+						if(validPassword) {
+              let result = zxcvbn(password);
+              state.passwordScore=result.score;
+            }
+            else {
+              state.passwordScore=-1;
+            }
         }
         else if (event.target.name === 'confirmPassword') {
             password = this.state.passwordValue;
@@ -238,6 +248,8 @@ export default class SignUp extends Component {
                 onTouchTap={this.handleClose}
             />;
 
+				const PasswordClass=[`is-strength-${this.state.passwordScore}`];
+
         return (
         <div>
             <div>
@@ -267,7 +279,7 @@ export default class SignUp extends Component {
                                 errorText={this.emailErrorMessage}
                                 floatingLabelText="Email" />
                         </div>
-                        <div>
+                        <div className={PasswordClass.join(' ')}>
                             <PasswordField
                                 name="password"
                                 style={fieldStyle}
@@ -275,6 +287,7 @@ export default class SignUp extends Component {
                                 onChange={this.handleChange}
                                 errorText={this.passwordErrorMessage}
                                 floatingLabelText="Password" />
+																<div className="ReactPasswordStrength-strength-bar" />
                         </div>
                         <div>
                             <PasswordField
