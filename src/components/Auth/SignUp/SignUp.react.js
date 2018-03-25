@@ -19,6 +19,8 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Chat from 'material-ui/svg-icons/communication/chat';
 import Help from 'material-ui/svg-icons/action/help';
 import LogIn from 'material-ui/svg-icons/action/account-circle';
+import CommunicationEmail from 'material-ui/svg-icons/communication/email';
+import ActionLock from 'material-ui/svg-icons/action/lock'
 
 /* eslint-disable */
 const ListMenu = () => (
@@ -34,10 +36,10 @@ const ListMenu = () => (
 											anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
 										 >
                      <MenuItem primaryText="Chat"
- 										href="http://chat.susi.ai" 
+ 										href="http://chat.susi.ai"
                                          rightIcon={<Chat/>}/>
 										 <MenuItem primaryText="Forgot Password"
-													 containerElement={<Link to="/forgotpwd" />} 
+													 containerElement={<Link to="/forgotpwd" />}
                                                      rightIcon={<Help/>}/>
 										<MenuItem primaryText="Log In"
                                         containerElement={<Link to="/" />}
@@ -45,6 +47,10 @@ const ListMenu = () => (
 									</IconMenu>
 
 );
+
+const iconStyles = {
+  marginRight: 10,
+};
 
 export default class SignUp extends Component {
     constructor(props) {
@@ -256,6 +262,7 @@ export default class SignUp extends Component {
                     <h1>Sign Up with SUSI</h1>
                     <form onSubmit={this.handleSubmit}>
                         <div>
+												<CommunicationEmail style={iconStyles} />
                             <TextField
                                 name="email"
                                 value={this.state.email}
@@ -264,6 +271,7 @@ export default class SignUp extends Component {
                                 floatingLabelText="Email" />
                         </div>
                         <div>
+												<ActionLock style={iconStyles} />
                             <PasswordField
                                 name="password"
                                 style={fieldStyle}
@@ -273,6 +281,7 @@ export default class SignUp extends Component {
                                 floatingLabelText="Password" />
                         </div>
                         <div>
+												<ActionLock style={iconStyles} />
                             <PasswordField
                                 name="confirmPassword"
                                 style={fieldStyle}
