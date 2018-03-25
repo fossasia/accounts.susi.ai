@@ -24,32 +24,32 @@ import ActionLock from 'material-ui/svg-icons/action/lock'
 
 /* eslint-disable */
 const ListMenu = () => (
-					<IconMenu className='IconMenu'
-											tooltip="Options"
-											iconButtonElement={
-													<IconButton
-													className='menu-icon'
-													iconStyle={{ fill : 'white',}}>
-															<MoreVertIcon /></IconButton>
-											}
-											targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-											anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-										 >
-                     <MenuItem primaryText="Chat"
- 										href="http://chat.susi.ai"
-                                         rightIcon={<Chat/>}/>
-										 <MenuItem primaryText="Forgot Password"
-													 containerElement={<Link to="/forgotpwd" />}
-                                                     rightIcon={<Help/>}/>
-										<MenuItem primaryText="Log In"
-                                        containerElement={<Link to="/" />}
-                                        rightIcon={<LogIn/>}/>
-									</IconMenu>
+    <IconMenu className='IconMenu'
+        tooltip="Options"
+        iconButtonElement={
+            <IconButton
+                className='menu-icon'
+                iconStyle={{ fill: 'white', }}>
+                <MoreVertIcon /></IconButton>
+        }
+        targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+    >
+        <MenuItem primaryText="Chat"
+            href="http://chat.susi.ai"
+            rightIcon={<Chat />} />
+        <MenuItem primaryText="Forgot Password"
+            containerElement={<Link to="/forgotpwd" />}
+            rightIcon={<Help />} />
+        <MenuItem primaryText="Log In"
+            containerElement={<Link to="/" />}
+            rightIcon={<LogIn />} />
+    </IconMenu>
 
 );
 
 const iconStyles = {
-  marginRight: 10,
+    marginRight: 10,
 };
 
 export default class SignUp extends Component {
@@ -68,7 +68,7 @@ export default class SignUp extends Component {
             success: false,
             open: false,
             validForm: false,
-            checked:false,
+            checked: false,
         };
 
         this.emailErrorMessage = '';
@@ -100,7 +100,7 @@ export default class SignUp extends Component {
                 msg: '',
                 success: false,
                 validForm: false,
-                checked:false,
+                checked: false,
                 open: false
             });
         }
@@ -167,13 +167,13 @@ export default class SignUp extends Component {
         }
 
 
-        if(this.state.emailError||
-        this.state.passwordError||
-        this.state.passwordConfirmError){
-            this.setState({validForm: false});
+        if (this.state.emailError ||
+            this.state.passwordError ||
+            this.state.passwordConfirmError) {
+            this.setState({ validForm: false });
         }
-        else{
-            this.setState({validForm: true});
+        else {
+            this.setState({ validForm: true });
         }
     }
 
@@ -182,7 +182,7 @@ export default class SignUp extends Component {
 
         let BASE_URL = 'https://api.susi.ai'
         let signupEndPoint =
-            BASE_URL+'/aaa/signup.json?signup=' + this.state.email +
+            BASE_URL + '/aaa/signup.json?signup=' + this.state.email +
             '&password=' + encodeURIComponent(this.state.passwordValue);
 
         if (!this.state.emailError && !this.state.passwordConfirmError) {
@@ -235,109 +235,111 @@ export default class SignUp extends Component {
             <FlatButton
                 label="OK"
                 backgroundColor={
-                    UserPreferencesStore.getTheme()==='light' ? '#4285F4' : '#4285F4'}
+                    UserPreferencesStore.getTheme() === 'light' ? '#4285F4' : '#4285F4'}
                 labelStyle={{ color: '#fff' }}
                 onTouchTap={this.handleClose}
             />;
 
         return (
-        <div>
             <div>
-                <header className='message-thread-heading'>
-                <div className="app-bar-div">
-                              <AppBar
-                              iconElementLeft= {<iconButton></iconButton>}
-                                  className="app-bar"
-                                  style={{ backgroundColor : '#4285F4',
-                                       height: '46px'}}
-                                  titleStyle={{height:'46px'}}
-                                  iconElementRight={<ListMenu />}
+                <div>
+                    <header className='message-thread-heading'>
+                        <div className="app-bar-div">
+                            <AppBar
+                                iconElementLeft={<iconButton></iconButton>}
+                                className="app-bar"
+                                style={{
+                                    backgroundColor: '#4285F4',
+                                    height: '46px'
+                                }}
+                                titleStyle={{ height: '46px' }}
+                                iconElementRight={<ListMenu />}
 
-                              />
-                  </div>
-                </header>
-            </div>
-            <div className="signUpForm">
-                <Paper zDepth={1} style={styles}>
-                    <h1>Sign Up with SUSI</h1>
-                    <form onSubmit={this.handleSubmit}>
-                        <div>
-												<CommunicationEmail style={iconStyles} />
-                            <TextField
-                                name="email"
-                                value={this.state.email}
-                                onChange={this.handleChange}
-                                errorText={this.emailErrorMessage}
-                                floatingLabelText="Email" />
+                            />
                         </div>
-                        <div>
-												<ActionLock style={iconStyles} />
-                            <PasswordField
-                                name="password"
-                                style={fieldStyle}
-                                value={this.state.passwordValue}
-                                onChange={this.handleChange}
-                                errorText={this.passwordErrorMessage}
-                                floatingLabelText="Password" />
-                        </div>
-                        <div>
-												<ActionLock style={iconStyles} />
-                            <PasswordField
-                                name="confirmPassword"
-                                style={fieldStyle}
-                                value={this.state.confirmPasswordValue}
-                                onChange={this.handleChange}
-                                errorText={this.passwordConfirmErrorMessage}
-                                floatingLabelText="Confirm Password" />
-                        </div>
-                        <div>
-                            <RaisedButton
-                                label="Sign Up"
-                                type="submit"
-                                disabled={!this.state.validForm}
-                                backgroundColor={
-                                    UserPreferencesStore.getTheme()==='light'
-                                    ? '#4285F4' : '#4285F4'}
-                                labelColor="#fff" />
-                        </div>
-                        <h1>OR</h1>
-                        <div>
-                            <h4>If you have an account, Please Login</h4>
-                            <Link to={'/'} >
-                            <RaisedButton
-                                // onTouchTap={this.handleOpen}
-                                label='Login'
+                    </header>
+                </div>
+                <div className="signUpForm">
+                    <Paper zDepth={1} style={styles}>
+                        <h1>Sign Up with SUSI</h1>
+                        <form onSubmit={this.handleSubmit}>
+                            <div>
+                                <CommunicationEmail style={iconStyles} />
+                                <TextField
+                                    name="email"
+                                    value={this.state.email}
+                                    onChange={this.handleChange}
+                                    errorText={this.emailErrorMessage}
+                                    floatingLabelText="Email" />
+                            </div>
+                            <div>
+                                <ActionLock style={iconStyles} />
+                                <PasswordField
+                                    name="password"
+                                    style={fieldStyle}
+                                    value={this.state.passwordValue}
+                                    onChange={this.handleChange}
+                                    errorText={this.passwordErrorMessage}
+                                    floatingLabelText="Password" />
+                            </div>
+                            <div>
+                                <ActionLock style={iconStyles} />
+                                <PasswordField
+                                    name="confirmPassword"
+                                    style={fieldStyle}
+                                    value={this.state.confirmPasswordValue}
+                                    onChange={this.handleChange}
+                                    errorText={this.passwordConfirmErrorMessage}
+                                    floatingLabelText="Confirm Password" />
+                            </div>
+                            <div>
+                                <RaisedButton
+                                    label="Sign Up"
+                                    type="submit"
+                                    disabled={!this.state.validForm}
+                                    backgroundColor={
+                                        UserPreferencesStore.getTheme() === 'light'
+                                            ? '#4285F4' : '#4285F4'}
+                                    labelColor="#fff" />
+                            </div>
+                            <h1>OR</h1>
+                            <div>
+                                <h4>If you have an account, Please Login</h4>
+                                <Link to={'/'} >
+                                    <RaisedButton
+                                        // onTouchTap={this.handleOpen}
+                                        label='Login'
 
-                                backgroundColor={
-                                    UserPreferencesStore.getTheme()==='light'
-                                    ? '#4285F4' : '#4285F4'}
-                                labelColor="#fff" />
-                              </Link>
-                        </div>
-                    </form>
-                </Paper>
-                {this.state.msg && (
-                    <div><Dialog
+                                        backgroundColor={
+                                            UserPreferencesStore.getTheme() === 'light'
+                                                ? '#4285F4' : '#4285F4'}
+                                        labelColor="#fff" />
+                                </Link>
+                            </div>
+                        </form>
+                    </Paper>
+                    {this.state.msg && (
+                        <div><Dialog
+                            actions={actions}
+                            modal={false}
+                            open={true}
+                            onRequestClose={this.handleClose}
+                        >
+                            {this.state.msg}
+                        </Dialog></div>
+                    )}
+                    <Dialog
                         actions={actions}
                         modal={false}
-                        open={true}
+                        open={this.state.open}
+                        autoScrollBodyContent={true}
                         onRequestClose={this.handleClose}
+                        contentStyle={{ width: '35%', minWidth: '300px' }}
                     >
-                        {this.state.msg}
-                    </Dialog></div>
-                )}
-                <Dialog
-                    actions={actions}
-                    modal={false}
-                    open={this.state.open}
-                    autoScrollBodyContent={true}
-                    onRequestClose={this.handleClose}
-                    contentStyle={{ width: '35%', minWidth: '300px' }}
-                >
-                    <div><Login {...this.props} /></div>
-                </Dialog>
+                        <div><Login {...this.props} /></div>
+                    </Dialog>
+                </div>
             </div>
-        </div>
         );
     };
 }
