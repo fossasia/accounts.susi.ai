@@ -20,8 +20,10 @@ import Dialog from 'material-ui/Dialog';
 import Chat from 'material-ui/svg-icons/communication/chat';
 import Help from 'material-ui/svg-icons/action/help';
 import SignUp from 'material-ui/svg-icons/social/person-add';
+
 import CommunicationEmail from 'material-ui/svg-icons/communication/email';
 import ActionLock from 'material-ui/svg-icons/action/lock'
+import Dashboard from 'material-ui/svg-icons/action/dashboard';
 
 /* eslint-disable */
 const cookies = new Cookies();
@@ -40,6 +42,9 @@ const ListMenu = () => (
 					<MenuItem primaryText="Chat"
 						href="http://chat.susi.ai"
 						rightIcon={<Chat/>} />
+						<MenuItem primaryText="Skills"
+						href="https://skills.susi.ai"
+						rightIcon={<Dashboard/>} />
 					<MenuItem primaryText="Forgot Password"
 						 containerElement={<Link to="/forgotpwd" />}
 					rightIcon={<Help/>} />
