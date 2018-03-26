@@ -20,6 +20,7 @@ import Dialog from 'material-ui/Dialog';
 import Chat from 'material-ui/svg-icons/communication/chat';
 import Help from 'material-ui/svg-icons/action/help';
 import SignUp from 'material-ui/svg-icons/social/person-add';
+import Dashboard from 'material-ui/svg-icons/action/dashboard';
 /* eslint-disable */
 const cookies = new Cookies();
 const ListMenu = () => (
@@ -37,11 +38,14 @@ const ListMenu = () => (
 					<MenuItem primaryText="Chat"
 						href="http://chat.susi.ai"
 						rightIcon={<Chat/>} />
+						<MenuItem primaryText="Skills"
+						href="https://skills.susi.ai"
+						rightIcon={<Dashboard/>} />
 					<MenuItem primaryText="Forgot Password"
 						 containerElement={<Link to="/forgotpwd" />}
 					rightIcon={<Help/>} />
 					<MenuItem primaryText="Sign Up"
-						containerElement={<Link to="/signup" />} 
+						containerElement={<Link to="/signup" />}
 						rightIcon={<SignUp/>}/>
 					</IconMenu>
 
@@ -218,7 +222,7 @@ class Login extends Component {
                labelStyle={{ color: '#fff' }}
                onTouchTap={this.handleClose}
 		   />;
-		   
+
 		const styles = {
 			'margin': '60px auto',
 			'width':'80%',
@@ -226,7 +230,7 @@ class Login extends Component {
             'padding': '20px',
             'textAlign': 'center',
 			'box-shadow': ['rgba(0, 0, 0, 0.12) 0px 1px 6px', 'rgba(0, 0, 0, 0.12) 0px 1px 4px']
-			
+
 		}
 		const fieldStyle={
 			'width':'256px'
