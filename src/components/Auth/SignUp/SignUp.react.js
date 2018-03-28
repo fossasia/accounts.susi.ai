@@ -22,6 +22,9 @@ import LogIn from 'material-ui/svg-icons/action/account-circle';
 import Dashboard from 'material-ui/svg-icons/action/dashboard';
 import zxcvbn from 'zxcvbn';
 
+import CommunicationEmail from 'material-ui/svg-icons/communication/email';
+import ActionLock from 'material-ui/svg-icons/action/lock'
+
 
 /* eslint-disable */
 const ListMenu = () => (
@@ -272,6 +275,7 @@ export default class SignUp extends Component {
                     <h1>Sign Up with SUSI</h1>
                     <form onSubmit={this.handleSubmit}>
                         <div>
+                        <CommunicationEmail style={iconStyles} />
                             <TextField
                                 name="email"
                                 value={this.state.email}
@@ -280,6 +284,7 @@ export default class SignUp extends Component {
                                 floatingLabelText="Email" />
                         </div>
                         <div className={PasswordClass.join(' ')}>
+                        <ActionLock style={iconStyles} />
                             <PasswordField
                                 name="password"
                                 style={fieldStyle}
@@ -290,6 +295,7 @@ export default class SignUp extends Component {
 																<div className="ReactPasswordStrength-strength-bar" />
                         </div>
                         <div>
+                        <ActionLock style={iconStyles} />
                             <PasswordField
                                 name="confirmPassword"
                                 style={fieldStyle}
