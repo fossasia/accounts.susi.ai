@@ -19,6 +19,9 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Chat from 'material-ui/svg-icons/communication/chat';
 import Help from 'material-ui/svg-icons/action/help';
 import LogIn from 'material-ui/svg-icons/action/account-circle';
+import Dashboard from 'material-ui/svg-icons/action/dashboard';
+import zxcvbn from 'zxcvbn';
+
 
 /* eslint-disable */
 const ListMenu = () => (
@@ -34,10 +37,13 @@ const ListMenu = () => (
 											anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
 										 >
                      <MenuItem primaryText="Chat"
- 										href="http://chat.susi.ai" 
+ 										href="http://chat.susi.ai"
                                          rightIcon={<Chat/>}/>
+										<MenuItem primaryText="Skills"
+									 				href="https://skills.susi.ai"
+									 				rightIcon={<Dashboard/>} />
 										 <MenuItem primaryText="Forgot Password"
-													 containerElement={<Link to="/forgotpwd" />} 
+													 containerElement={<Link to="/forgotpwd" />}
                                                      rightIcon={<Help/>}/>
 										<MenuItem primaryText="Log In"
                                         containerElement={<Link to="/" />}
@@ -90,6 +96,7 @@ export default class SignUp extends Component {
                 passwordError: true,
                 passwordConfirmError: true,
                 passwordValue: '',
+								passwordScore: -1,
                 confirmPasswordValue: '',
                 msg: '',
                 success: false,
@@ -118,6 +125,13 @@ export default class SignUp extends Component {
             let validPassword = password.length >= 6;
             state.passwordValue = password;
             state.passwordError = !(password && validPassword);
+						if(validPassword) {
+              let result = zxcvbn(password);
+              state.passwordScore=result.score;
+            }
+            else {
+              state.passwordScore=-1;
+            }
         }
         else if (event.target.name === 'confirmPassword') {
             password = this.state.passwordValue;
@@ -234,6 +248,8 @@ export default class SignUp extends Component {
                 onTouchTap={this.handleClose}
             />;
 
+				const PasswordClass=[`is-strength-${this.state.passwordScore}`];
+
         return (
         <div>
             <div>
@@ -263,7 +279,7 @@ export default class SignUp extends Component {
                                 errorText={this.emailErrorMessage}
                                 floatingLabelText="Email" />
                         </div>
-                        <div>
+                        <div className={PasswordClass.join(' ')}>
                             <PasswordField
                                 name="password"
                                 style={fieldStyle}
@@ -271,6 +287,7 @@ export default class SignUp extends Component {
                                 onChange={this.handleChange}
                                 errorText={this.passwordErrorMessage}
                                 floatingLabelText="Password" />
+																<div className="ReactPasswordStrength-strength-bar" />
                         </div>
                         <div>
                             <PasswordField
