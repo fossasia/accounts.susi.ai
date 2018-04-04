@@ -244,8 +244,7 @@ class Login extends Component {
             'padding': '20px',
             'textAlign': 'center',
 			'box-shadow': ['rgba(0, 0, 0, 0.12) 0px 1px 6px', 'rgba(0, 0, 0, 0.12) 0px 1px 4px'],
-			'height' : '350px'
-			
+			'height' : '350px',
 		}
 		const fieldStyle={
 			'width':'300px'
