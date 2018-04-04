@@ -116,3 +116,30 @@
 	padding:10px;
 	color:red;
 }
+
+.sign-in {
+  text-align: left;
+  margin-left: 8%;
+  margin-bottom: 10px;
+  margin-top: 0;
+}
+
+.forgotpwd {
+  text-align: left;
+  margin-left: 8%;
+}
+
+.loginbutton {
+  float: right;
+  margin-bottom: 30px;
+  margin-right: 8%;
+}
+
+.button {
+  border: none;
+  font-size: 14px;
+  color: blue;
+  float: left;
+  margin-left: 8%;
+  cursor: pointer;
+}

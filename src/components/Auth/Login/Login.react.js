@@ -20,6 +20,8 @@ import Dialog from 'material-ui/Dialog';
 import Chat from 'material-ui/svg-icons/communication/chat';
 import Help from 'material-ui/svg-icons/action/help';
 import SignUp from 'material-ui/svg-icons/social/person-add';
+import Menu from 'material-ui/Menu';
+import Popover from 'material-ui/Popover';
 /* eslint-disable */
 const cookies = new Cookies();
 const ListMenu = () => (
@@ -75,7 +77,8 @@ class Login extends Component {
 			validForm: false,
 			emailError: true,
 			showDialog: false,
-            checked: false
+			checked: false,
+			open: false
 		};
 		this.emailErrorMessage = '';
         this.passwordErrorMessage = '';
@@ -208,6 +211,21 @@ class Login extends Component {
 			this.setState({ open: true });
 	};
 
+	handleRequestClose = () => {
+		this.setState({
+		  open: false,
+		});
+	  };
+
+	  handleClick = (event) => {
+		// This prevents ghost click.
+		event.preventDefault();
+		this.setState({
+			open: true,
+			anchorEl: event.currentTarget,
+		  });
+		};
+
 	render() {
 		const { token } = this.props;
 
@@ -220,18 +238,18 @@ class Login extends Component {
 		   />;
 		   
 		const styles = {
-			'margin': '60px auto',
+			'margin': '160px auto',
 			'width':'80%',
 			'max-width':'400px',
             'padding': '20px',
             'textAlign': 'center',
-			'box-shadow': ['rgba(0, 0, 0, 0.12) 0px 1px 6px', 'rgba(0, 0, 0, 0.12) 0px 1px 4px']
+			'box-shadow': ['rgba(0, 0, 0, 0.12) 0px 1px 6px', 'rgba(0, 0, 0, 0.12) 0px 1px 4px'],
+			'height' : '350px'
 			
 		}
 		const fieldStyle={
-			'width':'256px'
+			'width':'300px'
 		}
-
 
 		return (
 			<div>
@@ -246,11 +264,13 @@ class Login extends Component {
 					/>
             	</div>
             	<div className="loginForm">
-					<Paper zDepth={0}style={styles}>
-	            		<h1>Login to SUSI</h1>
+					<Paper zDepth={0}style={styles}>	
+	            		<h2 className="sign-in">Sign In</h2>
+						<h5 className="sign-in">to continue to Susi</h5>
 						<form onSubmit={this.handleSubmit}>
 							<div>
 								<TextField name="email"
+								  	style={fieldStyle}
 									value={this.state.email}
 									onChange={this.handleChange}
 									errorText={this.emailErrorMessage}
@@ -261,35 +281,39 @@ class Login extends Component {
 							        name='password'
 									style={fieldStyle}
 							        value={this.state.password}
-
 									onChange={this.handleChange}
 									errorText={this.passwordErrorMessage}
 									floatingLabelText='Password' />
 							</div>
-							<br />
-							<div>
-								<Link to='/forgotpwd'
+							<br /><br/>
+							<button
+							className="button"
+							onClick={this.handleClick}
+							label="More options"
+							>More options</button>
+							<Popover
+							open={this.state.open}
+							anchorEl={this.state.anchorEl}
+							anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+							targetOrigin={{horizontal: 'left', vertical: 'top'}}
+							onRequestClose={this.handleRequestClose}
+							>
+							<Menu>
+							<MenuItem primaryText="Forgot Password" containerElement={<Link to='/forgotpwd'
 									className="forgotpwdlink">
-									<b>Forgot Password?</b>
-								</Link>
-							</div>
-							<br /><br />
-							<div>
+								</Link>}/>
+								<MenuItem primaryText="Create Account" containerElement={<Link to={'/signup'} className='signupbtn'>
+								</Link>}/>
+								</Menu>
+								</Popover>
+							<div className="loginbutton">
 								<RaisedButton
-									label="Login"
+									label="Sign In"
 									type="submit"
 									backgroundColor={
 										UserPreferencesStore.getTheme()==='light' ? '#4285F4' : '#4285F4'}
 									labelColor="#fff"
-									disabled={!this.state.validForm} />
-								<Link to={'/signup'} className='signupbtn'>
-									<RaisedButton
-										label='SignUp'
-										backgroundColor={
-												UserPreferencesStore.getTheme()==='light'
-												? '#4285F4' : '#4285F4'}
-										labelColor="#fff" />
-								</Link>
+									 />
 							</div>
 							<div id="message"><span>{this.state.msg}</span></div>
 						</form>
