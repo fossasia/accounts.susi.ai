@@ -221,7 +221,7 @@ class Login extends Component {
 		   
 		const styles = {
 			'margin': '60px auto',
-			'width':'80%',
+			'width':'100%',
 			'max-width':'400px',
             'padding': '20px',
             'textAlign': 'center',
