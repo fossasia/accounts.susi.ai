@@ -10,7 +10,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import './Login.css';
 import PasswordField from 'material-ui-password-field'
 import $ from 'jquery';
-import PropTypes  from 'prop-types';
+import PropTypes from 'prop-types';
 import AppBar from 'material-ui/AppBar';
 import { addUrlProps, UrlQueryParamTypes } from 'react-url-query';
 import Cookies from 'universal-cookie';
@@ -20,55 +20,59 @@ import Dialog from 'material-ui/Dialog';
 import Chat from 'material-ui/svg-icons/communication/chat';
 import Help from 'material-ui/svg-icons/action/help';
 import SignUp from 'material-ui/svg-icons/social/person-add';
+
+import CommunicationEmail from 'material-ui/svg-icons/communication/email';
+import ActionLock from 'material-ui/svg-icons/action/lock'
 import Dashboard from 'material-ui/svg-icons/action/dashboard';
+
 /* eslint-disable */
 const cookies = new Cookies();
 const ListMenu = () => (
-					<IconMenu className='IconMenu'
-						tooltip="Options"
-						iconButtonElement={
-								<IconButton
-								className='menu-icon'
-								iconStyle={{ fill : 'white',}}>
-										<MoreVertIcon /></IconButton>
-						}
-						targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-						anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-					>
-					<MenuItem primaryText="Chat"
-						href="http://chat.susi.ai"
-						rightIcon={<Chat/>} />
-						<MenuItem primaryText="Skills"
-						href="https://skills.susi.ai"
-						rightIcon={<Dashboard/>} />
-					<MenuItem primaryText="Forgot Password"
-						 containerElement={<Link to="/forgotpwd" />}
-					rightIcon={<Help/>} />
-					<MenuItem primaryText="Sign Up"
-						containerElement={<Link to="/signup" />}
-						rightIcon={<SignUp/>}/>
-					</IconMenu>
+	<IconMenu className='IconMenu'
+		tooltip="Options"
+		iconButtonElement={
+			<IconButton
+				className='menu-icon'
+				iconStyle={{ fill: 'white', }}>
+				<MoreVertIcon /></IconButton>
+		}
+		targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+		anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+	>
+		<MenuItem primaryText="Chat"
+			href="http://chat.susi.ai"
+			rightIcon={<Chat />} />
+		<MenuItem primaryText="Skills"
+			href="https://skills.susi.ai"
+			rightIcon={<Dashboard />} />
+		<MenuItem primaryText="Forgot Password"
+			containerElement={<Link to="/forgotpwd" />}
+			rightIcon={<Help />} />
+		<MenuItem primaryText="Sign Up"
+			containerElement={<Link to="/signup" />}
+			rightIcon={<SignUp />} />
+	</IconMenu>
 
 
 );
 
 const urlPropsQueryConfig = {
-  token: { type: UrlQueryParamTypes.string },
+	token: { type: UrlQueryParamTypes.string },
 };
 
 class Login extends Component {
 	static propTypes = {
-    // URL props are automatically decoded and passed in based on the config
-    token: PropTypes.string,
-    // change handlers are automatically generated when given a config.
-    // By default they update that single query parameter and maintain existing
-    // values in the other parameters.
-    onChangeToken: PropTypes.func,
-  }
+		// URL props are automatically decoded and passed in based on the config
+		token: PropTypes.string,
+		// change handlers are automatically generated when given a config.
+		// By default they update that single query parameter and maintain existing
+		// values in the other parameters.
+		onChangeToken: PropTypes.func,
+	}
 
-  static defaultProps = {
-    token: "null",
-  }
+	static defaultProps = {
+		token: "null",
+	}
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -79,22 +83,22 @@ class Login extends Component {
 			validForm: false,
 			emailError: true,
 			showDialog: false,
-            checked: false
+			checked: false
 		};
 		this.emailErrorMessage = '';
-        this.passwordErrorMessage = '';
+		this.passwordErrorMessage = '';
 	}
 
 	handleClose = (event) => {
-		this.setState({showDialog: false})
+		this.setState({ showDialog: false })
 	};
 
 	componentDidMount() {
 		const { token } = this.props;
-		if(token !== "null") {
-			this.props.history.push('/resetpass/?token='+token);
+		if (token !== "null") {
+			this.props.history.push('/resetpass/?token=' + token);
 		}
-		if(cookies.get('loggedIn')) {
+		if (cookies.get('loggedIn')) {
 			this.props.history.push('/userhome', { showLogin: false });
 		}
 	}
@@ -111,7 +115,7 @@ class Login extends Component {
 
 		let validEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
 		let loginEndPoint =
-			BASE_URL+'/aaa/login.json?type=access-token&login=' +
+			BASE_URL + '/aaa/login.json?type=access-token&login=' +
 			this.state.email + '&password=' + encodeURIComponent(this.state.password);
 
 		if (email && validEmail) {
@@ -140,10 +144,10 @@ class Login extends Component {
 				}.bind(this),
 				error: function (errorThrown) {
 					let msg1 = 'Login Failed.Try Again.';
-						 let state = this.state;
-						 state.msg1 = msg1;
-						 state.showDialog = true;
-						 this.setState(state)
+					let state = this.state;
+					state.msg1 = msg1;
+					state.showDialog = true;
+					this.setState(state)
 				}.bind(this)
 			});
 		}
@@ -151,22 +155,22 @@ class Login extends Component {
 
 	handleChange = (event) => {
 		let email;
-        let password;
-        let state = this.state;
+		let password;
+		let state = this.state;
 
-        if (event.target.name === 'email') {
-            email = event.target.value.trim();
-            let validEmail =
-                /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
-            state.email = email;
-            state.emailError = !(email && validEmail)
-        }
-        else if (event.target.name === 'password') {
-            password = event.target.value;
-            let validPassword = password.length >= 6;
-            state.password = password;
-            state.passwordError = !(password && validPassword);
-        }
+		if (event.target.name === 'email') {
+			email = event.target.value.trim();
+			let validEmail =
+				/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+			state.email = email;
+			state.emailError = !(email && validEmail)
+		}
+		else if (event.target.name === 'password') {
+			password = event.target.value;
+			let validPassword = password.length >= 6;
+			state.password = password;
+			state.passwordError = !(password && validPassword);
+		}
 
 		if (this.state.emailError) {
 			this.emailErrorMessage = 'Enter a valid Email Address';
@@ -175,20 +179,19 @@ class Login extends Component {
 			this.emailErrorMessage = '';
 		}
 
-        if (this.state.passwordError) {
-            this.passwordErrorMessage
-                = 'Minimum 6 characters required';
-        }
-        else{
-        	this.passwordErrorMessage='';
-        }
-	    if (!state.emailError && !state.passwordError)
-	    {
-	    	state.validForm = true;
-	    }
-        else {
-        	state.validForm = false;
-        }
+		if (this.state.passwordError) {
+			this.passwordErrorMessage
+				= 'Minimum 6 characters required';
+		}
+		else {
+			this.passwordErrorMessage = '';
+		}
+		if (!state.emailError && !state.passwordError) {
+			state.validForm = true;
+		}
+		else {
+			state.validForm = false;
+		}
 
 		this.setState(state);
 	}
@@ -209,31 +212,31 @@ class Login extends Component {
 		}
 	}
 	handleOpen = () => {
-			this.setState({ open: true });
+		this.setState({ open: true });
 	};
 
 	render() {
 		const { token } = this.props;
 
 		const actions =
-           <FlatButton
-               label="OK"
-               backgroundColor={'#607D8B'}
-               labelStyle={{ color: '#fff' }}
-               onTouchTap={this.handleClose}
-		   />;
+			<FlatButton
+				label="OK"
+				backgroundColor={'#607D8B'}
+				labelStyle={{ color: '#fff' }}
+				onTouchTap={this.handleClose}
+			/>;
 
 		const styles = {
 			'margin': '60px auto',
-			'width':'80%',
-			'max-width':'400px',
-            'padding': '20px',
-            'textAlign': 'center',
+			'width': '80%',
+			'max-width': '400px',
+			'padding': '20px',
+			'textAlign': 'center',
 			'box-shadow': ['rgba(0, 0, 0, 0.12) 0px 1px 6px', 'rgba(0, 0, 0, 0.12) 0px 1px 4px']
 
 		}
-		const fieldStyle={
-			'width':'256px'
+		const fieldStyle = {
+			'width': '256px'
 		}
 
 
@@ -241,19 +244,22 @@ class Login extends Component {
 			<div>
 				<div className="app-bar-div">
 					<AppBar
-						iconElementLeft= {<iconButton></iconButton>}
+						iconElementLeft={<iconButton></iconButton>}
 						iconElementRight={<ListMenu />}
 						className="app-bar"
-						style={{ backgroundColor : '#4285F4',
-						height: '46px'}}
-						titleStyle={{height:'46px'}}
+						style={{
+							backgroundColor: '#4285F4',
+							height: '46px'
+						}}
+						titleStyle={{ height: '46px' }}
 					/>
-            	</div>
-            	<div className="loginForm">
-					<Paper zDepth={0}style={styles}>
-	            		<h1>Login to SUSI</h1>
+				</div>
+				<div className="loginForm">
+					<Paper zDepth={0} style={styles}>
+						<h1>Login to SUSI</h1>
 						<form onSubmit={this.handleSubmit}>
 							<div>
+								<CommunicationEmail />
 								<TextField name="email"
 									value={this.state.email}
 									onChange={this.handleChange}
@@ -261,10 +267,11 @@ class Login extends Component {
 									floatingLabelText="Email" />
 							</div>
 							<div>
-						        <PasswordField
-							        name='password'
+								<ActionLock />
+								<PasswordField
+									name='password'
 									style={fieldStyle}
-							        value={this.state.password}
+									value={this.state.password}
 
 									onChange={this.handleChange}
 									errorText={this.passwordErrorMessage}
@@ -283,32 +290,32 @@ class Login extends Component {
 									label="Login"
 									type="submit"
 									backgroundColor={
-										UserPreferencesStore.getTheme()==='light' ? '#4285F4' : '#4285F4'}
+										UserPreferencesStore.getTheme() === 'light' ? '#4285F4' : '#4285F4'}
 									labelColor="#fff"
 									disabled={!this.state.validForm} />
 								<Link to={'/signup'} className='signupbtn'>
 									<RaisedButton
 										label='SignUp'
 										backgroundColor={
-												UserPreferencesStore.getTheme()==='light'
+											UserPreferencesStore.getTheme() === 'light'
 												? '#4285F4' : '#4285F4'}
 										labelColor="#fff" />
 								</Link>
 							</div>
 							<div id="message"><span>{this.state.msg}</span></div>
 						</form>
-				</Paper>
-			</div>
-			<div>
-				<Dialog
-					actions={actions}
-					modal={false}
-					open={this.state.showDialog}
-					onRequestClose={this.handleClose} >
-					{this.state.msg1}
+					</Paper>
+				</div>
+				<div>
+					<Dialog
+						actions={actions}
+						modal={false}
+						open={this.state.showDialog}
+						onRequestClose={this.handleClose} >
+						{this.state.msg1}
 					</Dialog>
+				</div>
 			</div>
-		</div>
 		);
 
 	};
