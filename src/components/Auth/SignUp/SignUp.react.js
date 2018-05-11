@@ -21,9 +21,9 @@ import Help from 'material-ui/svg-icons/action/help';
 import LogIn from 'material-ui/svg-icons/action/account-circle';
 import Dashboard from 'material-ui/svg-icons/action/dashboard';
 import zxcvbn from 'zxcvbn';
-
 import CommunicationEmail from 'material-ui/svg-icons/communication/email';
 import ActionLock from 'material-ui/svg-icons/action/lock'
+import Person from 'material-ui/svg-icons/social/person';
 
 
 /* eslint-disable */
@@ -60,20 +60,27 @@ export default class SignUp extends Component {
         super(props);
 
         this.state = {
+	    fName: '',
+            lName: '',
+            username: '',
             email: '',
+	    passwordValue: '',
+            confirmPasswordValue: '',
             isEmail: false,
+	    fNameError: true,
+            usernameError: true,
             emailError: true,
             passwordError: true,
             passwordConfirmError: true,
-            passwordValue: '',
-            confirmPasswordValue: '',
             msg: '',
             success: false,
             open: false,
             validForm: false,
             checked: false,
         };
-
+	
+	this.fNameErrorMessage = '';
+        this.usernameErrorMessage = '';
         this.emailErrorMessage = '';
         this.passwordErrorMessage = '';
         this.passwordConfirmErrorMessage = '';
@@ -93,8 +100,13 @@ export default class SignUp extends Component {
         }
         else {
             this.setState({
+	        fName: '',
+                lName: '',
+                username: '',
                 email: '',
                 isEmail: false,
+		fNameError: true,
+                usernameError: true,
                 emailError: true,
                 passwordError: true,
                 passwordConfirmError: true,
@@ -111,6 +123,9 @@ export default class SignUp extends Component {
     }
 
     handleChange = (event) => {
+        let fName;
+	let lName;
+        let username;
         let email;
         let password;
         let confirmPassword;
@@ -143,9 +158,28 @@ export default class SignUp extends Component {
             state.confirmPasswordValue = confirmPassword;
             state.passwordConfirmError = !(validPassword && confirmPassword);
         }
+	else if (event.target.name === 'fName'){
+	    fName = event.target.value;
+	    let validfName = fName.length >= 3;
+	    state.fName = fName;
+	    state.fNameError = !(fName && validfName);
+	}
+	else if (event.target.name === 'lName'){
+	    lName = event.target.value;
+	    state.lName = lName;
+	}
+	else if (event.target.name === 'username'){
+	    username = event.target.value;
+	    let validusername = username.length >= 3;
+	    state.username = username;
+	    state.usernameError = !(username && validusername);
+	}
 
 
-        if (!this.state.emailError
+
+        if (!this.state.fNameError
+            && !this.state.usernameError
+            && !this.state.emailError
             && !this.state.passwordError
             && !this.state.passwordConfirmError) {
             state.validForm = true;
@@ -156,32 +190,57 @@ export default class SignUp extends Component {
 
         this.setState(state);
 
-        if (this.state.emailError) {
+        if (this.state.fNameError) {
+            this.fNameErrorMessage = 'Enter a valid First Name';
+            this.usernameErrorMessage = '';
+            this.emailErrorMessage = '';
+            this.passwordErrorMessage = '';
+            this.passwordConfirmErrorMessage = '';
+        }
+        else if (this.state.usernameError) {
+            this.fNameErrorMessage = '';
+            this.usernameErrorMessage = 'Enter a valid User Name';
+            this.emailErrorMessage = '';
+            this.passwordErrorMessage = '';
+            this.passwordConfirmErrorMessage = '';
+        }
+        else if (this.state.emailError) {
+            this.fNameErrorMessage = '';
+            this.usernameErrorMessage = '';
             this.emailErrorMessage = 'Enter a valid Email Address';
+            this.passwordErrorMessage = '';
+            this.passwordConfirmErrorMessage = '';
         }
         else if (this.state.passwordError) {
+            this.fNameErrorMessage = '';
+            this.usernameErrorMessage = '';
             this.emailErrorMessage = '';
-            this.passwordErrorMessage
-                = 'Minimum 6 characters required';
+            this.passwordErrorMessage = 'Minimum 6 characters required';
             this.passwordConfirmErrorMessage = '';
 
         }
         else if (this.state.passwordConfirmError) {
+            this.fNameErrorMessage = '';
+            this.usernameErrorMessage = '';
             this.emailErrorMessage = '';
             this.passwordErrorMessage = '';
             this.passwordConfirmErrorMessage = 'Check your password again';
         }
         else {
+            this.fNameErrorMessage = '';
+            this.usernameErrorMessage = '';
             this.emailErrorMessage = '';
             this.passwordErrorMessage = '';
             this.passwordConfirmErrorMessage = '';
         }
 
 
-        if (this.state.emailError ||
-            this.state.passwordError ||
-            this.state.passwordConfirmError) {
-            this.setState({ validForm: false });
+        if(this.state.fNameError||
+            this.state.usernameError||
+            this.state.emailError||
+            this.state.passwordError||
+            this.state.passwordConfirmError){
+            this.setState({validForm: false});
         }
         else {
             this.setState({ validForm: true });
@@ -276,6 +335,30 @@ export default class SignUp extends Component {
                     <Paper zDepth={1} style={styles}>
                         <h1>Sign Up with SUSI</h1>
                         <form onSubmit={this.handleSubmit}>
+			<div>{<Person/>}
+                            <TextField
+                                name="fName"
+                                value={this.state.fName}
+                                onChange={this.handleChange}
+                                errorText={this.fNameErrorMessage}
+                                floatingLabelText="First Name" />
+                        </div>                        
+			<div>{<Person/>}
+                            <TextField
+                                name="lName"
+                                value={this.state.lName}
+                                onChange={this.handleChange}
+                                errorText={this.lNameErrorMessage}
+                                floatingLabelText="Last Name" />
+                        </div>
+			<div>{<Person/>}
+                            <TextField
+                                name="username"
+                                value={this.state.username}
+                                onChange={this.handleChange}
+                                errorText={this.usernameErrorMessage}
+                                floatingLabelText="User Name" />
+                        </div>
                             <div>
                                 <CommunicationEmail />
                                 <TextField
