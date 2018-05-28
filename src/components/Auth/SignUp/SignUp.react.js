@@ -1,59 +1,27 @@
+// Packages
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import $ from 'jquery';
+import { Link } from 'react-router-dom';
+import zxcvbn from 'zxcvbn';
+
+// Components
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import $ from 'jquery';
-import './SignUp.css';
-import AppBar from 'material-ui/AppBar';
 import PasswordField from 'material-ui-password-field';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import PropTypes from 'prop-types';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 import Login from '../Login/Login.react';
-import MenuItem from 'material-ui/MenuItem';
-import IconButton from 'material-ui/IconButton';
-import IconMenu from 'material-ui/IconMenu';
-import { Link } from 'react-router-dom';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import Chat from 'material-ui/svg-icons/communication/chat';
-import Help from 'material-ui/svg-icons/action/help';
-import LogIn from 'material-ui/svg-icons/action/account-circle';
-import Dashboard from 'material-ui/svg-icons/action/dashboard';
-import zxcvbn from 'zxcvbn';
+import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 
+
+// Static assets
 import CommunicationEmail from 'material-ui/svg-icons/communication/email';
 import ActionLock from 'material-ui/svg-icons/action/lock'
 
-
-/* eslint-disable */
-const ListMenu = () => (
-    <IconMenu className='IconMenu'
-        tooltip="Options"
-        iconButtonElement={
-            <IconButton
-                className='menu-icon'
-                iconStyle={{ fill: 'white', }}>
-                <MoreVertIcon /></IconButton>
-        }
-        targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-    >
-        <MenuItem primaryText="Chat"
-            href="http://chat.susi.ai"
-            rightIcon={<Chat />} />
-        <MenuItem primaryText="Skills"
-            href="https://skills.susi.ai"
-            rightIcon={<Dashboard />} />
-        <MenuItem primaryText="Forgot Password"
-            containerElement={<Link to="/forgotpwd" />}
-            rightIcon={<Help />} />
-        <MenuItem primaryText="Log In"
-            containerElement={<Link to="/" />}
-            rightIcon={<LogIn />} />
-    </IconMenu>
-
-);
+import './SignUp.css';
 
 export default class SignUp extends Component {
     constructor(props) {
@@ -258,17 +226,7 @@ export default class SignUp extends Component {
                 <div>
                     <header className='message-thread-heading'>
                         <div className="app-bar-div">
-                            <AppBar
-                                iconElementLeft={<iconButton></iconButton>}
-                                className="app-bar"
-                                style={{
-                                    backgroundColor: '#4285F4',
-                                    height: '46px'
-                                }}
-                                titleStyle={{ height: '46px' }}
-                                iconElementRight={<ListMenu />}
-
-                            />
+                            <StaticAppBar />
                         </div>
                     </header>
                 </div>

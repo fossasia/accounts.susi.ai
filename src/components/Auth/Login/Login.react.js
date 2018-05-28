@@ -1,60 +1,30 @@
+// Packages
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import $ from 'jquery';
+import PropTypes from 'prop-types';
+import { addUrlProps, UrlQueryParamTypes } from 'react-url-query';
+import Cookies from 'universal-cookie';
+
+// Components
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import MenuItem from 'material-ui/MenuItem';
-import IconButton from 'material-ui/IconButton';
-import IconMenu from 'material-ui/IconMenu';
-import { Link } from 'react-router-dom';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import './Login.css';
 import PasswordField from 'material-ui-password-field'
-import $ from 'jquery';
-import PropTypes from 'prop-types';
-import AppBar from 'material-ui/AppBar';
-import { addUrlProps, UrlQueryParamTypes } from 'react-url-query';
-import Cookies from 'universal-cookie';
+import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
-import Chat from 'material-ui/svg-icons/communication/chat';
-import Help from 'material-ui/svg-icons/action/help';
-import SignUp from 'material-ui/svg-icons/social/person-add';
 
+// Static assets
 import CommunicationEmail from 'material-ui/svg-icons/communication/email';
 import ActionLock from 'material-ui/svg-icons/action/lock'
-import Dashboard from 'material-ui/svg-icons/action/dashboard';
+
+import './Login.css';
 
 /* eslint-disable */
 const cookies = new Cookies();
-const ListMenu = () => (
-	<IconMenu className='IconMenu'
-		tooltip="Options"
-		iconButtonElement={
-			<IconButton
-				className='menu-icon'
-				iconStyle={{ fill: 'white', }}>
-				<MoreVertIcon /></IconButton>
-		}
-		targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-		anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-	>
-		<MenuItem primaryText="Chat"
-			href="http://chat.susi.ai"
-			rightIcon={<Chat />} />
-		<MenuItem primaryText="Skills"
-			href="https://skills.susi.ai"
-			rightIcon={<Dashboard />} />
-		<MenuItem primaryText="Forgot Password"
-			containerElement={<Link to="/forgotpwd" />}
-			rightIcon={<Help />} />
-		<MenuItem primaryText="Sign Up"
-			containerElement={<Link to="/signup" />}
-			rightIcon={<SignUp />} />
-	</IconMenu>
 
-
-);
 
 const urlPropsQueryConfig = {
 	token: { type: UrlQueryParamTypes.string },
@@ -243,16 +213,7 @@ class Login extends Component {
 		return (
 			<div>
 				<div className="app-bar-div">
-					<AppBar
-						iconElementLeft={<iconButton></iconButton>}
-						iconElementRight={<ListMenu />}
-						className="app-bar"
-						style={{
-							backgroundColor: '#4285F4',
-							height: '46px'
-						}}
-						titleStyle={{ height: '46px' }}
-					/>
+					<StaticAppBar />
 				</div>
 				<div className="loginForm">
 					<Paper zDepth={0} style={styles}>

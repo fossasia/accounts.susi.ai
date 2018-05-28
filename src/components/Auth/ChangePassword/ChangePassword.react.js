@@ -6,12 +6,11 @@ import $ from 'jquery';
 import './ChangePassword.css';
 import FlatButton from 'material-ui/FlatButton'
 import PropTypes from 'prop-types';
-import AppBar from 'material-ui/AppBar';
 import PasswordField from 'material-ui-password-field';
 import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-
+import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 
 const cookies = new Cookies();
 injectTapEventPlugin();
@@ -173,13 +172,7 @@ export default class ChangePassword extends Component{
 		return(
 			<div>
 				<div className="app-bar-div">
-					<AppBar
-						className="app-bar"
-						iconElementLeft={<iconButton></iconButton>}
-						style={{ backgroundColor : '#4285F4',
-							height: '46px' }}
-							titleStyle={{height:'46px'}}
-					/>
+					<StaticAppBar />
 				</div>
 				<div className="changePasswordForm">
 					<Paper zDepth={1} style={styles}>

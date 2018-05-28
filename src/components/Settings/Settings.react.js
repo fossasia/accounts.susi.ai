@@ -1,7 +1,11 @@
+// Packages
 import React, { Component } from 'react';
-import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton'
 import PropTypes from 'prop-types'
+
+// Components
+import StaticAppBar from '../StaticAppBar/StaticAppBar';
+
 
 class Settings extends Component {
 
@@ -17,13 +21,7 @@ class Settings extends Component {
     return(
       <div>
         <div className="app-bar-div">
-          <AppBar
-            className="app-bar"
-            iconElementLeft={<iconButton></iconButton>}
-            style={{ backgroundColor : '#4285F4',
-              height: '46px' }}
-            titleStyle={{height:'46px'}}
-          />
+          <StaticAppBar />
         </div>
         <div style={submitButton}>
         <RaisedButton

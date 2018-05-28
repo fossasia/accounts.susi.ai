@@ -1,10 +1,13 @@
+// Packages
 import React, { Component } from 'react';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
 import PropTypes from 'prop-types';
 import { addUrlProps, UrlQueryParamTypes } from 'react-url-query';
 import $ from 'jquery';
-import AppBar from 'material-ui/AppBar';
+
+// Components
+import StaticAppBar from '../../StaticAppBar/StaticAppBar';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
 
 const urlPropsQueryConfig = {
   accessToken: { type: UrlQueryParamTypes.string, queryParam: 'access_token' },
@@ -98,13 +101,7 @@ class VerifyAccount extends Component {
     return(
       <div>
           <div className="app-bar-div">
-                    <AppBar
-                    iconElementLeft={<iconButton></iconButton>}
-                        className="app-bar"
-                        style={{ backgroundColor : '#4285F4',
-                             height: '46px'}}
-                        titleStyle={{height:'46px'}}
-                    />
+            <StaticAppBar />
           </div>
           <div>
           <Dialog

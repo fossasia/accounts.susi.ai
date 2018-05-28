@@ -1,61 +1,26 @@
+// Packages
 import React, { Component } from 'react';
 import './LoggedIn.css';
-import AppBar from 'material-ui/AppBar';
-import MenuItem from 'material-ui/MenuItem';
-import IconButton from 'material-ui/IconButton';
-import IconMenu from 'material-ui/IconMenu';
 import { Link } from 'react-router-dom';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
+import Cookies from 'universal-cookie';
+
+// Components
+import StaticAppBar from '../../StaticAppBar/StaticAppBar';
+import Footer from '../Footer/Footer.react';
+import Paper from 'material-ui/Paper';
+import Row from 'react-bootstrap/lib/Row';
+import Col from 'react-bootstrap/lib/Col';
+import Grid from 'react-bootstrap/lib/Grid';
+
+// Static assets
 import iOS from '../../images/ios.png'
 import android from '../../images/android1.png'
 import web from '../../images/network-icon.png'
 import cms from '../../images/edit-icon-png-24.png'
-import Cookies from 'universal-cookie';
-const c = new Cookies();
-import Footer from '../Footer/Footer.react';
-import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
-import Settings from 'material-ui/svg-icons/action/settings';
-import Exit from 'material-ui/svg-icons/action/exit-to-app';
-import Dashboard from 'material-ui/svg-icons/action/dashboard';
-import Chat from 'material-ui/svg-icons/communication/chat';
-const ListMenu = () => (
-          <IconMenu className='IconMenu'
-                      tooltip="Options"
-                      iconButtonElement={
-                          <IconButton
-                          className='menu-icon'
-                          iconStyle={{ fill : 'white',}}>
-                              <MoreVertIcon /></IconButton>
-                      }
-                      targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-                      anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-                     >
-                     <MenuItem primaryText="Chat"
- 										href="https://chat.susi.ai"
-                     rightIcon={<Chat/>}/>
- 					<MenuItem primaryText="Skills"
- 										href="https://skills.susi.ai/"
-                     rightIcon={<Dashboard/>}/>
-                     <MenuItem
-                        primaryText="Settings"
-                        menuItems={[
-                          <MenuItem key="1" primaryText="Change Password"
-                          containerElement={<Link to="/changepassword" />} />,
-                          <MenuItem key="2" primaryText="Delete Account"
-                          containerElement={<Link to="/delete-account" />} />
-                        ]}
-                        rightIcon={<Settings/>}
-                      />
-                    <MenuItem primaryText="Logout"
-                    containerElement={<Link to="/logout" />}
-                    rightIcon={<Exit />}/>
-                  </IconMenu>
-);
 
+
+const c = new Cookies();
 
 class LoggedIn extends Component {
 
@@ -85,14 +50,7 @@ class LoggedIn extends Component {
     return(
       <div>
         <div className='app-bar-div'>
-          <AppBar
-            iconElementLeft={<iconButton ></iconButton>}
-            className="app-bar"
-            style={{ backgroundColor : '#4285F4',
-               height: '46px'}}
-            titleStyle={{height:'46px'}}
-            iconElementRight={<ListMenu />}
-          />
+          <StaticAppBar />
           <h1 style={{margin:'30px 20px',fontSize:'40'}}>Welcome {c.get('emailId')}</h1>
         </div>
         <div id="parent">

@@ -1,18 +1,23 @@
+// Packages
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { addUrlProps, UrlQueryParamTypes } from 'react-url-query';
+import Cookies from 'universal-cookie'
+import $ from 'jquery';
+
+// Components
+import PasswordField from 'material-ui-password-field';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import './ResetPassword.css';
-import AppBar from 'material-ui/AppBar';
-import $ from 'jquery';
-import { addUrlProps, UrlQueryParamTypes } from 'react-url-query';
-import PasswordField from 'material-ui-password-field';
-import Cookies from 'universal-cookie'
-import PropTypes from 'prop-types';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
+import StaticAppBar from '../../StaticAppBar/StaticAppBar';
+
 // import Login from '../Login/Login.react';
+
+import './ResetPassword.css';
 
 const urlPropsQueryConfig = {
   token: { type: UrlQueryParamTypes.string },
@@ -211,13 +216,7 @@ class ResetPassword extends Component{
 		return(
 			<div>
 				<div className="app-bar-div">
-					<AppBar
-						className="app-bar"
-						iconElementLeft={<iconButton></iconButton>}
-						style={{ backgroundColor : '#4285F4',
-							height: '46px' }}
-							titleStyle={{height:'46px'}}
-					/>
+					<StaticAppBar />
 				</div>
 				<div className="resetPasswordForm">
 					<Paper zDepth={1} style={styles}>
