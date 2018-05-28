@@ -1,13 +1,16 @@
+// Packages
 import React, { Component } from 'react';
-import Paper from 'material-ui/Paper';
-import AppBar from 'material-ui/AppBar';
+import $ from 'jquery'
+import Cookies from 'universal-cookie'
+import PropTypes from 'prop-types'
+
+// Components
 import PasswordField from 'material-ui-password-field'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
-import $ from 'jquery'
-import Cookies from 'universal-cookie'
+import Paper from 'material-ui/Paper';
 import  Dialog from 'material-ui/Dialog'
-import PropTypes from 'prop-types'
+import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 
 const cookies = new Cookies()
 
@@ -169,13 +172,7 @@ class DeleteAccount extends Component {
     return(
       <div>
         <div className="app-bar-div">
-          <AppBar
-            className="app-bar"
-            iconElementLeft={<iconButton></iconButton>}
-            style={{ backgroundColor : '#4285F4',
-              height: '46px' }}
-              titleStyle={{height:'46px'}}
-          />
+          <StaticAppBar />
         </div>
       <div>
         <div style={test}>

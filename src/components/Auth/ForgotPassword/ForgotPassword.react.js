@@ -1,14 +1,18 @@
+// Packages
 import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
+import $ from 'jquery';
+import PropTypes from 'prop-types'
+
+// Components
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import AppBar from 'material-ui/AppBar';
-import './ForgotPassword.css';
-import $ from 'jquery';
-import PropTypes from 'prop-types'
+import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
+
+import './ForgotPassword.css';
 
 class ForgotPassword extends Component {
 
@@ -135,13 +139,7 @@ class ForgotPassword extends Component {
 		return (
 			<div>
 				<div className="app-bar-div">
-											<AppBar
-													iconElementLeft={<iconButton></iconButton>}
-													className="app-bar"
-													style={{ backgroundColor : '#4285F4',
-														 	height: '46px'}}
-													titleStyle={{height:'46px'}}
-											/>
+					<StaticAppBar />
 				</div>
 				<div className="forgotPwdForm">
 					<Paper zDepth={1} style={styles}>
@@ -167,11 +165,11 @@ class ForgotPassword extends Component {
 						</form>
 						<br/>
 						<RaisedButton
-								label="Cancel"
-								backgroundColor={
-									UserPreferencesStore.getTheme()==='light' ? '#4285F4' : '#4285F4'}
-								labelColor="#fff"
-								onTouchTap={this.handleCancel}
+							label="Cancel"
+							backgroundColor={
+								UserPreferencesStore.getTheme()==='light' ? '#4285F4' : '#4285F4'}
+							labelColor="#fff"
+							onTouchTap={this.handleCancel}
 						/>
 					</Paper>
 						{

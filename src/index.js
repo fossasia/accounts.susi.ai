@@ -56,7 +56,7 @@ const App = () => (
 				<Route exact path="/delete-account" component={DeleteAccount} />
 				<Route exact path="/forgotpwd" component={ForgotPassword} />
 				<Route exact path="*" component={NotFound} />
-				</Switch>
+			</Switch>
 		</div>
 		</MuiThemeProvider>
 	</Router>
