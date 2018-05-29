@@ -17,6 +17,7 @@ import Chat from 'material-ui/svg-icons/communication/chat';
 import Extension from 'material-ui/svg-icons/action/extension';
 import Settings from 'material-ui/svg-icons/action/settings';
 import Exit from 'material-ui/svg-icons/action/exit-to-app';
+import LoginIcon from 'material-ui/svg-icons/action/account-circle';
 
 const cookies = new Cookies();
 
@@ -58,9 +59,18 @@ const ListMenu = () => (
       ]}
       rightIcon={<Settings/>}
       />
-    <MenuItem primaryText="Logout"
-      containerElement={<Link to="/logout" />}
-      rightIcon={<Exit />}/>
+    {
+      cookies.get('loggedIn') ?
+        (
+          <MenuItem primaryText="Logout"
+            containerElement={<Link to="/logout" />}
+            rightIcon={<Exit />}/>):
+        (
+          <MenuItem primaryText="Login"
+            containerElement={<Link to="/" />}
+            rightIcon={<LoginIcon />}/>)
+
+    }
   </IconMenu>
 );
 
