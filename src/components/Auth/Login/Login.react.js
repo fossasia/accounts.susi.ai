@@ -156,7 +156,7 @@ class Login extends Component {
 		else {
 			this.passwordErrorMessage = '';
 		}
-		if (!state.emailError && !state.passwordError) {
+		if (!state.emailError && !state.passwordError && this.state.password != '') {
 			state.validForm = true;
 		}
 		else {
