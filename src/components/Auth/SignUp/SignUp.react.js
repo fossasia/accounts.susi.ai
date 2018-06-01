@@ -6,10 +6,7 @@ import { Link } from 'react-router-dom';
 import zxcvbn from 'zxcvbn';
 
 // Components
-import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import PasswordField from 'material-ui-password-field';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
@@ -18,8 +15,8 @@ import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 
 
 // Static assets
-import CommunicationEmail from 'material-ui/svg-icons/communication/email';
-import ActionLock from 'material-ui/svg-icons/action/lock'
+import Footer from '../../Footer/Footer.react.js';
+import susi from '../../../images/susi-logo.svg';
 
 import './SignUp.css';
 
@@ -198,17 +195,15 @@ export default class SignUp extends Component {
 
     render() {
 
-
-        const styles = {
-            'margin': '60px auto',
-            'width': '100%',
-            'padding': '20px',
-            'textAlign': 'center'
-        }
-
         const fieldStyle = {
-            'width': '256px'
-        }
+	    'width': '100%',
+	    'height': '30px',
+	    'marginBottom': '3%'
+	}
+	const button = {
+	    'width': '100%',
+	    'marginTop': '0',
+	}
 
         const actions =
             <FlatButton
@@ -230,66 +225,86 @@ export default class SignUp extends Component {
                         </div>
                     </header>
                 </div>
-                <div className="signUpForm">
-                    <Paper zDepth={1} style={styles}>
-                        <h1>Sign Up with SUSI</h1>
-                        <form onSubmit={this.handleSubmit}>
-                            <div>
-                                <CommunicationEmail />
-                                <TextField
-                                    name="email"
-                                    value={this.state.email}
-                                    onChange={this.handleChange}
-                                    errorText={this.emailErrorMessage}
-                                    floatingLabelText="Email" />
-                            </div>
-                            <div className={PasswordClass.join(' ')}>
-                                <ActionLock />
-                                <PasswordField
-                                    name="password"
-                                    style={fieldStyle}
-                                    value={this.state.passwordValue}
-                                    onChange={this.handleChange}
-                                    errorText={this.passwordErrorMessage}
-                                    floatingLabelText="Password" />
-                                <div className="ReactPasswordStrength-strength-bar" />
-                            </div>
-                            <div>
-                                <ActionLock />
-                                <PasswordField
-                                    name="confirmPassword"
-                                    style={fieldStyle}
-                                    value={this.state.confirmPasswordValue}
-                                    onChange={this.handleChange}
-                                    errorText={this.passwordConfirmErrorMessage}
-                                    floatingLabelText="Confirm Password" />
-                            </div>
-                            <div>
-                                <RaisedButton
-                                    label="Sign Up"
-                                    type="submit"
-                                    disabled={!this.state.validForm}
-                                    backgroundColor={
-                                        UserPreferencesStore.getTheme() === 'light'
-                                            ? '#4285F4' : '#4285F4'}
-                                    labelColor="#fff" />
-                            </div>
-                            <h1>OR</h1>
-                            <div>
-                                <h4>If you have an account, Please Login</h4>
-                                <Link to={'/'} >
-                                    <RaisedButton
-                                        // onTouchTap={this.handleOpen}
-                                        label='Login'
+                <div className='app-body-div'>
+                  <div className='About'>
+                    <h1>
+                     Meet SUSI.AI,
+                     Your Artificial Intelligence for Personal Assistants,
+                     Robots, Help Desks and Chatbots.
+                    </h1>
+                    <p style={{'margin' : '5% 3% 0% 0%','fontSize':'24px'}}>
+                     Ask it questions.<br />
+                     <br />Tell it to do things.<br />
+                     <br />Always ready to help.
+                    </p>
+                  </div>
+                </div>
 
-                                        backgroundColor={
-                                            UserPreferencesStore.getTheme() === 'light'
-                                                ? '#4285F4' : '#4285F4'}
-                                        labelColor="#fff" />
-                                </Link>
-                            </div>
-                        </form>
-                    </Paper>
+		<div className='signup-container'>
+                  <div className="signUpForm">
+                   <img src={susi} alt='SUSI' className='susi-logo' />
+                   <h1>See whats happening in the world right now</h1>
+                   <h1>Sign Up with SUSI</h1>
+                   <form onSubmit={this.handleSubmit}>
+                    <div>
+                     <input
+                       type="text"
+                       name="email"
+                       style={fieldStyle}
+                       value={this.state.email}
+                       onChange={this.handleChange}
+                       errorText={this.emailErrorMessage}
+                       placeholder="Email" />
+                       </div>
+                     <div className={PasswordClass.join(' ')}>
+                      <input
+                       type="password"
+                       name="password"
+                       style={fieldStyle}
+                       value={this.state.passwordValue}
+                       onChange={this.handleChange}
+                       errorText={this.passwordErrorMessage}
+                       placeholder="Password" />
+                     <div className="ReactPasswordStrength-strength-bar" />
+                   </div>
+                   <div>
+                      <input
+                        type="password"
+                        name="confirmPassword"
+                        style={fieldStyle}
+                        value={this.state.confirmPasswordValue}
+                        onChange={this.handleChange}
+                        errorText={this.passwordConfirmErrorMessage}
+                        placeholder="Confirm Password" />
+                   </div>
+
+                   <div>
+                     <RaisedButton
+                       label="Sign Up"
+                       type="submit"
+                       style={button}
+                       disabled={!this.state.validForm}
+                       backgroundColor={
+                         UserPreferencesStore.getTheme() === 'light'?
+                          '#4285F4' : '#4285F4'}
+                         labelColor="#fff" />
+                   </div>
+                   <h1 style={{'textAlign' : 'center'}}>OR</h1>
+                   <div>
+                     <h4 style={{'textAlign' : 'center'}}>
+			If you have an account, Please Login</h4>
+                       <Link to={'/'} >
+                       <RaisedButton
+                         // onTouchTap={this.handleOpen}
+                         label='Login'
+                         style={button}
+                         backgroundColor={
+                         UserPreferencesStore.getTheme() === 'light'?
+                         '#4285F4' : '#4285F4'}
+                         labelColor="#fff" />
+                       </Link>
+                   </div>
+                  </form>
                     {this.state.msg && (
                         <div><Dialog
                             actions={actions}
@@ -310,7 +325,8 @@ export default class SignUp extends Component {
                     >
                         <div><Login {...this.props} /></div>
                     </Dialog>
-                </div>
+                </div></div>
+				<Footer />
             </div>
         );
     };
