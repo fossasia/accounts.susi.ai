@@ -23,6 +23,7 @@ const cookies = new Cookies();
 
 const ListMenu = () => (
   <IconMenu className='IconMenu'
+    animated={false}
     tooltip="Options"
     iconButtonElement={
         <IconButton
@@ -31,7 +32,7 @@ const ListMenu = () => (
             <MoreVertIcon /></IconButton>
     }
     targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-    anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
    >
     <MenuItem primaryText="About"
       href="http://chat.susi.ai/overview"
