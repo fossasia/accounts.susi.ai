@@ -3,24 +3,20 @@
 	color: #999999;
 	margin-bottom: 30px;
 }
-
-.signupbtn{
-  padding-left: 15px;
+.signup{
+  margin-left:25%;
+  margin-right:25%;
 }
 .loginForm{
-	width: 100%;
-	margin: 0 auto;
+  width: 90%;
+  margin: 5%;
 }
 
 .app-bar{
-  background-image: url('../../images/susi-white.png');
-  background-size: 100px;
-  background-repeat: no-repeat;
-  background-position: center;
 	position: absolute;
 }
 .app-bar-div{
-	position: fixed;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
@@ -30,6 +26,23 @@
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
   user-select: none;
   -webkit-user-select: none;
+}
+.login-container{
+  margin-top:5%;
+  height: 80%;
+  width : 50%;
+  float : right;
+}
+.app-body-div{
+  height: 80%;
+  width : 50%;
+  float : left;
+  background-color : #F6F6F6;
+}
+.About{
+  margin: 30% 8% 34% 8%;
+  text-size : 18px;
+  height:100%;
 }
 .menu-icon{
 	top: -7px;
@@ -54,12 +67,6 @@
 .sty{
 	width: 256px;
 }
-@media screen and (max-width: 768px) {
-	.loginForm h1{
-		font-size: 16px;
-	}
-}
-
 
 .bm-burger-bars {
   background: #ffffff;
@@ -115,4 +122,22 @@
 #message{
 	padding:10px;
 	color:red;
+}
+
+@media screen and (max-width: 660px) {
+  .login-container{
+    float : none;
+    height: auto;
+    width : auto;
+	}
+  .app-body-div{
+    height:auto;
+    width : auto;
+    margin:0;
+    float : none;;
+    background-color : #F6F6F6;
+  }
+  .About{
+  margin:50px 0 5px 0;
+ }
 }

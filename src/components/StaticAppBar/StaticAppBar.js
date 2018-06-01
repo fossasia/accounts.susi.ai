@@ -18,12 +18,13 @@ import Extension from 'material-ui/svg-icons/action/extension';
 import Settings from 'material-ui/svg-icons/action/settings';
 import Exit from 'material-ui/svg-icons/action/exit-to-app';
 import LoginIcon from 'material-ui/svg-icons/action/account-circle';
-
+import susiWhite from '../../images/susi-logo-white.png';
 const cookies = new Cookies();
 
 const ListMenu = () => (
   <IconMenu className='IconMenu'
     tooltip="Options"
+    style={{'right':'-8px','top':'-2px'}}
     iconButtonElement={
         <IconButton
         className='menu-icon'
@@ -79,6 +80,10 @@ class StaticAppBar extends Component {
   render() {
     return(
       <AppBar
+        title={<div id="rightIconButton">
+          <img src={susiWhite} alt="susi-logo" className="siteTitle"
+          style={{'height':'25px','marginBottom':'4px','marginLeft':'8px'}}/>
+        </div>}
         iconElementLeft={<iconButton ></iconButton>}
         className="app-bar"
         style={{ backgroundColor : '#4285F4',
