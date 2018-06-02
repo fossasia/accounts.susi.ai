@@ -7,7 +7,7 @@ import Cookies from 'universal-cookie';
 
 // Components
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
-import Footer from '../Footer/Footer.react';
+import Footer from '../../Footer/Footer.react';
 import Paper from 'material-ui/Paper';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
