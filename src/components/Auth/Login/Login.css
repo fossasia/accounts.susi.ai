@@ -13,10 +13,6 @@
 }
 
 .app-bar{
-  background-image: url('../../images/susi-white.png');
-  background-size: 100px;
-  background-repeat: no-repeat;
-  background-position: center;
 	position: absolute;
 }
 .app-bar-div{
