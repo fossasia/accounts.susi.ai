@@ -94,6 +94,7 @@ class StaticAppBar extends Component {
         style={{ backgroundColor : '#4285F4',
            height: '46px'}}
         titleStyle={{height:'46px'}}
+        iconStyleRight={{ marginRight: '7px',marginTop: '7px' }}
         iconElementRight={<ListMenu />}
       />
     )
