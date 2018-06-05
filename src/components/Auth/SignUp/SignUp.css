@@ -39,12 +39,13 @@
   height: 80%;
   width : 50%;
   float : left;
-  background-color : #F6F6F6;
+  background-color : #EEE;
 }
 .About{
-  margin: 30% 8% 34% 8%;
+  margin: 30vh 8% 0% 8%;
   text-size : 18px;
-  height:100%;
+  height:59vh;
+  min-height:580px;
 }
 
 .menu-icon{
@@ -181,6 +182,9 @@
     background-color : #F6F6F6;
   }
   .About{
-  margin:50px 0 5px 0;
+  margin:50px 0 0px 0;
+  padding:0px 20px;
+  min-height:unset;
+  height:unset;
  }
 }
