@@ -22,6 +22,21 @@ import susiWhite from '../../images/susi-logo-white.png';
 const cookies = new Cookies();
 
 const ListMenu = () => (
+ <div>
+  {cookies.get('loggedIn') ?
+    (<label
+    style={{
+      color: 'white',
+      fontSize: '16px',
+      verticalAlign:'super',
+      position:'relative',
+      top:'-8px',
+      right:'-8px'}}>
+    {cookies.get('emailId')}
+    </label>) :
+    (<label>
+    </label>)
+  }
   <IconMenu className='IconMenu'
     animated={false}
     tooltip="Options"
@@ -78,6 +93,7 @@ const ListMenu = () => (
 
     }
   </IconMenu>
+ </div>
 );
 
 class StaticAppBar extends Component {

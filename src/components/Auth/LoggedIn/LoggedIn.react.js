@@ -20,7 +20,7 @@ import web from '../../images/network-icon.png'
 import cms from '../../images/edit-icon-png-24.png'
 
 
-const c = new Cookies();
+const cookies = new Cookies();
 
 class LoggedIn extends Component {
 
@@ -51,8 +51,10 @@ class LoggedIn extends Component {
       <div>
         <div className='app-bar-div'>
           <StaticAppBar />
-          <h1 style={{margin:'30px 20px',fontSize:'40'}}>Welcome {c.get('emailId')}</h1>
         </div>
+          <h1
+           style={{margin:'50px 20px 0 20px',fontSize:'40'}}>
+           Welcome {cookies.get('emailId')}</h1>
         <div id="parent">
         <Grid>
         <Row>
