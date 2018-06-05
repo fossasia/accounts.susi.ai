@@ -196,9 +196,11 @@ export default class SignUp extends Component {
     render() {
 
         const fieldStyle = {
-	    'width': '100%',
+	    'width': '94%',
 	    'height': '30px',
-	    'marginBottom': '3%'
+	    'marginBottom': '3%',
+	    'borderRadius': '5px',
+	    'paddingLeft': '20px'
 	}
 	const button = {
 	    'width': '100%',
