@@ -7,18 +7,15 @@ import { addUrlProps, UrlQueryParamTypes } from 'react-url-query';
 import Cookies from 'universal-cookie';
 
 // Components
-import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import PasswordField from 'material-ui-password-field'
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 
 // Static assets
-import CommunicationEmail from 'material-ui/svg-icons/communication/email';
-import ActionLock from 'material-ui/svg-icons/action/lock'
+import Footer from '../../Footer/Footer.react.js';
+import susi from '../../../images/susi-logo.svg';
 
 import './Login.css';
 
@@ -156,7 +153,7 @@ class Login extends Component {
 		else {
 			this.passwordErrorMessage = '';
 		}
-		if (!state.emailError && !state.passwordError && this.state.password != '') {
+		if (!state.emailError && !state.passwordError) {
 			state.validForm = true;
 		}
 		else {
@@ -206,7 +203,16 @@ class Login extends Component {
 
 		}
 		const fieldStyle = {
-			'width': '256px'
+			'width': '35%',
+			'height': '30px',
+			'marginRight': '3%',
+			'marginBottom': '1%',
+			'paddingLeft': '20px',
+			'borderRadius': '5px'
+		}
+		const button = {
+			'width': '100%',
+			'marginLeft':0
 		}
 
 
@@ -215,58 +221,70 @@ class Login extends Component {
 				<div className="app-bar-div">
 					<StaticAppBar />
 				</div>
-				<div className="loginForm">
-					<Paper zDepth={0} style={styles}>
-						<h1>Login to SUSI</h1>
-						<form onSubmit={this.handleSubmit}>
-							<div>
-								<CommunicationEmail />
-								<TextField name="email"
-									value={this.state.email}
-									onChange={this.handleChange}
-									errorText={this.emailErrorMessage}
-									floatingLabelText="Email" />
-							</div>
-							<div>
-								<ActionLock />
-								<PasswordField
-									name='password'
-									style={fieldStyle}
-									value={this.state.password}
-
-									onChange={this.handleChange}
-									errorText={this.passwordErrorMessage}
-									floatingLabelText='Password' />
-							</div>
-							<br />
-							<div>
-								<Link to='/forgotpwd'
-									className="forgotpwdlink">
-									<b>Forgot Password?</b>
-								</Link>
-							</div>
-							<br /><br />
-							<div>
-								<RaisedButton
-									label="Login"
-									type="submit"
-									backgroundColor={
-										UserPreferencesStore.getTheme() === 'light' ? '#4285F4' : '#4285F4'}
-									labelColor="#fff"
-									disabled={!this.state.validForm} />
-								<Link to={'/signup'} className='signupbtn'>
-									<RaisedButton
-										label='SignUp'
-										backgroundColor={
-											UserPreferencesStore.getTheme() === 'light'
-												? '#4285F4' : '#4285F4'}
-										labelColor="#fff" />
-								</Link>
-							</div>
-							<div id="message"><span>{this.state.msg}</span></div>
-						</form>
-					</Paper>
+				<div className = 'app-body-div'>
+				  <div className = 'About'>
+				    <h1>
+				      Meet SUSI.AI,
+				      Your Artificial Intelligence for Personal Assistants,
+				      Robots, Help Desks and Chatbots.
+				      </h1>
+				      <p style = {{'margin' : '5% 3% 0% 0%','fontSize':'24px'}}>Ask it questions.<br /><br /> Tell it to do things.<br /><br /> Always ready to help.</p>
+			          </div>	
 				</div>
+
+				<div className = 'login-container'>
+				  <div className="loginForm">
+				    <form id='loginform' onSubmit={this.handleSubmit}>
+				      <div>
+				        <input 
+				         type = "text"
+				         name="email"
+				         style={fieldStyle}
+				         value={this.state.email}
+				         onChange={this.handleChange}
+				         errorText={this.emailErrorMessage}
+				         placeholder="Email" />
+
+				        <input
+					 type = "password"
+				         name='password'
+				         style={fieldStyle}
+				         value={this.state.password}
+				         onChange={this.handleChange}
+				         placeholder='Password' />
+
+				        <RaisedButton
+				        label="Login"
+				        type="submit"
+					style={{'width':'10%'}}
+				        backgroundColor={
+				        UserPreferencesStore.getTheme() === 'light' ? '#4285F4' : '#4285F4'}
+				        labelColor="#fff"
+				        disabled={!this.state.validForm} />
+
+				        <Link to='/forgotpwd'
+				        className="forgotpwdlink">
+				        <b id='forgotpwd'>Forgot Password?</b>
+				        </Link>
+				      </div>
+				      <div id="message"><span>{this.state.msg}</span></div>
+				      </form>
+				</div>
+
+				<div className='signup'>
+				  <img src={susi} alt='SUSI' className='susi-logo' />
+				  <h1>See what's happening in the world right now</h1>
+				  <p style={{'fontSize':'18px'}}>Join SUSI.AI Today.</p><br />
+				  <Link to={'/signup'} className='signupbtn'>
+				  <RaisedButton
+				  style = {button}
+				  label='Sign Up'
+				  backgroundColor={
+				  UserPreferencesStore.getTheme() === 'light'? '#4285F4' : '#4285F4'}
+				  labelColor="#fff" />
+				  </Link><br />
+				</div></div>
+				<Footer />
 				<div>
 					<Dialog
 						actions={actions}
