@@ -2,9 +2,9 @@ export function convertRawMessage(rawMessage, currentThreadID) {
   return {
     ...rawMessage,
     date: new Date(rawMessage.timestamp),
-    isRead: rawMessage.threadID === currentThreadID
+    isRead: rawMessage.threadID === currentThreadID,
   };
-};
+}
 
 export function getCreatedMessageData(text, currentThreadID) {
   var timestamp = Date.now();
@@ -15,14 +15,14 @@ export function getCreatedMessageData(text, currentThreadID) {
     date: new Date(timestamp),
     text: text,
     isRead: true,
-    type: 'message'
+    type: 'message',
   };
-};
+}
 
 export function getSUSIMessageData(message, currentThreadID) {
   var timestamp = Date.now();
 
-  let receivedMessage =  {
+  let receivedMessage = {
     id: 'm_' + timestamp,
     threadID: currentThreadID,
     authorName: 'SUSI', // hard coded for the example
@@ -33,9 +33,8 @@ export function getSUSIMessageData(message, currentThreadID) {
     date: new Date(timestamp),
     isRead: true,
     responseTime: message.responseTime,
-    type: 'message'
+    type: 'message',
   };
 
   return receivedMessage;
 }
-

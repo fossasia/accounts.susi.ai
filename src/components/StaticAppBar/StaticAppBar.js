@@ -1,5 +1,5 @@
 // Packages
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
@@ -22,98 +22,118 @@ import susiWhite from '../../images/susi-logo-white.png';
 const cookies = new Cookies();
 
 const ListMenu = () => (
- <div>
-  {cookies.get('loggedIn') ?
-    (<label
-    style={{
-      color: 'white',
-      fontSize: '16px',
-      verticalAlign:'super',
-      position:'relative',
-      top:'-8px',
-      right:'-8px'}}>
-    {cookies.get('emailId')}
-    </label>) :
-    (<label>
-    </label>)
-  }
-  <IconMenu className='IconMenu'
-    animated={false}
-    tooltip="Options"
-    style={{'right':'-8px','top':'-2px'}}
-    iconButtonElement={
-        <IconButton
-        className='menu-icon'
-        iconStyle={{ fill : 'white',}}>
-            <MoreVertIcon /></IconButton>
-    }
-    targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-   >
-    <MenuItem primaryText="About"
-      href="http://chat.susi.ai/overview"
-      rightIcon={<Info />} />
-    <MenuItem primaryText="Chat"
-      href="https://chat.susi.ai"
-      rightIcon={<Chat/>}/>
-    <MenuItem primaryText="Skills"
-      href="https://skills.susi.ai/"
-      rightIcon={<Dashboard/>}/>
-    {
-      cookies.get('loggedIn') ?
-        (<MenuItem primaryText="Botbuilder"
+  <div>
+    {cookies.get('loggedIn') ? (
+      <label
+        style={{
+          color: 'white',
+          fontSize: '16px',
+          verticalAlign: 'super',
+          position: 'relative',
+          top: '-8px',
+          right: '-8px',
+        }}
+      >
+        {cookies.get('emailId')}
+      </label>
+    ) : (
+      <label />
+    )}
+    <IconMenu
+      className="IconMenu"
+      animated={false}
+      tooltip="Options"
+      style={{ right: '-8px', top: '-2px' }}
+      iconButtonElement={
+        <IconButton className="menu-icon" iconStyle={{ fill: 'white' }}>
+          <MoreVertIcon />
+        </IconButton>
+      }
+      targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+      anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+    >
+      <MenuItem
+        primaryText="About"
+        href="http://chat.susi.ai/overview"
+        rightIcon={<Info />}
+      />
+      <MenuItem
+        primaryText="Chat"
+        href="https://chat.susi.ai"
+        rightIcon={<Chat />}
+      />
+      <MenuItem
+        primaryText="Skills"
+        href="https://skills.susi.ai/"
+        rightIcon={<Dashboard />}
+      />
+      {cookies.get('loggedIn') ? (
+        <MenuItem
+          primaryText="Botbuilder"
           href="https://skills.susi.ai/botbuilder"
-          rightIcon={<Extension/>}/>):
-          null
-    }
-    {
-      cookies.get('loggedIn') ?
-        (<MenuItem
+          rightIcon={<Extension />}
+        />
+      ) : null}
+      {cookies.get('loggedIn') ? (
+        <MenuItem
           primaryText="Settings"
           menuItems={[
-            <MenuItem key="1" primaryText="Change Password"
-            containerElement={<Link to="/changepassword" />} />,
-            <MenuItem key="2" primaryText="Delete Account"
-            containerElement={<Link to="/delete-account" />} />
+            <MenuItem
+              key="1"
+              primaryText="Change Password"
+              containerElement={<Link to="/changepassword" />}
+            />,
+            <MenuItem
+              key="2"
+              primaryText="Delete Account"
+              containerElement={<Link to="/delete-account" />}
+            />,
           ]}
-          rightIcon={<Settings/>}
-         />):
-          null
-    }
-    {
-      cookies.get('loggedIn') ?
-        (
-          <MenuItem primaryText="Logout"
-            containerElement={<Link to="/logout" />}
-            rightIcon={<Exit />}/>):
-        (
-          <MenuItem primaryText="Login"
-            containerElement={<Link to="/" />}
-            rightIcon={<LoginIcon />}/>)
-
-    }
-  </IconMenu>
- </div>
+          rightIcon={<Settings />}
+        />
+      ) : null}
+      {cookies.get('loggedIn') ? (
+        <MenuItem
+          primaryText="Logout"
+          containerElement={<Link to="/logout" />}
+          rightIcon={<Exit />}
+        />
+      ) : (
+        <MenuItem
+          primaryText="Login"
+          containerElement={<Link to="/" />}
+          rightIcon={<LoginIcon />}
+        />
+      )}
+    </IconMenu>
+  </div>
 );
 
 class StaticAppBar extends Component {
-
   render() {
-    return(
+    return (
       <AppBar
-        title={<div id="rightIconButton">
-          <img src={susiWhite} alt="susi-logo" className="siteTitle"
-          style={{'height':'25px','marginBottom':'4px','marginLeft':'8px'}}/>
-        </div>}
-        iconElementLeft={<iconButton ></iconButton>}
+        title={
+          <div id="rightIconButton">
+            <img
+              src={susiWhite}
+              alt="susi-logo"
+              className="siteTitle"
+              style={{ height: '25px', marginBottom: '4px', marginLeft: '8px' }}
+            />
+          </div>
+        }
+        iconElementLeft={<iconButton />}
         className="app-bar"
-        style={{ backgroundColor : '#4285F4',
-           height: '46px'}}
-        titleStyle={{height:'46px'}}
-        iconStyleRight={{ marginRight: '7px',marginTop: '7px' }}
+        style={{
+          backgroundColor: '#4285F4',
+          height: '46px',
+        }}
+        titleStyle={{ height: '46px' }}
+        iconStyleRight={{ marginRight: '7px', marginTop: '7px' }}
         iconElementRight={<ListMenu />}
       />
-    )
+    );
   }
 }
 

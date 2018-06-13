@@ -3,22 +3,22 @@ import ChatConstants from '../constants/ChatConstants';
 
 let ActionTypes = ChatConstants.ActionTypes;
 
-export function serverChanged(server){
+export function serverChanged(server) {
   ChatAppDispatcher.dispatch({
     type: ActionTypes.SERVER_CHANGED,
-    server
+    server,
   });
 }
 
 export function themeChanged(theme) {
   ChatAppDispatcher.dispatch({
     type: ActionTypes.THEME_CHANGED,
-    theme
+    theme,
   });
-};
+}
 
 export function ToggleSearch() {
   ChatAppDispatcher.dispatch({
-    type: ActionTypes.SEARCH_MODE
+    type: ActionTypes.SEARCH_MODE,
   });
-};
+}
