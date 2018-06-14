@@ -7,6 +7,8 @@ import { addUrlProps, UrlQueryParamTypes } from 'react-url-query';
 import Cookies from 'universal-cookie';
 
 // Components
+import TextField from 'material-ui/TextField';
+import PasswordField from 'material-ui-password-field';
 import RaisedButton from 'material-ui/RaisedButton';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
@@ -202,13 +204,22 @@ class Login extends Component {
 			'box-shadow': ['rgba(0, 0, 0, 0.12) 0px 1px 6px', 'rgba(0, 0, 0, 0.12) 0px 1px 4px']
 
 		}
+
 		const fieldStyle = {
-			'width': '35%',
-			'height': '30px',
-			'marginRight': '3%',
-			'marginBottom': '1%',
-			'paddingLeft': '20px',
-			'borderRadius': '5px'
+			'height': '35px',
+			'borderRadius': 4,
+			'border': '1px solid #ced4da',
+			'fontSize': 16,
+			'padding': '0px 12px',
+			'margin':'10px',
+			'paddingRight': '0',
+			'width': '',
+		}
+
+		const inputStyle = {
+			'height': '35px',
+			'marginBottom': '10px',
+			'width': '140%',
 		}
 		const button = {
 			'width': '100%',
@@ -236,29 +247,35 @@ class Login extends Component {
 				  <div className="loginForm">
 				    <form id='loginform' onSubmit={this.handleSubmit}>
 				      <div>
-				        <input 
-				         type = "text"
-				         name="email"
-				         style={fieldStyle}
-				         value={this.state.email}
-				         onChange={this.handleChange}
-				         errorText={this.emailErrorMessage}
-				         placeholder="Email" />
 
-				        <input
-					 type = "password"
-				         name='password'
-				         style={fieldStyle}
-				         value={this.state.password}
-				         onChange={this.handleChange}
-				         placeholder='Password' />
+				      <TextField
+				        name="email"
+				        style={fieldStyle}
+				        className="fieldStyle"
+				      	value={this.state.email}
+					placeholder="Email"
+				      	onChange={this.handleChange}
+				        underlineStyle={{display: 'none'}} />
+
+				      <PasswordField
+				        name="password"
+				        style={fieldStyle}
+				        className="fieldStyle"
+				        value={this.state.password}
+					placeholder="Password"
+				        onChange={this.handleChange}
+				        inputStyle={inputStyle}
+				        underlineStyle={{display: 'none'}}
+				        disableButton={true}
+				        visibilityButtonStyle={{'display':'none'}}
+				        visibilityIconStyle={{'display':'none'}} />
 
 				        <RaisedButton
 				        label="Login"
 				        type="submit"
-					style={{'width':'10%'}}
-				        backgroundColor={
-				        UserPreferencesStore.getTheme() === 'light' ? '#4285F4' : '#4285F4'}
+					className='loginbtn'
+					style={{'marginLeft':'10px'}}
+				        backgroundColor='#4285F4'
 				        labelColor="#fff"
 				        disabled={!this.state.validForm} />
 

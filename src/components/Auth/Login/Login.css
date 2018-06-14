@@ -1,26 +1,26 @@
-.forgotpwdlink{
-	text-decoration: none;
-	color: #999999;
-	margin-bottom: 30px;
+.forgotpwdlink {
+  text-decoration: none;
+  color: #999999;
+  margin-bottom: 30px;
 }
-.signup{
+.signup {
   margin-left:25%;
   margin-right:25%;
 }
-.loginForm{
+.loginForm {
   width: 90%;
   margin: 5%;
 }
-#loginform{
-  margin-left:5%;
+#loginform {
+  margin-left:20%;
 }
-#forgotpwd{
-  margin-left:42%;
+#forgotpwd {
+  margin-left:250px;
 }
-.app-bar{
-	position: absolute;
+.app-bar {
+  position: absolute;
 }
-.app-bar-div{
+.app-bar-div {
   position: fixed;
   top: 0;
   left: 0;
@@ -32,25 +32,25 @@
   user-select: none;
   -webkit-user-select: none;
 }
-.login-container{
+.login-container {
   margin-top:5%;
   height: 80%;
   width : 50%;
   float : right;
 }
-.app-body-div{
+.app-body-div {
   height: 80%;
   width : 50%;
   float : left;
   background-color : #F6F6F6;
 }
-.About{
+.About {
   margin: 30vh 8% 0% 8%;
   text-size : 18px;
   height:59vh;
 }
-.menu-icon{
-	top: -7px;
+.menu-icon {
+  top: -7px;
   height: 24px;
   width: 24px;
   transform-origin: 50% 50% 0px;
@@ -58,19 +58,19 @@
 
 
 .bm-burger-button {
-	position: absolute;
+  position: absolute;
   width: 36px;
   height: 30px;
   left: 36px;
   top: 8px;
-	z-index: 1;
+  z-index: 1;
 }
-.bm-burger-button{
-	background: #607D8B;
+.bm-burger-button {
+  background: #607D8B;
 }
 
-.sty{
-	width: 256px;
+.sty {
+  width: 256px;
 }
 
 .bm-burger-bars {
@@ -113,7 +113,7 @@
   padding: 0.6em 0 0.6em 0.6em;
 }
 
-.menu-new ul{
+.menu-new ul {
     border-top: 1px solid #333;
 }
 .menu-new a:hover,
@@ -124,47 +124,65 @@
 .menu-new a {
     color: #fff;
 }
-#message{
+#message {
 	padding:10px;
 	color:red;
 }
-@media screen and (max-width: 1340px) {
-  #forgotpwd{
-    margin-left:30%;
+.fieldStyle {
+  width: 200px;
+}
+@media screen and (max-width: 1587px) {
+  #forgotpwd {
+    margin-left:150px;
   }
 }
-@media screen and (max-width: 920px) {
-  #forgotpwd{
-    margin-left:20%;
+
+@media screen and (max-width: 1314px) {
+  #forgotpwd {
+    float:left;
+    margin-left:15px;
+  }
+}
+@media screen and (max-width: 937px) {
+  .loginbtn {
+    float:left;
   }
 }
 @media screen and (max-width: 660px) {
-  .login-container{
+  .login-container {
     float : none;
     height: auto;
     width : auto;
-	}
-  .app-body-div{
+  }
+  .app-body-div {
     height:auto;
     width : auto;
     margin:0;
     float : none;;
     background-color : #EEE;
   }
-  .About{
-  margin:50px 0 5px 0;
+  .About {
+    margin:50px 0 5px 0;
  }
-  #forgotpwd{
-    margin-left:30%;
+  #forgotpwd {
+    margin: 10px 25% 10px 15px;
+  }
+  .loginbtn {	
+    width:210px;
+    margin-right:110px;
+  }	
+
+  #loginform {
+    margin-right:25%;
+    margin-left:25%;
+  }
+  .passfieldStyle {	
+    width:100%;
   }
 }
-@media screen and (max-width: 469px) {
-  #forgotpwd{
-    margin-left:22%;
-  }
-}
-@media screen and (max-width: 380px) {
-  #forgotpwd{
+@media screen and (max-width: 435px) {
+  #loginform {
+    margin-right:15%;
     margin-left:15%;
   }
 }
