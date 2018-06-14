@@ -53,7 +53,7 @@ class LoggedIn extends Component {
           <StaticAppBar />
         </div>
           <h1
-           style={{margin:'50px 20px 0 20px',fontSize:'40'}}>
+           style={{margin:'50px 20px 0 20px',fontSize:'40px'}}>
            Welcome {cookies.get('emailId')}</h1>
         <div id="parent">
         <Grid>
@@ -75,7 +75,7 @@ class LoggedIn extends Component {
                 {<div className="child2">
             <Link to="/settings">
               <Paper style={style} zDepth={1} circle={true}>
-              <img style={{margin: '30', height: '70%'}} src={android}
+              <img style={{margin: '30px', height: '70%'}} src={android}
                alt="android-logo" className="siteTitle"  />
               </Paper>
             </Link>
@@ -88,7 +88,7 @@ class LoggedIn extends Component {
                 {<div className="child3">
             <Link to="/settings">
               <Paper style={style} zDepth={1} circle={true}>
-              <img style={{margin: '35'}} src={web}
+              <img style={{margin: '35px'}} src={web}
                alt="web-logo" className="siteTitle" />
               </Paper>
             </Link>
@@ -101,7 +101,7 @@ class LoggedIn extends Component {
                 {<div className="child4">
             <Link to="/settings">
               <Paper style={style} zDepth={1} circle={true}>
-              <img style={{margin: '35', height: '65%'}} src={cms}
+              <img style={{margin: '35px', height: '65%'}} src={cms}
                alt="web-logo" className="siteTitle" />
               </Paper>
             </Link>
