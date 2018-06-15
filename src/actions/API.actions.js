@@ -10,24 +10,24 @@ let ActionTypes = ChatConstants.ActionTypes;
 let _Location = null;
 
 // Get Location
-export function getLocation(){
+export function getLocation() {
   $.ajax({
     url: 'https://ipinfo.io/json',
     dataType: 'jsonp',
     crossDomain: true,
     timeout: 3000,
     async: false,
-    success: function (response) {
+    success: function(response) {
       let loc = response.loc.split(',');
       _Location = {
         lat: loc[0],
         lng: loc[1],
       };
     },
-    error: function(errorThrown){
+    error: function(errorThrown) {
       console.log(errorThrown);
       _Location = null;
-    }
+    },
   });
 }
 
@@ -44,38 +44,47 @@ export function createSUSIMessage(createdMessage, currentThreadID) {
     websearchresults: [],
     date: new Date(timestamp),
     isRead: true,
-    type: 'message'
+    type: 'message',
   };
 
   let defaults = UserPreferencesStore.getPreferences();
   let defaultServerURL = defaults.Server;
   let BASE_URL = '';
-  if(cookies.get('serverUrl')===defaultServerURL||
-    cookies.get('serverUrl')===null||
-    cookies.get('serverUrl')=== undefined) {
+  if (
+    cookies.get('serverUrl') === defaultServerURL ||
+    cookies.get('serverUrl') === null ||
+    cookies.get('serverUrl') === undefined
+  ) {
     BASE_URL = defaultServerURL;
-  }
-  else{
-    BASE_URL= cookies.get('serverUrl');
+  } else {
+    BASE_URL = cookies.get('serverUrl');
   }
   let url = '';
   // Fetching local browser language
   var locale = document.documentElement.getAttribute('lang');
-  if(cookies.get('loggedIn')===null||
-    cookies.get('loggedIn')===undefined) {
-    url = BASE_URL+'/susi/chat.json?q='+
-          createdMessage.text+
-          '&language='+locale;
-  }
-  else{
-    url = BASE_URL+'/susi/chat.json?q='
-          +createdMessage.text+'&language='
-          +locale+'&access_token='
-          +cookies.get('loggedIn');
+  if (
+    cookies.get('loggedIn') === null ||
+    cookies.get('loggedIn') === undefined
+  ) {
+    url =
+      BASE_URL +
+      '/susi/chat.json?q=' +
+      createdMessage.text +
+      '&language=' +
+      locale;
+  } else {
+    url =
+      BASE_URL +
+      '/susi/chat.json?q=' +
+      createdMessage.text +
+      '&language=' +
+      locale +
+      '&access_token=' +
+      cookies.get('loggedIn');
   }
   // Send location info of client if available
-  if(_Location){
-    url = url+'&latitude='+_Location.lat+'&longitude='+_Location.lng;
+  if (_Location) {
+    url = url + '&latitude=' + _Location.lat + '&longitude=' + _Location.lng;
   }
   console.log(url);
   // Ajax Success calls the Dispatcher to CREATE_SUSI_MESSAGE
@@ -87,11 +96,11 @@ export function createSUSIMessage(createdMessage, currentThreadID) {
     crossDomain: true,
     timeout: 3000,
     async: false,
-    success: function (response) {
+    success: function(response) {
       receivedMessage.text = response.answers[0].actions[0].expression;
       receivedMessage.response = response;
       let actions = [];
-      response.answers[0].actions.forEach((actionobj) => {
+      response.answers[0].actions.forEach(actionobj => {
         actions.push(actionobj.type);
       });
       receivedMessage.actions = actions;
@@ -100,7 +109,7 @@ export function createSUSIMessage(createdMessage, currentThreadID) {
         let actionJson = response.answers[0].actions[actionIndex];
         let query = actionJson.query;
         let count = -1;
-        if(actionJson.hasOwnProperty('count')){
+        if (actionJson.hasOwnProperty('count')) {
           count = actionJson.count;
         }
         $.ajax({
@@ -109,17 +118,17 @@ export function createSUSIMessage(createdMessage, currentThreadID) {
           crossDomain: true,
           timeout: 3000,
           async: false,
-          success: function (data) {
-            if(count === -1){
-              count = data.RelatedTopics.length+1;
+          success: function(data) {
+            if (count === -1) {
+              count = data.RelatedTopics.length + 1;
             }
-            if(count > 0 && data.AbstractText){
+            if (count > 0 && data.AbstractText) {
               let abstractTile = {
                 title: '',
                 description: '',
                 link: '',
                 icon: '',
-              }
+              };
               abstractTile.title = data.Heading;
               abstractTile.description = data.AbstractText;
               abstractTile.link = data.AbstractURL;
@@ -127,19 +136,22 @@ export function createSUSIMessage(createdMessage, currentThreadID) {
               receivedMessage.websearchresults.push(abstractTile);
               count--;
             }
-            for(var tileKey=0;
-            tileKey<data.RelatedTopics.length && count > 0;
-            tileKey++) {
+            for (
+              var tileKey = 0;
+              tileKey < data.RelatedTopics.length && count > 0;
+              tileKey++
+            ) {
               let tileData = data.RelatedTopics[tileKey];
-              if(!tileData.hasOwnProperty('Name')){
+              if (!tileData.hasOwnProperty('Name')) {
                 let websearchTile = {
                   title: '',
                   description: '',
                   link: '',
                   icon: '',
                 };
-                websearchTile.title =
-                  tileData.Result.match(/<a [^>]+>([^<]+)<\/a>/)[1];
+                websearchTile.title = tileData.Result.match(
+                  /<a [^>]+>([^<]+)<\/a>/,
+                )[1];
                 websearchTile.description = tileData.Text;
                 websearchTile.link = tileData.FirstURL;
                 websearchTile.icon = tileData.Icon.URL;
@@ -148,31 +160,34 @@ export function createSUSIMessage(createdMessage, currentThreadID) {
               }
             }
             let message = ChatMessageUtils.getSUSIMessageData(
-              receivedMessage, currentThreadID);
+              receivedMessage,
+              currentThreadID,
+            );
             ChatAppDispatcher.dispatch({
               type: ActionTypes.CREATE_SUSI_MESSAGE,
-              message
+              message,
             });
           },
-          error: function (errorThrown) {
+          error: function(errorThrown) {
             console.log(errorThrown);
             receivedMessage.text = 'Please check your internet connection';
-          }
+          },
         });
-      }
-      else {
+      } else {
         let message = ChatMessageUtils.getSUSIMessageData(
-          receivedMessage, currentThreadID);
+          receivedMessage,
+          currentThreadID,
+        );
 
         ChatAppDispatcher.dispatch({
           type: ActionTypes.CREATE_SUSI_MESSAGE,
-          message
+          message,
         });
       }
     },
-    error: function (errorThrown) {
+    error: function(errorThrown) {
       console.log(errorThrown);
       receivedMessage.text = 'Please check your internet connection';
-    }
+    },
   });
-};
+}

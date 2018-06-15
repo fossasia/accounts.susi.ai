@@ -8,29 +8,30 @@ const cookies = new Cookies();
 
 let ActionTypes = ChatConstants.ActionTypes;
 
-
 export function getHistory() {
-
   let BASE_URL = '';
   let defaults = UserPreferencesStore.getPreferences();
   let defaultServerURL = defaults.Server;
 
-  if(cookies.get('serverUrl')===defaultServerURL||
-    cookies.get('serverUrl')===null||
-    cookies.get('serverUrl')=== undefined){
+  if (
+    cookies.get('serverUrl') === defaultServerURL ||
+    cookies.get('serverUrl') === null ||
+    cookies.get('serverUrl') === undefined
+  ) {
     BASE_URL = defaultServerURL;
-  }
-  else{
-    BASE_URL= cookies.get('serverUrl');
+  } else {
+    BASE_URL = cookies.get('serverUrl');
   }
 
   let url = '';
-  if(cookies.get('loggedIn')===null||
-    cookies.get('loggedIn')===undefined){
-    url = BASE_URL+'/susi/memory.json';
-  }
-  else{
-    url = BASE_URL+'/susi/memory.json?access_token='+cookies.get('loggedIn');
+  if (
+    cookies.get('loggedIn') === null ||
+    cookies.get('loggedIn') === undefined
+  ) {
+    url = BASE_URL + '/susi/memory.json';
+  } else {
+    url =
+      BASE_URL + '/susi/memory.json?access_token=' + cookies.get('loggedIn');
   }
   $.ajax({
     url: url,
@@ -38,9 +39,8 @@ export function getHistory() {
     crossDomain: true,
     timeout: 3000,
     async: false,
-    success: function (history) {
-      history.cognitions.forEach((cognition) => {
-
+    success: function(history) {
+      history.cognitions.forEach(cognition => {
         let susiMsg = {
           id: 'm_',
           threadID: 't_1',
@@ -51,7 +51,7 @@ export function getHistory() {
           websearchresults: [],
           date: '',
           isRead: true,
-          type: 'message'
+          type: 'message',
         };
 
         let userMsg = {
@@ -61,7 +61,7 @@ export function getHistory() {
           date: '',
           text: '',
           isRead: true,
-          type: 'message'
+          type: 'message',
         };
 
         let query = cognition.query;
@@ -76,7 +76,7 @@ export function getHistory() {
         susiMsg.response = cognition;
 
         let actions = [];
-        cognition.answers[0].actions.forEach((actionObj) => {
+        cognition.answers[0].actions.forEach(actionObj => {
           actions.push(actionObj.type);
         });
         susiMsg.actions = actions;
@@ -88,42 +88,42 @@ export function getHistory() {
             crossDomain: true,
             timeout: 3000,
             async: false,
-            success: function (data) {
+            success: function(data) {
               susiMsg.websearchresults = data.RelatedTopics;
               if (data.AbstractText) {
                 let abstractTile = {
                   Text: '',
                   FirstURL: '',
                   Icon: { URL: '' },
-                }
+                };
                 abstractTile.Text = data.AbstractText;
                 abstractTile.FirstURL = data.AbstractURL;
                 abstractTile.Icon.URL = data.Image;
                 susiMsg.websearchresults.unshift(abstractTile);
               }
             },
-            error: function (errorThrown) {
+            error: function(errorThrown) {
               console.log(errorThrown);
               susiMsg.text = 'Please check your internet connection';
-            }
+            },
           });
         }
 
         let message = userMsg;
         ChatAppDispatcher.dispatch({
           type: ActionTypes.STORE_HISTORY_MESSAGE,
-          message
+          message,
         });
 
         message = susiMsg;
         ChatAppDispatcher.dispatch({
           type: ActionTypes.STORE_HISTORY_MESSAGE,
-          message
+          message,
         });
       });
     },
-    error: function (errorThrown) {
+    error: function(errorThrown) {
       console.log(errorThrown);
-    }
+    },
   });
 }
