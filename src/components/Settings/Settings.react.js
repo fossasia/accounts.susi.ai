@@ -12,12 +12,12 @@ import Paper from 'material-ui/Paper';
 import Footer from '../Footer/Footer.react.js';
 import './Settings.css';
 import TimezonePicker from 'react-timezone';
-import List from 'material-ui/List/List';
-import ListItem from 'material-ui/List/ListItem';
-import Divider from 'material-ui/Divider';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import countryData from 'country-data';
 import MenuItem from 'material-ui/MenuItem';
+import Menu from 'material-ui/Menu';
+import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
+import Divider from 'material-ui/Divider';
 
 const cookies = new Cookies();
 const token = cookies.get('loggedIn');
@@ -214,38 +214,12 @@ class Settings extends Component {
     });
   };
 
-  displayAccount = event => {
-    this.setState({
-      selectedSetting: 'Account',
-    });
-  };
-  displayPassword = event => {
-    this.setState({
-      selectedSetting: 'Password',
-    });
-  };
-  displaySpeech = event => {
-    this.setState({
-      selectedSetting: 'Speech',
-    });
-  };
-  displayServer = event => {
-    this.setState({
-      selectedSetting: 'Server',
-    });
-  };
-  displayDevices = event => {
-    this.setState({
-      selectedSetting: 'Devices',
-    });
-  };
-  displayMobile = event => {
-    this.setState({
-      selectedSetting: 'Mobile',
-    });
-  };
   handleSave = event => {
     this.props.history.push('/', { showLogin: true });
+  };
+
+  loadSettings = e => {
+    this.setState({ selectedSetting: e.target.innerText });
   };
   render() {
     countryData.countries.all.sort(function(a, b) {
@@ -295,6 +269,11 @@ class Settings extends Component {
       paddingRight: 10,
       textAlign: 'center',
     };
+
+    const blueThemeColor = { color: 'rgb(66, 133, 244)' };
+    const themeBackgroundColor = '#fff';
+    const themeForegroundColor = '#272727';
+
     let currentSetting;
 
     if (!this.state.dataFetched && cookies.get('loggedIn')) {
@@ -433,7 +412,6 @@ class Settings extends Component {
         </div>
       );
     }
-
     return (
       <div>
         <div className="app-bar-div">
@@ -442,28 +420,127 @@ class Settings extends Component {
 
         <div className="settings-app">
           <div className="navBar">
-            <List>
-              <ListItem onClick={this.displayAccount}>
-                <h2 style={{ marginLeft: '10px' }}>Account</h2>
-              </ListItem>
-              <Divider />
-              <ListItem onClick={this.displayPassword}>
-                <h2>Password</h2>
-              </ListItem>
-              <Divider />
-              <ListItem onClick={this.displayServer}>
-                <h2>Server</h2>
-              </ListItem>
-              <Divider />
-              <ListItem onClick={this.displayDevices}>
-                <h2>Devices</h2>
-              </ListItem>
-              <Divider />
-              <ListItem onClick={this.displayMobile}>
-                <h2>Mobile</h2>
-              </ListItem>
-              <Divider />
-            </List>
+            <Paper
+              className="leftMenu tabStyle"
+              zDepth={1}
+              style={{
+                backgroundColor: '#fff',
+                color: '#272727',
+              }}
+            >
+              <div className="settings-list">
+                <Menu
+                  onItemTouchTap={this.loadSettings}
+                  selectedMenuItemStyle={blueThemeColor}
+                  style={{ width: '100%' }}
+                  value={this.state.selectedSetting}
+                >
+                  <MenuItem
+                    style={{ color: themeForegroundColor }}
+                    value="Account"
+                    className="setting-item"
+                  >
+                    Account
+                    <ChevronRight
+                      style={{ color: themeForegroundColor }}
+                      className="right-chevron"
+                    />
+                  </MenuItem>
+                  <Divider />
+
+                  <MenuItem
+                    style={{ color: themeForegroundColor }}
+                    value="Password"
+                    className="setting-item"
+                  >
+                    Password
+                    <ChevronRight
+                      style={{ color: themeForegroundColor }}
+                      className="right-chevron"
+                    />
+                  </MenuItem>
+                  <Divider />
+
+                  <MenuItem
+                    style={{ color: themeForegroundColor }}
+                    value="Server"
+                    className="setting-item"
+                  >
+                    Server
+                    <ChevronRight
+                      style={{ color: themeForegroundColor }}
+                      className="right-chevron"
+                    />
+                  </MenuItem>
+                  <Divider />
+
+                  <MenuItem
+                    style={{ color: themeForegroundColor }}
+                    value="Devices"
+                    className="setting-item"
+                  >
+                    Devices
+                    <ChevronRight
+                      style={{ color: themeForegroundColor }}
+                      className="right-chevron"
+                    />
+                  </MenuItem>
+                  <Divider />
+
+                  <MenuItem
+                    style={{ color: themeForegroundColor }}
+                    value="Mobile"
+                    className="setting-item"
+                  >
+                    Mobile
+                    <ChevronRight
+                      style={{ color: themeForegroundColor }}
+                      className="right-chevron"
+                    />
+                  </MenuItem>
+                  <Divider />
+                </Menu>
+              </div>
+
+              <div className="settings-list-dropdown">
+                <DropDownMenu
+                  selectedMenuItemStyle={blueThemeColor}
+                  onChange={this.loadSettings}
+                  value={this.state.selectedSetting}
+                  labelStyle={{ color: themeForegroundColor }}
+                  menuStyle={{ backgroundColor: themeBackgroundColor }}
+                  menuItemStyle={{ color: themeForegroundColor }}
+                  style={{ width: '100%' }}
+                  autoWidth={false}
+                >
+                  <MenuItem
+                    primaryText="Account"
+                    value="Account"
+                    className="setting-item"
+                  />
+                  <MenuItem
+                    primaryText="Password"
+                    value="Password"
+                    className="setting-item"
+                  />
+                  <MenuItem
+                    primaryText="Server"
+                    value="Server"
+                    className="setting-item"
+                  />
+                  <MenuItem
+                    primaryText="Devices"
+                    value="Devices"
+                    className="setting-item"
+                  />
+                  <MenuItem
+                    primaryText="Mobile"
+                    value="Mobile"
+                    className="setting-item"
+                  />
+                </DropDownMenu>
+              </div>
+            </Paper>
           </div>
 
           <Paper className="settings">
