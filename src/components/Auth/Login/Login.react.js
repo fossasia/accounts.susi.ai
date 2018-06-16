@@ -67,7 +67,7 @@ class Login extends Component {
       this.props.history.push('/resetpass/?token=' + token);
     }
     if (cookies.get('loggedIn')) {
-      this.props.history.push('/userhome', { showLogin: false });
+      this.props.history.push('/settings', { showLogin: false });
     }
   }
 
@@ -168,7 +168,7 @@ class Login extends Component {
     if (state.success) {
       cookies.set('loggedIn', loggedIn, { path: '/', maxAge: time });
       cookies.set('emailId', email, { path: '/', maxAge: time });
-      this.props.history.push('/userhome', { showLogin: false });
+      this.props.history.push('/settings', { showLogin: false });
     } else {
       this.setState({
         error: true,
