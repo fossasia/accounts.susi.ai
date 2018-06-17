@@ -8,7 +8,6 @@ import Cookies from 'universal-cookie';
 
 // Components
 import TextField from 'material-ui/TextField';
-import PasswordField from 'material-ui-password-field';
 import RaisedButton from 'material-ui/RaisedButton';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
@@ -219,7 +218,6 @@ class Login extends Component {
     const inputStyle = {
       height: '35px',
       marginBottom: '10px',
-      width: '140%',
     };
     const button = {
       width: '100%',
@@ -230,19 +228,6 @@ class Login extends Component {
       <div>
         <div className="app-bar-div">
           <StaticAppBar />
-        </div>
-        <div className="app-body-div">
-          <div className="About">
-            <h1>
-              Meet SUSI.AI, Your Artificial Intelligence for Personal
-              Assistants, Robots, Help Desks and Chatbots.
-            </h1>
-            <p style={{ margin: '5% 3% 0% 0%', fontSize: '24px' }}>
-              Ask it questions.<br />
-              <br /> Tell it to do things.<br />
-              <br /> Always ready to help.
-            </p>
-          </div>
         </div>
 
         <div className="login-container">
@@ -259,18 +244,15 @@ class Login extends Component {
                   underlineStyle={{ display: 'none' }}
                 />
 
-                <PasswordField
+                <TextField
                   name="password"
+                  type="password"
                   style={fieldStyle}
                   className="fieldStyle"
                   value={this.state.password}
                   placeholder="Password"
                   onChange={this.handleChange}
-                  inputStyle={inputStyle}
                   underlineStyle={{ display: 'none' }}
-                  disableButton={true}
-                  visibilityButtonStyle={{ display: 'none' }}
-                  visibilityIconStyle={{ display: 'none' }}
                 />
 
                 <RaisedButton
@@ -313,6 +295,25 @@ class Login extends Component {
             <br />
           </div>
         </div>
+
+        <div className="app-body-div">
+          <div className="About">
+            <div className="About-heading">
+              <h1>
+                Meet SUSI.AI, Your Artificial Intelligence for Personal
+                Assistants, Robots, Help Desks and Chatbots.
+              </h1>
+            </div>
+            <div className="points">
+              <p>
+                Ask it questions.<br />
+                <br /> Tell it to do things.<br />
+                <br /> Always ready to help.
+              </p>
+            </div>
+          </div>
+        </div>
+
         <Footer />
         <div>
           <Dialog
