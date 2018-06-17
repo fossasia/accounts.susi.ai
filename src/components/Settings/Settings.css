@@ -1,26 +1,68 @@
 .navBar {
   background-color:#EEE;
-  width:20%;
-  height:84vh;
+  width:333px;
+  height:70vh;
   min-width:180px;
   min-height:535px;
   float:left;
-  margin-left:17.5%;
 }
 .navBar h2 {
   margin-left:10px;
 }
+
+.right-chevron{
+  margin-top: 12px;
+  position: absolute;
+  right: 15px;
+}
+
+.settings-app {
+  max-width: none;
+  position: relative;
+  padding: 50px 0px 50px 0px;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  -ms-flex-pack: justify;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 85%;
+  width: 935px;
+  height:70vh;
+}
+
+.settings-list{
+  padding: 0px 0px;
+  user-select: none;
+  width: 100%;
+  height:70vh;
+  min-height:535px;
+}
+
+
+.settings-list-dropdown{
+  padding: 0px 0px;
+  user-select: none;
+  width: 100%;
+  display: none;
+}
+
 .settings-app {
   margin-top:50px;
 }
 
 .settings {
-  margin-right:17.5%;
   padding:30px;
-  width:45%;
-  height:84vh;
+  width:600px;
+  height:70vh;
   min-height:535px;
-  min-width:325px;
   float:right;
 }
 
@@ -34,53 +76,34 @@
   font-size: 10px;
   font-weight: bold;
 }
-@media screen and (max-width: 915px) {
+@media screen and (max-width: 1112px) {
   .settings {
-    margin-right:auto;
-    margin-left:auto;
     float:left;
+    width:100%;
   }
   .navBar {
     float:left;
     margin-right:auto;
-    margin-left:15%;
-
-  }
-}
-@media screen and (max-width: 610px) {
-  .settings {
-    margin-right:auto;
-    margin-left:auto;
-    float:left;
-  }
-  .navBar {
-    float:left;
-    margin-right:auto;
-    margin-left:5%;
-
-  }
-}
-@media screen and (max-width: 550px) {
-  .settings {
-    margin-right:auto;
-    margin-left:auto;
-    float:left;
-  }
-  .navBar {
-    float:left;
-    margin-right:auto;
-    margin-left:auto;
-
-  }
-}
-@media screen and (max-width: 519px) {
-  .navBar {
+    width:100%;
     min-height:unset;
-    width:100%;
-    height:190px;
-    overflow-y:auto;
+    height:65px;
+
   }
+  .settings-list{
+    display: none;
+  }
+
+  .settings-list-dropdown{
+    display: block;
+  }
+
+}
+@media screen and (max-width: 395px) {
+  .settings-app {
+    height:76vh;
+  }
+
   .settings {
-    width:100%;
+    height:76vh;
   }
 }
