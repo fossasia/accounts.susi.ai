@@ -15,6 +15,7 @@ import Info from 'material-ui/svg-icons/action/info';
 import Dashboard from 'material-ui/svg-icons/action/dashboard';
 import Chat from 'material-ui/svg-icons/communication/chat';
 import Extension from 'material-ui/svg-icons/action/extension';
+import Assessment from 'material-ui/svg-icons/action/assessment';
 import Settings from 'material-ui/svg-icons/action/settings';
 import Exit from 'material-ui/svg-icons/action/exit-to-app';
 import LoginIcon from 'material-ui/svg-icons/action/account-circle';
@@ -52,11 +53,13 @@ const ListMenu = () => (
       targetOrigin={{ horizontal: 'right', vertical: 'top' }}
       anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
     >
-      <MenuItem
-        primaryText="About"
-        href="http://chat.susi.ai/overview"
-        rightIcon={<Info />}
-      />
+      {cookies.get('loggedIn') ? (
+        <MenuItem
+          primaryText="Dashboard"
+          href="https://skills.susi.ai/dashboard"
+          rightIcon={<Assessment />}
+        />
+      ) : null}
       <MenuItem
         primaryText="Chat"
         href="https://chat.susi.ai"
@@ -92,6 +95,11 @@ const ListMenu = () => (
           rightIcon={<Settings />}
         />
       ) : null}
+      <MenuItem
+        primaryText="About"
+        href="http://chat.susi.ai/overview"
+        rightIcon={<Info />}
+      />
       {cookies.get('loggedIn') ? (
         <MenuItem
           primaryText="Logout"
