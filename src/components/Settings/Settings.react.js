@@ -245,7 +245,7 @@ class Settings extends Component {
     });
   };
   handleSave = event => {
-    this.props.history.push('/', { showLogin: true });
+    this.props.history.push('/settings', { showLogin: true });
   };
   render() {
     countryData.countries.all.sort(function(a, b) {
