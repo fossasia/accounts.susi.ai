@@ -6,6 +6,7 @@
 .signup {
   margin-left:25%;
   margin-right:25%;
+  margin-top: 10%;
 }
 .loginForm {
   width: 90%;
@@ -16,6 +17,10 @@
 }
 #forgotpwd {
   margin-left:250px;
+}
+.points{
+ margin: 5% 3% 5% 0%;
+ font-size: 24px;
 }
 .app-bar {
   position: absolute;
@@ -153,36 +158,139 @@
     float : none;
     height: auto;
     width : auto;
+    margin-top:50px;
   }
   .app-body-div {
     height:auto;
     width : auto;
-    margin:0;
+    margin:0 0 10px 0;
     float : none;;
     background-color : #EEE;
   }
   .About {
     margin:50px 0 5px 0;
- }
+  }
+  .About-heading{
+    padding-top:10px;
+  }
+  .signup{
+   margin: 15% 15% 0 15%;
+  }
+  .loginForm{
+    margin:0;
+  }
+  #loginForm{
+    margin:0;
+  }
+  .fieldStyle {
+    width: 100%;
+  }
   #forgotpwd {
     margin: 10px 25% 10px 15px;
   }
-  .loginbtn {	
-    width:210px;
+  .loginbtn {
+    width:104%;
     margin-right:110px;
-  }	
+  }
 
   #loginform {
-    margin-right:25%;
-    margin-left:25%;
+    margin:0 20%;
   }
-  .passfieldStyle {	
+  .passfieldStyle {
     width:100%;
   }
+  .points{
+    max-width: none;
+    position: relative;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    -ms-flex-pack: justify;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .footer{
+    margin-top:0;
+  }
 }
-@media screen and (max-width: 435px) {
+
+@media screen and (max-width: 475px) {
+  .login-container {
+    float : none;
+    height: auto;
+    width : auto;
+    margin-top:50px;
+  }
+  .app-body-div {
+    height:auto;
+    width : auto;
+    margin:0 0 10px 0;
+    float : none;;
+    background-color : #EEE;
+  }
+  .About {
+    margin:50px 0 5px 0;
+  }
+  .About-heading{
+    padding-top:2px;
+    padding-left:10px;
+  }
+  .signup{
+    margin: 20% 10% 0 10%;
+  }
+  .points{
+    padding-left:10px;
+  }
+  .loginForm{
+    margin:0;
+  }
+  #loginForm{
+    margin:0;
+  }
+  .fieldStyle {
+    width: 100%;
+  }
+  #forgotpwd {
+    margin: 10px 25% 10px 15px;
+  }
+  .loginbtn {
+    width:104%;
+    margin-right:110px;
+  }
+
   #loginform {
-    margin-right:15%;
-    margin-left:15%;
+    margin:0;
+  }
+  .passfieldStyle {
+    width:100%;
+  }
+  .points{
+    max-width: none;
+    position: relative;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    -ms-flex-pack: justify;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .footer{
+    margin-top:0;
   }
 }
