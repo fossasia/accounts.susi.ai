@@ -226,7 +226,7 @@ class Login extends Component {
 
     return (
       <div>
-        <div className="app-bar-div">
+        <div className="app-bar">
           <StaticAppBar />
         </div>
 

@@ -184,7 +184,7 @@ export default class ChangePassword extends Component {
     );
     return (
       <div>
-        <div className="app-bar-div">
+        <div className="app-bar">
           <StaticAppBar />
         </div>
         <div className="changePasswordForm">
