@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import $ from 'jquery';
 
 // Componentts
 import MenuItem from 'material-ui/MenuItem';
@@ -19,6 +20,8 @@ import Settings from 'material-ui/svg-icons/action/settings';
 import Exit from 'material-ui/svg-icons/action/exit-to-app';
 import LoginIcon from 'material-ui/svg-icons/action/account-circle';
 import susiWhite from '../../images/susi-logo-white.png';
+import './StaticAppBar.css';
+
 const cookies = new Cookies();
 
 const ListMenu = () => (
@@ -110,29 +113,86 @@ const ListMenu = () => (
 );
 
 class StaticAppBar extends Component {
+  handleScroll = event => {
+    let scrollTop = event.pageY || event.target.body.scrollTop,
+      itemTranslate = scrollTop > 60;
+    if (itemTranslate) {
+      this.closeOptions();
+    }
+  };
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+
+    var didScroll;
+    var lastScrollTop = 0;
+    var delta = 5;
+    var navbarHeight = $('header').outerHeight();
+    $(window).scroll(function(event) {
+      didScroll = true;
+    });
+    /* eslint-disable */
+    {
+      setInterval(function() {
+        if (didScroll) {
+          hasScrolled();
+          didScroll = false;
+        }
+      }, 500);
+    }
+    /* eslint-enable */
+    function hasScrolled() {
+      var st = $(window).scrollTop();
+      // Make sure they scroll more than delta
+      if (Math.abs(lastScrollTop - st) <= delta) {
+        return;
+      }
+
+      // If they scrolled down and are past the navbar, add class .nav-up.
+      // This is necessary so you never see what is 'behind' the navbar.
+      if (st > lastScrollTop && st > navbarHeight + 10) {
+        // Scroll Down
+        $('header')
+          .removeClass('nav-down')
+          .addClass('nav-up');
+      } else if (st + $(window).height() < $(document).height()) {
+        $('header')
+          .removeClass('nav-up')
+          .addClass('nav-down');
+      }
+
+      lastScrollTop = st;
+    }
+  }
   render() {
     return (
-      <AppBar
-        title={
-          <div id="rightIconButton">
-            <img
-              src={susiWhite}
-              alt="susi-logo"
-              className="siteTitle"
-              style={{ height: '25px', marginBottom: '4px', marginLeft: '8px' }}
-            />
-          </div>
-        }
-        iconElementLeft={<iconButton />}
-        className="app-bar"
-        style={{
-          backgroundColor: '#4285F4',
-          height: '46px',
-        }}
-        titleStyle={{ height: '46px' }}
-        iconStyleRight={{ marginRight: '7px', marginTop: '7px' }}
-        iconElementRight={<ListMenu />}
-      />
+      <header className="nav-down" id="headerSection">
+        <AppBar
+          title={
+            <div id="rightIconButton">
+              <img
+                src={susiWhite}
+                alt="susi-logo"
+                className="siteTitle"
+                style={{
+                  height: '25px',
+                  marginBottom: '4px',
+                  marginLeft: '8px',
+                }}
+              />
+            </div>
+          }
+          iconElementLeft={<iconButton />}
+          className="app-bar"
+          style={{
+            backgroundColor: '#4285F4',
+            height: '46px',
+          }}
+          titleStyle={{ height: '46px' }}
+          iconStyleRight={{ marginRight: '-8px', marginTop: '7px' }}
+          iconElementRight={<ListMenu />}
+        />
+      </header>
     );
   }
 }

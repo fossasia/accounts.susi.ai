@@ -216,7 +216,7 @@ export default class SignUp extends Component {
             </div>
           </header>
         </div>
-        <div className="app-body-div">
+        <div className="app-body">
           <div className="About">
             <h1>
               Meet SUSI.AI, Your Artificial Intelligence for Personal
