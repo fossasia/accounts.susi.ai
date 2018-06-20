@@ -16,6 +16,7 @@ script:
   - npm run test
 
 after_success:
+  - bash ./surge_deploy.sh
   - bash ./deploy.sh
 
 cache:
@@ -24,4 +25,4 @@ cache:
 # safelist
 branches:
   only:
-  - master  
+  - master
