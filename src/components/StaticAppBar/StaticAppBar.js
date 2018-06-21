@@ -86,11 +86,6 @@ const ListMenu = () => (
           menuItems={[
             <MenuItem
               key="1"
-              primaryText="Change Password"
-              containerElement={<Link to="/changepassword" />}
-            />,
-            <MenuItem
-              key="2"
               primaryText="Delete Account"
               containerElement={<Link to="/delete-account" />}
             />,

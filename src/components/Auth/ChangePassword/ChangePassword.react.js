@@ -7,7 +7,6 @@ import './ChangePassword.css';
 import FlatButton from 'material-ui/FlatButton';
 import PropTypes from 'prop-types';
 import PasswordField from 'material-ui-password-field';
-import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
@@ -170,9 +169,10 @@ export default class ChangePassword extends Component {
 
   render() {
     const styles = {
-      margin: '60px auto',
+      width: '100%',
+      textAlign: 'left',
       padding: '10px',
-      textAlign: 'center',
+      paddingTop: '0px',
     };
     const actions = (
       <FlatButton
@@ -182,62 +182,94 @@ export default class ChangePassword extends Component {
         onTouchTap={this.handleClose}
       />
     );
+
+    const fieldStyle = {
+      height: '35px',
+      borderRadius: 4,
+      border: '1px solid #ced4da',
+      fontSize: 16,
+      padding: '0px 12px',
+      width: '125%',
+    };
+    const labelStyle = {
+      width: '30%',
+      float: 'left',
+      marginTop: '12px',
+    };
+    const inputStyle = {
+      height: '35px',
+      marginBottom: '10px',
+    };
     return (
       <div>
         <div className="app-bar">
           <StaticAppBar />
         </div>
         <div className="changePasswordForm">
-          <Paper zDepth={1} style={styles}>
-            <h1>Change Password!!</h1>
-            <br />
+          <Paper zDepth={0} style={styles}>
             <form onSubmit={this.handleSubmit}>
+              <div style={labelStyle}>Current Password</div>
               <div>
                 <PasswordField
                   name="currentPassword"
-                  floatingLabelText="Current Password"
-                  errorText={this.currentPasswordErrorMessage}
-                  style={{ width: 350 }}
+                  style={fieldStyle}
                   value={this.state.currentPassword}
                   onChange={this.handleChange}
+                  inputStyle={inputStyle}
+                  errorText={this.currentPasswordErrorMessage}
+                  underlineStyle={{ display: 'none' }}
+                  disableButton={true}
+                  visibilityButtonStyle={{ display: 'none' }}
+                  visibilityIconStyle={{ display: 'none' }}
                 />
+                <div className="forgot">
+                  <a href="https://accounts.susi.ai/forgotpwd">
+                    Forgot your password?
+                  </a>
+                </div>
               </div>
+              <br />
+              <div style={labelStyle}>New Password</div>
               <div>
                 <PasswordField
                   name="newPassword"
-                  floatingLabelText="New Password"
-                  errorText={this.newPasswordErrorMessage}
-                  style={{ width: 350 }}
+                  style={fieldStyle}
                   value={this.state.newPassword}
                   onChange={this.handleChange}
+                  inputStyle={inputStyle}
+                  errorText={this.newPasswordErrorMessage}
+                  underlineStyle={{ display: 'none' }}
+                  disableButton={true}
+                  visibilityButtonStyle={{ display: 'none' }}
+                  visibilityIconStyle={{ display: 'none' }}
                 />
               </div>
+              <br />
+              <div style={labelStyle}>Verify Password</div>
+
               <div>
                 <PasswordField
                   name="confirmPassword"
-                  floatingLabelText="Confirm Password"
-                  errorText={this.confirmPasswordErrorMessage}
-                  style={{ width: 350 }}
+                  style={fieldStyle}
                   value={this.state.confirmPassword}
                   onChange={this.handleChange}
+                  inputStyle={inputStyle}
+                  errorText={this.confirmPasswordErrorMessage}
+                  underlineStyle={{ display: 'none' }}
+                  disableButton={true}
+                  visibilityButtonStyle={{ display: 'none' }}
+                  visibilityIconStyle={{ display: 'none' }}
                 />
               </div>
               <br />
               <div>
                 <RaisedButton
-                  label="submit"
+                  label="Save Changes"
                   type="submit"
+                  style={{ marginRight: '50px' }}
                   backgroundColor={'#4285F4'}
                   labelColor="#fff"
                 />
-                &nbsp;
-                <Link to={'/'}>
-                  <RaisedButton
-                    label="Cancel"
-                    backgroundColor={'#4285F4'}
-                    labelColor="#fff"
-                  />
-                </Link>
               </div>
             </form>
           </Paper>
