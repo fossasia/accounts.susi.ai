@@ -38,7 +38,9 @@ const ListMenu = () => (
           right: '-8px',
         }}
       >
-        {cookies.get('emailId')}
+        {cookies.get('username') === ''
+          ? cookies.get('emailId')
+          : cookies.get('username')}
       </label>
     ) : (
       <label />
@@ -130,6 +132,24 @@ class StaticAppBar extends Component {
   };
 
   componentDidMount() {
+    $.ajax({
+      url:
+        'https://api.susi.ai' +
+        '/aaa/listUserSettings.json?access_token=' +
+        cookies.get('loggedIn'),
+      jsonpCallback: 'pc',
+      dataType: 'jsonp',
+      jsonp: 'callback',
+      crossDomain: true,
+      success: function(data) {
+        let userName = data.settings.userName;
+        console.log(data);
+        cookies.set('username', userName);
+      },
+      error: function(errorThrown) {
+        console.log(errorThrown);
+      },
+    });
     window.addEventListener('scroll', this.handleScroll);
 
     var didScroll;
