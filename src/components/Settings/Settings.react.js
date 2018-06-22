@@ -19,6 +19,7 @@ import Menu from 'material-ui/Menu';
 import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import ChangePassword from '../Auth/ChangePassword/ChangePassword.react';
+import * as Actions from '../../actions/API.actions';
 
 // Icons
 import ChatIcon from 'material-ui/svg-icons/communication/chat';
@@ -55,6 +56,7 @@ class Settings extends Component {
       SpeechOutput: true,
       SpeechOutputAlways: true,
       deviceData: false,
+      settingsChanged: false,
       voiceList: [
         {
           lang: 'am-AM',
@@ -137,11 +139,24 @@ class Settings extends Component {
       timeout: 3000,
       async: false,
       success: function(response) {
-        if (response.settings.prefLanguage !== '') {
+        if (
+          response.settings.prefLanguage !== '' &&
+          response.settings.prefLanguage !== undefined
+        ) {
           this.setState({
             PrefLanguage: response.settings.prefLanguage,
           });
         }
+        /* eslint-disable */
+        response.settings.enterAsSend =
+          response.settings.enterAsSend === 'false' ? false : true;
+        response.settings.micInput =
+          response.settings.micInput === 'false' ? false : true;
+        response.settings.speechOutput =
+          response.settings.speechOutput === 'false' ? false : true;
+        response.settings.speechOutputAlways =
+          response.settings.speechOutputAlways === 'false' ? false : true;
+        /* eslint-enable */
         this.setState({
           dataFetched: true,
           UserName: response.settings.userName,
@@ -197,24 +212,67 @@ class Settings extends Component {
     return voiceOutput;
   };
 
-  handleUserName = (event, value) => {
-    this.setState({ UserName: this.target.value });
+  handleSave = () => {
+    let newEnterAsSend = this.state.EnterAsSend;
+    let newMicInput = this.state.MicInput;
+    let newSpeechOutput = this.state.SpeechOutput;
+    let newSpeechOutputAlways = this.state.SpeechOutputAlways;
+    let newUserName = this.state.UserName;
+    let newPrefLanguage = this.state.PrefLanguage;
+    let newTimeZone = this.state.TimeZone;
+    let newCountryCode = this.state.CountryCode;
+    let newCountryDialCode = this.state.CountryDialCode;
+    let newPhoneNo = this.state.PhoneNo;
+    let newTheme = this.state.theme;
+    let vals = {
+      enterAsSend: newEnterAsSend,
+      micInput: newMicInput,
+      speechOutput: newSpeechOutput,
+      speechOutputAlways: newSpeechOutputAlways,
+      userName: newUserName,
+      prefLanguage: newPrefLanguage,
+      timeZone: newTimeZone,
+      countryCode: newCountryCode,
+      countryDialCode: newCountryDialCode,
+      phoneNo: newPhoneNo,
+      theme: newTheme,
+    };
+    // Trigger Actions to save the settings in stores and server
+    this.implementSettings(vals);
+    cookies.set('username', vals.userName);
+  };
+
+  // Store the settings in server
+  implementSettings = values => {
+    Actions.pushSettingsToServer(values);
+    this.setState({ settingsChanged: false });
+    this.props.history.push('/settings', { showLogin: true });
+  };
+
+  handleUserName = event => {
+    this.setState({
+      UserName: event.target.value,
+      settingsChanged: true,
+    });
   };
 
   handlePrefLang = (event, index, value) => {
     this.setState({
       PrefLanguage: value,
+      settingsChanged: true,
     });
   };
 
   handleTimeZone = value => {
     this.setState({
       TimeZone: value,
+      settingsChanged: true,
     });
   };
   handleEnterAsSend = (event, isInputChecked) => {
     this.setState({
       EnterAsSend: isInputChecked,
+      settingsChanged: true,
     });
   };
 
@@ -223,30 +281,35 @@ class Settings extends Component {
       speechRate: settings.speechRate,
       speechPitch: settings.speechPitch,
       ttsLanguage: settings.ttsLanguage,
+      settingsChanged: true,
     });
   };
 
   handleMicInput = (event, isInputChecked) => {
     this.setState({
       MicInput: isInputChecked,
+      settingsChanged: true,
     });
   };
 
   handleSpeechOutput = (event, isInputChecked) => {
     this.setState({
       SpeechOutput: isInputChecked,
+      settingsChanged: true,
     });
   };
 
   handleSpeechOutputAlways = (event, isInputChecked) => {
     this.setState({
       SpeechOutputAlways: isInputChecked,
+      settingsChanged: true,
     });
   };
 
   handleCountryChange = (event, index, value) => {
     this.setState({
       countryCode: value,
+      settingsChanged: true,
       countryDialCode:
         countryData.countries[value ? value : 'US'].countryCallingCodes[0],
     });
@@ -254,17 +317,15 @@ class Settings extends Component {
   handleSelectChange = (event, value) => {
     this.setState({
       theme: value,
+      settingsChanged: true,
     });
   };
 
   handlePhoneNo = event => {
     this.setState({
       PhoneNo: event.target.value,
+      settingsChanged: true,
     });
-  };
-
-  handleSave = event => {
-    this.props.history.push('/settings', { showLogin: true });
   };
 
   loadSettings = e => {
@@ -429,7 +490,6 @@ class Settings extends Component {
           </div>
           <Toggle
             className="settings-toggle"
-            backgroundColor="#4285F4"
             onToggle={this.handleEnterAsSend}
             labelStyle={{ color: themeForegroundColor }}
             toggled={this.state.EnterAsSend}
@@ -729,6 +789,9 @@ class Settings extends Component {
                       className="right-chevron"
                     />
                   </MenuItem>
+                  <MenuItem style={{ display: 'none' }} value="Account">
+                    Account
+                  </MenuItem>
                   <hr className="Divider" />
                 </Menu>
               </div>
@@ -800,6 +863,7 @@ class Settings extends Component {
                     label="save changes"
                     backgroundColor="#4285F4"
                     labelColor="#fff"
+                    disabled={!this.state.settingsChanged}
                     onTouchTap={this.handleSave}
                   />
                 )}
