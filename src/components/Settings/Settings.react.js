@@ -10,14 +10,27 @@ import TextField from 'material-ui/TextField';
 import StaticAppBar from '../StaticAppBar/StaticAppBar';
 import Paper from 'material-ui/Paper';
 import Footer from '../Footer/Footer.react.js';
-import './Settings.css';
+import Toggle from 'material-ui/Toggle';
 import TimezonePicker from 'react-timezone';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import countryData from 'country-data';
 import MenuItem from 'material-ui/MenuItem';
 import Menu from 'material-ui/Menu';
 import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
-import Divider from 'material-ui/Divider';
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
+import ChangePassword from '../Auth/ChangePassword/ChangePassword.react';
+
+// Icons
+import ChatIcon from 'material-ui/svg-icons/communication/chat';
+import ThemeIcon from 'material-ui/svg-icons/action/invert-colors';
+import VoiceIcon from 'material-ui/svg-icons/action/settings-voice';
+import SpeechIcon from 'material-ui/svg-icons/action/record-voice-over';
+import AccountIcon from 'material-ui/svg-icons/action/account-box';
+import LockIcon from 'material-ui/svg-icons/action/lock';
+import MyDevices from 'material-ui/svg-icons/device/devices';
+import MobileIcon from 'material-ui/svg-icons/hardware/phone-android';
+
+import './Settings.css';
 
 const cookies = new Cookies();
 const token = cookies.get('loggedIn');
@@ -30,13 +43,17 @@ class Settings extends Component {
     this.state = {
       dataFetched: false,
       selectedSetting: 'Account',
+      UserName: '',
       PrefLanguage: 'en-US',
       TimeZone: '',
       CountryCode: '',
       CountryDialCode: '',
       PhoneNo: '',
-      Server: '',
-      ServerUrl: '',
+      EnterAsSend: true,
+      MicInput: false,
+      theme: 'light',
+      SpeechOutput: true,
+      SpeechOutputAlways: true,
       deviceData: false,
       voiceList: [
         {
@@ -127,12 +144,16 @@ class Settings extends Component {
         }
         this.setState({
           dataFetched: true,
+          UserName: response.settings.userName,
           TimeZone: response.settings.timeZone,
           CountryCode: response.settings.countryCode,
           CountryDialCode: response.settings.countryDialCode,
           PhoneNo: response.settings.phoneNo,
-          Server: response.settings.server,
-          ServerUrl: response.settings.serverUrl,
+          EnterAsSend: response.settings.enterAsSend,
+          MicInput: response.settings.micInput,
+          theme: response.settings.theme,
+          SpeechOutput: response.settings.speechOutput,
+          SpeechOutputAlways: response.settings.speechOutputAlways,
         });
       }.bind(this),
       error: function(errorThrown) {
@@ -176,6 +197,10 @@ class Settings extends Component {
     return voiceOutput;
   };
 
+  handleUserName = (event, value) => {
+    this.setState({ UserName: this.target.value });
+  };
+
   handlePrefLang = (event, index, value) => {
     this.setState({
       PrefLanguage: value,
@@ -187,16 +212,35 @@ class Settings extends Component {
       TimeZone: value,
     });
   };
-
-  handleServer = event => {
+  handleEnterAsSend = (event, isInputChecked) => {
     this.setState({
-      Server: event.target.value,
+      EnterAsSend: isInputChecked,
     });
   };
 
-  handleServerUrl = event => {
+  handleNewTextToSpeech = settings => {
     this.setState({
-      ServerUrl: event.target.value,
+      speechRate: settings.speechRate,
+      speechPitch: settings.speechPitch,
+      ttsLanguage: settings.ttsLanguage,
+    });
+  };
+
+  handleMicInput = (event, isInputChecked) => {
+    this.setState({
+      MicInput: isInputChecked,
+    });
+  };
+
+  handleSpeechOutput = (event, isInputChecked) => {
+    this.setState({
+      SpeechOutput: isInputChecked,
+    });
+  };
+
+  handleSpeechOutputAlways = (event, isInputChecked) => {
+    this.setState({
+      SpeechOutputAlways: isInputChecked,
     });
   };
 
@@ -205,6 +249,11 @@ class Settings extends Component {
       countryCode: value,
       countryDialCode:
         countryData.countries[value ? value : 'US'].countryCallingCodes[0],
+    });
+  };
+  handleSelectChange = (event, value) => {
+    this.setState({
+      theme: value,
     });
   };
 
@@ -259,6 +308,10 @@ class Settings extends Component {
       width: 'auto',
     };
 
+    const radioIconStyle = {
+      fill: '#4285f4',
+    };
+
     const menuStyle = {
       width: '250px',
       marginLeft: '-20px',
@@ -267,7 +320,6 @@ class Settings extends Component {
     const submitButton = {
       marginTop: '20px',
       paddingRight: 10,
-      textAlign: 'center',
     };
 
     const blueThemeColor = { color: 'rgb(66, 133, 244)' };
@@ -282,12 +334,21 @@ class Settings extends Component {
     if (this.state.selectedSetting === 'Account') {
       currentSetting = (
         <div>
-          <h1>Account Settings</h1>
-          <br />
+          <div className="tabHeading">Account</div>
+          <hr className="Divider" style={{ height: '2px' }} />
           <div>
-            <div className="label">
-              <h1>Your Email</h1>
-            </div>
+            <div className="label">User Name</div>
+
+            <TextField
+              name="userName"
+              style={fieldStyle}
+              value={this.state.UserName}
+              onChange={this.handleUserName}
+              placeholder="Enter your User Name"
+              underlineStyle={{ display: 'none' }}
+            />
+
+            <div className="label">Email</div>
 
             <TextField
               name="email"
@@ -296,28 +357,28 @@ class Settings extends Component {
               underlineStyle={{ display: 'none' }}
             />
 
-            <div className="label">
-              <h1>Select default Language</h1>
+            <div className="label" style={{ marginBottom: '0' }}>
+              Select default language
             </div>
 
             <DropDownMenu
               value={voiceOutput.voiceLang}
-              style={menuStyle}
+              style={{ marginLeft: '-20px' }}
               onChange={this.handlePrefLang}
             >
               {voiceOutput.voiceMenu}
             </DropDownMenu>
 
-            <div className="label">
-              <h1>Select TimeZone</h1>
+            <div className="label" style={{ marginBottom: '0' }}>
+              Select TimeZone
             </div>
+            <br />
             <TimezonePicker
               value={this.state.TimeZone}
               onChange={timezone => this.handleTimeZone(timezone)}
               inputProps={{
                 placeholder: 'Select Timezone...',
                 name: 'timezone',
-                style: { width: '230px' },
               }}
             />
           </div>
@@ -328,43 +389,14 @@ class Settings extends Component {
     if (this.state.selectedSetting === 'Password') {
       currentSetting = (
         <div>
-          <h1>Password Settings</h1>
-          <br />
-          This service will be available soon!
-        </div>
-      );
-    }
-
-    if (this.state.selectedSetting === 'Server') {
-      currentSetting = (
-        <div>
-          <h1>Server Settings</h1>
-          <br />
-          <div>
-            <div className="label">
-              <h1>Server Name</h1>
-            </div>
-
-            <TextField
-              name="serverName"
-              style={fieldStyle}
-              value={this.state.Server}
-              onChange={this.handleServer}
-              underlineStyle={{ display: 'none' }}
-            />
-
-            <div className="label">
-              <h1>Server Url</h1>
-            </div>
-
-            <TextField
-              name="serverUrl"
-              style={fieldStyle}
-              value={this.state.ServerUrl}
-              onChange={this.handleServerUrl}
-              underlineStyle={{ display: 'none' }}
-            />
+          <div className="tabHeading" style={{ marginBottom: '10px' }}>
+            Password
           </div>
+          <hr
+            className="Divider"
+            style={{ height: '2px', marginBottom: '10px' }}
+          />
+          <ChangePassword />
         </div>
       );
     }
@@ -372,9 +404,164 @@ class Settings extends Component {
     if (this.state.selectedSetting === 'Devices') {
       currentSetting = (
         <div>
-          <h1>Devices Settings</h1>
+          <div className="tabHeading">Devices Settings</div>
+          <hr className="Divider" style={{ height: '2px' }} />
+          <br />
           <br />
           This service will be available soon!
+        </div>
+      );
+    }
+
+    if (this.state.selectedSetting === 'ChatApp') {
+      currentSetting = (
+        <div>
+          <div className="tabHeading">Preferences</div>
+          <hr className="Divider" style={{ height: '2px' }} />
+          <br />
+          <div
+            style={{
+              float: 'left',
+              padding: '0px 5px 0px 0px',
+            }}
+          >
+            Send message by pressing ENTER
+          </div>
+          <Toggle
+            className="settings-toggle"
+            backgroundColor="#4285F4"
+            onToggle={this.handleEnterAsSend}
+            labelStyle={{ color: themeForegroundColor }}
+            toggled={this.state.EnterAsSend}
+          />
+          <br />
+        </div>
+      );
+    }
+
+    if (this.state.selectedSetting === 'Microphone') {
+      currentSetting = '';
+      currentSetting = (
+        <div>
+          <div>
+            <div>
+              <div className="tabHeading">Mic Input</div>
+              <hr className="Divider" style={{ height: '2px' }} />
+              <br />
+              <div
+                style={{
+                  float: 'left',
+                  padding: '0px 5px 0px 0px',
+                }}
+              >
+                Enable mic to give voice input
+              </div>
+              <Toggle
+                className="settings-toggle"
+                labelStyle={{ color: themeForegroundColor }}
+                onToggle={this.handleMicInput}
+                toggled={this.state.MicInput}
+              />
+              <br />
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    if (this.state.selectedSetting === 'Theme') {
+      currentSetting = '';
+      currentSetting = (
+        <div>
+          <span>
+            <div className="tabHeading">Select Theme</div>
+            <hr className="Divider" style={{ height: '2px' }} />
+          </span>
+          <RadioButtonGroup
+            style={{ textAlign: 'left', margin: '20px', marginBottom: '41px' }}
+            onChange={this.handleSelectChange}
+            name="Theme"
+            valueSelected={this.state.theme}
+          >
+            <RadioButton
+              style={{ width: '20%', display: 'block' }}
+              iconStyle={radioIconStyle}
+              labelStyle={{ color: themeForegroundColor }}
+              value="light"
+              label="Light"
+            />
+            <RadioButton
+              style={{ width: '20%', display: 'block' }}
+              iconStyle={radioIconStyle}
+              labelStyle={{ color: themeForegroundColor }}
+              value="dark"
+              label="Dark"
+            />
+            <RadioButton
+              style={{ width: '20%' }}
+              iconStyle={radioIconStyle}
+              labelStyle={{ color: themeForegroundColor }}
+              value="custom"
+              label="Custom"
+            />
+          </RadioButtonGroup>
+        </div>
+      );
+    }
+
+    if (this.state.selectedSetting === 'Speech') {
+      currentSetting = (
+        <div>
+          <div>
+            <div className="tabHeading">Speech Output</div>
+            <hr className="Divider" style={{ height: '2px' }} />
+            <br />
+            <div
+              style={{
+                float: 'left',
+                padding: '0px 5px 0px 0px',
+              }}
+            >
+              Enable speech output only for speech input
+            </div>
+            <Toggle
+              className="settings-toggle"
+              labelStyle={{ color: themeForegroundColor }}
+              onToggle={this.handleSpeechOutput}
+              toggled={this.state.SpeechOutput}
+            />
+            <br />
+            <br />
+          </div>
+          <div>
+            <div
+              style={{
+                marginTop: '10px',
+                marginBottom: '0px',
+                fontSize: '15px',
+                fontWeight: 'bold',
+              }}
+            >
+              Speech Output Always ON
+            </div>
+            <br />
+            <div
+              style={{
+                float: 'left',
+                padding: '5px 5px 0px 0px',
+              }}
+            >
+              Enable speech output regardless of input type
+            </div>
+            <Toggle
+              className="settings-toggle"
+              labelStyle={{ color: themeForegroundColor }}
+              onToggle={this.handleSpeechOutputAlways}
+              toggled={this.state.SpeechOutputAlways}
+            />
+            <br />
+            <br />
+          </div>
         </div>
       );
     }
@@ -382,12 +569,11 @@ class Settings extends Component {
     if (this.state.selectedSetting === 'Mobile') {
       currentSetting = (
         <div>
-          <h1>Mobile Settings</h1>
+          <div className="tabHeading">Mobile</div>
+          <hr className="Divider" style={{ height: '2px' }} />
           <br />
           <div>
-            <div className="label">
-              <h1>Country Code</h1>
-            </div>
+            <div className="label">Country Code</div>
             <DropDownMenu
               maxHeight={300}
               style={menuStyle}
@@ -397,9 +583,7 @@ class Settings extends Component {
               {countries}
             </DropDownMenu>
 
-            <div className="label">
-              <h1>Phone No</h1>
-            </div>
+            <div className="label">Phone No</div>
 
             <TextField
               name="phoneNo"
@@ -413,12 +597,12 @@ class Settings extends Component {
       );
     }
     return (
-      <div>
+      <div style={{ backgroundColor: '#F2F2F2' }}>
         <div className="app-bar">
           <StaticAppBar />
         </div>
 
-        <div className="settings-app">
+        <div className="settings-app" style={{ backgroundColor: '#F2F2F2' }}>
           <div className="navBar">
             <Paper
               className="leftMenu tabStyle"
@@ -439,6 +623,7 @@ class Settings extends Component {
                     style={{ color: themeForegroundColor }}
                     value="Account"
                     className="setting-item"
+                    leftIcon={<AccountIcon />}
                   >
                     Account
                     <ChevronRight
@@ -446,12 +631,13 @@ class Settings extends Component {
                       className="right-chevron"
                     />
                   </MenuItem>
-                  <Divider />
+                  <hr className="Divider" />
 
                   <MenuItem
                     style={{ color: themeForegroundColor }}
                     value="Password"
                     className="setting-item"
+                    leftIcon={<LockIcon />}
                   >
                     Password
                     <ChevronRight
@@ -459,25 +645,69 @@ class Settings extends Component {
                       className="right-chevron"
                     />
                   </MenuItem>
-                  <Divider />
+                  <hr className="Divider" />
 
                   <MenuItem
                     style={{ color: themeForegroundColor }}
-                    value="Server"
+                    value="ChatApp"
                     className="setting-item"
+                    leftIcon={<ChatIcon />}
                   >
-                    Server
+                    ChatApp
                     <ChevronRight
                       style={{ color: themeForegroundColor }}
                       className="right-chevron"
                     />
                   </MenuItem>
-                  <Divider />
+                  <hr className="Divider" />
+
+                  <MenuItem
+                    style={{ color: themeForegroundColor }}
+                    value="Theme"
+                    className="setting-item"
+                    leftIcon={<ThemeIcon />}
+                  >
+                    Theme
+                    <ChevronRight
+                      style={{ color: themeForegroundColor }}
+                      className="right-chevron"
+                    />
+                  </MenuItem>
+                  <hr className="Divider" />
+
+                  <MenuItem
+                    style={{ color: themeForegroundColor }}
+                    value="Microphone"
+                    className="setting-item"
+                    leftIcon={<VoiceIcon />}
+                  >
+                    Microphone
+                    <ChevronRight
+                      style={{ color: themeForegroundColor }}
+                      className="right-chevron"
+                    />
+                  </MenuItem>
+                  <hr className="Divider" />
+
+                  <MenuItem
+                    style={{ color: themeForegroundColor }}
+                    value="Speech"
+                    className="setting-item"
+                    leftIcon={<SpeechIcon />}
+                  >
+                    Speech
+                    <ChevronRight
+                      style={{ color: themeForegroundColor }}
+                      className="right-chevron"
+                    />
+                  </MenuItem>
+                  <hr className="Divider" />
 
                   <MenuItem
                     style={{ color: themeForegroundColor }}
                     value="Devices"
                     className="setting-item"
+                    leftIcon={<MyDevices />}
                   >
                     Devices
                     <ChevronRight
@@ -485,12 +715,13 @@ class Settings extends Component {
                       className="right-chevron"
                     />
                   </MenuItem>
-                  <Divider />
+                  <hr className="Divider" />
 
                   <MenuItem
                     style={{ color: themeForegroundColor }}
                     value="Mobile"
                     className="setting-item"
+                    leftIcon={<MobileIcon />}
                   >
                     Mobile
                     <ChevronRight
@@ -498,7 +729,7 @@ class Settings extends Component {
                       className="right-chevron"
                     />
                   </MenuItem>
-                  <Divider />
+                  <hr className="Divider" />
                 </Menu>
               </div>
 
@@ -524,8 +755,23 @@ class Settings extends Component {
                     className="setting-item"
                   />
                   <MenuItem
-                    primaryText="Server"
-                    value="Server"
+                    primaryText="ChatApp"
+                    value="ChatApp"
+                    className="setting-item"
+                  />
+                  <MenuItem
+                    primaryText="Theme"
+                    value="Theme"
+                    className="setting-item"
+                  />
+                  <MenuItem
+                    primaryText="Microphone"
+                    value="Microphone"
+                    className="setting-item"
+                  />
+                  <MenuItem
+                    primaryText="Speech"
+                    value="Speech"
                     className="setting-item"
                   />
                   <MenuItem
@@ -547,12 +793,16 @@ class Settings extends Component {
             <div className="currentSettings">
               {currentSetting}
               <div style={submitButton}>
-                <RaisedButton
-                  label="save"
-                  backgroundColor="#4285F4"
-                  labelColor="#fff"
-                  onTouchTap={this.handleSave}
-                />
+                {this.state.selectedSetting === 'Password' ? (
+                  ''
+                ) : (
+                  <RaisedButton
+                    label="save changes"
+                    backgroundColor="#4285F4"
+                    labelColor="#fff"
+                    onTouchTap={this.handleSave}
+                  />
+                )}
               </div>
             </div>
           </Paper>
