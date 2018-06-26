@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 import PasswordField from 'material-ui-password-field';
 import Cookies from 'universal-cookie';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 
 const cookies = new Cookies();
 injectTapEventPlugin();
@@ -202,9 +201,6 @@ export default class ChangePassword extends Component {
     };
     return (
       <div>
-        <div className="app-bar">
-          <StaticAppBar />
-        </div>
         <div className="changePasswordForm">
           <Paper zDepth={0} style={styles}>
             <form onSubmit={this.handleSubmit}>

@@ -1,6 +1,6 @@
 .navBar {
   background-color:#EEE;
-  width:326.5px;
+  width:327.5px;
   height:450px;
   min-width:180px;
   float:left;
@@ -64,7 +64,7 @@
 
 .settings {
   padding:20px 20px 20px 30px;
-  width:598px;
+  width:598.5px;
   height:450px;
   float:right;
   background-color: #fff;
@@ -109,6 +109,7 @@
   .navBar {
     float:left;
     margin-right:auto;
+    margin-bottom:15px;
     width:100%;
     min-height:unset;
     height:65px;

@@ -193,16 +193,18 @@ class StaticAppBar extends Component {
         <AppBar
           title={
             <div id="rightIconButton">
-              <img
-                src={susiWhite}
-                alt="susi-logo"
-                className="siteTitle"
-                style={{
-                  height: '25px',
-                  marginBottom: '4px',
-                  marginLeft: '8px',
-                }}
-              />
+              <Link to="/">
+                <img
+                  src={susiWhite}
+                  alt="susi-logo"
+                  className="siteTitle"
+                  style={{
+                    height: '25px',
+                    marginBottom: '4px',
+                    marginLeft: '8px',
+                  }}
+                />
+              </Link>
             </div>
           }
           iconElementLeft={<iconButton />}

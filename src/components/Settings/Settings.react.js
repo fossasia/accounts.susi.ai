@@ -657,8 +657,14 @@ class Settings extends Component {
       );
     }
     return (
-      <div style={{ backgroundColor: '#F2F2F2' }}>
-        <div className="app-bar">
+      <div
+        style={{
+          backgroundColor: '#F2F2F2',
+          position: 'absolute',
+          width: '100%',
+        }}
+      >
+        <div className="app-bar" style={{ backgroundColor: '#F2F2F2' }}>
           <StaticAppBar />
         </div>
 
