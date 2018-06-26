@@ -209,7 +209,7 @@ class Login extends Component {
       borderRadius: 4,
       border: '1px solid #ced4da',
       fontSize: 16,
-      padding: '0px 12px',
+      padding: '0px 1px',
       margin: '10px',
       paddingRight: '0',
       width: '',
@@ -233,7 +233,7 @@ class Login extends Component {
         <div className="login-container">
           <div className="loginForm">
             <form id="loginform" onSubmit={this.handleSubmit}>
-              <div>
+              <div className="login-div">
                 <TextField
                   name="email"
                   style={fieldStyle}
@@ -264,10 +264,11 @@ class Login extends Component {
                   labelColor="#fff"
                   disabled={!this.state.validForm}
                 />
-
-                <Link to="/forgotpwd" className="forgotpwdlink">
-                  <b id="forgotpwd">Forgot Password?</b>
-                </Link>
+                <div id="forgotpwd">
+                  <Link to="/forgotpwd" className="forgotpwdlink">
+                    <b>Forgot Password?</b>
+                  </Link>
+                </div>
               </div>
               <div id="message">
                 <span>{this.state.msg}</span>
