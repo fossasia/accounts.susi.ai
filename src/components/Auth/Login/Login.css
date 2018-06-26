@@ -3,11 +3,13 @@
   color: #999999;
   margin-bottom: 30px;
 }
+
 .signup {
   margin-left:25%;
   margin-right:25%;
   margin-top: 10%;
 }
+
 .loginForm {
   width: 90%;
   margin: 5%;
@@ -18,10 +20,12 @@
 #forgotpwd {
   margin-left:250px;
 }
+
 .points{
- margin: 5% 3% 5% 0%;
- font-size: 24px;
+  margin: 5% 3% 5% 0%;
+  font-size: 24px;
 }
+
 .app-bar {
   position: absolute;
 }
@@ -37,12 +41,14 @@
   user-select: none;
   -webkit-user-select: none;
 }
+
 .login-container {
   margin-top:5%;
   height: 80%;
   width : 50%;
   float : right;
 }
+
 .app-body-div {
   height: 80%;
   width : 50%;
@@ -86,7 +92,7 @@
 .bm-cross-button {
   height: 24px;
   width: 24px;
-	top: 55px;
+  top: 55px;
 }
 
 .bm-cross {
@@ -119,41 +125,86 @@
 }
 
 .menu-new ul {
-    border-top: 1px solid #333;
+  border-top: 1px solid #333;
 }
 .menu-new a:hover,
 .menu-new a:focus {
   color: #000;
-  }
+}
 
 .menu-new a {
-    color: #fff;
+  color: #fff;
 }
 #message {
-	padding:10px;
-	color:red;
+  padding:10px;
+  color:red;
 }
 .fieldStyle {
   width: 200px;
 }
-@media screen and (max-width: 1587px) {
-  #forgotpwd {
-    margin-left:150px;
+
+@media screen and (max-width: 1588px) {
+  .loginForm{
+    margin:10px;
+  }
+
+  #loginform {
+    margin-left:10%;
   }
 }
 
-@media screen and (max-width: 1314px) {
-  #forgotpwd {
-    float:left;
-    margin-left:15px;
+@media screen and (max-width: 1413px) {
+  #loginform {
+    margin-left:1%;
   }
 }
+
+@media screen and (max-width: 1286px) {
+  .loginForm{
+    width:98%;
+  }
+
+  #loginform {
+    margin-left:0%;
+  }
+}
+
+@media screen and (max-width: 1171px) {
+  .loginForm{
+    margin:0;
+    width:100%;
+  }
+}
+
+@media screen and (max-width: 1146px) {
+  .login-div {
+    margin:10% 15%;
+  }
+
+  #forgotpwd {
+    margin:20px 10px;
+  }
+
+  .fieldStyle{
+    width:85%;
+  }
+
+  .loginbtn {
+    width:86%;
+    margin-bottom:-5px;
+  }
+}
+
 @media screen and (max-width: 937px) {
   .loginbtn {
-    float:left;
+    width:87%;
   }
 }
 @media screen and (max-width: 660px) {
+  .login-div {
+    margin:0%;
+  }
+
   .login-container {
     float : none;
     height: auto;
@@ -174,10 +225,12 @@
     padding-top:10px;
   }
   .signup{
-   margin: 15% 15% 0 15%;
+   margin: 15% 20% 0 15%;
   }
   .loginForm{
+    width:90%;
     margin:0;
+    padding-top:20px;
   }
   #loginForm{
     margin:0;
@@ -189,8 +242,7 @@
     margin: 10px 25% 10px 15px;
   }
   .loginbtn {
-    width:104%;
-    margin-right:110px;
+    width:100%;
   }
 
   #loginform {
@@ -244,26 +296,26 @@
     padding-left:10px;
   }
   .signup{
-    margin: 20% 10% 0 10%;
+    margin: 0% 10% 0 10%;
   }
   .points{
     padding-left:10px;
   }
   .loginForm{
     margin:0;
+    padding-top:20px;
   }
   #loginForm{
     margin:0;
   }
   .fieldStyle {
-    width: 100%;
+    width: 103%;
   }
   #forgotpwd {
     margin: 10px 25% 10px 15px;
   }
   .loginbtn {
     width:104%;
-    margin-right:110px;
   }
 
   #loginform {
