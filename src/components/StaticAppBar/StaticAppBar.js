@@ -20,6 +20,7 @@ import Assessment from 'material-ui/svg-icons/action/assessment';
 import Settings from 'material-ui/svg-icons/action/settings';
 import Exit from 'material-ui/svg-icons/action/exit-to-app';
 import LoginIcon from 'material-ui/svg-icons/action/account-circle';
+import List from 'material-ui/svg-icons/action/list';
 import susiWhite from '../../images/susi-logo-white.png';
 import './StaticAppBar.css';
 
@@ -95,6 +96,13 @@ const ListMenu = () => (
           rightIcon={<Settings />}
         />
       ) : null}
+      {cookies.get('showAdmin') === true ? (
+        <MenuItem
+          primaryText="Admin"
+          rightIcon={<List />}
+          containerElement={<Link to="/admin" />}
+        />
+      ) : null}
       <MenuItem
         primaryText="About"
         href="http://chat.susi.ai/overview"
@@ -127,6 +135,28 @@ class StaticAppBar extends Component {
   };
 
   componentDidMount() {
+    $.ajax({
+      url:
+        'https://api.susi.ai' +
+        '/aaa/showAdminService.json?access_token=' +
+        cookies.get('loggedIn'),
+      dataType: 'jsonp',
+      jsonpCallback: 'pfns',
+      jsonp: 'callback',
+      crossDomain: true,
+      success: function(newResponse) {
+        let ShowAdmin = newResponse.showAdmin;
+        cookies.set('showAdmin', ShowAdmin);
+        this.setState({
+          showAdmin: ShowAdmin,
+        });
+        console.log(newResponse.showAdmin);
+      }.bind(this),
+      error: function(newErrorThrown) {
+        console.log(newErrorThrown);
+      },
+    });
+
     $.ajax({
       url:
         'https://api.susi.ai' +
