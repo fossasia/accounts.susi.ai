@@ -18,6 +18,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Menu from 'material-ui/Menu';
 import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
+import { Link } from 'react-router-dom';
 import ChangePassword from '../Auth/ChangePassword/ChangePassword.react';
 import * as Actions from '../../actions/API.actions';
 
@@ -874,6 +875,28 @@ class Settings extends Component {
                   />
                 )}
               </div>
+              {this.state.selectedSetting !== 'Account' ? (
+                ''
+              ) : (
+                <div>
+                  <hr
+                    className="Divider"
+                    style={{ height: '2px', marginTop: '25px' }}
+                  />
+                  <p
+                    style={{
+                      textAlign: 'center',
+                      marginTop: '20px',
+                      display: 'flex',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <span className="Link">
+                      <Link to="/delete-account">Deactivate your account</Link>
+                    </span>
+                  </p>
+                </div>
+              )}
             </div>
           </Paper>
         </div>
