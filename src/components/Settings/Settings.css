@@ -1,7 +1,7 @@
 .navBar {
   background-color:#EEE;
-  width:327.5px;
-  height:450px;
+  width:327px;
+  height:500px;
   min-width:180px;
   float:left;
 }
@@ -17,6 +17,11 @@
 
 .setting-item{
   width:97%;
+}
+
+.Link a {
+  color : #1DA1F5;
+  text-decoration : none;
 }
 
 .settings-app {
@@ -46,7 +51,7 @@
   padding: 0px 0px;
   user-select: none;
   width: 100%;
-  height:450px;
+  height:500px;
 }
 
 
@@ -65,7 +70,7 @@
 .settings {
   padding:20px 20px 20px 30px;
   width:598.5px;
-  height:450px;
+  height:500px;
   float:right;
   background-color: #fff;
 }
@@ -115,6 +120,7 @@
     min-height:unset;
     height:65px;
   }
+
   .settings-list{
     display: none;
   }
@@ -123,13 +129,21 @@
     display: block;
   }
 
+  .settings {
+    height:500px;
+  }
+
+  .settings-app {
+    min-height:550px;
+  }
+
 }
 @media screen and (max-width: 395px) {
   .settings-app {
-    height:76vh;
+    height:500px;
   }
 
   .settings {
-    height:76vh;
+    height:500px;
   }
 }

@@ -86,13 +86,7 @@ const ListMenu = () => (
       {cookies.get('loggedIn') ? (
         <MenuItem
           primaryText="Settings"
-          menuItems={[
-            <MenuItem
-              key="1"
-              primaryText="Delete Account"
-              containerElement={<Link to="/delete-account" />}
-            />,
-          ]}
+          containerElement={<Link to="/settings" />}
           rightIcon={<Settings />}
         />
       ) : null}
