@@ -55,7 +55,7 @@ class Admin extends Component {
       }.bind(this),
       error: function(errorThrown) {
         this.setState({
-          showNotAdminDialog: false,
+          showNotAdminDialog: true,
         });
         console.log(errorThrown);
       }.bind(this),
