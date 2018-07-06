@@ -47,7 +47,7 @@ class Settings extends Component {
       UserName: '',
       PrefLanguage: 'en-US',
       TimeZone: '',
-      CountryCode: '',
+      countryCode: '',
       CountryDialCode: '',
       PhoneNo: '',
       EnterAsSend: true,
@@ -161,7 +161,7 @@ class Settings extends Component {
           dataFetched: true,
           UserName: response.settings.userName,
           TimeZone: response.settings.timeZone,
-          CountryCode: response.settings.countryCode,
+          countryCode: response.settings.countryCode,
           CountryDialCode: response.settings.countryDialCode,
           PhoneNo: response.settings.phoneNo,
           EnterAsSend: response.settings.enterAsSend,
@@ -220,7 +220,7 @@ class Settings extends Component {
     let newUserName = this.state.UserName;
     let newPrefLanguage = this.state.PrefLanguage;
     let newTimeZone = this.state.TimeZone;
-    let newCountryCode = this.state.CountryCode;
+    let newCountryCode = this.state.countryCode;
     let newCountryDialCode = this.state.CountryDialCode;
     let newPhoneNo = this.state.PhoneNo;
     let newTheme = this.state.theme;
@@ -375,7 +375,7 @@ class Settings extends Component {
 
     const menuStyle = {
       width: '250px',
-      marginLeft: '-20px',
+      marginLeft: '-6px',
     };
 
     const submitButton = {
@@ -387,6 +387,9 @@ class Settings extends Component {
     const themeBackgroundColor = '#fff';
     const themeForegroundColor = '#272727';
 
+    const floatingLabelStyle = {
+      color: '#9e9e9e',
+    };
     let currentSetting;
 
     if (!this.state.dataFetched && cookies.get('loggedIn')) {
@@ -628,30 +631,108 @@ class Settings extends Component {
 
     if (this.state.selectedSetting === 'Mobile') {
       currentSetting = (
-        <div>
-          <div className="tabHeading">Mobile</div>
-          <hr className="Divider" style={{ height: '2px' }} />
-          <br />
+        <div style={{ marginBottom: '-2px' }}>
+          <div className="tabHeading" style={{ marginTop: '8px' }}>
+            Mobile
+          </div>
+
+          <div
+            style={{
+              marginBottom: '5px',
+              fontSize: '14px',
+            }}
+          >
+            Expand your experience, get closer, and stay current
+          </div>
+          <hr
+            className="Divider"
+            style={{ height: '2px', marginBottom: '-2px', marginTop: '8px' }}
+          />
           <div>
-            <div className="label">Country Code</div>
-            <DropDownMenu
-              maxHeight={300}
-              style={menuStyle}
-              value={this.state.countryCode ? this.state.countryCode : 'US'}
-              onChange={this.handleCountryChange}
+            <div className="label" style={{ fontSize: '15px' }}>
+              Add your phone number
+            </div>
+
+            <div
+              style={{
+                marginTop: '10px',
+                fontSize: '14px',
+              }}
             >
-              {countries}
-            </DropDownMenu>
+              In future, we will text a verification code to your number.
+              Standard SMS fees may apply.
+            </div>
+            <div
+              style={{
+                marginTop: '10px',
+                marginBottom: '0px',
+                marginLeft: '0px',
+                fontSize: '14px',
+              }}
+            >
+              Country/region :
+              <span style={menuStyle}>
+                <DropDownMenu
+                  maxHeight={300}
+                  style={{
+                    width: '250px',
+                    position: 'relative',
+                    top: '15px',
+                    marginLeft: '10px',
+                  }}
+                  labelStyle={{ color: themeForegroundColor }}
+                  menuStyle={{ backgroundColor: themeBackgroundColor }}
+                  menuItemStyle={{ color: themeForegroundColor }}
+                  value={this.state.countryCode ? this.state.countryCode : 'US'}
+                  onChange={this.handleCountryChange}
+                >
+                  {countries}
+                </DropDownMenu>
+              </span>
+            </div>
+            <div
+              style={{
+                marginTop: '-10px',
+                marginBottom: '0px',
+                marginLeft: '0px',
+                fontSize: '14px',
+              }}
+            >
+              Phone number :
+              <span
+                style={{
+                  width: '250px',
+                  marginLeft: '4px',
+                }}
+              >
+                <TextField
+                  name="selectedCountry"
+                  disabled={true}
+                  inputStyle={{
+                    color: '#333',
+                  }}
+                  floatingLabelStyle={floatingLabelStyle}
+                  value={
+                    countryData.countries[
+                      this.state.countryCode ? this.state.countryCode : 'US'
+                    ].countryCallingCodes[0]
+                  }
+                  style={{ width: '45px', marginLeft: '30px' }}
+                />
 
-            <div className="label">Phone No</div>
-
-            <TextField
-              name="phoneNo"
-              style={fieldStyle}
-              value={this.state.PhoneNo}
-              onChange={this.handlePhoneNo}
-              underlineStyle={{ display: 'none' }}
-            />
+                <TextField
+                  name="phonenumber"
+                  style={{ width: '150px', marginLeft: '5px' }}
+                  onChange={this.handlePhoneNo}
+                  inputStyle={{
+                    color: '#333',
+                  }}
+                  floatingLabelStyle={floatingLabelStyle}
+                  value={this.state.PhoneNo}
+                  floatingLabelText="Phone number"
+                />
+              </span>
+            </div>
           </div>
         </div>
       );
@@ -706,6 +787,20 @@ class Settings extends Component {
                     leftIcon={<LockIcon />}
                   >
                     Password
+                    <ChevronRight
+                      style={{ color: themeForegroundColor }}
+                      className="right-chevron"
+                    />
+                  </MenuItem>
+                  <hr className="Divider" />
+
+                  <MenuItem
+                    style={{ color: themeForegroundColor }}
+                    value="Mobile"
+                    className="setting-item"
+                    leftIcon={<MobileIcon />}
+                  >
+                    Mobile
                     <ChevronRight
                       style={{ color: themeForegroundColor }}
                       className="right-chevron"
@@ -781,19 +876,9 @@ class Settings extends Component {
                       className="right-chevron"
                     />
                   </MenuItem>
-                  <hr className="Divider" />
 
-                  <MenuItem
-                    style={{ color: themeForegroundColor }}
-                    value="Mobile"
-                    className="setting-item"
-                    leftIcon={<MobileIcon />}
-                  >
+                  <MenuItem style={{ display: 'none' }} value="Mobile">
                     Mobile
-                    <ChevronRight
-                      style={{ color: themeForegroundColor }}
-                      className="right-chevron"
-                    />
                   </MenuItem>
                   <MenuItem style={{ display: 'none' }} value="Account">
                     Account
@@ -824,6 +909,11 @@ class Settings extends Component {
                     className="setting-item"
                   />
                   <MenuItem
+                    primaryText="Mobile"
+                    value="Mobile"
+                    className="setting-item"
+                  />
+                  <MenuItem
                     primaryText="ChatApp"
                     value="ChatApp"
                     className="setting-item"
@@ -846,11 +936,6 @@ class Settings extends Component {
                   <MenuItem
                     primaryText="Devices"
                     value="Devices"
-                    className="setting-item"
-                  />
-                  <MenuItem
-                    primaryText="Mobile"
-                    value="Mobile"
                     className="setting-item"
                   />
                 </DropDownMenu>
