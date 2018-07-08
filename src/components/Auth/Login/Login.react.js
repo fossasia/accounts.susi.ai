@@ -17,8 +17,12 @@ import Dialog from 'material-ui/Dialog';
 // Static assets
 import Footer from '../../Footer/Footer.react.js';
 import susi from '../../../images/susi-logo.svg';
+import { isProduction } from '../../../utils/helperFunctions';
 
+// Static assets
 import './Login.css';
+
+const cookieDomain = isProduction() ? '.susi.ai' : '';
 
 /* eslint-disable */
 const cookies = new Cookies();
@@ -98,21 +102,34 @@ class Login extends Component {
         jsonp: 'callback',
         crossDomain: true,
         success: function(response) {
-          cookies.set('serverUrl', BASE_URL, { path: '/' });
-          console.log(cookies.get('serverUrl'));
-          let accessToken = response.access_token;
-          let state = this.state;
-          let time = response.valid_seconds;
-          state.isFilled = true;
-          state.accessToken = accessToken;
-          state.success = true;
-          state.msg = response.message;
-          state.time = time;
-          this.setState(state);
-          this.handleOnSubmit(email, accessToken, time);
-          let msg = 'You are loggedin';
-          state.msg = msg;
-          this.setState(state);
+          if (response.accepted) {
+            cookies.set('serverUrl', BASE_URL, {
+              path: '/',
+              domain: cookieDomain,
+            });
+            console.log(cookies.get('serverUrl'));
+            let accessToken = response.access_token;
+            let state = this.state;
+            let time = response.valid_seconds;
+
+            state.isFilled = true;
+            state.accessToken = accessToken;
+            state.success = true;
+            state.msg = response.message;
+            state.time = time;
+            this.setState(state);
+
+            this.handleOnSubmit(email, accessToken, time);
+            let msg = 'You are logged in';
+            state.msg = msg;
+            this.setState(state);
+          } else {
+            let state = this.state;
+            state.msg = 'Login Failed. Try Again';
+            state.password = '';
+            state.showDialog = true;
+            this.setState(state);
+          }
         }.bind(this),
         error: function(errorThrown) {
           let msg1 = 'Login Failed.Try Again.';
@@ -165,8 +182,16 @@ class Login extends Component {
   handleOnSubmit = (email, loggedIn, time) => {
     let state = this.state;
     if (state.success) {
-      cookies.set('loggedIn', loggedIn, { path: '/', maxAge: time });
-      cookies.set('emailId', email, { path: '/', maxAge: time });
+      cookies.set('loggedIn', loggedIn, {
+        path: '/',
+        maxAge: time,
+        domain: cookieDomain,
+      });
+      cookies.set('emailId', this.state.email, {
+        path: '/',
+        maxAge: time,
+        domain: cookieDomain,
+      });
       this.props.history.push('/settings', { showLogin: false });
     } else {
       this.setState({
