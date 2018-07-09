@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import './Admin.css';
 import StaticAppBar from '../StaticAppBar/StaticAppBar.js';
-import Dialog from 'material-ui/Dialog';
 import $ from 'jquery';
 import Cookies from 'universal-cookie';
-import FlatButton from 'material-ui/FlatButton';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import Tabs from 'antd/lib/tabs';
 import ListUser from './ListUser/ListUser';
 import 'antd/lib/tabs/style/index.css';
-// import ListUser from './ListUser/ListUser';
+import NotFound from './../NotFound/NotFound.react';
 
 const cookies = new Cookies();
 
@@ -22,15 +20,11 @@ class Admin extends Component {
 
     this.state = {
       tabPosition: 'top',
-      showNotAdminDialog: false,
+      isAdmin: false,
     };
   }
 
   componentDidMount() {
-    if (!cookies.get('loggedIn')) {
-      this.props.history.push('/');
-      window.location.reload();
-    }
     let url;
     url =
       'https://api.susi.ai/aaa/showAdminService.json?access_token=' +
@@ -43,19 +37,13 @@ class Admin extends Component {
       crossDomain: true,
       success: function(response) {
         // console.log(response.showAdmin);
-        if (response.showAdmin !== true) {
-          this.setState({
-            showNotAdminDialog: true,
-          });
-        } else {
-          this.setState({
-            showNotAdminDialog: false,
-          });
-        }
+        this.setState({
+          isAdmin: response.showAdmin,
+        });
       }.bind(this),
       error: function(errorThrown) {
         this.setState({
-          showNotAdminDialog: true,
+          isAdmin: false,
         });
         console.log(errorThrown);
       }.bind(this),
@@ -68,15 +56,6 @@ class Admin extends Component {
   };
 
   render() {
-    const actions = [
-      <FlatButton
-        key={1}
-        label="Ok"
-        primary={true}
-        onTouchTap={this.handleClose}
-      />,
-    ];
-
     const tabStyle = {
       width: '100%',
       animated: false,
@@ -86,35 +65,31 @@ class Admin extends Component {
 
     return (
       <div>
-        <div className="heading">
-          <StaticAppBar {...this.props} />
-          <h1 className="h1">SUSI.AI Admin Panel</h1>
-        </div>
-        <div>
-          <Dialog
-            title="Permission Denied"
-            actions={actions}
-            modal={true}
-            open={this.state.showNotAdminDialog}
-          >
-            You do not have permissions to access this page!! :(
-          </Dialog>
-        </div>
-        <div className="tabs">
-          <Paper style={tabStyle} zDepth={0}>
-            <Tabs tabPosition={this.state.tabPosition} animated={false}>
-              <TabPane tab="Admin" key="1">
-                Tab for Admin Content
-              </TabPane>
-              <TabPane tab="Users" key="2">
-                <ListUser />
-              </TabPane>
-              <TabPane tab="Permissions" key="3">
-                Permission Content Tab
-              </TabPane>
-            </Tabs>
-          </Paper>
-        </div>
+        {this.state.isAdmin ? (
+          <div>
+            <div className="heading">
+              <StaticAppBar {...this.props} />
+              <h1 className="h1">SUSI.AI Admin Panel</h1>
+            </div>
+            <div className="tabs">
+              <Paper style={tabStyle} zDepth={0}>
+                <Tabs tabPosition={this.state.tabPosition} animated={false}>
+                  <TabPane tab="Admin" key="1">
+                    Tab for Admin Content
+                  </TabPane>
+                  <TabPane tab="Users" key="2">
+                    <ListUser />
+                  </TabPane>
+                  <TabPane tab="Permissions" key="3">
+                    Permission Content Tab
+                  </TabPane>
+                </Tabs>
+              </Paper>
+            </div>
+          </div>
+        ) : (
+          <NotFound />
+        )}
       </div>
     );
   }
