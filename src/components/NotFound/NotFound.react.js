@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
+import StaticAppBar from './../StaticAppBar/StaticAppBar';
 import { Link } from 'react-router-dom';
 import './NotFound.css';
 import LogoImg from '../images/susi.svg';
@@ -35,6 +36,7 @@ export default class NotFound extends Component {
     );
     return (
       <div>
+        <StaticAppBar {...this.props} />
         <div className="container-fluid not-found-banner">
           <h2>
             <a className="susilogo">
