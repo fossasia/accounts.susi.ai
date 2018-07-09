@@ -329,8 +329,10 @@ class Settings extends Component {
     });
   };
 
-  loadSettings = e => {
-    this.setState({ selectedSetting: e.target.innerText });
+  loadSettings = (e, value) => {
+    this.setState({
+      selectedSetting: window.innerWidth > 1112 ? value : e.target.innerText,
+    });
   };
   render() {
     countryData.countries.all.sort(function(a, b) {
@@ -762,7 +764,7 @@ class Settings extends Component {
             >
               <div className="settings-list">
                 <Menu
-                  onItemTouchTap={this.loadSettings}
+                  onChange={this.loadSettings}
                   selectedMenuItemStyle={blueThemeColor}
                   style={{ width: '100%' }}
                   value={this.state.selectedSetting}
