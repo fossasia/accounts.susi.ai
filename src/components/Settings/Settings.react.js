@@ -323,10 +323,13 @@ class Settings extends Component {
   };
 
   handlePhoneNo = event => {
-    this.setState({
-      PhoneNo: event.target.value,
-      settingsChanged: true,
-    });
+    const re = /^[0-9\b]+$/;
+    if (event.target.value === '' || re.test(event.target.value)) {
+      this.setState({
+        PhoneNo: event.target.value,
+        settingsChanged: true,
+      });
+    }
   };
 
   loadSettings = (e, value) => {
