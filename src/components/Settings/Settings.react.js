@@ -33,6 +33,9 @@ import MyDevices from 'material-ui/svg-icons/device/devices';
 import MobileIcon from 'material-ui/svg-icons/hardware/phone-android';
 
 import './Settings.css';
+import { isProduction } from '../../utils/helperFunctions';
+
+const cookieDomain = isProduction() ? '.susi.ai' : '';
 
 const cookies = new Cookies();
 const token = cookies.get('loggedIn');
@@ -240,7 +243,11 @@ class Settings extends Component {
     };
     // Trigger Actions to save the settings in stores and server
     this.implementSettings(vals);
-    cookies.set('username', vals.userName);
+    let userName = vals.userName;
+    cookies.set('username', userName, {
+      path: '/',
+      domain: cookieDomain,
+    });
   };
 
   // Store the settings in server

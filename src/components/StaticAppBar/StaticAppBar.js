@@ -23,6 +23,9 @@ import LoginIcon from 'material-ui/svg-icons/action/account-circle';
 import List from 'material-ui/svg-icons/action/list';
 import susiWhite from '../../images/susi-logo-white.png';
 import './StaticAppBar.css';
+import { isProduction } from '../../utils/helperFunctions';
+
+const cookieDomain = isProduction() ? '.susi.ai' : '';
 
 const cookies = new Cookies();
 
@@ -140,7 +143,9 @@ class StaticAppBar extends Component {
       crossDomain: true,
       success: function(newResponse) {
         let ShowAdmin = newResponse.showAdmin;
-        cookies.set('showAdmin', ShowAdmin);
+        cookies.set('showAdmin', ShowAdmin, {
+          path: '/',
+        });
         this.setState({
           showAdmin: ShowAdmin,
         });
@@ -163,7 +168,10 @@ class StaticAppBar extends Component {
       success: function(data) {
         let userName = data.settings.userName;
         console.log(data);
-        cookies.set('username', userName);
+        cookies.set('username', userName, {
+          path: '/',
+          domain: cookieDomain,
+        });
       },
       error: function(errorThrown) {
         console.log(errorThrown);
