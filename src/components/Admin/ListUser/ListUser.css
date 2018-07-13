@@ -9,3 +9,47 @@
     margin-left: 30px;
     margin-right: 30px;
 }
+
+@font-face {
+  font-family: 'anticon';
+  src: url('https://at.alicdn.com/t/font_zck90zmlh7hf47vi.eot');
+  /* IE9*/
+  src: url('https://at.alicdn.com/t/font_zck90zmlh7hf47vi.eot?#iefix')
+       format('embedded-opentype'),
+ /* chrome、firefox */
+       url('https://at.alicdn.com/t/font_zck90zmlh7hf47vi.woff')
+       format('woff'),
+ /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+       url('https://at.alicdn.com/t/font_zck90zmlh7hf47vi.ttf')
+       format('truetype'),
+ /* iOS 4.1- */
+       url('https://at.alicdn.com/t/font_zck90zmlh7hf47vi.svg#iconfont')
+       format('svg');
+}
+.anticon {
+  display: inline-block;
+  font-style: normal;
+  vertical-align: baseline;
+  text-align: center;
+  text-transform: none;
+  line-height: 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.anticon:before {
+  display: block;
+  font-family: "anticon";
+}
+.anticon-step-forward:before {
+  content: "\e600";
+}
+.anticon-step-backward:before {
+  content: "\e601";
+}
+.anticon-forward:before {
+  content: "\e602";
+}
+.anticon-backward:before {
+  content: "\e603";
+}

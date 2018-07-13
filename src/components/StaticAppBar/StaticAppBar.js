@@ -93,6 +93,11 @@ const ListMenu = () => (
           rightIcon={<Settings />}
         />
       ) : null}
+      <MenuItem
+        primaryText="About"
+        href="http://chat.susi.ai/overview"
+        rightIcon={<Info />}
+      />
       {cookies.get('showAdmin') === true ? (
         <MenuItem
           primaryText="Admin"
@@ -100,11 +105,6 @@ const ListMenu = () => (
           containerElement={<Link to="/admin" />}
         />
       ) : null}
-      <MenuItem
-        primaryText="About"
-        href="http://chat.susi.ai/overview"
-        rightIcon={<Info />}
-      />
       {cookies.get('loggedIn') ? (
         <MenuItem
           primaryText="Logout"
