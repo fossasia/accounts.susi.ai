@@ -8,6 +8,7 @@ import Dialog from 'material-ui/Dialog';
 import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import 'antd/lib/table/style/index.css';
+import 'antd/lib/pagination/style/index.css';
 
 const cookies = new Cookies();
 
