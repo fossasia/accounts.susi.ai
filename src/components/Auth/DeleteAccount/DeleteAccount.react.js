@@ -5,12 +5,14 @@ import Cookies from 'universal-cookie';
 import PropTypes from 'prop-types';
 
 // Components
+import TextField from 'material-ui/TextField';
 import PasswordField from 'material-ui-password-field';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 import Dialog from 'material-ui/Dialog';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
+import Close from 'material-ui/svg-icons/navigation/close';
 
 const cookies = new Cookies();
 
@@ -30,9 +32,12 @@ class DeleteAccount extends Component {
     super(props);
 
     this.state = {
+      email: '',
       password: '',
       dialogMessage: '',
       showDialog: false,
+      confirmed: false,
+      showConfirmationDialog: false,
       passwordError: false,
       validFirm: false,
     };
@@ -83,6 +88,54 @@ class DeleteAccount extends Component {
     this.setState(state);
   };
 
+  handleEmailChange = event => {
+    let email;
+    let emailId = cookies.get('emailId');
+    let state = this.state;
+    email = event.target.value;
+    state.email = email;
+    state.emailError = !(email === emailId);
+    if (this.state.emailError) {
+      this.emailErrorMessage = 'Email does not match';
+      state.confirmed = false;
+    } else {
+      this.emailErrorMessage = '';
+      state.confirmed = true;
+    }
+    this.setState(state);
+  };
+
+  handleConfirm = event => {
+    if (this.state.confirmed) {
+      let deleteUrl =
+        'https://api.susi.ai/aaa/login.json?delete=true&access_token=' +
+        cookies.get('loggedIn');
+      $.ajax({
+        url: deleteUrl,
+        dataType: 'jsonp',
+        jsonpCallback: 'p',
+        crossDomain: true,
+        success: function(deleteResponse) {
+          console.log(deleteResponse);
+          deleteCookie('loggedIn', { domain: '.susi.ai', path: '/' });
+          deleteCookie('emailId', { domain: '.susi.ai', path: '/' });
+          this.setState({
+            showDialog: true,
+            dialogMessage: 'Account deleted successfully',
+          });
+          console.log(deleteResponse);
+        }.bind(this),
+        error: function(errorThrown) {
+          console.log(errorThrown);
+          this.setState({
+            showDialog: true,
+            dialogMessage: 'Invalid Password! Try again later',
+          });
+        }.bind(this),
+      });
+    }
+  };
+
   handleSubmit = event => {
     console.log('here');
     var password = this.state.password.trim();
@@ -99,31 +152,8 @@ class DeleteAccount extends Component {
       success: function(response) {
         console.log(response.accepted);
         if (response.accepted) {
-          let deleteUrl =
-            'https://api.susi.ai/aaa/login.json?delete=true&access_token=' +
-            cookies.get('loggedIn');
-          $.ajax({
-            url: deleteUrl,
-            dataType: 'jsonp',
-            jsonpCallback: 'p',
-            crossDomain: true,
-            success: function(deleteResponse) {
-              console.log(deleteResponse);
-              deleteCookie('loggedIn', { domain: '.susi.ai', path: '/' });
-              deleteCookie('emailId', { domain: '.susi.ai', path: '/' });
-              this.setState({
-                showDialog: true,
-                dialogMessage: 'Account deleted successfully',
-              });
-              console.log(deleteResponse);
-            }.bind(this),
-            error: function(errorThrown) {
-              console.log(errorThrown);
-              this.setState({
-                showDialog: true,
-                dialogMessage: 'Invalid Password! Try again later',
-              });
-            }.bind(this),
+          this.setState({
+            showConfirmationDialog: true,
           });
         }
       }.bind(this),
@@ -169,6 +199,21 @@ class DeleteAccount extends Component {
       paddingRight: 10,
       textAlign: 'right',
     };
+
+    const emailFieldStyle = {
+      height: '35px',
+      borderRadius: 4,
+      border: '1px solid #ced4da',
+      fontSize: 16,
+      padding: '0px 10px',
+      width: '425px',
+      marginTop: '0px',
+    };
+    const inputStyle = {
+      height: '35px',
+      marginBottom: '10px',
+    };
+
     const actions = (
       <FlatButton
         label="OK"
@@ -206,7 +251,7 @@ class DeleteAccount extends Component {
                   </div>
                   <div style={submitButton}>
                     <RaisedButton
-                      label="Yes, Delete My Account"
+                      label="Delete Account"
                       backgroundColor="red"
                       labelColor="#fff"
                       onTouchTap={this.handleSubmit}
@@ -227,6 +272,107 @@ class DeleteAccount extends Component {
           </div>
         </div>
         <div>
+          <Dialog
+            modal={false}
+            open={this.state.showConfirmationDialog}
+            onRequestClose={this.handleClose}
+            bodyStyle={{ padding: '0' }}
+          >
+            <div
+              style={{
+                backgroundColor: '#f6f8fa',
+                color: '#24292e',
+                padding: '16px',
+                border: '1px solid rgba(27,31,35,0.15)',
+                fontSize: '14px',
+                textAlign: 'left',
+                fontWeight: '600',
+                lineHeight: '1.5',
+              }}
+            >
+              Are you absolutely sure?<Close
+                style={{ float: 'right', cursor: 'pointer' }}
+                onClick={this.handleClose}
+              />
+            </div>
+            <div
+              style={{
+                backgroundColor: '#fffbdd',
+                color: '#735c0f',
+                padding: '16px',
+                border: '1px solid rgba(27,31,35,0.15)',
+                fontSize: '14px',
+                textAlign: 'left',
+                lineHeight: '1.5',
+              }}
+            >
+              Unexpected bad things will happen if you don’t read this!
+            </div>
+
+            <div
+              style={{
+                backgroundColor: '#ffffff',
+                color: '#24292e',
+                padding: '16px',
+                border: '1px solid rgba(27,31,35,0.15)',
+                fontSize: '14px',
+                textAlign: 'left',
+                fontWeight: '400',
+                lineHeight: '1.5',
+              }}
+            >
+              <p style={{ marginTop: '0px', marginBottom: '10px' }}>
+                This action <strong>cannot</strong> be undone. This will
+                permanently remove the account corresponding to the email id{' '}
+                <strong>{cookies.get('emailId')}</strong>.
+              </p>
+              <p style={{ marginTop: '0px', marginBottom: '10px' }}>
+                Please type in your email id to confirm.
+              </p>
+              <div style={{ textAlign: 'center' }}>
+                <TextField
+                  id="email"
+                  name="email"
+                  value={this.state.email}
+                  inputStyle={inputStyle}
+                  style={emailFieldStyle}
+                  placeholder=""
+                  underlineStyle={{ display: 'none' }}
+                  onChange={this.handleEmailChange}
+                  errorText={this.emailErrorMessage}
+                  autoComplete="off"
+                  width="100%"
+                />
+              </div>
+              {/* Remove Device Button */}
+              <div style={{ textAlign: 'center' }}>
+                <RaisedButton
+                  id="removeDeviceButton"
+                  onTouchTap={this.handleConfirm}
+                  label="I understand the consequences, Delete My Account."
+                  backgroundColor="#cb2431"
+                  style={{
+                    boxShadow: 'none',
+                    marginTop: '10px',
+                    border: '1px solid rgba(27,31,35,0.2)',
+                    borderRadius: '0.25em',
+                  }}
+                  labelStyle={{
+                    color: this.state.confirmed
+                      ? '#fff'
+                      : 'rgba(203,36,49,0.4)',
+                    padding: '6px 12px',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    lineHeight: '20px',
+                    whiteSpace: 'nowrap',
+                    verticalAlign: 'middle',
+                  }}
+                  disabled={!this.state.confirmed}
+                />
+              </div>
+            </div>
+          </Dialog>
           <Dialog
             actions={actions}
             modal={false}
