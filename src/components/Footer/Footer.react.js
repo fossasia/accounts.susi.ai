@@ -27,6 +27,9 @@ class Footer extends Component {
                 <a href="https://chat.susi.ai/blog">Blog</a>
               </li>
               <li>
+                <a href="https://api.susi.ai">API</a>
+              </li>
+              <li>
                 <a href="https://github.com/fossasia?utf8=%E2%9C%93&q=susi">
                   Code
                 </a>
