@@ -1,9 +1,8 @@
 .not-found-banner{
     text-align: center;
     margin: 0 auto;
-    background: url(../images/not-found-bg.jpg);
     background-size: cover;
-    height: 300px;
+    min-height: 74vh;
     width: 100%;
     position: relative;
     top:-18px;
@@ -11,10 +10,14 @@
 .not-found-banner h1{
     font-size: 72px;
     margin: 0px 0 23px 0 ;
+    font-weight: bold;
+    font-family: sans-serif;
 }
 .not-found-banner h2{
     font-size: 22px;
     letter-spacing: 10px;
+    font-weight: bold;
+    font-family: sans-serif;
 }
 .not-found-banner h2 a img{
     width: 180px;
@@ -22,45 +25,9 @@
 }
 
 .button-wrapper{
-    position: absolute;
-    left: 44%;
+    width: 100%;
   }
 .notfound-button{
-    margin: 20px 10px;
-    float: left;
-}
-
-@media screen and (min-width: 1920px) {
-  .button-wrapper{
-    position: absolute;
-    left: 47%;;
-  }
-}
-
-@media screen and (max-width: 991px) {
-.button-wrapper{
-    position: absolute;
-    left: 44%;
-    }
-}
-
-@media screen and (max-width: 767px) {
-  .button-wrapper{
-    position: absolute;
-    left: 44%;
-    }
-}
-
-@media screen and (max-width: 479px) {
-  .button-wrapper{
-    position: absolute;
-    left: 44%;
-    }
-}
-
-@media screen and (max-width: 359px) {
-  .button-wrapper{
-    position: absolute;
-    left: 44%;
-    }
+  width: 300px;
+  margin: 10px ;
 }
