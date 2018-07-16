@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
-import StaticAppBar from './../StaticAppBar/StaticAppBar';
 import { Link } from 'react-router-dom';
 import './NotFound.css';
-import LogoImg from '../images/susi.svg';
+import LogoImg from '../images/susi-logo.svg';
 import userPreferencesStore from '../../stores/UserPreferencesStore';
 import Dialog from 'material-ui/Dialog';
 import Login from '../Auth/Login/Login.react';
@@ -16,9 +15,6 @@ export default class NotFound extends Component {
       open: false,
     };
   }
-  handleOpen = () => {
-    this.setState({ open: true });
-  };
   handleClose = () => {
     this.setState({ open: false });
   };
@@ -36,7 +32,6 @@ export default class NotFound extends Component {
     );
     return (
       <div>
-        <StaticAppBar {...this.props} />
         <div className="container-fluid not-found-banner">
           <h2>
             <a className="susilogo">
@@ -46,35 +41,39 @@ export default class NotFound extends Component {
           <h1>404</h1>
           <h2>Page not found</h2>
           <div className="button-wrapper">
-            <Link to={'/'} className="actionButton">
+            <a href="https://chat.susi.ai/" className="actionButton">
               <RaisedButton
                 className="notfound-button"
                 label="Chat With SUSI"
                 backgroundColor={
-                  userPreferencesStore.getTheme() ? '#607D8B' : '#19314B'
+                  userPreferencesStore.getTheme() ? '#4285f4' : '#19314B'
                 }
                 labelColor="#fff"
               />
-            </Link>
+            </a>
+            <br />
             <Link to={'/signup'} className="actionButton">
               <RaisedButton
                 className="notfound-button"
                 label="SignUp to SUSI"
                 backgroundColor={
-                  userPreferencesStore.getTheme() ? '#607D8B' : '#19314B'
+                  userPreferencesStore.getTheme() ? '#4285f4' : '#19314B'
                 }
                 labelColor="#fff"
               />
             </Link>
-            <RaisedButton
-              className="notfound-button"
-              label="SignIn to SUSI"
-              onTouchTap={this.handleOpen}
-              backgroundColor={
-                userPreferencesStore.getTheme() ? '#607D8B' : '#19314B'
-              }
-              labelColor="#fff"
-            />
+            <br />
+            <Link to={'/'} className="actionButton">
+              <RaisedButton
+                className="notfound-button"
+                label="LogIn to SUSI"
+                backgroundColor={
+                  userPreferencesStore.getTheme() ? '#4285f4' : '#19314B'
+                }
+                labelColor="#fff"
+              />
+            </Link>
+            <br />
           </div>
         </div>
         <Dialog
