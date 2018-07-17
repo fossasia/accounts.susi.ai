@@ -20,7 +20,7 @@ import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { Link } from 'react-router-dom';
 import ChangePassword from '../Auth/ChangePassword/ChangePassword.react';
-import * as Actions from '../../actions/API.actions';
+import * as Actions from '../../actions/';
 
 // Icons
 import ChatIcon from 'material-ui/svg-icons/communication/chat';
