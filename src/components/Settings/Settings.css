@@ -68,9 +68,10 @@
 }
 
 .settings {
-  padding:20px 20px 20px 30px;
+  padding:20px 20px 0px 30px;
   width:598.5px;
-  height:500px;
+  min-height:500px;
+  height: fit-content;
   float:right;
   background-color: #fff;
 }
