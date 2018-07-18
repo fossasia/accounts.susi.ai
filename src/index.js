@@ -15,7 +15,6 @@ import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import * as ChatWebAPIUtils from './utils/ChatWebAPIUtils';
 
 import {
   BrowserRouter as Router,
@@ -23,10 +22,6 @@ import {
   Switch,
   hashHistory,
 } from 'react-router-dom';
-
-ChatWebAPIUtils.getLocation();
-ChatWebAPIUtils.getHistory();
-ChatWebAPIUtils.getAllMessages();
 
 const styles = {
   app: {
