@@ -334,11 +334,6 @@ export default class ListUser extends Component {
                   className="setting-item"
                 />
                 <MenuItem
-                  primaryText="ANONYMOUS"
-                  value="anonymous"
-                  className="setting-item"
-                />
-                <MenuItem
                   primaryText="USER"
                   value="user"
                   className="setting-item"
@@ -349,8 +344,8 @@ export default class ListUser extends Component {
                   className="setting-item"
                 />
                 <MenuItem
-                  primaryText="ACCOUNTCREATOR"
-                  value="accountcreator"
+                  primaryText="OPERATOR"
+                  value="operator"
                   className="setting-item"
                 />
                 <MenuItem
@@ -359,8 +354,8 @@ export default class ListUser extends Component {
                   className="setting-item"
                 />
                 <MenuItem
-                  primaryText="BUREAUCRAT"
-                  value="bureaucrat"
+                  primaryText="SUPERADMIN"
+                  value="superadmin"
                   className="setting-item"
                 />
               </DropDownMenu>
