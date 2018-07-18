@@ -78,6 +78,7 @@ class Admin extends Component {
                   tabPosition={this.state.tabPosition}
                   animated={false}
                   type="card"
+                  style={{ minHeight: '500px' }}
                 >
                   <TabPane tab="Admin" key="1">
                     Tab for Admin Content

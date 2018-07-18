@@ -7,8 +7,8 @@ import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu';
-import 'antd/lib/table/style/index.css';
-import 'antd/lib/pagination/style/index.css';
+import { LocaleProvider } from 'antd';
+import enUS from 'antd/lib/locale-provider/en_US';
 
 const cookies = new Cookies();
 
@@ -28,20 +28,29 @@ export default class ListUser extends Component {
       {
         title: 'S.No.',
         dataIndex: 'serialNum',
-        sorter: false,
         width: '5%',
       },
       {
         title: 'Email ID',
         dataIndex: 'email',
-        sorter: false,
         width: '22%',
         key: 'email',
       },
       {
         title: 'Activation Status',
         dataIndex: 'confirmed',
-        sorter: false,
+        filters: [
+          {
+            text: 'Activated',
+            value: 'Activated',
+          },
+          {
+            text: 'Not Activated',
+            value: 'Not Activated',
+          },
+        ],
+        onFilter: (value, record) => record.confirmed.indexOf(value) === 0,
+        sorter: (a, b) => a.confirmed.length - b.confirmed.length,
         width: '13%',
       },
       {
@@ -62,12 +71,42 @@ export default class ListUser extends Component {
       {
         title: 'User Role',
         dataIndex: 'userRole',
-        sorter: false,
+        filters: [
+          {
+            text: 'Bot',
+            value: 'bot',
+          },
+          {
+            text: 'Anonymous',
+            value: 'anonymous',
+          },
+          {
+            text: 'User',
+            value: 'user',
+          },
+          {
+            text: 'Reviewer',
+            value: 'reviewer',
+          },
+          {
+            text: 'Operator',
+            value: 'operator',
+          },
+          {
+            text: 'Admin',
+            value: 'admin',
+          },
+          {
+            text: 'SuperAdmin',
+            value: 'superadmin',
+          },
+        ],
+        onFilter: (value, record) => record.userRole.indexOf(value) === 0,
+        sorter: (a, b) => a.userRole.length - b.userRole.length,
         width: '10%',
       },
       {
         title: 'Action',
-        sorter: false,
         width: '5%',
         key: 'action',
         render: (text, record) => {
@@ -115,7 +154,7 @@ export default class ListUser extends Component {
       crossDomain: true,
       timeout: 3000,
       async: false,
-      success: function(response) {
+      success: response => {
         console.log(response);
         this.setState({ changeRoleDialog: true });
       },
@@ -388,14 +427,16 @@ export default class ListUser extends Component {
           </Dialog>
         </div>
 
-        <Table
-          columns={this.columns}
-          rowKey={record => record.registered}
-          dataSource={this.state.data}
-          pagination={this.state.pagination}
-          loading={this.state.loading}
-          onChange={this.handleTableChange}
-        />
+        <LocaleProvider locale={enUS}>
+          <Table
+            columns={this.columns}
+            rowKey={record => record.registered}
+            dataSource={this.state.data}
+            pagination={this.state.pagination}
+            loading={this.state.loading}
+            onChange={this.handleTableChange}
+          />
+        </LocaleProvider>
       </div>
     );
   }

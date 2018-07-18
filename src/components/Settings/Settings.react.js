@@ -42,6 +42,7 @@ import LockIcon from 'material-ui/svg-icons/action/lock';
 import MyDevices from 'material-ui/svg-icons/device/devices';
 import MobileIcon from 'material-ui/svg-icons/hardware/phone-android';
 
+import 'antd/dist/antd.css';
 import './Settings.css';
 import { isProduction } from '../../utils/helperFunctions';
 

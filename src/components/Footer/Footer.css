@@ -34,6 +34,8 @@ li{
     list-style: none;
     list-style-type: none;
     display: flex;
+    margin-top: 17px;
+    padding-left: 40px;
 }
 .leftDiv a,.rightDiv a {
     color:#3367d6;
@@ -120,6 +122,9 @@ li{
         text-overflow: ellipsis;
         display: block;
     }
+   .susi-logo{
+    margin-bottom: 9px;
+   }
 }
 @media only screen and (max-width: 386px){
     .footer-wrapper,.footer{
