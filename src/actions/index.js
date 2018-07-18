@@ -1,5 +1,9 @@
 // imports
-import { getLocation, createSUSIMessage } from './API.actions';
+import {
+  getLocation,
+  createSUSIMessage,
+  pushSettingsToServer,
+} from './API.actions';
 import { getHistory } from './History.actions';
 import {
   createMessage,
@@ -10,7 +14,7 @@ import {
 import { serverChanged, ToggleSearch, themeChanged } from './Settings.actions';
 
 // exports
-export { getLocation, createSUSIMessage };
+export { getLocation, createSUSIMessage, pushSettingsToServer };
 export { getHistory };
 
 export { createMessage, receiveCreatedMessage, clickThread, receiveAll };

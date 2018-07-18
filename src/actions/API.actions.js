@@ -207,15 +207,17 @@ export function pushSettingsToServer(settings) {
     cookies.get('loggedIn');
 
   Object.keys(settings).forEach((key, index) => {
-    url +=
-      '&key' +
-      (index + 1).toString() +
-      '=' +
-      key +
-      '&value' +
-      (index + 1).toString() +
-      '=' +
-      settings[key].toString();
+    if (key) {
+      url +=
+        '&key' +
+          (index + 1) +
+          '=' +
+          key +
+          '&value' +
+          (index + 1) +
+          '=' +
+          settings[key] || '';
+    }
   });
   url += '&count=' + Object.keys(settings).length.toString();
   // push settings to server
