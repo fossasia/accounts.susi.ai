@@ -1,5 +1,7 @@
 import React from 'react';
 import Table from 'antd/lib/table';
+import { LocaleProvider } from 'antd';
+import enUS from 'antd/lib/locale-provider/en_US';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import DropDownMenu from 'material-ui/DropDownMenu';
@@ -34,12 +36,95 @@ class ListSkills extends React.Component {
       {
         title: 'Name',
         dataIndex: 'skillName',
-        sorter: false,
         width: '20%',
       },
       {
         title: 'Group',
         dataIndex: 'group',
+        filters: [
+          {
+            text: 'Business and Finance',
+            value: 'Business and Finance',
+          },
+          {
+            text: 'Communication',
+            value: 'Communication',
+          },
+          {
+            text: 'Connected Car',
+            value: 'Connected Car',
+          },
+          {
+            text: 'Food and Drink',
+            value: 'Food and Drink',
+          },
+          {
+            text: 'Games, Trivia and Accessories',
+            value: 'Games, Trivia and Accessories',
+          },
+          {
+            text: 'Health and Fitness',
+            value: 'Health and Fitness',
+          },
+          {
+            text: 'Knowledge',
+            value: 'Knowledge',
+          },
+          {
+            text: 'Lifestyle',
+            value: 'Lifestyle',
+          },
+          {
+            text: 'Movies and TV',
+            value: 'Movies and TV',
+          },
+          {
+            text: 'Music and Audio',
+            value: 'Music and Audio',
+          },
+          {
+            text: 'News',
+            value: 'News',
+          },
+          {
+            text: 'Novelty and Humour',
+            value: 'Novelty and Humour',
+          },
+          {
+            text: 'Problem Solving',
+            value: 'Problem Solving',
+          },
+          {
+            text: 'Productivity',
+            value: 'Productivity',
+          },
+          {
+            text: 'Shopping',
+            value: 'Shopping',
+          },
+          {
+            text: 'Social',
+            value: 'Social',
+          },
+          {
+            text: 'Sports',
+            value: 'Sports',
+          },
+          {
+            text: 'Travel and Trasportation',
+            value: 'Travel and Trasportation',
+          },
+          {
+            text: 'Utilities',
+            value: 'Utilities',
+          },
+          {
+            text: 'Weather',
+            value: 'Weather',
+          },
+        ],
+        onFilter: (value, record) => record.group.indexOf(value) === 0,
+        sorter: (a, b) => a.group.length - b.group.length,
         width: '15%',
       },
       {
@@ -50,6 +135,18 @@ class ListSkills extends React.Component {
       {
         title: 'Type',
         dataIndex: 'type',
+        filters: [
+          {
+            text: 'Public',
+            value: 'public',
+          },
+          {
+            text: 'Private',
+            value: 'private',
+          },
+        ],
+        onFilter: (value, record) => record.type.indexOf(value) === 0,
+        sorter: (a, b) => a.type.length - b.type.length,
         width: '10%',
       },
       {
@@ -60,6 +157,18 @@ class ListSkills extends React.Component {
       {
         title: 'Status',
         dataIndex: 'status',
+        filters: [
+          {
+            text: 'Reviewed',
+            value: 'Reviewed',
+          },
+          {
+            text: 'Not Reviewed',
+            value: 'Not Reviewed',
+          },
+        ],
+        onFilter: (value, record) => record.status.indexOf(value) === 0,
+        sorter: (a, b) => a.status.length - b.status.length,
         width: '15%',
       },
       {
@@ -312,12 +421,14 @@ class ListSkills extends React.Component {
                 </span>!
               </div>
             </Dialog>
-            <Table
-              columns={this.columns}
-              rowKey={record => record.registered}
-              dataSource={this.state.skillsData}
-              loading={this.state.loading}
-            />
+            <LocaleProvider locale={enUS}>
+              <Table
+                columns={this.columns}
+                rowKey={record => record.registered}
+                dataSource={this.state.skillsData}
+                loading={this.state.loading}
+              />
+            </LocaleProvider>
           </div>
         )}
         <Snackbar
