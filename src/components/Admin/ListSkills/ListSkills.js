@@ -23,6 +23,7 @@ class ListSkills extends React.Component {
       isAction: false,
       showDialog: false,
       skillName: '',
+      skillTag: '',
       skillModel: '',
       skillGroup: '',
       skillLanguage: '',
@@ -79,6 +80,7 @@ class ListSkills extends React.Component {
                     record.group,
                     record.language,
                     record.reviewStatus,
+                    record.skillTag,
                   )
                 }
               >
@@ -107,7 +109,7 @@ class ListSkills extends React.Component {
         this.state.skillModel
       }&group=${this.state.skillGroup}&language=${
         this.state.skillLanguage
-      }&skill=${this.state.skillName}&reviewed=${
+      }&skill=${this.state.skillTag}&reviewed=${
         this.state.skillReviewStatus
       }&access_token=` + cookies.get('loggedIn');
     $.ajax({
@@ -126,8 +128,10 @@ class ListSkills extends React.Component {
   };
 
   loadSkills = () => {
-    let url =
-      'https://api.susi.ai/cms/getSkillList.json?applyFilter=true&filter_name=ascending&filter_type=lexicographical';
+    let url;
+    url =
+      'https:/api.susi.ai/cms/getSkillList.json?' +
+      'applyFilter=true&filter_name=ascending&filter_type=lexicographical';
     let self = this;
     $.ajax({
       url: url,
@@ -143,6 +147,7 @@ class ListSkills extends React.Component {
             model: i.model,
             group: i.group,
             language: i.language,
+            skillTag: i.skill_tag,
             reviewStatus: i.reviewed,
             type: 'public',
             author: i.author,
@@ -172,12 +177,13 @@ class ListSkills extends React.Component {
     });
   };
 
-  handleOpen = (name, model, group, language, reviewStatus) => {
+  handleOpen = (name, model, group, language, reviewStatus, skillTag) => {
     this.setState({
       skillModel: model,
       skillGroup: group,
       skillLanguage: language,
       skillName: name,
+      skillTag: skillTag,
       skillReviewStatus: reviewStatus,
       showDialog: true,
     });
@@ -218,6 +224,7 @@ class ListSkills extends React.Component {
     const blueThemeColor = { color: 'rgb(66, 133, 244)' };
     const themeForegroundColor = '#272727';
     const themeBackgroundColor = '#fff';
+
     return (
       <div>
         {this.state.loading ? (
