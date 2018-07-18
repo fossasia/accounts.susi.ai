@@ -11,6 +11,13 @@ import StaticAppBar from '../StaticAppBar/StaticAppBar';
 import Paper from 'material-ui/Paper';
 import Footer from '../Footer/Footer.react.js';
 import Toggle from 'material-ui/Toggle';
+import Dialog from 'material-ui/Dialog';
+import Close from 'material-ui/svg-icons/navigation/close';
+import SwipeableViews from 'react-swipeable-views';
+import TableComplex from '../TableComplex/TableComplex.react';
+import RemoveDeviceDialog from '../TableComplex/RemoveDeviceDialog.react';
+import { GoogleApiWrapper } from 'google-maps-react';
+import MapContainer from '../MapContainer/MapContainer.react';
 import TimezonePicker from 'react-timezone';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import countryData from 'country-data';
@@ -21,6 +28,9 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { Link } from 'react-router-dom';
 import ChangePassword from '../Auth/ChangePassword/ChangePassword.react';
 import * as Actions from '../../actions/';
+
+// Keys
+import { MAP_KEY } from '../../../src/config.js';
 
 // Icons
 import ChatIcon from 'material-ui/svg-icons/communication/chat';
@@ -47,6 +57,19 @@ class Settings extends Component {
     super(props);
     this.state = {
       dataFetched: false,
+      deviceData: false,
+      obj: [],
+      mapObj: [],
+      devicenames: [],
+      rooms: [],
+      macids: [],
+      editIdx: -1,
+      removeDevice: -1,
+      slideIndex: 0,
+      centerLat: 0,
+      centerLng: 0,
+      showRemoveConfirmation: false,
+
       selectedSetting: 'Account',
       UserName: '',
       PrefLanguage: 'en-US',
@@ -59,7 +82,6 @@ class Settings extends Component {
       theme: 'light',
       SpeechOutput: true,
       SpeechOutputAlways: true,
-      deviceData: false,
       settingsChanged: false,
       voiceList: [
         {
@@ -118,6 +140,98 @@ class Settings extends Component {
     };
   }
 
+  handleRemove = i => {
+    let data = this.state.obj;
+    let macid = data[i].macid;
+
+    this.setState({
+      obj: data.filter((row, j) => j !== i),
+    });
+
+    $.ajax({
+      url:
+        'https://api.susi.ai/aaa/removeUserDevices.json?macid=' +
+        macid +
+        '&access_token=' +
+        cookies.get('loggedIn'),
+      dataType: 'jsonp',
+      crossDomain: true,
+      timeout: 3000,
+      async: false,
+      success: function(response) {
+        console.log(response);
+      },
+      error: function(errorThrown) {
+        console.log(errorThrown);
+      },
+      complete: function(jqXHR, textStatus) {
+        window.location.reload();
+      },
+    });
+  };
+
+  startEditing = i => {
+    this.setState({ editIdx: i });
+  };
+
+  stopEditing = i => {
+    let data = this.state.obj;
+    let macid = data[i].macid;
+    let devicename = data[i].devicename;
+    let room = data[i].room;
+    let latitude = data[i].latitude;
+    let longitude = data[i].longitude;
+    let devicenames = this.state.devicenames;
+    devicenames[i] = devicename;
+    let rooms = this.state.rooms;
+    rooms[i] = room;
+    this.setState({
+      editIdx: -1,
+      devicenames: devicenames,
+      rooms: rooms,
+    });
+
+    $.ajax({
+      url:
+        'https://api.susi.ai/aaa/addNewDevice.json?macid=' +
+        macid +
+        '&name=' +
+        devicename +
+        '&room=' +
+        room +
+        '&latitude=' +
+        latitude +
+        '&longitude=' +
+        longitude +
+        '&access_token=' +
+        cookies.get('loggedIn'),
+      dataType: 'jsonp',
+      crossDomain: true,
+      timeout: 3000,
+      async: false,
+      success: function(response) {
+        console.log(response);
+      },
+      error: function(errorThrown) {
+        console.log(errorThrown);
+      },
+    });
+  };
+
+  handleChange = (e, name, i) => {
+    const value = e.target.value;
+    let data = this.state.obj;
+    this.setState({
+      obj: data.map((row, j) => (j === i ? { ...row, [name]: value } : row)),
+    });
+  };
+
+  handleTabSlide = value => {
+    this.setState({
+      slideIndex: value,
+    });
+  };
+
   apiCall = () => {
     $.ajax({
       url: url,
@@ -174,6 +288,85 @@ class Settings extends Component {
           SpeechOutput: response.settings.speechOutput,
           SpeechOutputAlways: response.settings.speechOutputAlways,
         });
+
+        let obj = [];
+        let mapObj = [];
+        let devicenames = [];
+        let rooms = [];
+        let macids = [];
+        let centerLat = 0;
+        let centerLng = 0;
+        if (response.devices) {
+          let keys = Object.keys(response.devices);
+          let devicesNotAvailable = 0;
+          keys.forEach(i => {
+            let myObj = {
+              macid: i,
+              devicename: response.devices[i].name,
+              room: response.devices[i].room,
+              latitude: response.devices[i].geolocation.latitude,
+              longitude: response.devices[i].geolocation.longitude,
+            };
+            let locationData = {
+              lat: parseFloat(response.devices[i].geolocation.latitude),
+              lng: parseFloat(response.devices[i].geolocation.longitude),
+            };
+            if (
+              myObj.latitude === 'Latitude not available.' ||
+              myObj.longitude === 'Longitude not available.'
+            ) {
+              devicesNotAvailable++;
+            } else {
+              centerLat += parseFloat(response.devices[i].geolocation.latitude);
+              centerLng += parseFloat(
+                response.devices[i].geolocation.longitude,
+              );
+            }
+
+            let location = {
+              location: locationData,
+            };
+            obj.push(myObj);
+            mapObj.push(location);
+            devicenames.push(response.devices[i].name);
+            rooms.push(response.devices[i].room);
+            macids.push(i);
+            this.setState({
+              dataFetched: true,
+            });
+          });
+          centerLat /= mapObj.length - devicesNotAvailable;
+          centerLng /= mapObj.length - devicesNotAvailable;
+          if (obj.length) {
+            this.setState({
+              deviceData: true,
+              obj: obj,
+            });
+          }
+          if (mapObj.length) {
+            this.setState({
+              mapObj: mapObj,
+              centerLat: centerLat,
+              centerLng: centerLng,
+              devicesNotAvailable: devicesNotAvailable,
+            });
+          }
+          if (devicenames.length) {
+            this.setState({
+              devicenames: devicenames,
+            });
+          }
+          if (rooms.length) {
+            this.setState({
+              rooms: rooms,
+            });
+          }
+          if (macids.length) {
+            this.setState({
+              macids: macids,
+            });
+          }
+        }
       }.bind(this),
       error: function(errorThrown) {
         console.log(errorThrown);
@@ -255,6 +448,26 @@ class Settings extends Component {
     Actions.pushSettingsToServer(values);
     this.setState({ settingsChanged: false });
     this.props.history.push('/settings', { showLogin: true });
+  };
+
+  // Open Remove Device Confirmation dialog
+  handleRemoveConfirmation = i => {
+    let data = this.state.obj;
+    let devicename = data[i].devicename;
+    this.setState({
+      showRemoveConfirmation: true,
+      showForgotPassword: false,
+      showLogin: false,
+      showOptions: false,
+      removeDevice: i,
+      removeDeviceName: devicename,
+    });
+  };
+
+  handleClose = () => {
+    this.setState({
+      showRemoveConfirmation: false,
+    });
   };
 
   handleUserName = event => {
@@ -396,6 +609,17 @@ class Settings extends Component {
       paddingRight: 10,
     };
 
+    const closingStyle = {
+      position: 'absolute',
+      zIndex: 1200,
+      fill: '#444',
+      width: '26px',
+      height: '26px',
+      right: '10px',
+      top: '10px',
+      cursor: 'pointer',
+    };
+
     const blueThemeColor = { color: 'rgb(66, 133, 244)' };
     const themeBackgroundColor = '#fff';
     const themeForegroundColor = '#272727';
@@ -403,6 +627,15 @@ class Settings extends Component {
     const floatingLabelStyle = {
       color: '#9e9e9e',
     };
+
+    const settingsMenuStyle = {
+      marginTop: 20,
+      textAlign: 'center',
+      display: 'inline-block',
+      backgroundColor: themeBackgroundColor,
+      color: themeForegroundColor,
+    };
+
     let currentSetting;
 
     if (!this.state.dataFetched && cookies.get('loggedIn')) {
@@ -480,13 +713,78 @@ class Settings extends Component {
 
     if (this.state.selectedSetting === 'Devices') {
       currentSetting = (
-        <div>
-          <div className="tabHeading">Devices Settings</div>
-          <hr className="Divider" style={{ height: '2px' }} />
-          <br />
-          <br />
-          This service will be available soon!
-        </div>
+        <span style={{ right: '40px' }}>
+          <div>
+            <span>
+              <div
+                style={{
+                  marginTop: '10px',
+                  marginBottom: '10px',
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                }}
+              >
+                Devices
+              </div>
+            </span>
+            <hr
+              className="Divider"
+              style={{ height: '2px', marginBottom: '10px' }}
+            />
+            {this.state.deviceData ? (
+              <div>
+                <SwipeableViews>
+                  <div>
+                    <div style={{ overflowX: 'auto' }}>
+                      <div
+                        style={{
+                          left: '0px',
+                          marginTop: '0px',
+                          width: '550px',
+                        }}
+                      >
+                        <TableComplex
+                          handleRemove={this.handleRemove}
+                          handleRemoveConfirmation={
+                            this.handleRemoveConfirmation
+                          }
+                          startEditing={this.startEditing}
+                          editIdx={this.state.editIdx}
+                          stopEditing={this.stopEditing}
+                          handleChange={this.handleChange}
+                          tableData={this.state.obj}
+                        />
+                      </div>
+                      <div>
+                        <div style={{ maxHeight: '300px', marginTop: '10px' }}>
+                          <MapContainer
+                            google={this.props.google}
+                            mapData={this.state.mapObj}
+                            centerLat={this.state.centerLat}
+                            centerLng={this.state.centerLng}
+                            devicenames={this.state.devicenames}
+                            rooms={this.state.rooms}
+                            macids={this.state.macids}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </SwipeableViews>
+                {this.state.slideIndex && this.state.devicesNotAvailable ? (
+                  <div style={{ marginTop: '10px' }}>
+                    <b>NOTE: </b>Location info of one or more devices could not
+                    be retrieved.
+                  </div>
+                ) : null}
+              </div>
+            ) : (
+              <div id="subheading">
+                You do not have any devices connected yet!
+              </div>
+            )}
+          </div>
+        </span>
       );
     }
 
@@ -758,6 +1056,22 @@ class Settings extends Component {
           width: '100%',
         }}
       >
+        <Dialog
+          className="dialogStyle"
+          modal={false}
+          open={this.state.showRemoveConfirmation}
+          autoScrollBodyContent={true}
+          contentStyle={{ width: '35%', minWidth: '300px' }}
+          onRequestClose={this.handleClose}
+        >
+          <RemoveDeviceDialog
+            {...this.props}
+            deviceIndex={this.state.removeDevice}
+            devicename={this.state.removeDeviceName}
+            handleRemove={this.handleRemove}
+          />
+          <Close style={closingStyle} onTouchTap={this.handleClose} />
+        </Dialog>
         <div className="app-bar" style={{ backgroundColor: '#F2F2F2' }}>
           <StaticAppBar />
         </div>
@@ -956,11 +1270,12 @@ class Settings extends Component {
             </Paper>
           </div>
 
-          <Paper className="settings">
+          <Paper className="settings" styles={settingsMenuStyle} zDepth={1}>
             <div className="currentSettings">
               {currentSetting}
               <div style={submitButton}>
-                {this.state.selectedSetting === 'Password' ? (
+                {this.state.selectedSetting === 'Password' ||
+                this.state.selectedSetting === 'Devices' ? (
                   ''
                 ) : (
                   <RaisedButton
@@ -1005,6 +1320,10 @@ class Settings extends Component {
 
 Settings.propTypes = {
   history: PropTypes.object,
+  location: PropTypes.object,
+  google: PropTypes.object,
 };
 
-export default Settings;
+export default GoogleApiWrapper({
+  apiKey: MAP_KEY,
+})(Settings);
