@@ -18,12 +18,6 @@ export function themeChanged(theme) {
   });
 }
 
-export function ToggleSearch() {
-  ChatAppDispatcher.dispatch({
-    type: ActionTypes.SEARCH_MODE,
-  });
-}
-
 export function settingsChanged(settings) {
   ChatAppDispatcher.dispatch({
     type: ActionTypes.SETTINGS_CHANGED,
