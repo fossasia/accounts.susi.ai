@@ -29,100 +29,14 @@ const cookieDomain = isProduction() ? '.susi.ai' : '';
 
 const cookies = new Cookies();
 
-const ListMenu = () => (
-  <div>
-    {cookies.get('loggedIn') ? (
-      <label
-        style={{
-          color: 'white',
-          fontSize: '16px',
-          verticalAlign: 'super',
-          position: 'relative',
-          top: '-8px',
-          right: '-8px',
-        }}
-      >
-        {cookies.get('username') === ''
-          ? cookies.get('emailId')
-          : cookies.get('username')}
-      </label>
-    ) : (
-      <label />
-    )}
-    <IconMenu
-      className="IconMenu"
-      animated={false}
-      tooltip="Options"
-      style={{ right: '-8px', top: '-2px' }}
-      iconButtonElement={
-        <IconButton className="menu-icon" iconStyle={{ fill: 'white' }}>
-          <MoreVertIcon />
-        </IconButton>
-      }
-      targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-      anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-    >
-      {cookies.get('loggedIn') ? (
-        <MenuItem
-          primaryText="Dashboard"
-          href="https://skills.susi.ai/dashboard"
-          rightIcon={<Assessment />}
-        />
-      ) : null}
-      <MenuItem
-        primaryText="Chat"
-        href="https://chat.susi.ai"
-        rightIcon={<Chat />}
-      />
-      <MenuItem
-        primaryText="Skills"
-        href="https://skills.susi.ai/"
-        rightIcon={<Dashboard />}
-      />
-      {cookies.get('loggedIn') ? (
-        <MenuItem
-          primaryText="Botbuilder"
-          href="https://skills.susi.ai/botbuilder"
-          rightIcon={<Extension />}
-        />
-      ) : null}
-      {cookies.get('loggedIn') ? (
-        <MenuItem
-          primaryText="Settings"
-          containerElement={<Link to="/settings" />}
-          rightIcon={<Settings />}
-        />
-      ) : null}
-      <MenuItem
-        primaryText="About"
-        href="http://chat.susi.ai/overview"
-        rightIcon={<Info />}
-      />
-      {cookies.get('showAdmin') === true ? (
-        <MenuItem
-          primaryText="Admin"
-          rightIcon={<List />}
-          containerElement={<Link to="/admin" />}
-        />
-      ) : null}
-      {cookies.get('loggedIn') ? (
-        <MenuItem
-          primaryText="Logout"
-          containerElement={<Link to="/logout" />}
-          rightIcon={<Exit />}
-        />
-      ) : (
-        <MenuItem
-          primaryText="Login"
-          containerElement={<Link to="/" />}
-          rightIcon={<LoginIcon />}
-        />
-      )}
-    </IconMenu>
-  </div>
-);
-
 class StaticAppBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showAdmin: false,
+    };
+  }
+
   handleScroll = event => {
     let scrollTop = event.pageY || event.target.body.scrollTop,
       itemTranslate = scrollTop > 60;
@@ -142,12 +56,12 @@ class StaticAppBar extends Component {
       jsonp: 'callback',
       crossDomain: true,
       success: function(newResponse) {
-        let ShowAdmin = newResponse.showAdmin;
-        cookies.set('showAdmin', ShowAdmin, {
+        let showAdmin = newResponse.showAdmin;
+        cookies.set('showAdmin', showAdmin, {
           path: '/',
         });
         this.setState({
-          showAdmin: ShowAdmin,
+          showAdmin,
         });
         console.log(newResponse.showAdmin);
       }.bind(this),
@@ -219,7 +133,101 @@ class StaticAppBar extends Component {
       lastScrollTop = st;
     }
   }
+
   render() {
+    let ListMenu = props => (
+      <div>
+        {cookies.get('loggedIn') ? (
+          <label
+            style={{
+              color: 'white',
+              fontSize: '16px',
+              verticalAlign: 'super',
+              position: 'relative',
+              top: '-8px',
+              right: '-8px',
+            }}
+          >
+            {cookies.get('username') === ''
+              ? cookies.get('emailId')
+              : cookies.get('username')}
+          </label>
+        ) : (
+          <label />
+        )}
+        <IconMenu
+          className="IconMenu"
+          animated={false}
+          tooltip="Options"
+          style={{ right: '-8px', top: '-2px' }}
+          iconButtonElement={
+            <IconButton className="menu-icon" iconStyle={{ fill: 'white' }}>
+              <MoreVertIcon />
+            </IconButton>
+          }
+          targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        >
+          {cookies.get('loggedIn') ? (
+            <MenuItem
+              primaryText="Dashboard"
+              href="https://skills.susi.ai/dashboard"
+              rightIcon={<Assessment />}
+            />
+          ) : null}
+          <MenuItem
+            primaryText="Chat"
+            href="https://chat.susi.ai"
+            rightIcon={<Chat />}
+          />
+          <MenuItem
+            primaryText="Skills"
+            href="https://skills.susi.ai/"
+            rightIcon={<Dashboard />}
+          />
+          {cookies.get('loggedIn') ? (
+            <MenuItem
+              primaryText="Botbuilder"
+              href="https://skills.susi.ai/botbuilder"
+              rightIcon={<Extension />}
+            />
+          ) : null}
+          {cookies.get('loggedIn') ? (
+            <MenuItem
+              primaryText="Settings"
+              containerElement={<Link to="/settings" />}
+              rightIcon={<Settings />}
+            />
+          ) : null}
+          <MenuItem
+            primaryText="About"
+            href="http://chat.susi.ai/overview"
+            rightIcon={<Info />}
+          />
+          {this.state.showAdmin === true ? (
+            <MenuItem
+              primaryText="Admin"
+              rightIcon={<List />}
+              containerElement={<Link to="/admin" />}
+            />
+          ) : null}
+          {cookies.get('loggedIn') ? (
+            <MenuItem
+              primaryText="Logout"
+              containerElement={<Link to="/logout" />}
+              rightIcon={<Exit />}
+            />
+          ) : (
+            <MenuItem
+              primaryText="Login"
+              containerElement={<Link to="/" />}
+              rightIcon={<LoginIcon />}
+            />
+          )}
+        </IconMenu>
+      </div>
+    );
+
     return (
       <header className="nav-down" id="headerSection">
         <AppBar
