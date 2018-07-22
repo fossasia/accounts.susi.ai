@@ -183,15 +183,17 @@ export default class SignUp extends Component {
 
   render() {
     const fieldStyle = {
-      width: '94%',
+      width: '90%',
       height: '30px',
       marginBottom: '3%',
       borderRadius: '5px',
       paddingLeft: '20px',
+      marginLeft: '8px',
     };
     const button = {
-      width: '100%',
+      width: '96%',
       marginTop: '0',
+      marginLeft: '8px',
     };
 
     const actions = (
@@ -285,9 +287,9 @@ export default class SignUp extends Component {
                   labelColor="#fff"
                 />
               </div>
-              <h1 style={{ textAlign: 'center' }}>OR</h1>
+              <h1 style={{ textAlign: 'center', margin: 5 }}>OR</h1>
               <div>
-                <h4 style={{ textAlign: 'center' }}>
+                <h4 style={{ textAlign: 'center', margin: 5 }}>
                   If you have an account, Please Login
                 </h4>
                 <Link to={'/'}>
