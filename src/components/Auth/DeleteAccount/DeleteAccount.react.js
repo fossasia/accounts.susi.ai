@@ -14,6 +14,8 @@ import Dialog from 'material-ui/Dialog';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import Close from 'material-ui/svg-icons/navigation/close';
 
+import urls from '../../../utils/urls';
+
 const cookies = new Cookies();
 
 let deleteCookie = function(name, options = {}) {
@@ -48,7 +50,7 @@ class DeleteAccount extends Component {
     let state = this.state;
     if (cookies.get('loggedIn')) {
       let url =
-        'https://api.susi.ai/aaa/account-permissions.json?access_token=' +
+        `${urls.API_URL}/aaa/account-permissions.json?access_token=` +
         cookies.get('loggedIn');
       $.ajax({
         url: url,
@@ -108,7 +110,7 @@ class DeleteAccount extends Component {
   handleConfirm = event => {
     if (this.state.confirmed) {
       let deleteUrl =
-        'https://api.susi.ai/aaa/login.json?delete=true&access_token=' +
+        `${urls.API_URL}/aaa/login.json?delete=true&access_token=` +
         cookies.get('loggedIn');
       $.ajax({
         url: deleteUrl,
@@ -137,10 +139,9 @@ class DeleteAccount extends Component {
   };
 
   handleSubmit = event => {
-    console.log('here');
     var password = this.state.password.trim();
     let url =
-      'https://api.susi.ai/aaa/login.json?type=check_password&login=' +
+      `${urls.API_URL}/aaa/login.json?type=check_password&login=` +
       cookies.get('emailId') +
       '&password=' +
       password;

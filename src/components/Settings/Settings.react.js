@@ -42,6 +42,8 @@ import LockIcon from 'material-ui/svg-icons/action/lock';
 import MyDevices from 'material-ui/svg-icons/device/devices';
 import MobileIcon from 'material-ui/svg-icons/hardware/phone-android';
 
+import urls from '../../utils/urls';
+
 import 'antd/dist/antd.css';
 import './Settings.css';
 import { isProduction } from '../../utils/helperFunctions';
@@ -50,8 +52,7 @@ const cookieDomain = isProduction() ? '.susi.ai' : '';
 
 const cookies = new Cookies();
 const token = cookies.get('loggedIn');
-const url =
-  'https://api.susi.ai/aaa/listUserSettings.json?access_token=' + token;
+const url = `${urls.API_URL}/aaa/listUserSettings.json?access_token=` + token;
 
 class Settings extends Component {
   constructor(props) {
@@ -151,7 +152,7 @@ class Settings extends Component {
 
     $.ajax({
       url:
-        'https://api.susi.ai/aaa/removeUserDevices.json?macid=' +
+        `${urls.API_URL}/aaa/removeUserDevices.json?macid=` +
         macid +
         '&access_token=' +
         cookies.get('loggedIn'),
@@ -194,7 +195,7 @@ class Settings extends Component {
 
     $.ajax({
       url:
-        'https://api.susi.ai/aaa/addNewDevice.json?macid=' +
+        `${urls.API_URL}/aaa/addNewDevice.json?macid=` +
         macid +
         '&name=' +
         devicename +

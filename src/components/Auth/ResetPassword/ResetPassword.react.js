@@ -15,7 +15,7 @@ import FlatButton from 'material-ui/FlatButton';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 
-// import Login from '../Login/Login.react';
+import urls from '../../../utils/urls';
 
 import './ResetPassword.css';
 
@@ -60,7 +60,7 @@ class ResetPassword extends Component {
   componentDidMount() {
     const { token } = this.props;
     console.log(token);
-    let BASE_URL = 'https://api.susi.ai';
+    let BASE_URL = urls.API_URL;
     let resetPasswordEndPoint =
       BASE_URL +
       '/aaa/recoverpassword.json?getParameters=true&' +
@@ -94,11 +94,9 @@ class ResetPassword extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log('test');
     var newPassword = this.state.newPassword.trim();
-    console.log(newPassword);
 
-    let BASE_URL = 'https://api.susi.ai';
+    let BASE_URL = urls.API_URL;
     if (!newPassword) {
       return this.state.isFilled;
     }
@@ -112,7 +110,6 @@ class ResetPassword extends Component {
       resetToken +
       '&newpass=' +
       encodeURIComponent(newPassword);
-    console.log(resetPasswordEndPoint);
     if (!this.state.confirmPasswordError && !this.state.newPasswordError) {
       $.ajax({
         url: resetPasswordEndPoint,

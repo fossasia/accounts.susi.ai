@@ -19,6 +19,8 @@ import Footer from '../../Footer/Footer.react.js';
 import susi from '../../../images/susi-logo.svg';
 import { isProduction } from '../../../utils/helperFunctions';
 
+import urls from '../../../utils/urls';
+
 // Static assets
 import './Login.css';
 
@@ -80,7 +82,7 @@ class Login extends Component {
     var email = this.state.email.trim();
     var password = this.state.password.trim();
 
-    let BASE_URL = 'https://api.susi.ai';
+    let BASE_URL = `${urls.API_URL}`;
 
     if (!email || !password) {
       return this.state.isFilled;

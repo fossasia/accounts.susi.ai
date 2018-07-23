@@ -12,6 +12,8 @@ import Cookies from 'universal-cookie';
 import './ListSkills.css';
 import * as $ from 'jquery';
 
+import urls from '../../../utils/urls';
+
 const cookies = new Cookies();
 
 class ListSkills extends React.Component {
@@ -214,7 +216,7 @@ class ListSkills extends React.Component {
   changeStatus = () => {
     let url;
     url =
-      `https://api.susi.ai/cms/changeSkillStatus.json?model=${
+      `${urls.API_URL}/cms/changeSkillStatus.json?model=${
         this.state.skillModel
       }&group=${this.state.skillGroup}&language=${
         this.state.skillLanguage
@@ -239,7 +241,7 @@ class ListSkills extends React.Component {
   loadSkills = () => {
     let url;
     url =
-      'https:/api.susi.ai/cms/getSkillList.json?' +
+      `${urls.API_URL}/cms/getSkillList.json?` +
       'applyFilter=true&filter_name=ascending&filter_type=lexicographical';
     let self = this;
     $.ajax({
