@@ -59,6 +59,7 @@ class StaticAppBar extends Component {
         let showAdmin = newResponse.showAdmin;
         cookies.set('showAdmin', showAdmin, {
           path: '/',
+          domain: cookieDomain,
         });
         this.setState({
           showAdmin,
