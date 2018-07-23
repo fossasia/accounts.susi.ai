@@ -10,6 +10,8 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import { LocaleProvider } from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
 
+import urls from '../../../utils/urls';
+
 const cookies = new Cookies();
 
 export default class ListUser extends Component {
@@ -127,7 +129,7 @@ export default class ListUser extends Component {
 
   apiCall = () => {
     let url =
-      'https://api.susi.ai/aaa/changeRoles.json?user=' +
+      `${urls.API_URL}/aaa/changeRoles.json?user=` +
       this.state.userEmail +
       '&role=' +
       this.state.userRole +
@@ -183,7 +185,7 @@ export default class ListUser extends Component {
     const pagination = { ...this.state.pagination };
     let url;
     url =
-      'https://api.susi.ai/aaa/showAdminService.json?access_token=' +
+      `${urls.API_URL}/aaa/showAdminService.json?access_token=` +
       cookies.get('loggedIn');
     $.ajax({
       url: url,
@@ -195,7 +197,7 @@ export default class ListUser extends Component {
         // console.log(response.showAdmin);
         if (response.showAdmin) {
           let getPagesUrl =
-            'https://api.susi.ai/aaa/getUsers.json?access_token=' +
+            `${urls.API_URL}/aaa/getUsers.json?access_token=` +
             cookies.get('loggedIn') +
             '&getUserCount=true';
           $.ajax({
@@ -271,7 +273,7 @@ export default class ListUser extends Component {
       page = 1;
     }
     url =
-      'https://api.susi.ai/aaa/getUsers.json?access_token=' +
+      `${urls.API_URL}/aaa/getUsers.json?access_token=` +
       cookies.get('loggedIn') +
       '&page=' +
       page;

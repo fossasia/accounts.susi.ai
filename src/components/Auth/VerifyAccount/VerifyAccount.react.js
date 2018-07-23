@@ -9,6 +9,8 @@ import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 
+import urls from '../../../utils/urls';
+
 const urlPropsQueryConfig = {
   accessToken: { type: UrlQueryParamTypes.string, queryParam: 'access_token' },
   requessession: { type: UrlQueryParamTypes.string },
@@ -54,7 +56,7 @@ class VerifyAccount extends Component {
       accessToken.length !== 0 &&
       validateEmail.length !== 0
     ) {
-      let BASE_URL = 'https://api.susi.ai';
+      let BASE_URL = urls.API_URL;
       let accountVerificationEndPoint =
         BASE_URL +
         '/aaa/signup.json?access_token=' +

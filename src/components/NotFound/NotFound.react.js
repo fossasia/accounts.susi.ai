@@ -7,6 +7,8 @@ import userPreferencesStore from '../../stores/UserPreferencesStore';
 import Dialog from 'material-ui/Dialog';
 import Login from '../Auth/Login/Login.react';
 
+import urls from '../../utils/urls';
+
 export default class NotFound extends Component {
   constructor(props) {
     super(props);
@@ -41,7 +43,7 @@ export default class NotFound extends Component {
           <h1>404</h1>
           <h2>Page not found</h2>
           <div className="button-wrapper">
-            <a href="https://chat.susi.ai/" className="actionButton">
+            <a href={`${urls.CHAT_URL}`} className="actionButton">
               <RaisedButton
                 className="notfound-button"
                 label="Chat With SUSI"

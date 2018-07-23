@@ -17,6 +17,8 @@ import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import Footer from '../../Footer/Footer.react.js';
 import susi from '../../../images/susi-logo.svg';
 
+import urls from '../../../utils/urls';
+
 import './SignUp.css';
 
 export default class SignUp extends Component {
@@ -144,7 +146,7 @@ export default class SignUp extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    let BASE_URL = 'https://api.susi.ai';
+    let BASE_URL = urls.API_URL;
     let signupEndPoint =
       BASE_URL +
       '/aaa/signup.json?signup=' +

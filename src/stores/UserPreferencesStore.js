@@ -1,14 +1,15 @@
 import ChatAppDispatcher from '../dispatcher/ChatAppDispatcher';
 import ChatConstants from '../constants/ChatConstants';
 import { EventEmitter } from 'events';
+import urls from '../utils/urls';
 
 let ActionTypes = ChatConstants.ActionTypes;
 let CHANGE_EVENT = 'change';
 
 let _defaults = {
   Theme: 'light',
-  Server: 'https://api.susi.ai',
-  StandardServer: 'https://api.susi.ai',
+  Server: `${urls.API_URL}`,
+  StandardServer: `${urls.API_URL}`,
 };
 
 let UserPreferencesStore = {

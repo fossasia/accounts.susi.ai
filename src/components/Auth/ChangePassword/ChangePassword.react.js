@@ -10,6 +10,8 @@ import PasswordField from 'material-ui-password-field';
 import Cookies from 'universal-cookie';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
+import urls from '../../../utils/urls';
+
 const cookies = new Cookies();
 injectTapEventPlugin();
 
@@ -46,7 +48,7 @@ export default class ChangePassword extends Component {
     var password = this.state.currentPassword.trim();
     var newPassword = this.state.newPassword.trim();
 
-    let BASE_URL = 'https://api.susi.ai';
+    let BASE_URL = urls.API_URL;
     if (!newPassword || !password) {
       return this.state.isFilled;
     }
@@ -219,7 +221,7 @@ export default class ChangePassword extends Component {
                   visibilityIconStyle={{ display: 'none' }}
                 />
                 <div className="forgot">
-                  <a href="https://accounts.susi.ai/forgotpwd">
+                  <a href={`${window.location.origin}/forgotpwd`}>
                     Forgot your password?
                   </a>
                 </div>
