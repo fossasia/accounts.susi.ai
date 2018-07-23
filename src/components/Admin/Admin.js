@@ -11,6 +11,8 @@ import ListSkills from './ListSkills/ListSkills';
 import 'antd/lib/tabs/style/index.css';
 import NotFound from './../NotFound/NotFound.react';
 
+import urls from '../../utils/urls';
+
 const cookies = new Cookies();
 
 const TabPane = Tabs.TabPane;
@@ -28,7 +30,7 @@ class Admin extends Component {
   componentDidMount() {
     let url;
     url =
-      'https://api.susi.ai/aaa/showAdminService.json?access_token=' +
+      `${urls.API_URL}/aaa/showAdminService.json?access_token=` +
       cookies.get('loggedIn');
     $.ajax({
       url: url,

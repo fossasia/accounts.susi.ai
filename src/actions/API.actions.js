@@ -1,5 +1,6 @@
 import Cookies from 'universal-cookie';
 import $ from 'jquery';
+import urls from '../utils/urls';
 
 const cookies = new Cookies();
 
@@ -13,7 +14,7 @@ export function pushSettingsToServer(settings) {
   }
 
   let url =
-    'https://api.susi.ai/aaa/changeUserSettings.json?' +
+    `${urls.API_URL}/aaa/changeUserSettings.json?` +
     '&access_token=' +
     cookies.get('loggedIn');
 

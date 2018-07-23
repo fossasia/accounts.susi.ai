@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import $ from 'jquery';
 
-// Componentts
+// Components
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
@@ -24,6 +24,8 @@ import List from 'material-ui/svg-icons/action/list';
 import susiWhite from '../../images/susi-logo-white.png';
 import './StaticAppBar.css';
 import { isProduction } from '../../utils/helperFunctions';
+
+import urls from '../../utils/urls';
 
 const cookieDomain = isProduction() ? '.susi.ai' : '';
 
@@ -48,7 +50,7 @@ class StaticAppBar extends Component {
   componentDidMount() {
     $.ajax({
       url:
-        'https://api.susi.ai' +
+        `${urls.API_URL}` +
         '/aaa/showAdminService.json?access_token=' +
         cookies.get('loggedIn'),
       dataType: 'jsonp',
@@ -72,7 +74,7 @@ class StaticAppBar extends Component {
 
     $.ajax({
       url:
-        'https://api.susi.ai' +
+        `${urls.API_URL}` +
         '/aaa/listUserSettings.json?access_token=' +
         cookies.get('loggedIn'),
       jsonpCallback: 'pc',
@@ -171,24 +173,24 @@ class StaticAppBar extends Component {
           {cookies.get('loggedIn') ? (
             <MenuItem
               primaryText="Dashboard"
-              href="https://skills.susi.ai/dashboard"
+              href={`${urls.CMS_URL}/dashboard`}
               rightIcon={<Assessment />}
             />
           ) : null}
           <MenuItem
             primaryText="Chat"
-            href="https://chat.susi.ai"
+            href={`${urls.CHAT_URL}`}
             rightIcon={<Chat />}
           />
           <MenuItem
             primaryText="Skills"
-            href="https://skills.susi.ai/"
+            href={`${urls.CMS_URL}`}
             rightIcon={<Dashboard />}
           />
           {cookies.get('loggedIn') ? (
             <MenuItem
               primaryText="Botbuilder"
-              href="https://skills.susi.ai/botbuilder"
+              href={`${urls.CMS_URL}/botbuilder`}
               rightIcon={<Extension />}
             />
           ) : null}
@@ -201,7 +203,7 @@ class StaticAppBar extends Component {
           ) : null}
           <MenuItem
             primaryText="About"
-            href="http://chat.susi.ai/overview"
+            href={`${urls.CHAT_URL}/overview`}
             rightIcon={<Info />}
           />
           {this.state.showAdmin === true ? (
