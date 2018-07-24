@@ -75,10 +75,6 @@ export default class ListUser extends Component {
         dataIndex: 'userRole',
         filters: [
           {
-            text: 'Bot',
-            value: 'bot',
-          },
-          {
             text: 'Anonymous',
             value: 'anonymous',
           },
@@ -369,11 +365,6 @@ export default class ListUser extends Component {
                 }}
                 autoWidth={false}
               >
-                <MenuItem
-                  primaryText="BOT"
-                  value="bot"
-                  className="setting-item"
-                />
                 <MenuItem
                   primaryText="USER"
                   value="user"
