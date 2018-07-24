@@ -32,8 +32,9 @@ class ListSkills extends React.Component {
       skillGroup: '',
       skillLanguage: '',
       skillReviewStatus: false,
-      changeReviewStatusSuccessDialog: false,
-      changeReviewStatusFailureDialog: false,
+      skillEditStatus: true,
+      changeStatusSuccessDialog: false,
+      changeStatusFailureDialog: false,
     };
     this.columns = [
       {
@@ -128,7 +129,7 @@ class ListSkills extends React.Component {
         ],
         onFilter: (value, record) => record.group.indexOf(value) === 0,
         sorter: (a, b) => a.group.length - b.group.length,
-        width: '15%',
+        width: '10%',
       },
       {
         title: 'Language',
@@ -155,23 +156,40 @@ class ListSkills extends React.Component {
       {
         title: 'Author',
         dataIndex: 'author',
-        width: '20%',
+        width: '10%',
       },
       {
-        title: 'Status',
-        dataIndex: 'status',
+        title: 'Review Status',
+        dataIndex: 'reviewed',
         filters: [
           {
             text: 'Reviewed',
-            value: 'Reviewed',
+            value: 'Approved',
           },
           {
             text: 'Not Reviewed',
             value: 'Not Reviewed',
           },
         ],
-        onFilter: (value, record) => record.status.indexOf(value) === 0,
-        sorter: (a, b) => a.status.length - b.status.length,
+        onFilter: (value, record) => record.reviewed.indexOf(value) === 0,
+        sorter: (a, b) => a.reviewed.length - b.reviewed.length,
+        width: '15%',
+      },
+      {
+        title: 'Edit Status',
+        dataIndex: 'editable',
+        filters: [
+          {
+            text: 'Editable',
+            value: 'Editable',
+          },
+          {
+            text: 'Not Editable',
+            value: 'Not Editable',
+          },
+        ],
+        onFilter: (value, record) => record.editable.indexOf(value) === 0,
+        sorter: (a, b) => a.editable.length - b.editable.length,
         width: '15%',
       },
       {
@@ -191,6 +209,7 @@ class ListSkills extends React.Component {
                     record.group,
                     record.language,
                     record.reviewStatus,
+                    record.editStatus,
                     record.skillTag,
                   )
                 }
@@ -205,7 +224,6 @@ class ListSkills extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
-    this.handleStatusChange = this.handleStatusChange.bind(this);
     this.handleFinish = this.handleFinish.bind(this);
   }
 
@@ -222,18 +240,19 @@ class ListSkills extends React.Component {
         this.state.skillLanguage
       }&skill=${this.state.skillTag}&reviewed=${
         this.state.skillReviewStatus
-      }&access_token=` + cookies.get('loggedIn');
+      }&editable=${this.state.skillEditStatus}&access_token=` +
+      cookies.get('loggedIn');
     $.ajax({
       url: url,
       dataType: 'jsonp',
       jsonp: 'callback',
       crossDomain: true,
       success: function(data) {
-        this.setState({ changeReviewStatusSuccessDialog: true });
+        this.setState({ changeStatusSuccessDialog: true });
       }.bind(this),
       error: function(err) {
         console.log(err);
-        this.setState({ changeReviewStatusFailureDialog: true });
+        this.setState({ changeStatusFailureDialog: true });
       }.bind(this),
     });
   };
@@ -260,9 +279,11 @@ class ListSkills extends React.Component {
             language: i.language,
             skillTag: i.skill_tag,
             reviewStatus: i.reviewed,
+            editStatus: i.editable,
             type: 'public',
             author: i.author,
-            status: i.reviewed ? 'Approved' : 'Not Reviewed',
+            reviewed: i.reviewed ? 'Approved' : 'Not Reviewed',
+            editable: i.editable ? 'Editable' : 'Not Editable',
           };
           skills.push(skill);
         }
@@ -288,7 +309,15 @@ class ListSkills extends React.Component {
     });
   };
 
-  handleOpen = (name, model, group, language, reviewStatus, skillTag) => {
+  handleOpen = (
+    name,
+    model,
+    group,
+    language,
+    reviewStatus,
+    editStatus,
+    skillTag,
+  ) => {
     this.setState({
       skillModel: model,
       skillGroup: group,
@@ -296,6 +325,7 @@ class ListSkills extends React.Component {
       skillName: name,
       skillTag: skillTag,
       skillReviewStatus: reviewStatus,
+      skillEditStatus: editStatus,
       showDialog: true,
     });
   };
@@ -306,9 +336,15 @@ class ListSkills extends React.Component {
     });
   };
 
-  handleStatusChange = (event, index, value) => {
+  handleReviewStatusChange = (event, index, value) => {
     this.setState({
       skillReviewStatus: value,
+    });
+  };
+
+  handleEditStatusChange = (event, index, value) => {
+    this.setState({
+      skillEditStatus: value,
     });
   };
 
@@ -357,7 +393,7 @@ class ListSkills extends React.Component {
               <div>
                 <DropDownMenu
                   selectedMenuItemStyle={blueThemeColor}
-                  onChange={this.handleStatusChange}
+                  onChange={this.handleReviewStatusChange}
                   value={this.state.skillReviewStatus}
                   labelStyle={{ color: themeForegroundColor }}
                   menuStyle={{ backgroundColor: themeBackgroundColor }}
@@ -380,6 +416,35 @@ class ListSkills extends React.Component {
                   />
                 </DropDownMenu>
               </div>
+              <div style={{ marginTop: '12px' }}>
+                Change the edit status of skill {this.state.skillName}
+              </div>
+              <div>
+                <DropDownMenu
+                  selectedMenuItemStyle={blueThemeColor}
+                  onChange={this.handleEditStatusChange}
+                  value={this.state.skillEditStatus}
+                  labelStyle={{ color: themeForegroundColor }}
+                  menuStyle={{ backgroundColor: themeBackgroundColor }}
+                  menuItemStyle={{ color: themeForegroundColor }}
+                  style={{
+                    width: '250px',
+                    marginLeft: '-20px',
+                  }}
+                  autoWidth={false}
+                >
+                  <MenuItem
+                    primaryText="Editable"
+                    value={true}
+                    className="setting-item"
+                  />
+                  <MenuItem
+                    primaryText="Not Editable"
+                    value={false}
+                    className="setting-item"
+                  />
+                </DropDownMenu>
+              </div>
             </Dialog>
             <Dialog
               title="Success"
@@ -392,18 +457,14 @@ class ListSkills extends React.Component {
                 />
               }
               modal={true}
-              open={this.state.changeReviewStatusSuccessDialog}
+              open={this.state.changeStatusSuccessDialog}
             >
               <div>
-                Review status of
+                Status of
                 <span style={{ fontWeight: 'bold', margin: '0 5px' }}>
                   {this.state.skillName}
                 </span>
-                is changed to
-                <span style={{ fontWeight: 'bold', margin: '0 5px' }}>
-                  {this.state.skillReviewStatus ? 'Approved' : 'Not Approved'}
-                </span>
-                successfully!
+                has been changed successfully!
               </div>
             </Dialog>
             <Dialog
@@ -417,17 +478,14 @@ class ListSkills extends React.Component {
                 />
               }
               modal={true}
-              open={this.state.changeReviewStatusFailureDialog}
+              open={this.state.changeStatusFailureDialog}
             >
               <div>
-                Error! Review status of
+                Error! Status of
                 <span style={{ fontWeight: 'bold', margin: '0 5px' }}>
                   {this.state.skillName}
                 </span>
-                could not be changed to
-                <span style={{ fontWeight: 'bold', margin: '0 5px' }}>
-                  {this.state.skillReviewStatus ? 'Approved' : 'Not Approved'}
-                </span>!
+                could not be changed!
               </div>
             </Dialog>
             <LocaleProvider locale={enUS}>
