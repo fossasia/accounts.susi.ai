@@ -6,6 +6,8 @@ import ResetPassword from './components/Auth/ResetPassword/ResetPassword.react';
 import DeleteAccount from './components/Auth/DeleteAccount/DeleteAccount.react';
 import Settings from './components/Settings/Settings.react';
 import Admin from './components/Admin/Admin.js';
+import Users from './components/Admin/ListUser/ListUser.js';
+import Skills from './components/Admin/ListSkills/ListSkills.js';
 import VerifyAccount from './components/Auth/VerifyAccount/VerifyAccount.react';
 import Login from './components/Auth/Login/Login.react';
 import ForgotPassword from './components/Auth/ForgotPassword/ForgotPassword.react';
@@ -45,6 +47,8 @@ const App = () => (
           <Route exact path="/logout" component={Logout} />
           <Route exact path="/settings" component={Settings} />
           <Route exact path="/admin" component={Admin} />
+          <Route exact path="/admin/users" component={Users} />
+          <Route exact path="/admin/skills" component={Skills} />
           <Route exact path="/verify-account" component={VerifyAccount} />
           <Route exact path="/resetpass" component={ResetPassword} />
           <Route exact path="/delete-account" component={DeleteAccount} />
