@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './ListUser.css';
 import $ from 'jquery';
 import Cookies from 'universal-cookie';
 import Table from 'antd/lib/table';
+import StaticAppBar from '../../StaticAppBar/StaticAppBar.js';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu';
+import Paper from 'material-ui/Paper';
+import Tabs from 'antd/lib/tabs';
+import NotFound from '../../NotFound/NotFound.react';
 import { LocaleProvider } from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
 
 import urls from '../../../utils/urls';
 
 const cookies = new Cookies();
+
+const TabPane = Tabs.TabPane;
 
 export default class ListUser extends Component {
   constructor(props) {
@@ -253,6 +260,15 @@ export default class ListUser extends Component {
     });
   };
 
+  handleTabChange = activeKey => {
+    if (activeKey === '1') {
+      this.props.history.push('/admin');
+    }
+    if (activeKey === '3') {
+      this.props.history.push('/admin/skills');
+    }
+  };
+
   handleUserRoleChange = (event, index, value) => {
     this.setState({
       userRole: value,
@@ -336,101 +352,154 @@ export default class ListUser extends Component {
     const themeForegroundColor = '#272727';
     const themeBackgroundColor = '#fff';
 
-    return (
-      <div className="table">
-        <div>
-          <Dialog
-            title="Change User Role"
-            actions={actions}
-            modal={true}
-            open={this.state.showEditDialog}
-          >
-            <div>
-              Select new User Role for
-              <span style={{ fontWeight: 'bold', marginLeft: '5px' }}>
-                {this.state.userEmail}
-              </span>
-            </div>
-            <div>
-              <DropDownMenu
-                selectedMenuItemStyle={blueThemeColor}
-                onChange={this.handleUserRoleChange}
-                value={this.state.userRole}
-                labelStyle={{ color: themeForegroundColor }}
-                menuStyle={{ backgroundColor: themeBackgroundColor }}
-                menuItemStyle={{ color: themeForegroundColor }}
-                style={{
-                  width: '250px',
-                  marginLeft: '-20px',
-                }}
-                autoWidth={false}
-              >
-                <MenuItem
-                  primaryText="USER"
-                  value="user"
-                  className="setting-item"
-                />
-                <MenuItem
-                  primaryText="REVIEWER"
-                  value="reviewer"
-                  className="setting-item"
-                />
-                <MenuItem
-                  primaryText="OPERATOR"
-                  value="operator"
-                  className="setting-item"
-                />
-                <MenuItem
-                  primaryText="ADMIN"
-                  value="admin"
-                  className="setting-item"
-                />
-                <MenuItem
-                  primaryText="SUPERADMIN"
-                  value="superadmin"
-                  className="setting-item"
-                />
-              </DropDownMenu>
-            </div>
-          </Dialog>
-          <Dialog
-            title="Success"
-            actions={
-              <FlatButton
-                key={1}
-                label="Ok"
-                primary={true}
-                onTouchTap={this.handleSuccess}
-              />
-            }
-            modal={true}
-            open={this.state.changeRoleDialog}
-          >
-            <div>
-              User role of
-              <span style={{ fontWeight: 'bold', margin: '0 5px' }}>
-                {this.state.userEmail}
-              </span>
-              is changed to
-              <span style={{ fontWeight: 'bold', margin: '0 5px' }}>
-                {this.state.userRole}
-              </span>
-              successfully!
-            </div>
-          </Dialog>
-        </div>
+    const tabStyle = {
+      width: '100%',
+      animated: false,
+      textAlign: 'left',
+      display: 'inline-block',
+    };
 
-        <LocaleProvider locale={enUS}>
-          <Table
-            columns={this.columns}
-            rowKey={record => record.registered}
-            dataSource={this.state.data}
-            pagination={this.state.pagination}
-            loading={this.state.loading}
-            onChange={this.handleTableChange}
-          />
-        </LocaleProvider>
+    return (
+      <div>
+        {cookies.get('showAdmin') === 'true' ? (
+          <div>
+            <div className="heading">
+              <StaticAppBar {...this.props} />
+              <h2 className="h2">Users Panel</h2>
+            </div>
+            <div className="tabs">
+              <Paper style={tabStyle} zDepth={0}>
+                <Tabs
+                  defaultActiveKey="2"
+                  onTabClick={this.handleTabChange}
+                  tabPosition={this.state.tabPosition}
+                  animated={false}
+                  type="card"
+                  style={{ minHeight: '500px' }}
+                >
+                  <TabPane tab="Admin" key="1" />
+                  <TabPane tab="Users" key="2">
+                    <div className="table">
+                      <div>
+                        <Dialog
+                          title="Change User Role"
+                          actions={actions}
+                          modal={true}
+                          open={this.state.showEditDialog}
+                        >
+                          <div>
+                            Select new User Role for
+                            <span
+                              style={{ fontWeight: 'bold', marginLeft: '5px' }}
+                            >
+                              {this.state.userEmail}
+                            </span>
+                          </div>
+                          <div>
+                            <DropDownMenu
+                              selectedMenuItemStyle={blueThemeColor}
+                              onChange={this.handleUserRoleChange}
+                              value={this.state.userRole}
+                              labelStyle={{ color: themeForegroundColor }}
+                              menuStyle={{
+                                backgroundColor: themeBackgroundColor,
+                              }}
+                              menuItemStyle={{ color: themeForegroundColor }}
+                              style={{
+                                width: '250px',
+                                marginLeft: '-20px',
+                              }}
+                              autoWidth={false}
+                            >
+                              <MenuItem
+                                primaryText="BOT"
+                                value="bot"
+                                className="setting-item"
+                              />
+                              <MenuItem
+                                primaryText="USER"
+                                value="user"
+                                className="setting-item"
+                              />
+                              <MenuItem
+                                primaryText="REVIEWER"
+                                value="reviewer"
+                                className="setting-item"
+                              />
+                              <MenuItem
+                                primaryText="OPERATOR"
+                                value="operator"
+                                className="setting-item"
+                              />
+                              <MenuItem
+                                primaryText="ADMIN"
+                                value="admin"
+                                className="setting-item"
+                              />
+                              <MenuItem
+                                primaryText="SUPERADMIN"
+                                value="superadmin"
+                                className="setting-item"
+                              />
+                            </DropDownMenu>
+                          </div>
+                        </Dialog>
+                        <Dialog
+                          title="Success"
+                          actions={
+                            <FlatButton
+                              key={1}
+                              label="Ok"
+                              primary={true}
+                              onTouchTap={this.handleSuccess}
+                            />
+                          }
+                          modal={true}
+                          open={this.state.changeRoleDialog}
+                        >
+                          <div>
+                            User role of
+                            <span
+                              style={{ fontWeight: 'bold', margin: '0 5px' }}
+                            >
+                              {this.state.userEmail}
+                            </span>
+                            is changed to
+                            <span
+                              style={{ fontWeight: 'bold', margin: '0 5px' }}
+                            >
+                              {this.state.userRole}
+                            </span>
+                            successfully!
+                          </div>
+                        </Dialog>
+                      </div>
+
+                      <LocaleProvider locale={enUS}>
+                        <Table
+                          columns={this.columns}
+                          rowKey={record => record.registered}
+                          dataSource={this.state.data}
+                          pagination={this.state.pagination}
+                          loading={this.state.loading}
+                          onChange={this.handleTableChange}
+                        />
+                      </LocaleProvider>
+                    </div>
+                  </TabPane>
+                  <TabPane tab="Skills" key="3" />
+                </Tabs>
+              </Paper>
+            </div>
+          </div>
+        ) : (
+          <NotFound />
+        )}
       </div>
     );
   }
 }
+
+ListUser.propTypes = {
+  history: PropTypes.object,
+};

@@ -32,13 +32,6 @@ const cookieDomain = isProduction() ? '.susi.ai' : '';
 const cookies = new Cookies();
 
 class StaticAppBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showAdmin: false,
-    };
-  }
-
   handleScroll = event => {
     let scrollTop = event.pageY || event.target.body.scrollTop,
       itemTranslate = scrollTop > 60;
@@ -48,31 +41,6 @@ class StaticAppBar extends Component {
   };
 
   componentDidMount() {
-    $.ajax({
-      url:
-        `${urls.API_URL}` +
-        '/aaa/showAdminService.json?access_token=' +
-        cookies.get('loggedIn'),
-      dataType: 'jsonp',
-      jsonpCallback: 'pfns',
-      jsonp: 'callback',
-      crossDomain: true,
-      success: function(newResponse) {
-        let showAdmin = newResponse.showAdmin;
-        cookies.set('showAdmin', showAdmin, {
-          path: '/',
-          domain: cookieDomain,
-        });
-        this.setState({
-          showAdmin,
-        });
-        console.log(newResponse.showAdmin);
-      }.bind(this),
-      error: function(newErrorThrown) {
-        console.log(newErrorThrown);
-      },
-    });
-
     $.ajax({
       url:
         `${urls.API_URL}` +
@@ -207,7 +175,7 @@ class StaticAppBar extends Component {
             href={`${urls.CHAT_URL}/overview`}
             rightIcon={<Info />}
           />
-          {this.state.showAdmin === true ? (
+          {cookies.get('showAdmin') === 'true' ? (
             <MenuItem
               primaryText="Admin"
               rightIcon={<List />}
