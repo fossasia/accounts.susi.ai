@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Table from 'antd/lib/table';
 import { LocaleProvider } from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
@@ -8,6 +9,10 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import CircularProgress from 'material-ui/CircularProgress';
 import Snackbar from 'material-ui/Snackbar';
+import Paper from 'material-ui/Paper';
+import Tabs from 'antd/lib/tabs';
+import NotFound from '../../NotFound/NotFound.react';
+import StaticAppBar from '../../StaticAppBar/StaticAppBar.js';
 import Cookies from 'universal-cookie';
 import './ListSkills.css';
 import * as $ from 'jquery';
@@ -15,6 +20,8 @@ import * as $ from 'jquery';
 import urls from '../../../utils/urls';
 
 const cookies = new Cookies();
+
+const TabPane = Tabs.TabPane;
 
 class ListSkills extends React.Component {
   constructor(props) {
@@ -336,6 +343,15 @@ class ListSkills extends React.Component {
     });
   };
 
+  handleTabChange = activeKey => {
+    if (activeKey === '1') {
+      this.props.history.push('/admin');
+    }
+    if (activeKey === '2') {
+      this.props.history.push('/admin/users');
+    }
+  };
+
   handleReviewStatusChange = (event, index, value) => {
     this.setState({
       skillReviewStatus: value,
@@ -372,143 +388,195 @@ class ListSkills extends React.Component {
     const themeForegroundColor = '#272727';
     const themeBackgroundColor = '#fff';
 
+    const tabStyle = {
+      width: '100%',
+      animated: false,
+      textAlign: 'left',
+      display: 'inline-block',
+    };
+
     return (
       <div>
-        {this.state.loading ? (
-          <div className="center">
-            <CircularProgress size={62} color="#4285f5" />
-            <h4>Loading</h4>
+        {cookies.get('showAdmin') === 'true' ? (
+          <div>
+            <div className="heading">
+              <StaticAppBar {...this.props} />
+              <h2 className="h2">Skills Panel</h2>
+            </div>
+            <div className="tabs">
+              <Paper style={tabStyle} zDepth={0}>
+                <Tabs
+                  defaultActiveKey="3"
+                  onTabClick={this.handleTabChange}
+                  tabPosition={this.state.tabPosition}
+                  animated={false}
+                  type="card"
+                  style={{ minHeight: '500px' }}
+                >
+                  <TabPane tab="Admin" key="1">
+                    Tab for Admin Content
+                  </TabPane>
+                  <TabPane tab="Users" key="2" />
+                  <TabPane tab="Skills" key="3">
+                    <div>
+                      {this.state.loading ? (
+                        <div className="center">
+                          <CircularProgress size={62} color="#4285f5" />
+                          <h4>Loading</h4>
+                        </div>
+                      ) : (
+                        <div className="table">
+                          <Dialog
+                            title="Skill Settings"
+                            actions={actions}
+                            model={true}
+                            open={this.state.showDialog}
+                          >
+                            <div>
+                              Change the review status of skill{' '}
+                              {this.state.skillName}
+                            </div>
+                            <div>
+                              <DropDownMenu
+                                selectedMenuItemStyle={blueThemeColor}
+                                onChange={this.handleReviewStatusChange}
+                                value={this.state.skillReviewStatus}
+                                labelStyle={{ color: themeForegroundColor }}
+                                menuStyle={{
+                                  backgroundColor: themeBackgroundColor,
+                                }}
+                                menuItemStyle={{ color: themeForegroundColor }}
+                                style={{
+                                  width: '250px',
+                                  marginLeft: '-20px',
+                                }}
+                                autoWidth={false}
+                              >
+                                <MenuItem
+                                  primaryText="Approved"
+                                  value={true}
+                                  className="setting-item"
+                                />
+                                <MenuItem
+                                  primaryText="Not Approved"
+                                  value={false}
+                                  className="setting-item"
+                                />
+                              </DropDownMenu>
+                            </div>
+                            <div style={{ marginTop: '12px' }}>
+                              Change the edit status of skill{' '}
+                              {this.state.skillName}
+                            </div>
+                            <div>
+                              <DropDownMenu
+                                selectedMenuItemStyle={blueThemeColor}
+                                onChange={this.handleEditStatusChange}
+                                value={this.state.skillEditStatus}
+                                labelStyle={{ color: themeForegroundColor }}
+                                menuStyle={{
+                                  backgroundColor: themeBackgroundColor,
+                                }}
+                                menuItemStyle={{ color: themeForegroundColor }}
+                                style={{
+                                  width: '250px',
+                                  marginLeft: '-20px',
+                                }}
+                                autoWidth={false}
+                              >
+                                <MenuItem
+                                  primaryText="Editable"
+                                  value={true}
+                                  className="setting-item"
+                                />
+                                <MenuItem
+                                  primaryText="Not Editable"
+                                  value={false}
+                                  className="setting-item"
+                                />
+                              </DropDownMenu>
+                            </div>
+                          </Dialog>
+                          <Dialog
+                            title="Success"
+                            actions={
+                              <FlatButton
+                                key={1}
+                                label="Ok"
+                                primary={true}
+                                onTouchTap={this.handleFinish}
+                              />
+                            }
+                            modal={true}
+                            open={this.state.changeStatusSuccessDialog}
+                          >
+                            <div>
+                              Status of
+                              <span
+                                style={{ fontWeight: 'bold', margin: '0 5px' }}
+                              >
+                                {this.state.skillName}
+                              </span>
+                              has been changed successfully!
+                            </div>
+                          </Dialog>
+                          <Dialog
+                            title="Failed!"
+                            actions={
+                              <FlatButton
+                                key={1}
+                                label="Ok"
+                                primary={true}
+                                onTouchTap={this.handleFinish}
+                              />
+                            }
+                            modal={true}
+                            open={this.state.changeStatusFailureDialog}
+                          >
+                            <div>
+                              Error! Status of
+                              <span
+                                style={{ fontWeight: 'bold', margin: '0 5px' }}
+                              >
+                                {this.state.skillName}
+                              </span>
+                              could not be changed!
+                            </div>
+                          </Dialog>
+                          <LocaleProvider locale={enUS}>
+                            <Table
+                              columns={this.columns}
+                              rowKey={record => record.registered}
+                              dataSource={this.state.skillsData}
+                              loading={this.state.loading}
+                            />
+                          </LocaleProvider>
+                        </div>
+                      )}
+                      <Snackbar
+                        open={this.state.openSnackbar}
+                        message={this.state.msgSnackbar}
+                        autoHideDuration={2000}
+                        onRequestClose={() => {
+                          this.setState({ openSnackbar: false });
+                        }}
+                      />
+                    </div>
+                  </TabPane>
+                </Tabs>
+              </Paper>
+            </div>
           </div>
         ) : (
-          <div className="table">
-            <Dialog
-              title="Skill Settings"
-              actions={actions}
-              model={true}
-              open={this.state.showDialog}
-            >
-              <div>
-                Change the review status of skill {this.state.skillName}
-              </div>
-              <div>
-                <DropDownMenu
-                  selectedMenuItemStyle={blueThemeColor}
-                  onChange={this.handleReviewStatusChange}
-                  value={this.state.skillReviewStatus}
-                  labelStyle={{ color: themeForegroundColor }}
-                  menuStyle={{ backgroundColor: themeBackgroundColor }}
-                  menuItemStyle={{ color: themeForegroundColor }}
-                  style={{
-                    width: '250px',
-                    marginLeft: '-20px',
-                  }}
-                  autoWidth={false}
-                >
-                  <MenuItem
-                    primaryText="Approved"
-                    value={true}
-                    className="setting-item"
-                  />
-                  <MenuItem
-                    primaryText="Not Approved"
-                    value={false}
-                    className="setting-item"
-                  />
-                </DropDownMenu>
-              </div>
-              <div style={{ marginTop: '12px' }}>
-                Change the edit status of skill {this.state.skillName}
-              </div>
-              <div>
-                <DropDownMenu
-                  selectedMenuItemStyle={blueThemeColor}
-                  onChange={this.handleEditStatusChange}
-                  value={this.state.skillEditStatus}
-                  labelStyle={{ color: themeForegroundColor }}
-                  menuStyle={{ backgroundColor: themeBackgroundColor }}
-                  menuItemStyle={{ color: themeForegroundColor }}
-                  style={{
-                    width: '250px',
-                    marginLeft: '-20px',
-                  }}
-                  autoWidth={false}
-                >
-                  <MenuItem
-                    primaryText="Editable"
-                    value={true}
-                    className="setting-item"
-                  />
-                  <MenuItem
-                    primaryText="Not Editable"
-                    value={false}
-                    className="setting-item"
-                  />
-                </DropDownMenu>
-              </div>
-            </Dialog>
-            <Dialog
-              title="Success"
-              actions={
-                <FlatButton
-                  key={1}
-                  label="Ok"
-                  primary={true}
-                  onTouchTap={this.handleFinish}
-                />
-              }
-              modal={true}
-              open={this.state.changeStatusSuccessDialog}
-            >
-              <div>
-                Status of
-                <span style={{ fontWeight: 'bold', margin: '0 5px' }}>
-                  {this.state.skillName}
-                </span>
-                has been changed successfully!
-              </div>
-            </Dialog>
-            <Dialog
-              title="Failed!"
-              actions={
-                <FlatButton
-                  key={1}
-                  label="Ok"
-                  primary={true}
-                  onTouchTap={this.handleFinish}
-                />
-              }
-              modal={true}
-              open={this.state.changeStatusFailureDialog}
-            >
-              <div>
-                Error! Status of
-                <span style={{ fontWeight: 'bold', margin: '0 5px' }}>
-                  {this.state.skillName}
-                </span>
-                could not be changed!
-              </div>
-            </Dialog>
-            <LocaleProvider locale={enUS}>
-              <Table
-                columns={this.columns}
-                rowKey={record => record.registered}
-                dataSource={this.state.skillsData}
-                loading={this.state.loading}
-              />
-            </LocaleProvider>
-          </div>
+          <NotFound />
         )}
-        <Snackbar
-          open={this.state.openSnackbar}
-          message={this.state.msgSnackbar}
-          autoHideDuration={2000}
-          onRequestClose={() => {
-            this.setState({ openSnackbar: false });
-          }}
-        />
       </div>
     );
   }
 }
+
+ListSkills.propTypes = {
+  history: PropTypes.object,
+};
 
 export default ListSkills;

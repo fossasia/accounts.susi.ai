@@ -194,6 +194,34 @@ class Login extends Component {
         maxAge: time,
         domain: cookieDomain,
       });
+
+      let BASE_URL = `${urls.API_URL}`;
+
+      let url;
+      url = BASE_URL + '/aaa/showAdminService.json?access_token=' + loggedIn;
+      $.ajax({
+        url: url,
+        dataType: 'jsonp',
+        jsonpCallback: 'pyfw',
+        jsonp: 'callback',
+        crossDomain: true,
+        success: function(response) {
+          cookies.set('showAdmin', response.showAdmin, {
+            path: '/',
+            maxAge: time,
+            domain: cookieDomain,
+          });
+        }.bind(this),
+        error: function(errorThrown) {
+          cookies.set('showAdmin', 'false', {
+            path: '/',
+            maxAge: time,
+            domain: cookieDomain,
+          });
+          console.log(errorThrown);
+        }.bind(this),
+      });
+
       this.props.history.push('/settings', { showLogin: false });
     } else {
       this.setState({

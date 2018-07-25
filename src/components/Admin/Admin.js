@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
 import './Admin.css';
 import StaticAppBar from '../StaticAppBar/StaticAppBar.js';
-import $ from 'jquery';
 import Cookies from 'universal-cookie';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import Tabs from 'antd/lib/tabs';
-import ListUser from './ListUser/ListUser';
-import ListSkills from './ListSkills/ListSkills';
 import 'antd/lib/tabs/style/index.css';
 import NotFound from './../NotFound/NotFound.react';
-
-import urls from '../../utils/urls';
 
 const cookies = new Cookies();
 
@@ -23,39 +18,21 @@ class Admin extends Component {
 
     this.state = {
       tabPosition: 'top',
-      isAdmin: false,
     };
-  }
-
-  componentDidMount() {
-    let url;
-    url =
-      `${urls.API_URL}/aaa/showAdminService.json?access_token=` +
-      cookies.get('loggedIn');
-    $.ajax({
-      url: url,
-      dataType: 'jsonp',
-      jsonpCallback: 'pyfw',
-      jsonp: 'callback',
-      crossDomain: true,
-      success: function(response) {
-        // console.log(response.showAdmin);
-        this.setState({
-          isAdmin: response.showAdmin,
-        });
-      }.bind(this),
-      error: function(errorThrown) {
-        this.setState({
-          isAdmin: false,
-        });
-        console.log(errorThrown);
-      }.bind(this),
-    });
   }
 
   handleClose = () => {
     this.props.history.push('/');
     window.location.reload();
+  };
+
+  handleTabChange = activeKey => {
+    if (activeKey === '2') {
+      this.props.history.push('/admin/users');
+    }
+    if (activeKey === '3') {
+      this.props.history.push('/admin/skills');
+    }
   };
 
   render() {
@@ -68,7 +45,7 @@ class Admin extends Component {
 
     return (
       <div>
-        {this.state.isAdmin ? (
+        {cookies.get('showAdmin') === 'true' ? (
           <div>
             <div className="heading">
               <StaticAppBar {...this.props} />
@@ -77,6 +54,7 @@ class Admin extends Component {
             <div className="tabs">
               <Paper style={tabStyle} zDepth={0}>
                 <Tabs
+                  onTabClick={this.handleTabChange}
                   tabPosition={this.state.tabPosition}
                   animated={false}
                   type="card"
@@ -85,15 +63,8 @@ class Admin extends Component {
                   <TabPane tab="Admin" key="1">
                     Tab for Admin Content
                   </TabPane>
-                  <TabPane tab="Users" key="2">
-                    <ListUser />
-                  </TabPane>
-                  <TabPane tab="Skills" key="3">
-                    <ListSkills />
-                  </TabPane>
-                  <TabPane tab="Permissions" key="4">
-                    Permission Content Tab
-                  </TabPane>
+                  <TabPane tab="Users" key="2" />
+                  <TabPane tab="Skills" key="3" />
                 </Tabs>
               </Paper>
             </div>
