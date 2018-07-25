@@ -3,12 +3,7 @@
 	width: 400px;
 	margin: 0 auto;
 }
-.susi-logo{
-    margin:10px;
-}
-.signUpForm h1{
-    margin:10px;
-}
+
 @media screen and (max-width: 768px) {
 	.signUpForm h1{
 		font-size: 16px;
@@ -44,7 +39,7 @@
     float : left;
     width : 50%;
     height: 80%;
-    background-color : #EEE;
+    background-color : #eee;
 }
 .About{
   margin: 30vh 8% 0% 8%;

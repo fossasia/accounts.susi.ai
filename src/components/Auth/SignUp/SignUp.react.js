@@ -185,7 +185,7 @@ export default class SignUp extends Component {
 
   render() {
     const fieldStyle = {
-      width: '90%',
+      width: '94%',
       height: '30px',
       marginBottom: '3%',
       borderRadius: '5px',
@@ -193,9 +193,8 @@ export default class SignUp extends Component {
       marginLeft: '8px',
     };
     const button = {
-      width: '96%',
+      width: '100%',
       marginTop: '0',
-      marginLeft: '8px',
     };
 
     const actions = (
@@ -237,8 +236,10 @@ export default class SignUp extends Component {
         <div className="signup-container">
           <div className="signUpForm">
             <img src={susi} alt="SUSI" className="susi-logo" />
-            <h1>See whats happening in the world right now</h1>
-            <h1>Sign Up with SUSI</h1>
+            <h1 style={{ marginBottom: 7 }}>
+              See whats happening in the world right now
+            </h1>
+            <h1 style={{ marginBottom: 7 }}>Sign Up with SUSI</h1>
             <form onSubmit={this.handleSubmit}>
               <div>
                 <input
@@ -289,9 +290,9 @@ export default class SignUp extends Component {
                   labelColor="#fff"
                 />
               </div>
-              <h1 style={{ textAlign: 'center', margin: 5 }}>OR</h1>
+              <h1 style={{ textAlign: 'center', marginBottom: 7 }}>OR</h1>
               <div>
-                <h4 style={{ textAlign: 'center', margin: 5 }}>
+                <h4 style={{ textAlign: 'center', marginBottom: 7 }}>
                   If you have an account, Please Login
                 </h4>
                 <Link to={'/'}>
