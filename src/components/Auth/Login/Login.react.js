@@ -72,7 +72,11 @@ class Login extends Component {
       this.props.history.push('/resetpass/?token=' + token);
     }
     if (cookies.get('loggedIn')) {
-      this.props.history.push('/settings', { showLogin: false });
+      if (cookies.get('showAdmin') && cookies.get('showAdmin') === 'true') {
+        this.props.history.replace('/admin', { showLogin: false });
+      } else {
+        this.props.history.replace('/settings', { showLogin: false });
+      }
     }
   }
 
@@ -196,14 +200,14 @@ class Login extends Component {
       });
 
       let BASE_URL = `${urls.API_URL}`;
+      let self = this;
 
-      let url;
+      let url,
+        showAdmin = false;
       url = BASE_URL + '/aaa/showAdminService.json?access_token=' + loggedIn;
       $.ajax({
         url: url,
         dataType: 'jsonp',
-        jsonpCallback: 'pyfw',
-        jsonp: 'callback',
         crossDomain: true,
         success: function(response) {
           cookies.set('showAdmin', response.showAdmin, {
@@ -211,7 +215,8 @@ class Login extends Component {
             maxAge: time,
             domain: cookieDomain,
           });
-        }.bind(this),
+          showAdmin = response.showAdmin;
+        },
         error: function(errorThrown) {
           cookies.set('showAdmin', 'false', {
             path: '/',
@@ -219,10 +224,15 @@ class Login extends Component {
             domain: cookieDomain,
           });
           console.log(errorThrown);
-        }.bind(this),
+        },
+        complete: function(jqXHR, textStatus) {
+          if (showAdmin === true) {
+            self.props.history.push('/admin', { showLogin: false });
+          } else {
+            self.props.history.push('/settings', { showLogin: false });
+          }
+        },
       });
-
-      this.props.history.push('/settings', { showLogin: false });
     } else {
       this.setState({
         error: true,
