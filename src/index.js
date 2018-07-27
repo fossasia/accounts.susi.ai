@@ -1,6 +1,5 @@
 import SignUp from './components/Auth/SignUp/SignUp.react';
 import Logout from './components/Auth/Logout.react';
-import LoggedIn from './components/Settings/Settings.react';
 import ChangePassword from './components/Auth/ChangePassword/ChangePassword.react';
 import ResetPassword from './components/Auth/ResetPassword/ResetPassword.react';
 import DeleteAccount from './components/Auth/DeleteAccount/DeleteAccount.react';
@@ -41,7 +40,6 @@ const App = () => (
         </div>
         <Switch>
           <Route exact path="/" component={Login} />
-          <Route exact path="/settings" component={LoggedIn} />
           <Route exact path="/changepassword" component={ChangePassword} />
           <Route exact path="/signup" component={SignUp} />
           <Route exact path="/logout" component={Logout} />
