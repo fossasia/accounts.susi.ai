@@ -4,6 +4,7 @@ import './ListUser.css';
 import $ from 'jquery';
 import Cookies from 'universal-cookie';
 import Table from 'antd/lib/table';
+import { Input } from 'antd';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar.js';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
@@ -21,6 +22,8 @@ const cookies = new Cookies();
 
 const TabPane = Tabs.TabPane;
 
+const Search = Input.Search;
+
 export default class ListUser extends Component {
   constructor(props) {
     super(props);
@@ -30,6 +33,7 @@ export default class ListUser extends Component {
       middle: '50',
       pagination: {},
       loading: false,
+      search: false,
       showEditDialog: false,
       changeRoleDialog: false,
     };
@@ -212,7 +216,68 @@ export default class ListUser extends Component {
     });
   };
 
+  handleSearch = value => {
+    this.setState({
+      search: true,
+    });
+    let url;
+    url = `${urls.API_URL}/aaa/getUsers.json?access_token=${cookies.get(
+      'loggedIn',
+    )}&search=${value}`;
+    $.ajax({
+      url: url,
+      dataType: 'jsonp',
+      jsonpCallback: 'pvsdu',
+      jsonp: 'callback',
+      crossDomain: true,
+      success: function(response) {
+        let userList = response.users;
+        let users = [];
+        userList.map((data, i) => {
+          let devices = [];
+          let keys = Object.keys(data.devices);
+          keys.forEach(j => {
+            let device = {
+              macid: j,
+              devicename: data.devices[j].name,
+              room: data.devices[j].room,
+              latitude: data.devices[j].geolocation.latitude,
+              longitude: data.devices[j].geolocation.longitude,
+            };
+            devices.push(device);
+          });
+          let user = {
+            serialNum: ++i,
+            email: data.name,
+            signup: data.signupTime,
+            lastLogin: data.lastLoginTime,
+            ipLastLogin: data.lastLoginIP,
+            userRole: data.userRole,
+            devices: devices,
+          };
+
+          if (data.confirmed) {
+            user.confirmed = 'Activated';
+          } else {
+            user.confirmed = 'Not Activated';
+          }
+
+          users.push(user);
+          return 1;
+        });
+        this.setState({
+          data: users,
+          loading: false,
+        });
+      }.bind(this),
+      error: function(errorThrown) {
+        console.log(errorThrown);
+      },
+    });
+  };
+
   componentDidMount() {
+    $('.ant-input').css('padding-right', '0');
     const pagination = { ...this.state.pagination };
     let url;
     url =
@@ -516,25 +581,58 @@ export default class ListUser extends Component {
                         </Dialog>
                       </div>
 
+                      <Search
+                        placeholder="Search by email"
+                        style={{ margin: '5px 25% 20px 25%', width: '50%' }}
+                        size="default"
+                        onSearch={value => this.handleSearch(value)}
+                      />
+
                       <LocaleProvider locale={enUS}>
-                        <Table
-                          columns={this.columns}
-                          rowKey={record => record.serialNum}
-                          expandedRowRender={record => (
-                            <Table
-                              style={{ width: '80%', backgroundColor: 'white' }}
-                              columns={this.devicesColumns}
-                              dataSource={record.devices}
-                              pagination={false}
-                              locale={{ emptyText: 'No devices found!' }}
-                              bordered
-                            />
-                          )}
-                          dataSource={this.state.data}
-                          pagination={this.state.pagination}
-                          loading={this.state.loading}
-                          onChange={this.handleTableChange}
-                        />
+                        {this.state.search ? (
+                          <Table
+                            columns={this.columns}
+                            rowKey={record => record.serialNum}
+                            expandedRowRender={record => (
+                              <Table
+                                style={{
+                                  width: '80%',
+                                  backgroundColor: 'white',
+                                }}
+                                columns={this.devicesColumns}
+                                dataSource={record.devices}
+                                pagination={false}
+                                locale={{ emptyText: 'No devices found!' }}
+                                bordered
+                              />
+                            )}
+                            dataSource={this.state.data}
+                            loading={this.state.loading}
+                            pagination={false}
+                          />
+                        ) : (
+                          <Table
+                            columns={this.columns}
+                            rowKey={record => record.serialNum}
+                            expandedRowRender={record => (
+                              <Table
+                                style={{
+                                  width: '80%',
+                                  backgroundColor: 'white',
+                                }}
+                                columns={this.devicesColumns}
+                                dataSource={record.devices}
+                                pagination={false}
+                                locale={{ emptyText: 'No devices found!' }}
+                                bordered
+                              />
+                            )}
+                            dataSource={this.state.data}
+                            pagination={this.state.pagination}
+                            loading={this.state.loading}
+                            onChange={this.handleTableChange}
+                          />
+                        )}
                       </LocaleProvider>
                     </div>
                   </TabPane>
