@@ -23,9 +23,7 @@ import LoginIcon from 'material-ui/svg-icons/action/account-circle';
 import List from 'material-ui/svg-icons/action/list';
 import susiWhite from '../../images/susi-logo-white.png';
 import './StaticAppBar.css';
-import { isProduction } from '../../utils/helperFunctions';
-
-import urls from '../../utils/urls';
+import { urls, isProduction } from '../../Utils';
 
 const cookieDomain = isProduction() ? '.susi.ai' : '';
 

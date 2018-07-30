@@ -1,6 +1,6 @@
 import Cookies from 'universal-cookie';
 import $ from 'jquery';
-import urls from '../utils/urls';
+import { urls } from '../Utils';
 
 const cookies = new Cookies();
 

@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isProduction } from '../../utils/helperFunctions';
+import { isProduction } from '../../Utils';
 
 const cookieDomain = isProduction() ? '.susi.ai' : '';
 

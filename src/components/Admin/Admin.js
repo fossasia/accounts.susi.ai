@@ -10,7 +10,7 @@ import Tabs from 'antd/lib/tabs';
 import 'antd/lib/tabs/style/index.css';
 import NotFound from './../NotFound/NotFound.react';
 
-import urls from '../../utils/urls';
+import { urls } from '../../Utils';
 
 const cookies = new Cookies();
 

@@ -7,7 +7,7 @@ import userPreferencesStore from '../../stores/UserPreferencesStore';
 import Dialog from 'material-ui/Dialog';
 import Login from '../Auth/Login/Login.react';
 
-import urls from '../../utils/urls';
+import { urls } from '../../Utils';
 
 export default class NotFound extends Component {
   constructor(props) {

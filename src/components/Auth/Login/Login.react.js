@@ -17,9 +17,7 @@ import Dialog from 'material-ui/Dialog';
 // Static assets
 import Footer from '../../Footer/Footer.react.js';
 import susi from '../../../images/susi-logo.svg';
-import { isProduction } from '../../../utils/helperFunctions';
-
-import urls from '../../../utils/urls';
+import { urls, isProduction } from '../../../Utils';
 
 // Static assets
 import './Login.css';
