@@ -24,6 +24,7 @@ import List from 'material-ui/svg-icons/action/list';
 import susiWhite from '../../images/susi-logo-white.png';
 import './StaticAppBar.css';
 import { urls, isProduction } from '../../Utils';
+import ChatConstants from '../../constants/ChatConstants';
 
 const cookieDomain = isProduction() ? '.susi.ai' : '';
 
@@ -219,7 +220,7 @@ class StaticAppBar extends Component {
           iconElementLeft={<iconButton />}
           className="app-bar"
           style={{
-            backgroundColor: '#4285F4',
+            backgroundColor: ChatConstants.standardBlue,
             height: '46px',
           }}
           titleStyle={{ height: '46px' }}

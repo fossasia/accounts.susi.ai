@@ -11,6 +11,7 @@ import Cookies from 'universal-cookie';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import { urls } from '../../../Utils';
+import ChatConstants from '../../../constants/ChatConstants';
 
 const cookies = new Cookies();
 injectTapEventPlugin();
@@ -265,7 +266,7 @@ export default class ChangePassword extends Component {
                   label="Save Changes"
                   type="submit"
                   style={{ marginRight: '50px' }}
-                  backgroundColor={'#4285F4'}
+                  backgroundColor={ChatConstants.standardBlue}
                   labelColor="#fff"
                 />
               </div>

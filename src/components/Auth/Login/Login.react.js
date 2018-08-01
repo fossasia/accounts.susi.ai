@@ -10,7 +10,6 @@ import Cookies from 'universal-cookie';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
-import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 
@@ -18,6 +17,7 @@ import Dialog from 'material-ui/Dialog';
 import Footer from '../../Footer/Footer.react.js';
 import susi from '../../../images/susi-logo.svg';
 import { urls, isProduction } from '../../../Utils';
+import ChatConstants from '../../../constants/ChatConstants';
 
 // Static assets
 import './Login.css';
@@ -313,7 +313,7 @@ class Login extends Component {
                   type="submit"
                   className="loginbtn"
                   style={{ marginLeft: '10px' }}
-                  backgroundColor="#4285F4"
+                  backgroundColor={ChatConstants.standardBlue}
                   labelColor="#fff"
                   disabled={!this.state.validForm}
                 />
@@ -338,11 +338,7 @@ class Login extends Component {
               <RaisedButton
                 style={button}
                 label="Sign Up"
-                backgroundColor={
-                  UserPreferencesStore.getTheme() === 'light'
-                    ? '#4285F4'
-                    : '#4285F4'
-                }
+                backgroundColor={ChatConstants.standardBlue}
                 labelColor="#fff"
               />
             </Link>

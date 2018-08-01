@@ -15,6 +15,7 @@ import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import Close from 'material-ui/svg-icons/navigation/close';
 
 import { urls } from '../../../Utils';
+import ChatConstants from '../../../constants/ChatConstants';
 
 const cookies = new Cookies();
 
@@ -218,7 +219,7 @@ class DeleteAccount extends Component {
     const actions = (
       <FlatButton
         label="OK"
-        backgroundColor={'#4285F4'}
+        backgroundColor={ChatConstants.standardBlue}
         labelStyle={{ color: '#fff' }}
         onTouchTap={this.handleClose}
       />
@@ -262,7 +263,7 @@ class DeleteAccount extends Component {
                   <div style={submitButton}>
                     <RaisedButton
                       label="Cancel"
-                      backgroundColor="#4285F4"
+                      backgroundColor={ChatConstants.standardBlue}
                       labelColor="#fff"
                       onTouchTap={this.handleCancel}
                     />

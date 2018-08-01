@@ -10,6 +10,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 
 import { urls } from '../../../Utils';
+import ChatConstants from '../../../constants/ChatConstants';
 
 const urlPropsQueryConfig = {
   accessToken: { type: UrlQueryParamTypes.string, queryParam: 'access_token' },
@@ -101,7 +102,7 @@ class VerifyAccount extends Component {
     const actions = (
       <FlatButton
         label="OK"
-        backgroundColor={'#4285F4'}
+        backgroundColor={ChatConstants.standardBlue}
         labelStyle={{ color: '#fff' }}
         onTouchTap={this.handleClose}
       />

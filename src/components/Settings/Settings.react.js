@@ -28,6 +28,7 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { Link } from 'react-router-dom';
 import ChangePassword from '../Auth/ChangePassword/ChangePassword.react';
 import * as Actions from '../../actions/';
+import ChatConstants from '../../constants/ChatConstants';
 
 // Keys
 import { MAP_KEY } from '../../../src/config.js';
@@ -596,7 +597,7 @@ class Settings extends Component {
     };
 
     const radioIconStyle = {
-      fill: '#4285f4',
+      fill: ChatConstants.standardBlue,
     };
 
     const menuStyle = {
@@ -807,6 +808,10 @@ class Settings extends Component {
             onToggle={this.handleEnterAsSend}
             labelStyle={{ color: themeForegroundColor }}
             toggled={this.state.EnterAsSend}
+            thumbStyle={ChatConstants.thumbStyle}
+            trackStyle={ChatConstants.trackStyle}
+            thumbSwitchedStyle={ChatConstants.thumbSwitchedStyle}
+            trackSwitchedStyle={ChatConstants.trackSwitchedStyle}
           />
           <br />
         </div>
@@ -835,6 +840,10 @@ class Settings extends Component {
                 labelStyle={{ color: themeForegroundColor }}
                 onToggle={this.handleMicInput}
                 toggled={this.state.MicInput}
+                thumbStyle={ChatConstants.thumbStyle}
+                trackStyle={ChatConstants.trackStyle}
+                thumbSwitchedStyle={ChatConstants.thumbSwitchedStyle}
+                trackSwitchedStyle={ChatConstants.trackSwitchedStyle}
               />
               <br />
             </div>
@@ -903,6 +912,10 @@ class Settings extends Component {
               labelStyle={{ color: themeForegroundColor }}
               onToggle={this.handleSpeechOutput}
               toggled={this.state.SpeechOutput}
+              thumbStyle={ChatConstants.thumbStyle}
+              trackStyle={ChatConstants.trackStyle}
+              thumbSwitchedStyle={ChatConstants.thumbSwitchedStyle}
+              trackSwitchedStyle={ChatConstants.trackSwitchedStyle}
             />
             <br />
             <br />
@@ -932,6 +945,10 @@ class Settings extends Component {
               labelStyle={{ color: themeForegroundColor }}
               onToggle={this.handleSpeechOutputAlways}
               toggled={this.state.SpeechOutputAlways}
+              thumbStyle={ChatConstants.thumbStyle}
+              trackStyle={ChatConstants.trackStyle}
+              thumbSwitchedStyle={ChatConstants.thumbSwitchedStyle}
+              trackSwitchedStyle={ChatConstants.trackSwitchedStyle}
             />
             <br />
             <br />
@@ -1280,7 +1297,7 @@ class Settings extends Component {
                 ) : (
                   <RaisedButton
                     label="save changes"
-                    backgroundColor="#4285F4"
+                    backgroundColor={ChatConstants.standardBlue}
                     labelColor="#fff"
                     disabled={!this.state.settingsChanged}
                     onTouchTap={this.handleSave}

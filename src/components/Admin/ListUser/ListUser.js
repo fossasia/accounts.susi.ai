@@ -17,6 +17,7 @@ import { LocaleProvider } from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
 
 import { urls } from '../../../Utils';
+import ChatConstants from '../../../constants/ChatConstants';
 
 const cookies = new Cookies();
 
@@ -482,7 +483,7 @@ export default class ListUser extends Component {
       <FlatButton
         key={1}
         label="Change"
-        primary={true}
+        labelStyle={{ color: ChatConstants.standardBlue }}
         onTouchTap={this.handleChange}
       />,
       <FlatButton
@@ -497,7 +498,7 @@ export default class ListUser extends Component {
       <FlatButton
         key={1}
         label="Delete"
-        primary={true}
+        labelStyle={{ color: ChatConstants.standardBlue }}
         onTouchTap={this.deleteUser}
       />,
       <FlatButton
@@ -610,7 +611,7 @@ export default class ListUser extends Component {
                             <FlatButton
                               key={1}
                               label="Ok"
-                              primary={true}
+                              labelStyle={{ color: ChatConstants.standardBlue }}
                               onTouchTap={this.handleSuccess}
                             />
                           }
@@ -655,7 +656,7 @@ export default class ListUser extends Component {
                             <FlatButton
                               key={1}
                               label="Ok"
-                              primary={true}
+                              labelStyle={{ color: ChatConstants.standardBlue }}
                               onTouchTap={this.handleSuccess}
                             />
                           }
@@ -678,7 +679,7 @@ export default class ListUser extends Component {
                             <FlatButton
                               key={1}
                               label="Ok"
-                              primary={true}
+                              labelStyle={{ color: ChatConstants.standardBlue }}
                               onTouchTap={this.handleClose}
                             />
                           }
