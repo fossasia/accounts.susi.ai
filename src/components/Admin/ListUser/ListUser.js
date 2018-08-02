@@ -35,7 +35,10 @@ export default class ListUser extends Component {
       loading: false,
       search: false,
       showEditDialog: false,
+      showDeleteDialog: false,
       changeRoleDialog: false,
+      deleteSuccessDialog: false,
+      deleteFailedDialog: false,
     };
     this.columns = [
       {
@@ -46,7 +49,7 @@ export default class ListUser extends Component {
       {
         title: 'Email ID',
         dataIndex: 'email',
-        width: '22%',
+        width: '20%',
         key: 'email',
       },
       {
@@ -74,7 +77,7 @@ export default class ListUser extends Component {
       {
         title: 'Last Login',
         dataIndex: 'lastLogin',
-        width: '15%',
+        width: '12%',
       },
       {
         title: 'IP of Last Login',
@@ -116,17 +119,24 @@ export default class ListUser extends Component {
       },
       {
         title: 'Action',
-        width: '5%',
+        width: '8%',
         key: 'action',
         render: (text, record) => {
           return (
             <span>
-              <div
+              <span
                 style={{ cursor: 'pointer', color: '#49A9EE' }}
                 onClick={() => this.editUserRole(record.email, record.userRole)}
               >
                 Edit
-              </div>
+              </span>
+              <span style={{ marginLeft: '5px', marginRight: '5px' }}> | </span>
+              <span
+                style={{ cursor: 'pointer', color: '#49A9EE' }}
+                onClick={() => this.handleDelete(record.email)}
+              >
+                Delete
+              </span>
             </span>
           );
         },
@@ -161,6 +171,26 @@ export default class ListUser extends Component {
       },
     ];
   }
+
+  deleteUser = () => {
+    let url = `${urls.API_URL}/aaa/deleteUserAccount.json?email=${
+      this.state.userEmail
+    }&access_token=${cookies.get('loggedIn')}`;
+    $.ajax({
+      url: url,
+      dataType: 'jsonp',
+      crossDomain: true,
+      timeout: 3000,
+      async: false,
+      success: response => {
+        this.setState({ deleteSuccessDialog: true });
+      },
+      error: function(errorThrown) {
+        console.log(errorThrown);
+        this.setState({ deleteFailedDialog: true });
+      },
+    });
+  };
 
   apiCall = () => {
     let url =
@@ -336,6 +366,13 @@ export default class ListUser extends Component {
     });
   };
 
+  handleDelete = email => {
+    this.setState({
+      userEmail: email,
+      showDeleteDialog: true,
+    });
+  };
+
   handleChange = () => {
     this.apiCall();
     this.setState({
@@ -350,6 +387,8 @@ export default class ListUser extends Component {
   handleClose = () => {
     this.setState({
       showEditDialog: false,
+      showDeleteDialog: false,
+      deleteFailedDialog: false,
     });
   };
 
@@ -445,6 +484,21 @@ export default class ListUser extends Component {
         label="Change"
         primary={true}
         onTouchTap={this.handleChange}
+      />,
+      <FlatButton
+        key={2}
+        label="Cancel"
+        primary={false}
+        onTouchTap={this.handleClose}
+      />,
+    ];
+
+    const deleteActions = [
+      <FlatButton
+        key={1}
+        label="Delete"
+        primary={true}
+        onTouchTap={this.deleteUser}
       />,
       <FlatButton
         key={2}
@@ -577,6 +631,68 @@ export default class ListUser extends Component {
                               {this.state.userRole}
                             </span>
                             successfully!
+                          </div>
+                        </Dialog>
+                        <Dialog
+                          title="Delete User Account"
+                          actions={deleteActions}
+                          modal={true}
+                          open={this.state.showDeleteDialog}
+                        >
+                          <div>
+                            Are you sure you want to delete account associated
+                            with
+                            <span
+                              style={{ fontWeight: 'bold', marginLeft: '5px' }}
+                            >
+                              {this.state.userEmail}
+                            </span>
+                          </div>
+                        </Dialog>
+                        <Dialog
+                          title="Success"
+                          actions={
+                            <FlatButton
+                              key={1}
+                              label="Ok"
+                              primary={true}
+                              onTouchTap={this.handleSuccess}
+                            />
+                          }
+                          modal={true}
+                          open={this.state.deleteSuccessDialog}
+                        >
+                          <div>
+                            Account associated with
+                            <span
+                              style={{ fontWeight: 'bold', margin: '0 5px' }}
+                            >
+                              {this.state.userEmail}
+                            </span>
+                            is deleted successfully!
+                          </div>
+                        </Dialog>
+                        <Dialog
+                          title="Failed"
+                          actions={
+                            <FlatButton
+                              key={1}
+                              label="Ok"
+                              primary={true}
+                              onTouchTap={this.handleClose}
+                            />
+                          }
+                          modal={true}
+                          open={this.state.deleteFailedDialog}
+                        >
+                          <div>
+                            Account associated with
+                            <span
+                              style={{ fontWeight: 'bold', margin: '0 5px' }}
+                            >
+                              {this.state.userEmail}
+                            </span>
+                            cannot be deleted!
                           </div>
                         </Dialog>
                       </div>
