@@ -399,6 +399,9 @@ export default class ListUser extends Component {
     if (activeKey === '3') {
       this.props.history.push('/admin/skills');
     }
+    if (activeKey === '4') {
+      this.props.history.push('/admin/settings');
+    }
   };
 
   handleUserRoleChange = (event, index, value) => {
@@ -753,6 +756,7 @@ export default class ListUser extends Component {
                     </div>
                   </TabPane>
                   <TabPane tab="Skills" key="3" />
+                  <TabPane tab="System Settings" key="4" />
                 </Tabs>
               </Paper>
             </div>
