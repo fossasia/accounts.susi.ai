@@ -9,7 +9,7 @@ import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 
-import urls from '../../../utils/urls';
+import { urls } from '../../../Utils';
 
 const urlPropsQueryConfig = {
   accessToken: { type: UrlQueryParamTypes.string, queryParam: 'access_token' },

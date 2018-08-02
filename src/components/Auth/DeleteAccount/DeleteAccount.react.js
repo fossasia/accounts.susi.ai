@@ -14,7 +14,7 @@ import Dialog from 'material-ui/Dialog';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import Close from 'material-ui/svg-icons/navigation/close';
 
-import urls from '../../../utils/urls';
+import { urls } from '../../../Utils';
 
 const cookies = new Cookies();
 

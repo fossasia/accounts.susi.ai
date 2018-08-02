@@ -17,7 +17,7 @@ import Cookies from 'universal-cookie';
 import './ListSkills.css';
 import * as $ from 'jquery';
 
-import urls from '../../../utils/urls';
+import { urls } from '../../../Utils';
 
 const cookies = new Cookies();
 

@@ -16,7 +16,7 @@ import NotFound from '../../NotFound/NotFound.react';
 import { LocaleProvider } from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
 
-import urls from '../../../utils/urls';
+import { urls } from '../../../Utils';
 
 const cookies = new Cookies();
 

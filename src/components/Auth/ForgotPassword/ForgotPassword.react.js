@@ -12,7 +12,7 @@ import FlatButton from 'material-ui/FlatButton';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 
-import urls from '../../../utils/urls';
+import { urls } from '../../../Utils';
 
 import './ForgotPassword.css';
 

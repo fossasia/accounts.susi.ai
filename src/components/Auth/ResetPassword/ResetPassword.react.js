@@ -15,7 +15,7 @@ import FlatButton from 'material-ui/FlatButton';
 import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 
-import urls from '../../../utils/urls';
+import { urls } from '../../../Utils';
 
 import './ResetPassword.css';
 

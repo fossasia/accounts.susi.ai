@@ -17,7 +17,7 @@ import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import Footer from '../../Footer/Footer.react.js';
 import susi from '../../../images/susi-logo.svg';
 
-import urls from '../../../utils/urls';
+import { urls } from '../../../Utils';
 
 import './SignUp.css';
 
