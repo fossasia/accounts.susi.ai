@@ -53,6 +53,11 @@ export default class ListUser extends Component {
         key: 'email',
       },
       {
+        title: 'User Name',
+        dataIndex: 'userName',
+        width: '12%',
+      },
+      {
         title: 'Activation Status',
         dataIndex: 'confirmed',
         filters: [
@@ -67,7 +72,7 @@ export default class ListUser extends Component {
         ],
         onFilter: (value, record) => record.confirmed.indexOf(value) === 0,
         sorter: (a, b) => a.confirmed.length - b.confirmed.length,
-        width: '13%',
+        width: '12%',
       },
       {
         title: 'Signup',
@@ -82,7 +87,7 @@ export default class ListUser extends Component {
       {
         title: 'IP of Last Login',
         dataIndex: 'ipLastLogin',
-        width: '15%',
+        width: '10%',
       },
       {
         title: 'User Role',
@@ -283,6 +288,7 @@ export default class ListUser extends Component {
             lastLogin: data.lastLoginTime,
             ipLastLogin: data.lastLoginIP,
             userRole: data.userRole,
+            userName: data.userName,
             devices: devices,
           };
 
@@ -452,6 +458,7 @@ export default class ListUser extends Component {
             lastLogin: data.lastLoginTime,
             ipLastLogin: data.lastLoginIP,
             userRole: data.userRole,
+            userName: data.userName,
             devices: devices,
           };
 
