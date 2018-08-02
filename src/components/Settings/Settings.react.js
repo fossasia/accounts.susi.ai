@@ -852,7 +852,7 @@ class Settings extends Component {
             <hr className="Divider" style={{ height: '2px' }} />
           </span>
           <RadioButtonGroup
-            style={{ textAlign: 'left', margin: '20px', marginBottom: '41px' }}
+            style={{ textAlign: 'left', margin: '20px', marginBottom: '43px' }}
             onChange={this.handleSelectChange}
             name="Theme"
             valueSelected={this.state.theme}
@@ -862,21 +862,21 @@ class Settings extends Component {
               iconStyle={radioIconStyle}
               labelStyle={{ color: themeForegroundColor }}
               value="light"
-              label="Light"
+              label={<span style={{ fontSize: '16px' }}>Light</span>}
             />
             <RadioButton
-              style={{ width: '20%', display: 'block' }}
+              style={{ width: '20%', display: 'block', marginTop: '-1px' }}
               iconStyle={radioIconStyle}
               labelStyle={{ color: themeForegroundColor }}
               value="dark"
-              label="Dark"
+              label={<span style={{ fontSize: '16px' }}>Dark</span>}
             />
             <RadioButton
-              style={{ width: '20%' }}
+              style={{ width: '20%', display: 'block', marginTop: '-1px' }}
               iconStyle={radioIconStyle}
               labelStyle={{ color: themeForegroundColor }}
               value="custom"
-              label="Custom"
+              label={<span style={{ fontSize: '16px' }}>Custom</span>}
             />
           </RadioButtonGroup>
         </div>
