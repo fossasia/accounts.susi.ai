@@ -227,7 +227,6 @@ export default class ListUser extends Component {
       timeout: 3000,
       async: false,
       success: response => {
-        console.log(response);
         this.setState({ changeRoleDialog: true });
       },
       error: function(errorThrown) {
@@ -326,7 +325,6 @@ export default class ListUser extends Component {
       jsonp: 'callback',
       crossDomain: true,
       success: function(response) {
-        // console.log(response.showAdmin);
         if (response.showAdmin) {
           let getPagesUrl =
             `${urls.API_URL}/aaa/getUsers.json?access_token=` +
@@ -339,14 +337,12 @@ export default class ListUser extends Component {
             jsonp: 'callback',
             crossDomain: true,
             success: function(data) {
-              // console.log(data);
               pagination.total = data.userCount;
               pagination.pageSize = 50;
               this.setState({
                 loading: false,
                 pagination,
               });
-              // console.log(pagination);
               this.fetch();
             }.bind(this),
             error: function(errorThrown) {
@@ -417,7 +413,6 @@ export default class ListUser extends Component {
     let url;
     let page;
     if (params.page !== undefined) {
-      // console.log(params.page);
       page = params.page;
     } else {
       page = 1;
@@ -434,7 +429,6 @@ export default class ListUser extends Component {
       jsonp: 'callback',
       crossDomain: true,
       success: function(response) {
-        // console.log(response.users);
         let userList = response.users;
         let users = [];
         userList.map((data, i) => {
@@ -471,7 +465,6 @@ export default class ListUser extends Component {
           users.push(user);
           return 1;
         });
-        // console.log(users);
         this.setState({
           data: users,
         });

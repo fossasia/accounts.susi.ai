@@ -46,7 +46,6 @@ class Admin extends Component {
           userStats: response.userStats,
           loadingUsers: false,
         });
-        // console.log(response);
       }.bind(this),
       error: function(errorThrown) {
         console.log(errorThrown);

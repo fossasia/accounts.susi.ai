@@ -45,7 +45,6 @@ UserPreferencesStore.dispatchToken = ChatAppDispatcher.register(action => {
     }
     case ActionTypes.SERVER_CHANGED: {
       _defaults.Server = action.server;
-      console.log(_defaults);
       UserPreferencesStore.emitChange();
       break;
     }

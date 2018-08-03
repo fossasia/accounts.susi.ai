@@ -79,7 +79,6 @@ class VerifyAccount extends Component {
                 'Please login to continue.',
               showDialog: true,
             });
-            console.log(accountVerificationEndPoint);
           }
         }.bind(this),
         error: function(errorThrown) {
@@ -87,7 +86,6 @@ class VerifyAccount extends Component {
             message: 'An error occurred. Please try again.',
             showDialog: true,
           });
-          console.log(accountVerificationEndPoint);
         }.bind(this),
       });
     } else {

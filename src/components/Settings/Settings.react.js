@@ -158,9 +158,6 @@ class Settings extends Component {
       crossDomain: true,
       timeout: 3000,
       async: false,
-      success: function(response) {
-        console.log(response);
-      },
       error: function(errorThrown) {
         console.log(errorThrown);
       },
@@ -209,9 +206,6 @@ class Settings extends Component {
       crossDomain: true,
       timeout: 3000,
       async: false,
-      success: function(response) {
-        console.log(response);
-      },
       error: function(errorThrown) {
         console.log(errorThrown);
       },
