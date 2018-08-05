@@ -59,7 +59,6 @@ class ResetPassword extends Component {
 
   componentDidMount() {
     const { token } = this.props;
-    console.log(token);
     let BASE_URL = urls.API_URL;
     let resetPasswordEndPoint =
       BASE_URL +
@@ -77,7 +76,6 @@ class ResetPassword extends Component {
           path: '/',
           maxAge: 7 * 24 * 60 * 60,
         });
-        // console.log(response)
         let state = this.state;
         state.msg = response.message;
         state.success = true;
@@ -127,7 +125,6 @@ class ResetPassword extends Component {
           state.msg = msg;
           state.showDialog = true;
           this.setState(state);
-          console.log(response.message);
         }.bind(this),
         error: function(errorThrown) {
           let msg = 'Failed' + errorThrown.message;
@@ -135,7 +132,6 @@ class ResetPassword extends Component {
           state.msg = msg;
           state.showDialog = true;
           this.setState(state);
-          console.log(this.state);
         }.bind(this),
       });
     }
@@ -193,8 +189,6 @@ class ResetPassword extends Component {
   };
 
   render() {
-    const { token } = this.props;
-    console.log(token);
     const styles = {
       margin: '60px auto',
       padding: '10px',

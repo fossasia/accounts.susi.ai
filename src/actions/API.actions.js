@@ -38,16 +38,12 @@ export function pushSettingsToServer(settings) {
 
 // Helper function for making server call
 export function makeServerCall(url) {
-  console.log(url);
   $.ajax({
     url: url,
     dataType: 'jsonp',
     crossDomain: true,
     timeout: 3000,
     async: false,
-    success: function(response) {
-      console.log(response);
-    },
     error: function(errorThrown) {
       console.log(errorThrown);
     },

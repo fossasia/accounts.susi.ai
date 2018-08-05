@@ -67,7 +67,6 @@ export default class ChangePassword extends Component {
       encodeURIComponent(newPassword) +
       '&access_token=' +
       cookies.get('loggedIn');
-    // console.log(changePasswordEndPoint);
     if (!this.state.currentPasswordError && !this.state.newPasswordError) {
       $.ajax({
         url: changePasswordEndPoint,
@@ -85,7 +84,6 @@ export default class ChangePassword extends Component {
           state.msg = msg;
           state.showDialog = true;
           this.setState(state);
-          console.log(response.message);
         }.bind(this),
         error: function(errorThrown) {
           let msg = 'Incorrect password.Try again.';

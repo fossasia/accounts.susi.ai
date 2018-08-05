@@ -107,7 +107,6 @@ class Login extends Component {
               path: '/',
               domain: cookieDomain,
             });
-            console.log(cookies.get('serverUrl'));
             let accessToken = response.access_token;
             let state = this.state;
             let time = response.valid_seconds;

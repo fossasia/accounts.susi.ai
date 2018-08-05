@@ -58,9 +58,6 @@ class DeleteAccount extends Component {
         dataType: 'jsonp',
         jsonpCallback: 'p',
         crossDomain: true,
-        success: function(response) {
-          console.log(response.accepted);
-        },
         error: function(errorThrown) {
           state.dialogMessage = 'Not logged In!';
           state.showDialog = true;
@@ -119,14 +116,12 @@ class DeleteAccount extends Component {
         jsonpCallback: 'p',
         crossDomain: true,
         success: function(deleteResponse) {
-          console.log(deleteResponse);
           deleteCookie('loggedIn', { domain: '.susi.ai', path: '/' });
           deleteCookie('emailId', { domain: '.susi.ai', path: '/' });
           this.setState({
             showDialog: true,
             dialogMessage: 'Account deleted successfully',
           });
-          console.log(deleteResponse);
         }.bind(this),
         error: function(errorThrown) {
           console.log(errorThrown);
@@ -152,7 +147,6 @@ class DeleteAccount extends Component {
       jsonpCallback: 'p',
       crossDomain: true,
       success: function(response) {
-        console.log(response.accepted);
         if (response.accepted) {
           this.setState({
             showConfirmationDialog: true,
