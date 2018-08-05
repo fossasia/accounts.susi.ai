@@ -773,8 +773,8 @@ class Settings extends Component {
                 </SwipeableViews>
                 {this.state.slideIndex && this.state.devicesNotAvailable ? (
                   <div style={{ marginTop: '10px' }}>
-                    <b>NOTE: </b>Location info of one or more devices could not
-                    be retrieved.
+                    <b>NOTE: </b>
+                    Location info of one or more devices could not be retrieved.
                   </div>
                 ) : null}
               </div>

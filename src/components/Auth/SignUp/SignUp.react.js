@@ -212,11 +212,9 @@ export default class SignUp extends Component {
     return (
       <div>
         <div>
-          <header className="message-thread-heading">
-            <div className="app-bar-div">
-              <StaticAppBar />
-            </div>
-          </header>
+          <div className="app-bar-div">
+            <StaticAppBar />
+          </div>
         </div>
         <div className="app-body">
           <div className="About">
@@ -225,9 +223,13 @@ export default class SignUp extends Component {
               Assistants, Robots, Help Desks and Chatbots.
             </h1>
             <p style={{ margin: '5% 3% 0% 0%', fontSize: '24px' }}>
-              Ask it questions.<br />
-              <br />Tell it to do things.<br />
-              <br />Always ready to help.
+              Ask it questions.
+              <br />
+              <br />
+              Tell it to do things.
+              <br />
+              <br />
+              Always ready to help.
             </p>
           </div>
         </div>
