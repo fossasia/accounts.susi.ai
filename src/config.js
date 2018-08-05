@@ -1,1 +1,16 @@
-export const MAP_KEY = 'AIzaSyCWxXuqny-dx-1FiMrjCSr6fFvukoy7oEM';
+import $ from 'jquery';
+import urls from './Utils/urls';
+
+const url = `${urls.API_URL}/aaa/getApiKeys.json`;
+
+/* global module */
+
+$.ajax({
+  url: url,
+  dataType: 'json',
+  crossDomain: true,
+  timeout: 3000,
+  async: false,
+}).done(function(output) {
+  module.exports.MAP_KEY = output.keys.MAP_KEY;
+});
