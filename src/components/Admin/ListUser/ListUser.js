@@ -644,13 +644,13 @@ export default class ListUser extends Component {
                           open={this.state.showDeleteDialog}
                         >
                           <div>
-                            Are you sure you want to delete account associated
-                            with
+                            Are you sure you want to delete the account
+                            associated with
                             <span
                               style={{ fontWeight: 'bold', marginLeft: '5px' }}
                             >
                               {this.state.userEmail}
-                            </span>
+                            </span>?
                           </div>
                         </Dialog>
                         <Dialog
