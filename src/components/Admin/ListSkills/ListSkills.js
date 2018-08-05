@@ -340,6 +340,9 @@ class ListSkills extends React.Component {
     if (activeKey === '2') {
       this.props.history.push('/admin/users');
     }
+    if (activeKey === '4') {
+      this.props.history.push('/admin/settings');
+    }
   };
 
   handleReviewStatusChange = (event, index, value) => {
@@ -907,6 +910,7 @@ class ListSkills extends React.Component {
                       />
                     </div>
                   </TabPane>
+                  <TabPane tab="System Settings" key="4" />
                 </Tabs>
               </Paper>
             </div>
