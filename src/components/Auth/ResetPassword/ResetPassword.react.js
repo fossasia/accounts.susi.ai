@@ -12,8 +12,8 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
+import ChatConstants from '../../../constants/ChatConstants';
 
 import { urls } from '../../../Utils';
 
@@ -203,9 +203,7 @@ class ResetPassword extends Component {
     const actions = (
       <FlatButton
         label="OK"
-        backgroundColor={
-          UserPreferencesStore.getTheme() === 'light' ? '#4285F4' : '#4285F4'
-        }
+        backgroundColor={ChatConstants.standardBlue}
         labelStyle={{ color: '#fff' }}
         onTouchTap={this.handleClose}
       />
@@ -253,11 +251,7 @@ class ResetPassword extends Component {
                 <RaisedButton
                   label="submit"
                   type="submit"
-                  backgroundColor={
-                    UserPreferencesStore.getTheme() === 'light'
-                      ? '#4285F4'
-                      : '#4285F4'
-                  }
+                  backgroundColor={ChatConstants.standardBlue}
                   labelColor="#fff"
                   keyboardFocused={true}
                 />

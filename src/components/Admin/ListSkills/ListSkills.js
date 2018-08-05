@@ -18,6 +18,7 @@ import './ListSkills.css';
 import * as $ from 'jquery';
 
 import { urls } from '../../../Utils';
+import ChatConstants from '../../../constants/ChatConstants';
 
 const cookies = new Cookies();
 
@@ -366,7 +367,7 @@ class ListSkills extends React.Component {
       <FlatButton
         key={1}
         label="Change"
-        primary={true}
+        labelStyle={{ color: ChatConstants.standardBlue }}
         onTouchTap={this.handleChange}
       />,
       <FlatButton
@@ -381,7 +382,7 @@ class ListSkills extends React.Component {
       <FlatButton
         key={1}
         label="Delete"
-        primary={true}
+        labelStyle={{ color: ChatConstants.standardBlue }}
         onTouchTap={this.confirmDelete}
       />,
       <FlatButton
@@ -396,7 +397,7 @@ class ListSkills extends React.Component {
       <FlatButton
         key={1}
         label="Restore"
-        primary={true}
+        labelStyle={{ color: ChatConstants.standardBlue }}
         onTouchTap={this.confirmRestore}
       />,
       <FlatButton
@@ -728,7 +729,9 @@ class ListSkills extends React.Component {
                                   <FlatButton
                                     key={1}
                                     label="Ok"
-                                    primary={true}
+                                    labelStyle={{
+                                      color: ChatConstants.standardBlue,
+                                    }}
                                     onTouchTap={this.handleFinish}
                                   />
                                 }
@@ -754,7 +757,9 @@ class ListSkills extends React.Component {
                                   <FlatButton
                                     key={1}
                                     label="Ok"
-                                    primary={true}
+                                    labelStyle={{
+                                      color: ChatConstants.standardBlue,
+                                    }}
                                     onTouchTap={this.handleFinish}
                                   />
                                 }
@@ -780,7 +785,9 @@ class ListSkills extends React.Component {
                                   <FlatButton
                                     key={1}
                                     label="Ok"
-                                    primary={true}
+                                    labelStyle={{
+                                      color: ChatConstants.standardBlue,
+                                    }}
                                     onTouchTap={this.handleFinish}
                                   />
                                 }
@@ -806,7 +813,9 @@ class ListSkills extends React.Component {
                                   <FlatButton
                                     key={1}
                                     label="Ok"
-                                    primary={true}
+                                    labelStyle={{
+                                      color: ChatConstants.standardBlue,
+                                    }}
                                     onTouchTap={this.handleFinish}
                                   />
                                 }
@@ -833,7 +842,9 @@ class ListSkills extends React.Component {
                                   <FlatButton
                                     key={1}
                                     label="Ok"
-                                    primary={true}
+                                    labelStyle={{
+                                      color: ChatConstants.standardBlue,
+                                    }}
                                     onTouchTap={this.handleFinish}
                                   />
                                 }
@@ -859,7 +870,9 @@ class ListSkills extends React.Component {
                                   <FlatButton
                                     key={1}
                                     label="Ok"
-                                    primary={true}
+                                    labelStyle={{
+                                      color: ChatConstants.standardBlue,
+                                    }}
                                     onTouchTap={this.handleFinish}
                                   />
                                 }

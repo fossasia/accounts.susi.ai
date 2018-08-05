@@ -6,6 +6,7 @@ import LogoImg from '../images/susi-logo.svg';
 import userPreferencesStore from '../../stores/UserPreferencesStore';
 import Dialog from 'material-ui/Dialog';
 import Login from '../Auth/Login/Login.react';
+import ChatConstants from '../../constants/ChatConstants';
 
 import { urls } from '../../Utils';
 
@@ -48,7 +49,9 @@ export default class NotFound extends Component {
                 className="notfound-button"
                 label="Chat With SUSI"
                 backgroundColor={
-                  userPreferencesStore.getTheme() ? '#4285f4' : '#19314B'
+                  userPreferencesStore.getTheme()
+                    ? ChatConstants.standardBlue
+                    : '#19314B'
                 }
                 labelColor="#fff"
               />
@@ -59,7 +62,9 @@ export default class NotFound extends Component {
                 className="notfound-button"
                 label="SignUp to SUSI"
                 backgroundColor={
-                  userPreferencesStore.getTheme() ? '#4285f4' : '#19314B'
+                  userPreferencesStore.getTheme()
+                    ? ChatConstants.standardBlue
+                    : '#19314B'
                 }
                 labelColor="#fff"
               />
@@ -70,7 +75,9 @@ export default class NotFound extends Component {
                 className="notfound-button"
                 label="LogIn to SUSI"
                 backgroundColor={
-                  userPreferencesStore.getTheme() ? '#4285f4' : '#19314B'
+                  userPreferencesStore.getTheme()
+                    ? ChatConstants.standardBlue
+                    : '#19314B'
                 }
                 labelColor="#fff"
               />

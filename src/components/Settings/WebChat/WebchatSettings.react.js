@@ -3,6 +3,7 @@ import { addUrlProps, UrlQueryParamTypes } from 'react-url-query';
 import PropTypes from 'prop-types';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import ChatConstants from '../../../constants/ChatConstants';
 
 const urlPropsQueryConfig = {
   client: { type: UrlQueryParamTypes.string },
@@ -48,7 +49,7 @@ class WebChatSettings extends Component {
     const actions = (
       <FlatButton
         label="OK"
-        backgroundColor={'#4285F4'}
+        backgroundColor={ChatConstants.standardBlue}
         labelStyle={{ color: '#fff' }}
         onTouchTap={this.handleClose}
       />
