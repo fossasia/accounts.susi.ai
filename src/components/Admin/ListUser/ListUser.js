@@ -33,7 +33,7 @@ export default class ListUser extends Component {
       data: [],
       middle: '50',
       pagination: {},
-      loading: false,
+      loading: true,
       search: false,
       showEditDialog: false,
       showDeleteDialog: false,
@@ -50,7 +50,7 @@ export default class ListUser extends Component {
       {
         title: 'Email ID',
         dataIndex: 'email',
-        width: '20%',
+        width: '18%',
         key: 'email',
       },
       {
@@ -78,7 +78,7 @@ export default class ListUser extends Component {
       {
         title: 'Signup',
         dataIndex: 'signup',
-        width: '15%',
+        width: '12%',
       },
       {
         title: 'Last Login',
@@ -254,6 +254,7 @@ export default class ListUser extends Component {
   handleSearch = value => {
     this.setState({
       search: true,
+      loading: true,
     });
     let url;
     url = `${urls.API_URL}/aaa/getUsers.json?access_token=${cookies.get(
@@ -315,47 +316,25 @@ export default class ListUser extends Component {
   componentDidMount() {
     $('.ant-input').css('padding-right', '0');
     const pagination = { ...this.state.pagination };
-    let url;
-    url =
-      `${urls.API_URL}/aaa/showAdminService.json?access_token=` +
-      cookies.get('loggedIn');
+    let getPagesUrl =
+      `${urls.API_URL}/aaa/getUsers.json?access_token=` +
+      cookies.get('loggedIn') +
+      '&getUserCount=true';
     $.ajax({
-      url: url,
+      url: getPagesUrl,
       dataType: 'jsonp',
-      jsonpCallback: 'py',
+      jsonpCallback: 'pvsdu',
       jsonp: 'callback',
       crossDomain: true,
-      success: function(response) {
-        if (response.showAdmin) {
-          let getPagesUrl =
-            `${urls.API_URL}/aaa/getUsers.json?access_token=` +
-            cookies.get('loggedIn') +
-            '&getUserCount=true';
-          $.ajax({
-            url: getPagesUrl,
-            dataType: 'jsonp',
-            jsonpCallback: 'pvsdu',
-            jsonp: 'callback',
-            crossDomain: true,
-            success: function(data) {
-              pagination.total = data.userCount;
-              pagination.pageSize = 50;
-              this.setState({
-                loading: false,
-                pagination,
-              });
-              this.fetch();
-            }.bind(this),
-            error: function(errorThrown) {
-              console.log(errorThrown);
-            },
-          });
-        } else {
-          console.log('Not allowed to access this page!');
-        }
+      success: function(data) {
+        pagination.total = data.userCount;
+        pagination.pageSize = 50;
+        this.setState({
+          pagination,
+        });
+        this.fetch();
       }.bind(this),
       error: function(errorThrown) {
-        console.log('Not allowed to access this page!');
         console.log(errorThrown);
       },
     });
@@ -471,6 +450,7 @@ export default class ListUser extends Component {
         });
         this.setState({
           data: users,
+          loading: false,
         });
       }.bind(this),
       error: function(errorThrown) {
@@ -712,6 +692,7 @@ export default class ListUser extends Component {
                         {this.state.search ? (
                           <Table
                             columns={this.columns}
+                            locale={{ emptyText: 'No search result found !' }}
                             rowKey={record => record.serialNum}
                             expandedRowRender={record => (
                               <Table
@@ -733,6 +714,7 @@ export default class ListUser extends Component {
                         ) : (
                           <Table
                             columns={this.columns}
+                            locale={{ emptyText: 'No users found!' }}
                             rowKey={record => record.serialNum}
                             expandedRowRender={record => (
                               <Table
