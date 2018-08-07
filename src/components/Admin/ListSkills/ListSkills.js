@@ -6,7 +6,6 @@ import enUS from 'antd/lib/locale-provider/en_US';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import Checkbox from 'material-ui/Checkbox';
-import CircularProgress from 'material-ui/CircularProgress';
 import Snackbar from 'material-ui/Snackbar';
 import Paper from 'material-ui/Paper';
 import Tabs from 'antd/lib/tabs';
@@ -209,7 +208,6 @@ class ListSkills extends React.Component {
         }
         this.setState({
           groups: groups,
-          loading: false,
         });
       },
       error: function(err) {
@@ -609,274 +607,271 @@ class ListSkills extends React.Component {
                   <TabPane tab="Users" key="2" />
                   <TabPane tab="Skills" key="3">
                     <div>
-                      {this.state.loading ? (
-                        <div className="center">
-                          <CircularProgress size={62} color="#4285f5" />
-                          <h4>Loading</h4>
-                        </div>
-                      ) : (
-                        <div className="table">
-                          <Tabs
-                            tabPosition="top"
-                            animated={false}
-                            style={{ minHeight: '500px' }}
-                          >
-                            <TabPane tab="Active" key="1">
-                              <Dialog
-                                title={
-                                  'Skill Settings for ' + this.state.skillName
-                                }
-                                actions={actions}
-                                model={true}
-                                open={this.state.showDialog}
-                                style={{
-                                  width: '800px',
-                                  left: '50%',
-                                  marginLeft: '-400px',
+                      <div className="table">
+                        <Tabs
+                          tabPosition="top"
+                          animated={false}
+                          style={{ minHeight: '500px' }}
+                        >
+                          <TabPane tab="Active" key="1">
+                            <Dialog
+                              title={
+                                'Skill Settings for ' + this.state.skillName
+                              }
+                              actions={actions}
+                              model={true}
+                              open={this.state.showDialog}
+                              style={{
+                                width: '800px',
+                                left: '50%',
+                                marginLeft: '-400px',
+                              }}
+                            >
+                              <div>
+                                <Checkbox
+                                  label="Reviewed"
+                                  labelPosition="right"
+                                  className="select"
+                                  checked={this.state.skillReviewStatus}
+                                  labelStyle={{ fontSize: '14px' }}
+                                  iconStyle={{ left: '4px', fill: '#4285f4' }}
+                                  style={{
+                                    width: 'auto',
+                                    marginTop: '3px',
+                                  }}
+                                  onCheck={this.handleReviewStatusChange}
+                                />
+                                <Checkbox
+                                  label="Editable"
+                                  labelPosition="right"
+                                  className="select"
+                                  checked={this.state.skillEditStatus}
+                                  labelStyle={{ fontSize: '14px' }}
+                                  iconStyle={{ left: '4px', fill: '#4285f4' }}
+                                  style={{
+                                    width: 'auto',
+                                    marginTop: '3px',
+                                  }}
+                                  onCheck={this.handleEditStatusChange}
+                                />
+                              </div>
+                            </Dialog>
+
+                            <Dialog
+                              title="Delete Skill"
+                              actions={deleteActions}
+                              model={true}
+                              open={this.state.showDeleteDialog}
+                            >
+                              <div>
+                                Are you sure you want to delete{' '}
+                                {this.state.skillName} ?
+                              </div>
+                            </Dialog>
+                            <Dialog
+                              title="Restore Skill"
+                              actions={restoreActions}
+                              model={true}
+                              open={this.state.showRestoreDialog}
+                            >
+                              <div>
+                                Are you sure you want to restore{' '}
+                                {this.state.skillName} ?
+                              </div>
+                            </Dialog>
+                            <Dialog
+                              title="Success"
+                              actions={
+                                <FlatButton
+                                  key={1}
+                                  label="Ok"
+                                  labelStyle={{
+                                    color: ChatConstants.standardBlue,
+                                  }}
+                                  onTouchTap={this.handleFinish}
+                                />
+                              }
+                              modal={true}
+                              open={this.state.restoreSuccessDialog}
+                            >
+                              <div>
+                                You successfully restored
+                                <span
+                                  style={{
+                                    fontWeight: 'bold',
+                                    margin: '0 5px',
+                                  }}
+                                >
+                                  {this.state.skillName}
+                                </span>
+                                !
+                              </div>
+                            </Dialog>
+                            <Dialog
+                              title="Failed!"
+                              actions={
+                                <FlatButton
+                                  key={1}
+                                  label="Ok"
+                                  labelStyle={{
+                                    color: ChatConstants.standardBlue,
+                                  }}
+                                  onTouchTap={this.handleFinish}
+                                />
+                              }
+                              modal={true}
+                              open={this.state.restoreFailureDialog}
+                            >
+                              <div>
+                                Error!
+                                <span
+                                  style={{
+                                    fontWeight: 'bold',
+                                    margin: '0 5px',
+                                  }}
+                                >
+                                  {this.state.skillName}
+                                </span>
+                                could not be restored!
+                              </div>
+                            </Dialog>
+                            <Dialog
+                              title="Success"
+                              actions={
+                                <FlatButton
+                                  key={1}
+                                  label="Ok"
+                                  labelStyle={{
+                                    color: ChatConstants.standardBlue,
+                                  }}
+                                  onTouchTap={this.handleFinish}
+                                />
+                              }
+                              modal={true}
+                              open={this.state.deleteSuccessDialog}
+                            >
+                              <div>
+                                You successfully deleted
+                                <span
+                                  style={{
+                                    fontWeight: 'bold',
+                                    margin: '0 5px',
+                                  }}
+                                >
+                                  {this.state.skillName}
+                                </span>
+                                !
+                              </div>
+                            </Dialog>
+                            <Dialog
+                              title="Failed!"
+                              actions={
+                                <FlatButton
+                                  key={1}
+                                  label="Ok"
+                                  labelStyle={{
+                                    color: ChatConstants.standardBlue,
+                                  }}
+                                  onTouchTap={this.handleFinish}
+                                />
+                              }
+                              modal={true}
+                              open={this.state.deleteFailureDialog}
+                            >
+                              <div>
+                                Error!
+                                <span
+                                  style={{
+                                    fontWeight: 'bold',
+                                    margin: '0 5px',
+                                  }}
+                                >
+                                  {this.state.skillName}
+                                </span>
+                                could not be deleted!
+                              </div>
+                            </Dialog>
+
+                            <Dialog
+                              title="Success"
+                              actions={
+                                <FlatButton
+                                  key={1}
+                                  label="Ok"
+                                  labelStyle={{
+                                    color: ChatConstants.standardBlue,
+                                  }}
+                                  onTouchTap={this.handleFinish}
+                                />
+                              }
+                              modal={true}
+                              open={this.state.changeStatusSuccessDialog}
+                            >
+                              <div>
+                                Status of
+                                <span
+                                  style={{
+                                    fontWeight: 'bold',
+                                    margin: '0 5px',
+                                  }}
+                                >
+                                  {this.state.skillName}
+                                </span>
+                                has been changed successfully!
+                              </div>
+                            </Dialog>
+                            <Dialog
+                              title="Failed!"
+                              actions={
+                                <FlatButton
+                                  key={1}
+                                  label="Ok"
+                                  labelStyle={{
+                                    color: ChatConstants.standardBlue,
+                                  }}
+                                  onTouchTap={this.handleFinish}
+                                />
+                              }
+                              modal={true}
+                              open={this.state.changeStatusFailureDialog}
+                            >
+                              <div>
+                                Error! Status of
+                                <span
+                                  style={{
+                                    fontWeight: 'bold',
+                                    margin: '0 5px',
+                                  }}
+                                >
+                                  {this.state.skillName}
+                                </span>
+                                could not be changed!
+                              </div>
+                            </Dialog>
+                            <LocaleProvider locale={enUS}>
+                              <Table
+                                columns={columns}
+                                locale={{ emptyText: 'No skills found!' }}
+                                rowKey={record => record.registered}
+                                dataSource={this.state.skillsData}
+                                loading={this.state.loading}
+                              />
+                            </LocaleProvider>
+                          </TabPane>
+                          <TabPane tab="Deleted" key="2">
+                            <LocaleProvider locale={enUS}>
+                              <Table
+                                columns={delColumns}
+                                locale={{
+                                  emptyText: 'No deleted skill(s) found!',
                                 }}
-                              >
-                                <div>
-                                  <Checkbox
-                                    label="Reviewed"
-                                    labelPosition="right"
-                                    className="select"
-                                    checked={this.state.skillReviewStatus}
-                                    labelStyle={{ fontSize: '14px' }}
-                                    iconStyle={{ left: '4px', fill: '#4285f4' }}
-                                    style={{
-                                      width: 'auto',
-                                      marginTop: '3px',
-                                    }}
-                                    onCheck={this.handleReviewStatusChange}
-                                  />
-                                  <Checkbox
-                                    label="Editable"
-                                    labelPosition="right"
-                                    className="select"
-                                    checked={this.state.skillEditStatus}
-                                    labelStyle={{ fontSize: '14px' }}
-                                    iconStyle={{ left: '4px', fill: '#4285f4' }}
-                                    style={{
-                                      width: 'auto',
-                                      marginTop: '3px',
-                                    }}
-                                    onCheck={this.handleEditStatusChange}
-                                  />
-                                </div>
-                              </Dialog>
-
-                              <Dialog
-                                title="Delete Skill"
-                                actions={deleteActions}
-                                model={true}
-                                open={this.state.showDeleteDialog}
-                              >
-                                <div>
-                                  Are you sure you want to delete{' '}
-                                  {this.state.skillName} ?
-                                </div>
-                              </Dialog>
-                              <Dialog
-                                title="Restore Skill"
-                                actions={restoreActions}
-                                model={true}
-                                open={this.state.showRestoreDialog}
-                              >
-                                <div>
-                                  Are you sure you want to restore{' '}
-                                  {this.state.skillName} ?
-                                </div>
-                              </Dialog>
-                              <Dialog
-                                title="Success"
-                                actions={
-                                  <FlatButton
-                                    key={1}
-                                    label="Ok"
-                                    labelStyle={{
-                                      color: ChatConstants.standardBlue,
-                                    }}
-                                    onTouchTap={this.handleFinish}
-                                  />
-                                }
-                                modal={true}
-                                open={this.state.restoreSuccessDialog}
-                              >
-                                <div>
-                                  You successfully restored
-                                  <span
-                                    style={{
-                                      fontWeight: 'bold',
-                                      margin: '0 5px',
-                                    }}
-                                  >
-                                    {this.state.skillName}
-                                  </span>
-                                  !
-                                </div>
-                              </Dialog>
-                              <Dialog
-                                title="Failed!"
-                                actions={
-                                  <FlatButton
-                                    key={1}
-                                    label="Ok"
-                                    labelStyle={{
-                                      color: ChatConstants.standardBlue,
-                                    }}
-                                    onTouchTap={this.handleFinish}
-                                  />
-                                }
-                                modal={true}
-                                open={this.state.restoreFailureDialog}
-                              >
-                                <div>
-                                  Error!
-                                  <span
-                                    style={{
-                                      fontWeight: 'bold',
-                                      margin: '0 5px',
-                                    }}
-                                  >
-                                    {this.state.skillName}
-                                  </span>
-                                  could not be restored!
-                                </div>
-                              </Dialog>
-                              <Dialog
-                                title="Success"
-                                actions={
-                                  <FlatButton
-                                    key={1}
-                                    label="Ok"
-                                    labelStyle={{
-                                      color: ChatConstants.standardBlue,
-                                    }}
-                                    onTouchTap={this.handleFinish}
-                                  />
-                                }
-                                modal={true}
-                                open={this.state.deleteSuccessDialog}
-                              >
-                                <div>
-                                  You successfully deleted
-                                  <span
-                                    style={{
-                                      fontWeight: 'bold',
-                                      margin: '0 5px',
-                                    }}
-                                  >
-                                    {this.state.skillName}
-                                  </span>
-                                  !
-                                </div>
-                              </Dialog>
-                              <Dialog
-                                title="Failed!"
-                                actions={
-                                  <FlatButton
-                                    key={1}
-                                    label="Ok"
-                                    labelStyle={{
-                                      color: ChatConstants.standardBlue,
-                                    }}
-                                    onTouchTap={this.handleFinish}
-                                  />
-                                }
-                                modal={true}
-                                open={this.state.deleteFailureDialog}
-                              >
-                                <div>
-                                  Error!
-                                  <span
-                                    style={{
-                                      fontWeight: 'bold',
-                                      margin: '0 5px',
-                                    }}
-                                  >
-                                    {this.state.skillName}
-                                  </span>
-                                  could not be deleted!
-                                </div>
-                              </Dialog>
-
-                              <Dialog
-                                title="Success"
-                                actions={
-                                  <FlatButton
-                                    key={1}
-                                    label="Ok"
-                                    labelStyle={{
-                                      color: ChatConstants.standardBlue,
-                                    }}
-                                    onTouchTap={this.handleFinish}
-                                  />
-                                }
-                                modal={true}
-                                open={this.state.changeStatusSuccessDialog}
-                              >
-                                <div>
-                                  Status of
-                                  <span
-                                    style={{
-                                      fontWeight: 'bold',
-                                      margin: '0 5px',
-                                    }}
-                                  >
-                                    {this.state.skillName}
-                                  </span>
-                                  has been changed successfully!
-                                </div>
-                              </Dialog>
-                              <Dialog
-                                title="Failed!"
-                                actions={
-                                  <FlatButton
-                                    key={1}
-                                    label="Ok"
-                                    labelStyle={{
-                                      color: ChatConstants.standardBlue,
-                                    }}
-                                    onTouchTap={this.handleFinish}
-                                  />
-                                }
-                                modal={true}
-                                open={this.state.changeStatusFailureDialog}
-                              >
-                                <div>
-                                  Error! Status of
-                                  <span
-                                    style={{
-                                      fontWeight: 'bold',
-                                      margin: '0 5px',
-                                    }}
-                                  >
-                                    {this.state.skillName}
-                                  </span>
-                                  could not be changed!
-                                </div>
-                              </Dialog>
-                              <LocaleProvider locale={enUS}>
-                                <Table
-                                  columns={columns}
-                                  rowKey={record => record.registered}
-                                  dataSource={this.state.skillsData}
-                                  loading={this.state.loading}
-                                />
-                              </LocaleProvider>
-                            </TabPane>
-                            <TabPane tab="Deleted" key="2">
-                              <LocaleProvider locale={enUS}>
-                                <Table
-                                  columns={delColumns}
-                                  rowKey={record => record.registered}
-                                  dataSource={this.state.deletedSkills}
-                                />
-                              </LocaleProvider>
-                            </TabPane>
-                          </Tabs>
-                        </div>
-                      )}
+                                rowKey={record => record.registered}
+                                dataSource={this.state.deletedSkills}
+                              />
+                            </LocaleProvider>
+                          </TabPane>
+                        </Tabs>
+                      </div>
                       <Snackbar
                         open={this.state.openSnackbar}
                         message={this.state.msgSnackbar}
