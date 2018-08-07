@@ -329,6 +329,7 @@ export default class ListUser extends Component {
       success: function(data) {
         pagination.total = data.userCount;
         pagination.pageSize = 50;
+        pagination.showQuickJumper = true;
         this.setState({
           pagination,
         });
