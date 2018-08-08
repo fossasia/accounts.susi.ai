@@ -172,28 +172,23 @@ class DeleteAccount extends Component {
 
   render() {
     const style = {
-      height: 280,
-      width: 750,
-      margin: 20,
+      margin: '60px auto',
+      padding: '10px',
       textAlign: 'center',
-      display: 'inline-block',
+      width: '400px',
     };
     const body = {
-      marginTop: 10,
+      margin: '60px auto',
+      padding: '10px',
       textAlign: 'center',
     };
-    const test = {
-      marginTop: 100,
-      fontSize: 50,
-      textAlign: 'center',
-    };
+
     const fieldStyle = {
       width: '256px',
     };
     const submitButton = {
-      marginTop: 10,
-      paddingRight: 10,
-      textAlign: 'right',
+      margin: '10px 0 10px 0',
+      textAlign: 'center',
     };
 
     const emailFieldStyle = {
@@ -224,48 +219,43 @@ class DeleteAccount extends Component {
         <div className="app-bar">
           <StaticAppBar />
         </div>
-        <div>
-          <div style={test}>
-            <h2>Delete Account</h2>
-          </div>
-          <div style={body}>
-            <Paper style={style} zDepth={5}>
-              <div>
-                <h2>Please enter your password to confirm deletion :</h2>
-              </div>
-              <div>
-                <form onSubmit={this.handleSubmit}>
-                  <div>
-                    <PasswordField
-                      name="password"
-                      style={fieldStyle}
-                      value={this.state.password}
-                      onChange={this.handleChange}
-                      errorText={this.passwordErrorMessage}
-                      floatingLabelText="Password"
-                    />
-                  </div>
-                  <div style={submitButton}>
-                    <RaisedButton
-                      label="Delete Account"
-                      backgroundColor="red"
-                      labelColor="#fff"
-                      onTouchTap={this.handleSubmit}
-                      disabled={!this.state.validForm}
-                    />
-                  </div>
-                  <div style={submitButton}>
-                    <RaisedButton
-                      label="Cancel"
-                      backgroundColor={ChatConstants.standardBlue}
-                      labelColor="#fff"
-                      onTouchTap={this.handleCancel}
-                    />
-                  </div>
-                </form>
-              </div>
-            </Paper>
-          </div>
+        <div style={body}>
+          <Paper style={style} zDepth={5}>
+            <h1 style={{ marginBottom: '30px' }}>Delete Account</h1>
+            <div>
+              <h5>Please enter your password to confirm deletion</h5>
+            </div>
+            <div>
+              <form onSubmit={this.handleSubmit}>
+                <div>
+                  <PasswordField
+                    name="password"
+                    style={fieldStyle}
+                    value={this.state.password}
+                    onChange={this.handleChange}
+                    errorText={this.passwordErrorMessage}
+                    floatingLabelText="Password"
+                  />
+                </div>
+                <div style={submitButton}>
+                  <RaisedButton
+                    label="Delete Account"
+                    backgroundColor="red"
+                    labelColor="#fff"
+                    onTouchTap={this.handleSubmit}
+                    disabled={!this.state.validForm}
+                    style={{ marginRight: '10px' }}
+                  />
+                  <RaisedButton
+                    label="Cancel"
+                    backgroundColor={ChatConstants.standardBlue}
+                    labelColor="#fff"
+                    onTouchTap={this.handleCancel}
+                  />
+                </div>
+              </form>
+            </div>
+          </Paper>
         </div>
         <div>
           <Dialog
