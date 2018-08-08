@@ -665,7 +665,7 @@ class ListSkills extends React.Component {
                             >
                               <div>
                                 Are you sure you want to delete{' '}
-                                {this.state.skillName} ?
+                                {this.state.skillName}?
                               </div>
                             </Dialog>
                             <Dialog
@@ -676,7 +676,7 @@ class ListSkills extends React.Component {
                             >
                               <div>
                                 Are you sure you want to restore{' '}
-                                {this.state.skillName} ?
+                                {this.state.skillName}?
                               </div>
                             </Dialog>
                             <Dialog
