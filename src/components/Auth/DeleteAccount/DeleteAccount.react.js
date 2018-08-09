@@ -276,7 +276,8 @@ class DeleteAccount extends Component {
                 lineHeight: '1.5',
               }}
             >
-              Are you absolutely sure?<Close
+              Are you absolutely sure?
+              <Close
                 style={{ float: 'right', cursor: 'pointer' }}
                 onClick={this.handleClose}
               />

@@ -244,18 +244,6 @@ class Login extends Component {
       />
     );
 
-    const styles = {
-      margin: '60px auto',
-      width: '80%',
-      'max-width': '400px',
-      padding: '20px',
-      textAlign: 'center',
-      'box-shadow': [
-        'rgba(0, 0, 0, 0.12) 0px 1px 6px',
-        'rgba(0, 0, 0, 0.12) 0px 1px 4px',
-      ],
-    };
-
     const fieldStyle = {
       height: '35px',
       borderRadius: 4,
@@ -355,8 +343,10 @@ class Login extends Component {
             </div>
             <div className="points">
               <p>
-                Ask it questions.<br />
-                <br /> Tell it to do things.<br />
+                Ask it questions.
+                <br />
+                <br /> Tell it to do things.
+                <br />
                 <br /> Always ready to help.
               </p>
             </div>
