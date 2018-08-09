@@ -11,6 +11,12 @@ body{
 * {
   box-sizing: unset;
 }
+
+.ant-pagination-options-quick-jumper input {
+  height:unset;
+  width:30px;
+}
+
 .navBar {
   background-color:#EEE;
   width:327px;
@@ -97,7 +103,7 @@ body{
 .label {
   margin-top: 10px;
   margin-bottom: 5px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: bold;
 }
 

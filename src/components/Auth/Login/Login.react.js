@@ -10,14 +10,14 @@ import Cookies from 'universal-cookie';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
-import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 
 // Static assets
 import Footer from '../../Footer/Footer.react.js';
 import susi from '../../../images/susi-logo.svg';
-import { isProduction } from '../../../utils/helperFunctions';
+import { urls, isProduction } from '../../../Utils';
+import ChatConstants from '../../../constants/ChatConstants';
 
 import urls from '../../../utils/urls';
 
@@ -109,7 +109,6 @@ class Login extends Component {
               path: '/',
               domain: cookieDomain,
             });
-            console.log(cookies.get('serverUrl'));
             let accessToken = response.access_token;
             let state = this.state;
             let time = response.valid_seconds;
@@ -247,18 +246,6 @@ class Login extends Component {
       />
     );
 
-    const styles = {
-      margin: '60px auto',
-      width: '80%',
-      'max-width': '400px',
-      padding: '20px',
-      textAlign: 'center',
-      'box-shadow': [
-        'rgba(0, 0, 0, 0.12) 0px 1px 6px',
-        'rgba(0, 0, 0, 0.12) 0px 1px 4px',
-      ],
-    };
-
     const fieldStyle = {
       height: '35px',
       borderRadius: 4,
@@ -315,7 +302,7 @@ class Login extends Component {
                   type="submit"
                   className="loginbtn"
                   style={{ marginLeft: '10px' }}
-                  backgroundColor="#4285F4"
+                  backgroundColor={ChatConstants.standardBlue}
                   labelColor="#fff"
                   disabled={!this.state.validForm}
                 />
@@ -340,11 +327,7 @@ class Login extends Component {
               <RaisedButton
                 style={button}
                 label="Sign Up"
-                backgroundColor={
-                  UserPreferencesStore.getTheme() === 'light'
-                    ? '#4285F4'
-                    : '#4285F4'
-                }
+                backgroundColor={ChatConstants.standardBlue}
                 labelColor="#fff"
               />
             </Link>
@@ -362,8 +345,10 @@ class Login extends Component {
             </div>
             <div className="points">
               <p>
-                Ask it questions.<br />
-                <br /> Tell it to do things.<br />
+                Ask it questions.
+                <br />
+                <br /> Tell it to do things.
+                <br />
                 <br /> Always ready to help.
               </p>
             </div>

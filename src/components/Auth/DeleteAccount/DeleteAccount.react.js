@@ -14,7 +14,9 @@ import Dialog from 'material-ui/Dialog';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import Close from 'material-ui/svg-icons/navigation/close';
 
-import urls from '../../../utils/urls';
+
+import { urls } from '../../../Utils';
+import ChatConstants from '../../../constants/ChatConstants';
 
 const cookies = new Cookies();
 
@@ -57,9 +59,6 @@ class DeleteAccount extends Component {
         dataType: 'jsonp',
         jsonpCallback: 'p',
         crossDomain: true,
-        success: function(response) {
-          console.log(response.accepted);
-        },
         error: function(errorThrown) {
           state.dialogMessage = 'Not logged In!';
           state.showDialog = true;
@@ -118,14 +117,12 @@ class DeleteAccount extends Component {
         jsonpCallback: 'p',
         crossDomain: true,
         success: function(deleteResponse) {
-          console.log(deleteResponse);
           deleteCookie('loggedIn', { domain: '.susi.ai', path: '/' });
           deleteCookie('emailId', { domain: '.susi.ai', path: '/' });
           this.setState({
             showDialog: true,
             dialogMessage: 'Account deleted successfully',
           });
-          console.log(deleteResponse);
         }.bind(this),
         error: function(errorThrown) {
           console.log(errorThrown);
@@ -151,7 +148,6 @@ class DeleteAccount extends Component {
       jsonpCallback: 'p',
       crossDomain: true,
       success: function(response) {
-        console.log(response.accepted);
         if (response.accepted) {
           this.setState({
             showConfirmationDialog: true,
@@ -177,28 +173,23 @@ class DeleteAccount extends Component {
 
   render() {
     const style = {
-      height: 280,
-      width: 750,
-      margin: 20,
+      margin: '60px auto',
+      padding: '10px',
       textAlign: 'center',
-      display: 'inline-block',
+      width: '400px',
     };
     const body = {
-      marginTop: 10,
+      margin: '60px auto',
+      padding: '10px',
       textAlign: 'center',
     };
-    const test = {
-      marginTop: 100,
-      fontSize: 50,
-      textAlign: 'center',
-    };
+
     const fieldStyle = {
       width: '256px',
     };
     const submitButton = {
-      marginTop: 10,
-      paddingRight: 10,
-      textAlign: 'right',
+      margin: '10px 0 10px 0',
+      textAlign: 'center',
     };
 
     const emailFieldStyle = {
@@ -218,7 +209,7 @@ class DeleteAccount extends Component {
     const actions = (
       <FlatButton
         label="OK"
-        backgroundColor={'#4285F4'}
+        backgroundColor={ChatConstants.standardBlue}
         labelStyle={{ color: '#fff' }}
         onTouchTap={this.handleClose}
       />
@@ -229,48 +220,43 @@ class DeleteAccount extends Component {
         <div className="app-bar">
           <StaticAppBar />
         </div>
-        <div>
-          <div style={test}>
-            <h2>Delete Account</h2>
-          </div>
-          <div style={body}>
-            <Paper style={style} zDepth={5}>
-              <div>
-                <h2>Please enter your password to confirm deletion :</h2>
-              </div>
-              <div>
-                <form onSubmit={this.handleSubmit}>
-                  <div>
-                    <PasswordField
-                      name="password"
-                      style={fieldStyle}
-                      value={this.state.password}
-                      onChange={this.handleChange}
-                      errorText={this.passwordErrorMessage}
-                      floatingLabelText="Password"
-                    />
-                  </div>
-                  <div style={submitButton}>
-                    <RaisedButton
-                      label="Delete Account"
-                      backgroundColor="red"
-                      labelColor="#fff"
-                      onTouchTap={this.handleSubmit}
-                      disabled={!this.state.validForm}
-                    />
-                  </div>
-                  <div style={submitButton}>
-                    <RaisedButton
-                      label="Cancel"
-                      backgroundColor="#4285F4"
-                      labelColor="#fff"
-                      onTouchTap={this.handleCancel}
-                    />
-                  </div>
-                </form>
-              </div>
-            </Paper>
-          </div>
+        <div style={body}>
+          <Paper style={style} zDepth={5}>
+            <h1 style={{ marginBottom: '30px' }}>Delete Account</h1>
+            <div>
+              <h5>Please enter your password to confirm deletion</h5>
+            </div>
+            <div>
+              <form onSubmit={this.handleSubmit}>
+                <div>
+                  <PasswordField
+                    name="password"
+                    style={fieldStyle}
+                    value={this.state.password}
+                    onChange={this.handleChange}
+                    errorText={this.passwordErrorMessage}
+                    floatingLabelText="Password"
+                  />
+                </div>
+                <div style={submitButton}>
+                  <RaisedButton
+                    label="Delete Account"
+                    backgroundColor="red"
+                    labelColor="#fff"
+                    onTouchTap={this.handleSubmit}
+                    disabled={!this.state.validForm}
+                    style={{ marginRight: '10px' }}
+                  />
+                  <RaisedButton
+                    label="Cancel"
+                    backgroundColor={ChatConstants.standardBlue}
+                    labelColor="#fff"
+                    onTouchTap={this.handleCancel}
+                  />
+                </div>
+              </form>
+            </div>
+          </Paper>
         </div>
         <div>
           <Dialog
@@ -291,7 +277,8 @@ class DeleteAccount extends Component {
                 lineHeight: '1.5',
               }}
             >
-              Are you absolutely sure?<Close
+              Are you absolutely sure?
+              <Close
                 style={{ float: 'right', cursor: 'pointer' }}
                 onClick={this.handleClose}
               />

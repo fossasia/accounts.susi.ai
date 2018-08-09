@@ -1,7 +1,8 @@
 import ChatAppDispatcher from '../dispatcher/ChatAppDispatcher';
 import ChatConstants from '../constants/ChatConstants';
 import { EventEmitter } from 'events';
-import urls from '../utils/urls';
+
+import { urls } from '../Utils';
 
 let ActionTypes = ChatConstants.ActionTypes;
 let CHANGE_EVENT = 'change';
@@ -45,7 +46,6 @@ UserPreferencesStore.dispatchToken = ChatAppDispatcher.register(action => {
     }
     case ActionTypes.SERVER_CHANGED: {
       _defaults.Server = action.server;
-      console.log(_defaults);
       UserPreferencesStore.emitChange();
       break;
     }

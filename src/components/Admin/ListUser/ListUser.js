@@ -4,6 +4,8 @@ import './ListUser.css';
 import $ from 'jquery';
 import Cookies from 'universal-cookie';
 import Table from 'antd/lib/table';
+
+import { Input } from 'antd';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar.js';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
@@ -15,11 +17,16 @@ import NotFound from '../../NotFound/NotFound.react';
 import { LocaleProvider } from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
 
-import urls from '../../../utils/urls';
+
+import { urls } from '../../../Utils';
+import ChatConstants from '../../../constants/ChatConstants';
 
 const cookies = new Cookies();
 
 const TabPane = Tabs.TabPane;
+
+
+const Search = Input.Search;
 
 export default class ListUser extends Component {
   constructor(props) {
@@ -29,9 +36,13 @@ export default class ListUser extends Component {
       data: [],
       middle: '50',
       pagination: {},
-      loading: false,
+      loading: true,
+      search: false,
       showEditDialog: false,
+      showDeleteDialog: false,
       changeRoleDialog: false,
+      deleteSuccessDialog: false,
+      deleteFailedDialog: false,
     };
     this.columns = [
       {
@@ -42,8 +53,13 @@ export default class ListUser extends Component {
       {
         title: 'Email ID',
         dataIndex: 'email',
-        width: '22%',
+        width: '18%',
         key: 'email',
+      },
+      {
+        title: 'User Name',
+        dataIndex: 'userName',
+        width: '12%',
       },
       {
         title: 'Activation Status',
@@ -60,22 +76,22 @@ export default class ListUser extends Component {
         ],
         onFilter: (value, record) => record.confirmed.indexOf(value) === 0,
         sorter: (a, b) => a.confirmed.length - b.confirmed.length,
-        width: '13%',
+        width: '12%',
       },
       {
         title: 'Signup',
         dataIndex: 'signup',
-        width: '15%',
+        width: '12%',
       },
       {
         title: 'Last Login',
         dataIndex: 'lastLogin',
-        width: '15%',
+        width: '12%',
       },
       {
         title: 'IP of Last Login',
         dataIndex: 'ipLastLogin',
-        width: '15%',
+        width: '10%',
       },
       {
         title: 'User Role',
@@ -112,23 +128,78 @@ export default class ListUser extends Component {
       },
       {
         title: 'Action',
-        width: '5%',
+        width: '8%',
         key: 'action',
         render: (text, record) => {
           return (
             <span>
-              <div
+              <span
                 style={{ cursor: 'pointer', color: '#49A9EE' }}
                 onClick={() => this.editUserRole(record.email, record.userRole)}
               >
                 Edit
-              </div>
+              </span>
+              <span style={{ marginLeft: '5px', marginRight: '5px' }}> | </span>
+              <span
+                style={{ cursor: 'pointer', color: '#49A9EE' }}
+                onClick={() => this.handleDelete(record.email)}
+              >
+                Delete
+              </span>
             </span>
           );
         },
       },
     ];
+
+    this.devicesColumns = [
+      {
+        title: 'Device Name',
+        dataIndex: 'devicename',
+        width: '10%',
+      },
+      {
+        title: 'Mac Id',
+        dataIndex: 'macid',
+        width: '10%',
+      },
+      {
+        title: 'Room',
+        dataIndex: 'room',
+        width: '10%',
+      },
+      {
+        title: 'Latitude',
+        dataIndex: 'latitude',
+        width: '10%',
+      },
+      {
+        title: 'Longitude',
+        dataIndex: 'longitude',
+        width: '10%',
+      },
+    ];
   }
+
+  deleteUser = () => {
+    let url = `${urls.API_URL}/aaa/deleteUserAccount.json?email=${
+      this.state.userEmail
+    }&access_token=${cookies.get('loggedIn')}`;
+    $.ajax({
+      url: url,
+      dataType: 'jsonp',
+      crossDomain: true,
+      timeout: 3000,
+      async: false,
+      success: response => {
+        this.setState({ deleteSuccessDialog: true });
+      },
+      error: function(errorThrown) {
+        console.log(errorThrown);
+        this.setState({ deleteFailedDialog: true });
+      },
+    });
+  };
 
   apiCall = () => {
     let url =
@@ -160,7 +231,6 @@ export default class ListUser extends Component {
       timeout: 3000,
       async: false,
       success: response => {
-        console.log(response);
         this.setState({ changeRoleDialog: true });
       },
       error: function(errorThrown) {
@@ -184,52 +254,93 @@ export default class ListUser extends Component {
     });
   };
 
-  componentDidMount() {
-    const pagination = { ...this.state.pagination };
+  handleSearch = value => {
+    this.setState({
+      search: true,
+      loading: true,
+    });
     let url;
-    url =
-      `${urls.API_URL}/aaa/showAdminService.json?access_token=` +
-      cookies.get('loggedIn');
+
+    url = `${urls.API_URL}/aaa/getUsers.json?access_token=${cookies.get(
+      'loggedIn',
+    )}&search=${value}`;
     $.ajax({
       url: url,
       dataType: 'jsonp',
-      jsonpCallback: 'py',
+      jsonpCallback: 'pvsdu',
       jsonp: 'callback',
       crossDomain: true,
       success: function(response) {
-        // console.log(response.showAdmin);
-        if (response.showAdmin) {
-          let getPagesUrl =
-            `${urls.API_URL}/aaa/getUsers.json?access_token=` +
-            cookies.get('loggedIn') +
-            '&getUserCount=true';
-          $.ajax({
-            url: getPagesUrl,
-            dataType: 'jsonp',
-            jsonpCallback: 'pvsdu',
-            jsonp: 'callback',
-            crossDomain: true,
-            success: function(data) {
-              // console.log(data);
-              pagination.total = data.userCount;
-              pagination.pageSize = 50;
-              this.setState({
-                loading: false,
-                pagination,
-              });
-              // console.log(pagination);
-              this.fetch();
-            }.bind(this),
-            error: function(errorThrown) {
-              console.log(errorThrown);
-            },
+
+        let userList = response.users;
+        let users = [];
+        userList.map((data, i) => {
+          let devices = [];
+          let keys = Object.keys(data.devices);
+          keys.forEach(j => {
+            let device = {
+              macid: j,
+              devicename: data.devices[j].name,
+              room: data.devices[j].room,
+              latitude: data.devices[j].geolocation.latitude,
+              longitude: data.devices[j].geolocation.longitude,
+            };
+            devices.push(device);
           });
-        } else {
-          console.log('Not allowed to access this page!');
-        }
+          let user = {
+            serialNum: ++i,
+            email: data.name,
+            signup: data.signupTime,
+            lastLogin: data.lastLoginTime,
+            ipLastLogin: data.lastLoginIP,
+            userRole: data.userRole,
+            userName: data.userName,
+            devices: devices,
+          };
+
+          if (data.confirmed) {
+            user.confirmed = 'Activated';
+          } else {
+            user.confirmed = 'Not Activated';
+          }
+
+          users.push(user);
+          return 1;
+        });
+        this.setState({
+          data: users,
+          loading: false,
+        });
       }.bind(this),
       error: function(errorThrown) {
-        console.log('Not allowed to access this page!');
+        console.log(errorThrown);
+      },
+    });
+  };
+
+  componentDidMount() {
+    $('.ant-input').css('padding-right', '0');
+    const pagination = { ...this.state.pagination };
+    let getPagesUrl =
+      `${urls.API_URL}/aaa/getUsers.json?access_token=` +
+      cookies.get('loggedIn') +
+      '&getUserCount=true';
+    $.ajax({
+      url: getPagesUrl,
+      dataType: 'jsonp',
+      jsonpCallback: 'pvsdu',
+      jsonp: 'callback',
+      crossDomain: true,
+      success: function(data) {
+        pagination.total = data.userCount;
+        pagination.pageSize = 50;
+        pagination.showQuickJumper = true;
+        this.setState({
+          pagination,
+        });
+        this.fetch();
+      }.bind(this),
+      error: function(errorThrown) {
         console.log(errorThrown);
       },
     });
@@ -240,6 +351,13 @@ export default class ListUser extends Component {
       userEmail: email,
       userRole: userRole,
       showEditDialog: true,
+    });
+  };
+
+  handleDelete = email => {
+    this.setState({
+      userEmail: email,
+      showDeleteDialog: true,
     });
   };
 
@@ -257,6 +375,8 @@ export default class ListUser extends Component {
   handleClose = () => {
     this.setState({
       showEditDialog: false,
+      showDeleteDialog: false,
+      deleteFailedDialog: false,
     });
   };
 
@@ -266,6 +386,10 @@ export default class ListUser extends Component {
     }
     if (activeKey === '3') {
       this.props.history.push('/admin/skills');
+    }
+
+    if (activeKey === '4') {
+      this.props.history.push('/admin/settings');
     }
   };
 
@@ -279,7 +403,6 @@ export default class ListUser extends Component {
     let url;
     let page;
     if (params.page !== undefined) {
-      // console.log(params.page);
       page = params.page;
     } else {
       page = 1;
@@ -296,10 +419,21 @@ export default class ListUser extends Component {
       jsonp: 'callback',
       crossDomain: true,
       success: function(response) {
-        // console.log(response.users);
         let userList = response.users;
         let users = [];
         userList.map((data, i) => {
+          let devices = [];
+          let keys = Object.keys(data.devices);
+          keys.forEach(j => {
+            let device = {
+              macid: j,
+              devicename: data.devices[j].name,
+              room: data.devices[j].room,
+              latitude: data.devices[j].geolocation.latitude,
+              longitude: data.devices[j].geolocation.longitude,
+            };
+            devices.push(device);
+          });
           let user = {
             serialNum: ++i + (page - 1) * 50,
             email: data.name,
@@ -308,6 +442,8 @@ export default class ListUser extends Component {
             lastLogin: data.lastLoginTime,
             ipLastLogin: data.lastLoginIP,
             userRole: data.userRole,
+            userName: data.userName,
+            devices: devices,
           };
 
           if (user.confirmed) {
@@ -319,9 +455,9 @@ export default class ListUser extends Component {
           users.push(user);
           return 1;
         });
-        // console.log(users);
         this.setState({
           data: users,
+          loading: false,
         });
       }.bind(this),
       error: function(errorThrown) {
@@ -337,8 +473,23 @@ export default class ListUser extends Component {
       <FlatButton
         key={1}
         label="Change"
-        primary={true}
+        labelStyle={{ color: ChatConstants.standardBlue }}
         onTouchTap={this.handleChange}
+      />,
+      <FlatButton
+        key={2}
+        label="Cancel"
+        primary={false}
+        onTouchTap={this.handleClose}
+      />,
+    ];
+
+    const deleteActions = [
+      <FlatButton
+        key={1}
+        label="Delete"
+        labelStyle={{ color: ChatConstants.standardBlue }}
+        onTouchTap={this.deleteUser}
       />,
       <FlatButton
         key={2}
@@ -450,7 +601,8 @@ export default class ListUser extends Component {
                             <FlatButton
                               key={1}
                               label="Ok"
-                              primary={true}
+
+                              labelStyle={{ color: ChatConstants.standardBlue }}
                               onTouchTap={this.handleSuccess}
                             />
                           }
@@ -473,21 +625,133 @@ export default class ListUser extends Component {
                             successfully!
                           </div>
                         </Dialog>
+
+                        <Dialog
+                          title="Delete User Account"
+                          actions={deleteActions}
+                          modal={true}
+                          open={this.state.showDeleteDialog}
+                        >
+                          <div>
+                            Are you sure you want to delete the account
+                            associated with
+                            <span
+                              style={{ fontWeight: 'bold', marginLeft: '5px' }}
+                            >
+                              {this.state.userEmail}
+                            </span>?
+                          </div>
+                        </Dialog>
+                        <Dialog
+                          title="Success"
+                          actions={
+                            <FlatButton
+                              key={1}
+                              label="Ok"
+                              labelStyle={{ color: ChatConstants.standardBlue }}
+                              onTouchTap={this.handleSuccess}
+                            />
+                          }
+                          modal={true}
+                          open={this.state.deleteSuccessDialog}
+                        >
+                          <div>
+                            Account associated with
+                            <span
+                              style={{ fontWeight: 'bold', margin: '0 5px' }}
+                            >
+                              {this.state.userEmail}
+                            </span>
+                            is deleted successfully!
+                          </div>
+                        </Dialog>
+                        <Dialog
+                          title="Failed"
+                          actions={
+                            <FlatButton
+                              key={1}
+                              label="Ok"
+                              labelStyle={{ color: ChatConstants.standardBlue }}
+                              onTouchTap={this.handleClose}
+                            />
+                          }
+                          modal={true}
+                          open={this.state.deleteFailedDialog}
+                        >
+                          <div>
+                            Account associated with
+                            <span
+                              style={{ fontWeight: 'bold', margin: '0 5px' }}
+                            >
+                              {this.state.userEmail}
+                            </span>
+                            cannot be deleted!
+                          </div>
+                        </Dialog>
                       </div>
 
+                      <Search
+                        placeholder="Search by email"
+                        style={{ margin: '5px 25% 20px 25%', width: '50%' }}
+                        size="default"
+                        onSearch={value => this.handleSearch(value)}
+                      />
+
                       <LocaleProvider locale={enUS}>
-                        <Table
-                          columns={this.columns}
-                          rowKey={record => record.registered}
-                          dataSource={this.state.data}
-                          pagination={this.state.pagination}
-                          loading={this.state.loading}
-                          onChange={this.handleTableChange}
-                        />
+                        {this.state.search ? (
+                          <Table
+                            columns={this.columns}
+                            locale={{ emptyText: 'No search result found !' }}
+                            rowKey={record => record.serialNum}
+                            expandedRowRender={record => (
+                              <Table
+                                style={{
+                                  width: '80%',
+                                  backgroundColor: 'white',
+                                }}
+                                columns={this.devicesColumns}
+                                dataSource={record.devices}
+                                pagination={false}
+                                locale={{ emptyText: 'No devices found!' }}
+                                bordered
+                              />
+                            )}
+                            dataSource={this.state.data}
+                            loading={this.state.loading}
+                            pagination={false}
+                          />
+                        ) : (
+                          <Table
+                            columns={this.columns}
+                            locale={{ emptyText: 'No users found!' }}
+                            rowKey={record => record.serialNum}
+                            expandedRowRender={record => (
+                              <Table
+                                style={{
+                                  width: '80%',
+                                  backgroundColor: 'white',
+                                }}
+                                columns={this.devicesColumns}
+                                dataSource={record.devices}
+                                pagination={false}
+                                locale={{ emptyText: 'No devices found!' }}
+                                bordered
+                              />
+                            )}
+                            dataSource={this.state.data}
+                            pagination={this.state.pagination}
+                            loading={this.state.loading}
+                            onChange={this.handleTableChange}
+                          />
+                        )}
+
                       </LocaleProvider>
                     </div>
                   </TabPane>
                   <TabPane tab="Skills" key="3" />
+
+                  <TabPane tab="System Settings" key="4" />
+
                 </Tabs>
               </Paper>
             </div>

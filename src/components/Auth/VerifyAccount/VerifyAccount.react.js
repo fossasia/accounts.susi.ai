@@ -9,7 +9,10 @@ import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 
-import urls from '../../../utils/urls';
+
+import { urls } from '../../../Utils';
+import ChatConstants from '../../../constants/ChatConstants';
+
 
 const urlPropsQueryConfig = {
   accessToken: { type: UrlQueryParamTypes.string, queryParam: 'access_token' },
@@ -79,7 +82,6 @@ class VerifyAccount extends Component {
                 'Please login to continue.',
               showDialog: true,
             });
-            console.log(accountVerificationEndPoint);
           }
         }.bind(this),
         error: function(errorThrown) {
@@ -87,7 +89,6 @@ class VerifyAccount extends Component {
             message: 'An error occurred. Please try again.',
             showDialog: true,
           });
-          console.log(accountVerificationEndPoint);
         }.bind(this),
       });
     } else {
@@ -101,7 +102,7 @@ class VerifyAccount extends Component {
     const actions = (
       <FlatButton
         label="OK"
-        backgroundColor={'#4285F4'}
+        backgroundColor={ChatConstants.standardBlue}
         labelStyle={{ color: '#fff' }}
         onTouchTap={this.handleClose}
       />

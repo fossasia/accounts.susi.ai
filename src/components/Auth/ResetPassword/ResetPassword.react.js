@@ -12,10 +12,10 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
+import ChatConstants from '../../../constants/ChatConstants';
+import { urls } from '../../../Utils';
 
-import urls from '../../../utils/urls';
 
 import './ResetPassword.css';
 
@@ -59,7 +59,7 @@ class ResetPassword extends Component {
 
   componentDidMount() {
     const { token } = this.props;
-    console.log(token);
+    
     let BASE_URL = urls.API_URL;
     let resetPasswordEndPoint =
       BASE_URL +
@@ -77,7 +77,6 @@ class ResetPassword extends Component {
           path: '/',
           maxAge: 7 * 24 * 60 * 60,
         });
-        // console.log(response)
         let state = this.state;
         state.msg = response.message;
         state.success = true;
@@ -127,7 +126,6 @@ class ResetPassword extends Component {
           state.msg = msg;
           state.showDialog = true;
           this.setState(state);
-          console.log(response.message);
         }.bind(this),
         error: function(errorThrown) {
           let msg = 'Failed' + errorThrown.message;
@@ -135,7 +133,6 @@ class ResetPassword extends Component {
           state.msg = msg;
           state.showDialog = true;
           this.setState(state);
-          console.log(this.state);
         }.bind(this),
       });
     }
@@ -193,8 +190,6 @@ class ResetPassword extends Component {
   };
 
   render() {
-    const { token } = this.props;
-    console.log(token);
     const styles = {
       margin: '60px auto',
       padding: '10px',
@@ -203,9 +198,7 @@ class ResetPassword extends Component {
     const actions = (
       <FlatButton
         label="OK"
-        backgroundColor={
-          UserPreferencesStore.getTheme() === 'light' ? '#4285F4' : '#4285F4'
-        }
+        backgroundColor={ChatConstants.standardBlue}
         labelStyle={{ color: '#fff' }}
         onTouchTap={this.handleClose}
       />
@@ -253,11 +246,7 @@ class ResetPassword extends Component {
                 <RaisedButton
                   label="submit"
                   type="submit"
-                  backgroundColor={
-                    UserPreferencesStore.getTheme() === 'light'
-                      ? '#4285F4'
-                      : '#4285F4'
-                  }
+                  backgroundColor={ChatConstants.standardBlue}
                   labelColor="#fff"
                   keyboardFocused={true}
                 />

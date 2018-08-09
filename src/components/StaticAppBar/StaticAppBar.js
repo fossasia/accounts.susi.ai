@@ -22,8 +22,10 @@ import Exit from 'material-ui/svg-icons/action/exit-to-app';
 import LoginIcon from 'material-ui/svg-icons/action/account-circle';
 import List from 'material-ui/svg-icons/action/list';
 import susiWhite from '../../images/susi-logo-white.png';
+import CircleImage from '../CircleImage/CircleImage';
+import ChatConstants from '../../constants/ChatConstants';
+import { urls, isProduction, getAvatarProps } from '../../Utils';
 import './StaticAppBar.css';
-import { isProduction } from '../../utils/helperFunctions';
 
 import urls from '../../utils/urls';
 
@@ -52,7 +54,6 @@ class StaticAppBar extends Component {
       crossDomain: true,
       success: function(data) {
         let userName = data.settings.userName;
-        console.log(data);
         cookies.set('username', userName, {
           path: '/',
           domain: cookieDomain,
@@ -106,31 +107,43 @@ class StaticAppBar extends Component {
   }
 
   render() {
+    const isLoggedIn = !!cookies.get('loggedIn');
+    let avatarProps = null;
+    if (isLoggedIn) {
+      avatarProps = getAvatarProps(cookies.get('emailId'));
+    }
+
     let ListMenu = props => (
-      <div>
-        {cookies.get('loggedIn') ? (
-          <label
+      <div className="topRightMenu">
+        {isLoggedIn && (
+          <div
             style={{
-              color: 'white',
-              fontSize: '16px',
-              verticalAlign: 'super',
-              position: 'relative',
-              top: '-8px',
-              right: '-8px',
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginTop: '-14px',
             }}
           >
-            {cookies.get('username') === ''
-              ? cookies.get('emailId')
-              : cookies.get('username')}
-          </label>
-        ) : (
-          <label />
+            <CircleImage {...avatarProps} size="32" />
+            <label
+              style={{
+                color: 'white',
+                marginRight: '5px',
+                fontSize: '16px',
+              }}
+            >
+              {cookies.get('username') === '' ||
+              cookies.get('username') === 'undefined'
+                ? cookies.get('emailId')
+                : cookies.get('username')}
+            </label>
+          </div>
         )}
         <IconMenu
           className="IconMenu"
           animated={false}
+          style={{ top: '-2px' }}
           tooltip="Options"
-          style={{ right: '-8px', top: '-2px' }}
           iconButtonElement={
             <IconButton className="menu-icon" iconStyle={{ fill: 'white' }}>
               <MoreVertIcon />
@@ -221,11 +234,10 @@ class StaticAppBar extends Component {
           iconElementLeft={<iconButton />}
           className="app-bar"
           style={{
-            backgroundColor: '#4285F4',
+            backgroundColor: ChatConstants.standardBlue,
             height: '46px',
           }}
           titleStyle={{ height: '46px' }}
-          iconStyleRight={{ marginRight: '-8px', marginTop: '7px' }}
           iconElementRight={<ListMenu />}
         />
       </header>

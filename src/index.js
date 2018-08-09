@@ -1,6 +1,5 @@
 import SignUp from './components/Auth/SignUp/SignUp.react';
 import Logout from './components/Auth/Logout.react';
-import LoggedIn from './components/Settings/Settings.react';
 import ChangePassword from './components/Auth/ChangePassword/ChangePassword.react';
 import ResetPassword from './components/Auth/ResetPassword/ResetPassword.react';
 import DeleteAccount from './components/Auth/DeleteAccount/DeleteAccount.react';
@@ -8,6 +7,8 @@ import Settings from './components/Settings/Settings.react';
 import Admin from './components/Admin/Admin.js';
 import Users from './components/Admin/ListUser/ListUser.js';
 import Skills from './components/Admin/ListSkills/ListSkills.js';
+
+import SystemSettings from './components/Admin/SystemSettings/SystemSettings.js';
 import VerifyAccount from './components/Auth/VerifyAccount/VerifyAccount.react';
 import Login from './components/Auth/Login/Login.react';
 import ForgotPassword from './components/Auth/ForgotPassword/ForgotPassword.react';
@@ -41,7 +42,6 @@ const App = () => (
         </div>
         <Switch>
           <Route exact path="/" component={Login} />
-          <Route exact path="/settings" component={LoggedIn} />
           <Route exact path="/changepassword" component={ChangePassword} />
           <Route exact path="/signup" component={SignUp} />
           <Route exact path="/logout" component={Logout} />
@@ -49,6 +49,8 @@ const App = () => (
           <Route exact path="/admin" component={Admin} />
           <Route exact path="/admin/users" component={Users} />
           <Route exact path="/admin/skills" component={Skills} />
+
+          <Route exact path="/admin/settings" component={SystemSettings} />
           <Route exact path="/verify-account" component={VerifyAccount} />
           <Route exact path="/resetpass" component={ResetPassword} />
           <Route exact path="/delete-account" component={DeleteAccount} />

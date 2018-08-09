@@ -10,7 +10,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
-import UserPreferencesStore from '../../../stores/UserPreferencesStore';
+import ChatConstants from '../../../constants/ChatConstants';
+
+import { urls } from '../../../Utils';
 
 import urls from '../../../utils/urls';
 
@@ -125,9 +127,7 @@ class ForgotPassword extends Component {
     const actions = (
       <FlatButton
         label="OK"
-        backgroundColor={
-          UserPreferencesStore.getTheme() === 'light' ? '#4285F4' : '#4285F4'
-        }
+        backgroundColor={ChatConstants.standardBlue}
         labelStyle={{ color: '#fff' }}
         onTouchTap={this.handleClose}
       />
@@ -155,11 +155,7 @@ class ForgotPassword extends Component {
                 <RaisedButton
                   type="submit"
                   label="Reset"
-                  backgroundColor={
-                    UserPreferencesStore.getTheme() === 'light'
-                      ? '#4285F4'
-                      : '#4285F4'
-                  }
+                  backgroundColor={ChatConstants.standardBlue}
                   labelColor="#fff"
                   disabled={!this.state.validForm}
                 />
@@ -168,11 +164,7 @@ class ForgotPassword extends Component {
             <br />
             <RaisedButton
               label="Cancel"
-              backgroundColor={
-                UserPreferencesStore.getTheme() === 'light'
-                  ? '#4285F4'
-                  : '#4285F4'
-              }
+              backgroundColor={ChatConstants.standardBlue}
               labelColor="#fff"
               onTouchTap={this.handleCancel}
             />

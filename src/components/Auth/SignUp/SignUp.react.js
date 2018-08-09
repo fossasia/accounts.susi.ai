@@ -9,15 +9,17 @@ import zxcvbn from 'zxcvbn';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import UserPreferencesStore from '../../../stores/UserPreferencesStore';
 import Login from '../Login/Login.react';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
+import ChatConstants from '../../../constants/ChatConstants';
 
 // Static assets
 import Footer from '../../Footer/Footer.react.js';
 import susi from '../../../images/susi-logo.svg';
 
-import urls from '../../../utils/urls';
+
+import { urls } from '../../../Utils';
+
 
 import './SignUp.css';
 
@@ -200,9 +202,7 @@ export default class SignUp extends Component {
     const actions = (
       <FlatButton
         label="OK"
-        backgroundColor={
-          UserPreferencesStore.getTheme() === 'light' ? '#4285F4' : '#4285F4'
-        }
+        backgroundColor={ChatConstants.standardBlue}
         labelStyle={{ color: '#fff' }}
         onTouchTap={this.handleClose}
       />
@@ -213,11 +213,9 @@ export default class SignUp extends Component {
     return (
       <div>
         <div>
-          <header className="message-thread-heading">
-            <div className="app-bar-div">
-              <StaticAppBar />
-            </div>
-          </header>
+          <div className="app-bar-div">
+            <StaticAppBar />
+          </div>
         </div>
         <div className="app-body">
           <div className="About">
@@ -226,9 +224,13 @@ export default class SignUp extends Component {
               Assistants, Robots, Help Desks and Chatbots.
             </h1>
             <p style={{ margin: '5% 3% 0% 0%', fontSize: '24px' }}>
-              Ask it questions.<br />
-              <br />Tell it to do things.<br />
-              <br />Always ready to help.
+              Ask it questions.
+              <br />
+              <br />
+              Tell it to do things.
+              <br />
+              <br />
+              Always ready to help.
             </p>
           </div>
         </div>
@@ -282,11 +284,7 @@ export default class SignUp extends Component {
                   type="submit"
                   style={button}
                   disabled={!this.state.validForm}
-                  backgroundColor={
-                    UserPreferencesStore.getTheme() === 'light'
-                      ? '#4285F4'
-                      : '#4285F4'
-                  }
+                  backgroundColor={ChatConstants.standardBlue}
                   labelColor="#fff"
                 />
               </div>
@@ -300,11 +298,7 @@ export default class SignUp extends Component {
                     // onTouchTap={this.handleOpen}
                     label="Login"
                     style={button}
-                    backgroundColor={
-                      UserPreferencesStore.getTheme() === 'light'
-                        ? '#4285F4'
-                        : '#4285F4'
-                    }
+                    backgroundColor={ChatConstants.standardBlue}
                     labelColor="#fff"
                   />
                 </Link>

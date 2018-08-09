@@ -28,6 +28,7 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { Link } from 'react-router-dom';
 import ChangePassword from '../Auth/ChangePassword/ChangePassword.react';
 import * as Actions from '../../actions/';
+import ChatConstants from '../../constants/ChatConstants';
 
 // Keys
 import { MAP_KEY } from '../../../src/config.js';
@@ -46,7 +47,7 @@ import urls from '../../utils/urls';
 
 import 'antd/dist/antd.css';
 import './Settings.css';
-import { isProduction } from '../../utils/helperFunctions';
+import { urls, isProduction } from '../../Utils';
 
 const cookieDomain = isProduction() ? '.susi.ai' : '';
 
@@ -160,9 +161,6 @@ class Settings extends Component {
       crossDomain: true,
       timeout: 3000,
       async: false,
-      success: function(response) {
-        console.log(response);
-      },
       error: function(errorThrown) {
         console.log(errorThrown);
       },
@@ -211,9 +209,6 @@ class Settings extends Component {
       crossDomain: true,
       timeout: 3000,
       async: false,
-      success: function(response) {
-        console.log(response);
-      },
       error: function(errorThrown) {
         console.log(errorThrown);
       },
@@ -598,7 +593,7 @@ class Settings extends Component {
     };
 
     const radioIconStyle = {
-      fill: '#4285f4',
+      fill: ChatConstants.standardBlue,
     };
 
     const menuStyle = {
@@ -775,8 +770,8 @@ class Settings extends Component {
                 </SwipeableViews>
                 {this.state.slideIndex && this.state.devicesNotAvailable ? (
                   <div style={{ marginTop: '10px' }}>
-                    <b>NOTE: </b>Location info of one or more devices could not
-                    be retrieved.
+                    <b>NOTE: </b>
+                    Location info of one or more devices could not be retrieved.
                   </div>
                 ) : null}
               </div>
@@ -809,6 +804,10 @@ class Settings extends Component {
             onToggle={this.handleEnterAsSend}
             labelStyle={{ color: themeForegroundColor }}
             toggled={this.state.EnterAsSend}
+            thumbStyle={ChatConstants.thumbStyle}
+            trackStyle={ChatConstants.trackStyle}
+            thumbSwitchedStyle={ChatConstants.thumbSwitchedStyle}
+            trackSwitchedStyle={ChatConstants.trackSwitchedStyle}
           />
           <br />
         </div>
@@ -837,6 +836,10 @@ class Settings extends Component {
                 labelStyle={{ color: themeForegroundColor }}
                 onToggle={this.handleMicInput}
                 toggled={this.state.MicInput}
+                thumbStyle={ChatConstants.thumbStyle}
+                trackStyle={ChatConstants.trackStyle}
+                thumbSwitchedStyle={ChatConstants.thumbSwitchedStyle}
+                trackSwitchedStyle={ChatConstants.trackSwitchedStyle}
               />
               <br />
             </div>
@@ -854,7 +857,7 @@ class Settings extends Component {
             <hr className="Divider" style={{ height: '2px' }} />
           </span>
           <RadioButtonGroup
-            style={{ textAlign: 'left', margin: '20px', marginBottom: '41px' }}
+            style={{ textAlign: 'left', margin: '20px', marginBottom: '43px' }}
             onChange={this.handleSelectChange}
             name="Theme"
             valueSelected={this.state.theme}
@@ -864,21 +867,21 @@ class Settings extends Component {
               iconStyle={radioIconStyle}
               labelStyle={{ color: themeForegroundColor }}
               value="light"
-              label="Light"
+              label={<span style={{ fontSize: '16px' }}>Light</span>}
             />
             <RadioButton
-              style={{ width: '20%', display: 'block' }}
+              style={{ width: '20%', display: 'block', marginTop: '-1px' }}
               iconStyle={radioIconStyle}
               labelStyle={{ color: themeForegroundColor }}
               value="dark"
-              label="Dark"
+              label={<span style={{ fontSize: '16px' }}>Dark</span>}
             />
             <RadioButton
-              style={{ width: '20%' }}
+              style={{ width: '20%', display: 'block', marginTop: '-1px' }}
               iconStyle={radioIconStyle}
               labelStyle={{ color: themeForegroundColor }}
               value="custom"
-              label="Custom"
+              label={<span style={{ fontSize: '16px' }}>Custom</span>}
             />
           </RadioButtonGroup>
         </div>
@@ -905,6 +908,10 @@ class Settings extends Component {
               labelStyle={{ color: themeForegroundColor }}
               onToggle={this.handleSpeechOutput}
               toggled={this.state.SpeechOutput}
+              thumbStyle={ChatConstants.thumbStyle}
+              trackStyle={ChatConstants.trackStyle}
+              thumbSwitchedStyle={ChatConstants.thumbSwitchedStyle}
+              trackSwitchedStyle={ChatConstants.trackSwitchedStyle}
             />
             <br />
             <br />
@@ -934,6 +941,10 @@ class Settings extends Component {
               labelStyle={{ color: themeForegroundColor }}
               onToggle={this.handleSpeechOutputAlways}
               toggled={this.state.SpeechOutputAlways}
+              thumbStyle={ChatConstants.thumbStyle}
+              trackStyle={ChatConstants.trackStyle}
+              thumbSwitchedStyle={ChatConstants.thumbSwitchedStyle}
+              trackSwitchedStyle={ChatConstants.trackSwitchedStyle}
             />
             <br />
             <br />
@@ -1282,7 +1293,7 @@ class Settings extends Component {
                 ) : (
                   <RaisedButton
                     label="save changes"
-                    backgroundColor="#4285F4"
+                    backgroundColor={ChatConstants.standardBlue}
                     labelColor="#fff"
                     disabled={!this.state.settingsChanged}
                     onTouchTap={this.handleSave}

@@ -27,3 +27,10 @@ header {
   top: -100px;
 }
 
+.topRightMenu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
