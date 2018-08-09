@@ -17,3 +17,6 @@
     align-items: center;
     flex-direction: column;
 }
+.dialogText{
+	color: rgba(0, 0, 0);
+}

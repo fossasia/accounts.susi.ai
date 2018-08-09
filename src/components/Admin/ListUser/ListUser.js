@@ -527,12 +527,13 @@ export default class ListUser extends Component {
                     <div className="table">
                       <div>
                         <Dialog
+                          className="dialogText"
                           title="Change User Role"
                           actions={actions}
                           modal={true}
                           open={this.state.showEditDialog}
                         >
-                          <div>
+                          <div className="dialogText">
                             Select new User Role for
                             <span
                               style={{ fontWeight: 'bold', marginLeft: '5px' }}
@@ -590,6 +591,7 @@ export default class ListUser extends Component {
                           </div>
                         </Dialog>
                         <Dialog
+                          className="dialogText"
                           title="Success"
                           actions={
                             <FlatButton
@@ -602,7 +604,7 @@ export default class ListUser extends Component {
                           modal={true}
                           open={this.state.changeRoleDialog}
                         >
-                          <div>
+                          <div className="dialogText">
                             User role of
                             <span
                               style={{ fontWeight: 'bold', margin: '0 5px' }}
@@ -619,12 +621,13 @@ export default class ListUser extends Component {
                           </div>
                         </Dialog>
                         <Dialog
+                          className="dialogText"
                           title="Delete User Account"
                           actions={deleteActions}
                           modal={true}
                           open={this.state.showDeleteDialog}
                         >
-                          <div>
+                          <div className="dialogText">
                             Are you sure you want to delete the account
                             associated with
                             <span
@@ -635,6 +638,7 @@ export default class ListUser extends Component {
                           </div>
                         </Dialog>
                         <Dialog
+                          className="dialogText"
                           title="Success"
                           actions={
                             <FlatButton
@@ -647,7 +651,7 @@ export default class ListUser extends Component {
                           modal={true}
                           open={this.state.deleteSuccessDialog}
                         >
-                          <div>
+                          <div className="dialogText">
                             Account associated with
                             <span
                               style={{ fontWeight: 'bold', margin: '0 5px' }}
@@ -658,6 +662,7 @@ export default class ListUser extends Component {
                           </div>
                         </Dialog>
                         <Dialog
+                          className="dialogText"
                           title="Failed"
                           actions={
                             <FlatButton
@@ -670,7 +675,7 @@ export default class ListUser extends Component {
                           modal={true}
                           open={this.state.deleteFailedDialog}
                         >
-                          <div>
+                          <div className="dialogText">
                             Account associated with
                             <span
                               style={{ fontWeight: 'bold', margin: '0 5px' }}

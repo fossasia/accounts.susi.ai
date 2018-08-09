@@ -619,6 +619,7 @@ class ListSkills extends React.Component {
                         >
                           <TabPane tab="Active" key="1">
                             <Dialog
+                              className="dialogText"
                               title={
                                 'Skill Settings for ' + this.state.skillName
                               }
@@ -662,28 +663,31 @@ class ListSkills extends React.Component {
                             </Dialog>
 
                             <Dialog
+                              className="dialogText"
                               title="Delete Skill"
                               actions={deleteActions}
                               model={true}
                               open={this.state.showDeleteDialog}
                             >
-                              <div>
+                              <div className="dialogText">
                                 Are you sure you want to delete{' '}
                                 {this.state.skillName}?
                               </div>
                             </Dialog>
                             <Dialog
+                              className="dialogText"
                               title="Restore Skill"
                               actions={restoreActions}
                               model={true}
                               open={this.state.showRestoreDialog}
                             >
-                              <div>
+                              <div className="dialogText">
                                 Are you sure you want to restore{' '}
                                 {this.state.skillName}?
                               </div>
                             </Dialog>
                             <Dialog
+                              className="dialogText"
                               title="Success"
                               actions={
                                 <FlatButton
@@ -698,7 +702,7 @@ class ListSkills extends React.Component {
                               modal={true}
                               open={this.state.restoreSuccessDialog}
                             >
-                              <div>
+                              <div className="dialogText">
                                 You successfully restored
                                 <span
                                   style={{
@@ -712,6 +716,7 @@ class ListSkills extends React.Component {
                               </div>
                             </Dialog>
                             <Dialog
+                              className="dialogText"
                               title="Failed!"
                               actions={
                                 <FlatButton
@@ -726,7 +731,7 @@ class ListSkills extends React.Component {
                               modal={true}
                               open={this.state.restoreFailureDialog}
                             >
-                              <div>
+                              <div className="dialogText">
                                 Error!
                                 <span
                                   style={{
@@ -740,6 +745,7 @@ class ListSkills extends React.Component {
                               </div>
                             </Dialog>
                             <Dialog
+                              className="dialogText"
                               title="Success"
                               actions={
                                 <FlatButton
@@ -754,7 +760,7 @@ class ListSkills extends React.Component {
                               modal={true}
                               open={this.state.deleteSuccessDialog}
                             >
-                              <div>
+                              <div className="dialogText">
                                 You successfully deleted
                                 <span
                                   style={{
@@ -768,6 +774,7 @@ class ListSkills extends React.Component {
                               </div>
                             </Dialog>
                             <Dialog
+                              className="dialogText"
                               title="Failed!"
                               actions={
                                 <FlatButton
@@ -782,7 +789,7 @@ class ListSkills extends React.Component {
                               modal={true}
                               open={this.state.deleteFailureDialog}
                             >
-                              <div>
+                              <div className="dialogText">
                                 Error!
                                 <span
                                   style={{
@@ -797,6 +804,7 @@ class ListSkills extends React.Component {
                             </Dialog>
 
                             <Dialog
+                              className="dialogText"
                               title="Success"
                               actions={
                                 <FlatButton
@@ -811,7 +819,7 @@ class ListSkills extends React.Component {
                               modal={true}
                               open={this.state.changeStatusSuccessDialog}
                             >
-                              <div>
+                              <div className="dialogText">
                                 Status of
                                 <span
                                   style={{
@@ -825,6 +833,7 @@ class ListSkills extends React.Component {
                               </div>
                             </Dialog>
                             <Dialog
+                              className="dialogText"
                               title="Failed!"
                               actions={
                                 <FlatButton
@@ -839,7 +848,7 @@ class ListSkills extends React.Component {
                               modal={true}
                               open={this.state.changeStatusFailureDialog}
                             >
-                              <div>
+                              <div className="dialogText">
                                 Error! Status of
                                 <span
                                   style={{
