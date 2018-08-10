@@ -151,23 +151,23 @@ class ForgotPassword extends Component {
                   onChange={this.handleChange}
                 />
               </div>
-              <div>
+              <div style={{ margin: '10px 0 10px 0' }}>
                 <RaisedButton
                   type="submit"
                   label="Reset"
                   backgroundColor={ChatConstants.standardBlue}
                   labelColor="#fff"
                   disabled={!this.state.validForm}
+                  style={{ marginRight: '15px' }}
+                />
+                <RaisedButton
+                  label="Cancel"
+                  backgroundColor={ChatConstants.standardBlue}
+                  labelColor="#fff"
+                  onTouchTap={this.handleCancel}
                 />
               </div>
             </form>
-            <br />
-            <RaisedButton
-              label="Cancel"
-              backgroundColor={ChatConstants.standardBlue}
-              labelColor="#fff"
-              onTouchTap={this.handleCancel}
-            />
           </Paper>
           {this.state.msg && (
             <div>

@@ -44,6 +44,7 @@ class ListSkills extends React.Component {
       skillLanguage: '',
       skillReviewStatus: false,
       skillEditStatus: true,
+      skillStaffPickStatus: false,
       changeStatusSuccessDialog: false,
       changeStatusFailureDialog: false,
 
@@ -75,9 +76,9 @@ class ListSkills extends React.Component {
         this.state.skillLanguage
       }&skill=${this.state.skillTag}&reviewed=${
         this.state.skillReviewStatus
-      }&editable=${this.state.skillEditStatus}&access_token=` +
-      cookies.get('loggedIn');
-
+      }&editable=${this.state.skillEditStatus}&staffPick=${
+        this.state.skillStaffPickStatus
+      }&access_token=` + cookies.get('loggedIn');
     $.ajax({
       url: url,
       dataType: 'jsonp',
@@ -249,6 +250,7 @@ class ListSkills extends React.Component {
               skillTag: i.skill_tag,
               reviewStatus: i.reviewed,
               editStatus: i.editable,
+              staffPickStatus: i.staffPick,
               type: 'public',
               author: i.author,
               reviewed: i.reviewed ? 'Approved' : 'Not Reviewed',
@@ -323,6 +325,7 @@ class ListSkills extends React.Component {
     language,
     reviewStatus,
     editStatus,
+    staffPickStatus,
     skillTag,
   ) => {
     this.setState({
@@ -333,6 +336,7 @@ class ListSkills extends React.Component {
       skillTag: skillTag,
       skillReviewStatus: reviewStatus,
       skillEditStatus: editStatus,
+      skillStaffPickStatus: staffPickStatus,
       showDialog: true,
     });
   };
@@ -370,6 +374,13 @@ class ListSkills extends React.Component {
     let value = !this.state.skillEditStatus;
     this.setState({
       skillEditStatus: value,
+    });
+  };
+
+  handleStaffPickStatusChange = () => {
+    let value = !this.state.skillStaffPickStatus;
+    this.setState({
+      skillStaffPickStatus: value,
     });
   };
 
@@ -522,6 +533,7 @@ class ListSkills extends React.Component {
                     record.language,
                     record.reviewStatus,
                     record.editStatus,
+                    record.staffPickStatus,
                     record.skillTag,
                   )
                 }
@@ -677,6 +689,20 @@ class ListSkills extends React.Component {
                                     marginTop: '3px',
                                   }}
                                   onCheck={this.handleEditStatusChange}
+                                />
+                                <Checkbox
+                                  label="Staff Pick"
+                                  labelPosition="right"
+                                  className="select"
+                                  checked={this.state.skillStaffPickStatus}
+                                  labelStyle={{ fontSize: '14px' }}
+                                  iconStyle={{ left: '4px', fill: '#4285f4' }}
+                                  style={{
+                                    width: 'auto',
+                                    marginTop: '3px',
+                                    whiteSpace: 'nowrap',
+                                  }}
+                                  onCheck={this.handleStaffPickStatusChange}
                                 />
                               </div>
                             </Dialog>
