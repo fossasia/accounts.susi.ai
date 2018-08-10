@@ -538,12 +538,18 @@ class Settings extends Component {
   };
 
   handlePhoneNo = event => {
-    const re = /^[0-9\b]+$/;
+    const re = /^\d*$/;
+    const verify = /^(?:[0-9] ?){6,14}[0-9]$/;
     if (event.target.value === '' || re.test(event.target.value)) {
       this.setState({
         PhoneNo: event.target.value,
         settingsChanged: true,
       });
+    }
+    if (!verify.test(event.target.value)) {
+      this.setState({ phoneNoError: 'Invalid phone number' });
+    } else {
+      this.setState({ phoneNoError: '' });
     }
   };
 
@@ -621,6 +627,8 @@ class Settings extends Component {
 
     const floatingLabelStyle = {
       color: '#9e9e9e',
+      fontSize: 'unset',
+      lineHeight: '20px',
     };
 
     const settingsMenuStyle = {
@@ -1014,13 +1022,13 @@ class Settings extends Component {
             </div>
             <div
               style={{
-                marginTop: '-10px',
+                marginTop: '30px',
                 marginBottom: '0px',
                 marginLeft: '0px',
                 fontSize: '14px',
               }}
             >
-              Phone number :
+              <span style={{ float: 'left' }}>Phone number :</span>
               <span
                 style={{
                   width: '250px',
@@ -1039,18 +1047,31 @@ class Settings extends Component {
                       this.state.countryCode ? this.state.countryCode : 'US'
                     ].countryCallingCodes[0]
                   }
-                  style={{ width: '45px', marginLeft: '30px' }}
+                  style={{
+                    width: '45px',
+                    marginTop: '-18px',
+                    marginLeft: '30px',
+                    float: 'left',
+                  }}
                 />
 
                 <TextField
                   name="phonenumber"
-                  style={{ width: '150px', marginLeft: '5px' }}
+                  style={{
+                    width: '150px',
+                    float: 'left',
+                    marginTop: '-42px',
+                    marginLeft: '10px',
+                  }}
                   onChange={this.handlePhoneNo}
                   inputStyle={{
                     color: '#333',
+                    paddingBottom: '4px',
+                    fontSize: '16px',
                   }}
                   floatingLabelStyle={floatingLabelStyle}
                   value={this.state.PhoneNo}
+                  errorText={this.state.phoneNoError}
                   floatingLabelText="Phone number"
                 />
               </span>
@@ -1293,7 +1314,9 @@ class Settings extends Component {
                     label="save changes"
                     backgroundColor={ChatConstants.standardBlue}
                     labelColor="#fff"
-                    disabled={!this.state.settingsChanged}
+                    disabled={
+                      !this.state.settingsChanged || this.state.phoneNoError
+                    }
                     onTouchTap={this.handleSave}
                   />
                 )}
