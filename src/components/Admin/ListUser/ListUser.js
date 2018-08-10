@@ -865,7 +865,11 @@ export default class ListUser extends Component {
 
                       <Search
                         placeholder="Search by email"
-                        style={{ margin: '5px 25% 20px 25%', width: '50%' }}
+                        style={{
+                          margin: '5px 25% 20px 25%',
+                          width: '50%',
+                          display: 'flex',
+                        }}
                         size="default"
                         onSearch={value => this.handleSearch(value)}
                       />
