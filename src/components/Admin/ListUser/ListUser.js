@@ -10,6 +10,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu';
+import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
 import Tabs from 'antd/lib/tabs';
 import NotFound from '../../NotFound/NotFound.react';
@@ -30,6 +31,7 @@ export default class ListUser extends Component {
     super(props);
     this.state = {
       username: [],
+      userEmail: '',
       data: [],
       middle: '50',
       pagination: {},
@@ -38,7 +40,10 @@ export default class ListUser extends Component {
       showEditDialog: false,
       showDeleteDialog: false,
       changeRoleDialog: false,
+      showEditDeviceDialog: false,
       deleteSuccessDialog: false,
+      editDeviceSuccessDialog: false,
+      editDeviceFailedDialog: false,
       deleteFailedDialog: false,
     };
     this.columns = [
@@ -153,27 +158,40 @@ export default class ListUser extends Component {
       {
         title: 'Device Name',
         dataIndex: 'devicename',
-        width: '10%',
       },
       {
         title: 'Mac Id',
         dataIndex: 'macid',
-        width: '10%',
       },
       {
         title: 'Room',
         dataIndex: 'room',
-        width: '10%',
       },
       {
         title: 'Latitude',
         dataIndex: 'latitude',
-        width: '10%',
       },
       {
         title: 'Longitude',
         dataIndex: 'longitude',
-        width: '10%',
+      },
+      {
+        title: 'Action',
+        key: 'action',
+        render: (text, record) => {
+          return (
+            <span>
+              <span
+                style={{ cursor: 'pointer', color: '#49A9EE' }}
+                onClick={() =>
+                  this.editDevice(record.devicename, record.room, record.macid)
+                }
+              >
+                Edit
+              </span>
+            </span>
+          );
+        },
       },
     ];
   }
@@ -248,6 +266,13 @@ export default class ListUser extends Component {
       sortField: sorter.field,
       sortOrder: sorter.order,
       ...filters,
+    });
+  };
+
+  handleExpand = (expanded, value) => {
+    this.setState({
+      userEmail: value.email,
+      expanded: expanded,
     });
   };
 
@@ -349,6 +374,42 @@ export default class ListUser extends Component {
     });
   };
 
+  editDevice = (deviceName, room, macid) => {
+    this.setState({
+      deviceName: deviceName,
+      room: room,
+      macid: macid,
+      showEditDeviceDialog: true,
+    });
+  };
+
+  handleDevice = () => {
+    this.setState({ showEditDeviceDialog: false });
+    let url =
+      `${urls.API_URL}/aaa/modifyUserDevices.json?access_token=${cookies.get(
+        'loggedIn',
+      )}&email=${this.state.userEmail}&macid=` +
+      this.state.macid +
+      '&name=' +
+      this.state.deviceName +
+      '&room=' +
+      this.state.room;
+    $.ajax({
+      url: url,
+      dataType: 'jsonp',
+      crossDomain: true,
+      timeout: 3000,
+      async: false,
+      success: response => {
+        this.setState({ editDeviceSuccessDialog: true });
+      },
+      error: function(errorThrown) {
+        console.log(errorThrown);
+        this.setState({ editDeviceFailedDialog: true });
+      },
+    });
+  };
+
   handleDelete = email => {
     this.setState({
       userEmail: email,
@@ -372,6 +433,8 @@ export default class ListUser extends Component {
       showEditDialog: false,
       showDeleteDialog: false,
       deleteFailedDialog: false,
+      showEditDeviceDialog: false,
+      editDeviceFailedDialog: false,
     });
   };
 
@@ -385,6 +448,18 @@ export default class ListUser extends Component {
     if (activeKey === '4') {
       this.props.history.push('/admin/settings');
     }
+  };
+
+  handleDeviceName = (event, value) => {
+    this.setState({
+      deviceName: value,
+    });
+  };
+
+  handleRoom = (event, value) => {
+    this.setState({
+      room: value,
+    });
   };
 
   handleUserRoleChange = (event, index, value) => {
@@ -493,6 +568,21 @@ export default class ListUser extends Component {
       />,
     ];
 
+    const editDeviceActions = [
+      <FlatButton
+        key={1}
+        label="Save"
+        labelStyle={{ color: ChatConstants.standardBlue }}
+        onTouchTap={this.handleDevice}
+      />,
+      <FlatButton
+        key={2}
+        label="Cancel"
+        primary={false}
+        onTouchTap={this.handleClose}
+      />,
+    ];
+
     const blueThemeColor = { color: 'rgb(66, 133, 244)' };
     const themeForegroundColor = '#272727';
     const themeBackgroundColor = '#fff';
@@ -589,6 +679,45 @@ export default class ListUser extends Component {
                             </DropDownMenu>
                           </div>
                         </Dialog>
+
+                        <Dialog
+                          title="Edit device config"
+                          actions={editDeviceActions}
+                          modal={true}
+                          open={this.state.showEditDeviceDialog}
+                        >
+                          <div>
+                            <span
+                              style={{ fontWeight: 'bold', color: 'black' }}
+                            >
+                              {' '}
+                              Mac Id:
+                            </span>
+                            <span
+                              style={{ fontWeight: 'bold', marginLeft: '5px' }}
+                            >
+                              {this.state.macid}
+                            </span>
+                          </div>
+                          <div style={{ width: '50%', marginTop: '35px' }}>
+                            <div className="label">Device Name</div>
+                            <TextField
+                              name="deviceName"
+                              style={{ marginBottom: '10px' }}
+                              value={this.state.deviceName}
+                              onChange={this.handleDeviceName}
+                              placeholder="Enter device name"
+                            />{' '}
+                            <div className="label">Room</div>
+                            <TextField
+                              name="room"
+                              value={this.state.room}
+                              onChange={this.handleRoom}
+                              placeholder="Enter room name"
+                            />
+                          </div>
+                        </Dialog>
+
                         <Dialog
                           title="Success"
                           actions={
@@ -618,6 +747,7 @@ export default class ListUser extends Component {
                             successfully!
                           </div>
                         </Dialog>
+
                         <Dialog
                           title="Delete User Account"
                           actions={deleteActions}
@@ -634,6 +764,7 @@ export default class ListUser extends Component {
                             </span>?
                           </div>
                         </Dialog>
+
                         <Dialog
                           title="Success"
                           actions={
@@ -680,6 +811,56 @@ export default class ListUser extends Component {
                             cannot be deleted!
                           </div>
                         </Dialog>
+
+                        <Dialog
+                          title="Success"
+                          actions={
+                            <FlatButton
+                              key={1}
+                              label="Ok"
+                              labelStyle={{ color: ChatConstants.standardBlue }}
+                              onTouchTap={this.handleSuccess}
+                            />
+                          }
+                          modal={true}
+                          open={this.state.editDeviceSuccessDialog}
+                        >
+                          <div>
+                            Successfully changed the configuration of device
+                            with macid
+                            <span
+                              style={{ fontWeight: 'bold', margin: '0 5px' }}
+                            >
+                              {this.state.macid}
+                            </span>
+                            !
+                          </div>
+                        </Dialog>
+
+                        <Dialog
+                          title="Failed"
+                          actions={
+                            <FlatButton
+                              key={1}
+                              label="Ok"
+                              labelStyle={{ color: ChatConstants.standardBlue }}
+                              onTouchTap={this.handleClose}
+                            />
+                          }
+                          modal={true}
+                          open={this.state.editDeviceFailedDialog}
+                        >
+                          <div>
+                            Unable to change the configuration of device with
+                            macid
+                            <span
+                              style={{ fontWeight: 'bold', margin: '0 5px' }}
+                            >
+                              {this.state.macid}
+                            </span>
+                            !
+                          </div>
+                        </Dialog>
                       </div>
 
                       <Search
@@ -695,12 +876,16 @@ export default class ListUser extends Component {
                             columns={this.columns}
                             locale={{ emptyText: 'No search result found !' }}
                             rowKey={record => record.serialNum}
+                            onExpand={(expanded, record) =>
+                              this.handleExpand(expanded, record)
+                            }
                             expandedRowRender={record => (
                               <Table
                                 style={{
                                   width: '80%',
                                   backgroundColor: 'white',
                                 }}
+                                rowKey={deviceRecord => deviceRecord.macid}
                                 columns={this.devicesColumns}
                                 dataSource={record.devices}
                                 pagination={false}
@@ -717,12 +902,16 @@ export default class ListUser extends Component {
                             columns={this.columns}
                             locale={{ emptyText: 'No users found!' }}
                             rowKey={record => record.serialNum}
+                            onExpand={(expanded, record) =>
+                              this.handleExpand(expanded, record)
+                            }
                             expandedRowRender={record => (
                               <Table
                                 style={{
                                   width: '80%',
                                   backgroundColor: 'white',
                                 }}
+                                rowKey={deviceRecord => deviceRecord.macid}
                                 columns={this.devicesColumns}
                                 dataSource={record.devices}
                                 pagination={false}
