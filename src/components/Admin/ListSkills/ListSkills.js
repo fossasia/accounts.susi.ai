@@ -50,6 +50,7 @@ class ListSkills extends React.Component {
       deleteFailureDialog: false,
       restoreSuccessDialog: false,
       restoreFailureDialog: false,
+      zIndex: -1,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -329,6 +330,7 @@ class ListSkills extends React.Component {
       skillEditStatus: editStatus,
       skillStaffPickStatus: staffPickStatus,
       showDialog: true,
+      zIndex: 1500,
     });
   };
 
@@ -338,6 +340,12 @@ class ListSkills extends React.Component {
       showDeleteDialog: false,
       showRestoreDialog: false,
     });
+
+    setTimeout(() => {
+      this.setState({
+        zIndex: -1,
+      });
+    }, 200);
   };
 
   handleTabChange = activeKey => {
@@ -642,6 +650,7 @@ class ListSkills extends React.Component {
                                 width: '800px',
                                 left: '50%',
                                 marginLeft: '-400px',
+                                zIndex: this.state.zIndex,
                               }}
                             >
                               <div>
