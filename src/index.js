@@ -8,6 +8,7 @@ import Admin from './components/Admin/Admin.js';
 import Users from './components/Admin/ListUser/ListUser.js';
 import Skills from './components/Admin/ListSkills/ListSkills.js';
 import SystemSettings from './components/Admin/SystemSettings/SystemSettings.js';
+import SystemLogs from './components/Admin/SystemLogs/SystemLogs.js';
 import VerifyAccount from './components/Auth/VerifyAccount/VerifyAccount.react';
 import Login from './components/Auth/Login/Login.react';
 import ForgotPassword from './components/Auth/ForgotPassword/ForgotPassword.react';
@@ -49,6 +50,7 @@ const App = () => (
           <Route exact path="/admin/users" component={Users} />
           <Route exact path="/admin/skills" component={Skills} />
           <Route exact path="/admin/settings" component={SystemSettings} />
+          <Route exact path="/admin/logs" component={SystemLogs} />
           <Route exact path="/verify-account" component={VerifyAccount} />
           <Route exact path="/resetpass" component={ResetPassword} />
           <Route exact path="/delete-account" component={DeleteAccount} />

@@ -88,6 +88,9 @@ class SystemSettings extends Component {
     if (activeKey === '3') {
       this.props.history.push('/admin/skills');
     }
+    if (activeKey === '5') {
+      this.props.history.push('/admin/logs');
+    }
   };
 
   render() {
@@ -138,6 +141,7 @@ class SystemSettings extends Component {
                       </LocaleProvider>
                     </div>
                   </TabPane>
+                  <TabPane tab="System Logs" key="5" />
                 </Tabs>
               </Paper>
             </div>

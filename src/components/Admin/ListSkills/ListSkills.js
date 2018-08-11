@@ -350,6 +350,9 @@ class ListSkills extends React.Component {
     if (activeKey === '4') {
       this.props.history.push('/admin/settings');
     }
+    if (activeKey === '5') {
+      this.props.history.push('/admin/logs');
+    }
   };
 
   handleReviewStatusChange = () => {
@@ -618,9 +621,7 @@ class ListSkills extends React.Component {
                   type="card"
                   style={{ minHeight: '500px' }}
                 >
-                  <TabPane tab="Admin" key="1">
-                    Tab for Admin Content
-                  </TabPane>
+                  <TabPane tab="Admin" key="1" />
                   <TabPane tab="Users" key="2" />
                   <TabPane tab="Skills" key="3">
                     <div>
@@ -916,6 +917,7 @@ class ListSkills extends React.Component {
                     </div>
                   </TabPane>
                   <TabPane tab="System Settings" key="4" />
+                  <TabPane tab="System Logs" key="5" />
                 </Tabs>
               </Paper>
             </div>
