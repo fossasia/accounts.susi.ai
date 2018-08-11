@@ -14,6 +14,8 @@ import ChatConstants from '../../../constants/ChatConstants';
 
 import { urls } from '../../../Utils';
 
+import urls from '../../../utils/urls';
+
 import './ForgotPassword.css';
 
 class ForgotPassword extends Component {

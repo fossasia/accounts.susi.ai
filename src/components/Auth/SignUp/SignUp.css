@@ -33,11 +33,11 @@
   width : 50%;
   float : right;
 }
-.app-body-div{
-  height: 80%;
-  width : 50%;
-  float : left;
-  background-color : #EEE;
+.app-body{
+    float : left;
+    width : 50%;
+    height: 80%;
+    background-color : #eee;
 }
 .About{
   margin: 30vh 8% 0% 8%;

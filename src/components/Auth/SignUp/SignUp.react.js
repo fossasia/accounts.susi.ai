@@ -17,7 +17,9 @@ import ChatConstants from '../../../constants/ChatConstants';
 import Footer from '../../Footer/Footer.react.js';
 import susi from '../../../images/susi-logo.svg';
 
+
 import { urls } from '../../../Utils';
+
 
 import './SignUp.css';
 
@@ -190,6 +192,7 @@ export default class SignUp extends Component {
       marginBottom: '3%',
       borderRadius: '5px',
       paddingLeft: '20px',
+      marginLeft: '8px',
     };
     const button = {
       width: '100%',
@@ -235,8 +238,10 @@ export default class SignUp extends Component {
         <div className="signup-container">
           <div className="signUpForm">
             <img src={susi} alt="SUSI" className="susi-logo" />
-            <h1>See whats happening in the world right now</h1>
-            <h1>Sign Up with SUSI</h1>
+            <h1 style={{ marginBottom: 7 }}>
+              See whats happening in the world right now
+            </h1>
+            <h1 style={{ marginBottom: 7 }}>Sign Up with SUSI</h1>
             <form onSubmit={this.handleSubmit}>
               <div>
                 <input
@@ -283,9 +288,9 @@ export default class SignUp extends Component {
                   labelColor="#fff"
                 />
               </div>
-              <h1 style={{ textAlign: 'center' }}>OR</h1>
+              <h1 style={{ textAlign: 'center', marginBottom: 7 }}>OR</h1>
               <div>
-                <h4 style={{ textAlign: 'center' }}>
+                <h4 style={{ textAlign: 'center', marginBottom: 7 }}>
                   If you have an account, Please Login
                 </h4>
                 <Link to={'/'}>

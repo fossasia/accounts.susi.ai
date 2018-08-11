@@ -4,6 +4,7 @@ import './ListUser.css';
 import $ from 'jquery';
 import Cookies from 'universal-cookie';
 import Table from 'antd/lib/table';
+
 import { Input } from 'antd';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar.js';
 import FlatButton from 'material-ui/FlatButton';
@@ -17,12 +18,14 @@ import NotFound from '../../NotFound/NotFound.react';
 import { LocaleProvider } from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
 
+
 import { urls } from '../../../Utils';
 import ChatConstants from '../../../constants/ChatConstants';
 
 const cookies = new Cookies();
 
 const TabPane = Tabs.TabPane;
+
 
 const Search = Input.Search;
 
@@ -282,6 +285,7 @@ export default class ListUser extends Component {
       loading: true,
     });
     let url;
+
     url = `${urls.API_URL}/aaa/getUsers.json?access_token=${cookies.get(
       'loggedIn',
     )}&search=${value}`;
@@ -292,6 +296,7 @@ export default class ListUser extends Component {
       jsonp: 'callback',
       crossDomain: true,
       success: function(response) {
+
         let userList = response.users;
         let users = [];
         userList.map((data, i) => {
@@ -445,6 +450,7 @@ export default class ListUser extends Component {
     if (activeKey === '3') {
       this.props.history.push('/admin/skills');
     }
+
     if (activeKey === '4') {
       this.props.history.push('/admin/settings');
     }
@@ -724,6 +730,7 @@ export default class ListUser extends Component {
                             <FlatButton
                               key={1}
                               label="Ok"
+
                               labelStyle={{ color: ChatConstants.standardBlue }}
                               onTouchTap={this.handleSuccess}
                             />
@@ -929,11 +936,14 @@ export default class ListUser extends Component {
                             onChange={this.handleTableChange}
                           />
                         )}
+
                       </LocaleProvider>
                     </div>
                   </TabPane>
                   <TabPane tab="Skills" key="3" />
+
                   <TabPane tab="System Settings" key="4" />
+
                 </Tabs>
               </Paper>
             </div>

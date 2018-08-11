@@ -10,8 +10,8 @@ import Tabs from 'antd/lib/tabs';
 import 'antd/lib/tabs/style/index.css';
 import { Avatar } from 'antd';
 import NotFound from './../NotFound/NotFound.react';
-
 import { urls } from '../../Utils';
+
 
 const cookies = new Cookies();
 
@@ -24,9 +24,11 @@ class Admin extends Component {
     this.state = {
       tabPosition: 'top',
       userStats: {},
+
       skillStats: {},
       loadingUsers: true,
       loadingSkills: true,
+
     };
   }
 
@@ -44,12 +46,16 @@ class Admin extends Component {
       success: function(response) {
         this.setState({
           userStats: response.userStats,
+
           loadingUsers: false,
+
         });
+        // console.log(response);
       }.bind(this),
       error: function(errorThrown) {
         console.log(errorThrown);
       },
+
     });
 
     url = `${urls.API_URL}/cms/getSkillList.json?access_token=${cookies.get(
@@ -69,6 +75,7 @@ class Admin extends Component {
       error: function(errorThrown) {
         console.log(errorThrown);
       },
+
     });
   }
 
@@ -84,9 +91,11 @@ class Admin extends Component {
     if (activeKey === '3') {
       this.props.history.push('/admin/skills');
     }
+
     if (activeKey === '4') {
       this.props.history.push('/admin/settings');
     }
+
   };
 
   render() {
@@ -124,24 +133,30 @@ class Admin extends Component {
                       }}
                     >
                       <Card
+
                         loading={this.state.loadingUsers}
                         title={
                           <span
                             style={{ fontSize: '18px', fontWeight: 'bold' }}
                           >
+
                             User Roles
+
                           </span>
                         }
                         style={{
                           width: '300px',
+
                           height: '310px',
                           marginBottom: '20px',
+
                           fontSize: '18px',
                           fontWeight: 'bold',
                           lineHeight: '2',
                         }}
                       >
                         <p>
+
                           Anonymous:{' '}
                           {this.state.userStats.anonymous
                             ? this.state.userStats.anonymous
@@ -185,16 +200,19 @@ class Admin extends Component {
                         fontSize: '18px',
                         fontWeight: '5000',
                         float: 'left',
+
                         marginRight: '20px',
                       }}
                     >
                       <Card
                         className="flexCard"
                         loading={this.state.loadingUsers}
+
                         title={
                           <span
                             style={{ fontSize: '18px', fontWeight: 'bold' }}
                           >
+
                             Users
                           </span>
                         }
@@ -354,18 +372,22 @@ class Admin extends Component {
                             style={{ fontSize: '18px', fontWeight: 'bold' }}
                           >
                             Skill Types
+
                           </span>
                         }
                         style={{
                           width: '300px',
+
                           height: '310px',
                           marginBottom: '20px',
+
                           fontSize: '18px',
                           fontWeight: 'bold',
                           lineHeight: '2',
                         }}
                       >
                         <p>
+
                           Editable:{' '}
                           {this.state.skillStats.editableSkills
                             ? this.state.skillStats.editableSkills
@@ -381,6 +403,7 @@ class Admin extends Component {
                           Staff Picks :{' '}
                           {this.state.skillStats.staffPicks
                             ? this.state.skillStats.staffPicks
+
                             : 0}
                         </p>
                       </Card>
@@ -388,7 +411,9 @@ class Admin extends Component {
                   </TabPane>
                   <TabPane tab="Users" key="2" />
                   <TabPane tab="Skills" key="3" />
+
                   <TabPane tab="System Settings" key="4" />
+
                 </Tabs>
               </Paper>
             </div>

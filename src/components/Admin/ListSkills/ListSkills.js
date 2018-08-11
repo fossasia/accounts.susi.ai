@@ -15,6 +15,7 @@ import Cookies from 'universal-cookie';
 import './ListSkills.css';
 import * as $ from 'jquery';
 
+
 import { urls } from '../../../Utils';
 import ChatConstants from '../../../constants/ChatConstants';
 
@@ -46,6 +47,7 @@ class ListSkills extends React.Component {
       skillStaffPickStatus: false,
       changeStatusSuccessDialog: false,
       changeStatusFailureDialog: false,
+
       deleteSuccessDialog: false,
       deleteFailureDialog: false,
       restoreSuccessDialog: false,
@@ -139,12 +141,14 @@ class ListSkills extends React.Component {
       this.state.skillName +
       '&access_token=' +
       cookies.get('loggedIn');
+
     $.ajax({
       url: url,
       dataType: 'jsonp',
       jsonp: 'callback',
       crossDomain: true,
       success: function(data) {
+
         this.setState({ loading: false });
         this.setState({ restoreSuccessDialog: true });
       }.bind(this),
@@ -152,6 +156,7 @@ class ListSkills extends React.Component {
         console.log(err);
         this.setState({ loading: false });
         this.setState({ restoreFailureDialog: true });
+
       }.bind(this),
     });
   };
@@ -234,6 +239,7 @@ class ListSkills extends React.Component {
       crossDomain: true,
       success: function(data) {
         let skills = [];
+
         if (data) {
           for (let i of data.filteredData) {
             let skill = {
@@ -252,6 +258,7 @@ class ListSkills extends React.Component {
             };
             skills.push(skill);
           }
+
         }
         self.setState({
           skillsData: skills,
@@ -274,6 +281,7 @@ class ListSkills extends React.Component {
       showDialog: false,
     });
   };
+
 
   confirmDelete = () => {
     this.deleteSkill();
@@ -308,6 +316,7 @@ class ListSkills extends React.Component {
       showRestoreDialog: true,
     });
   };
+
 
   handleOpen = (
     name,
@@ -347,6 +356,7 @@ class ListSkills extends React.Component {
     if (activeKey === '2') {
       this.props.history.push('/admin/users');
     }
+
     if (activeKey === '4') {
       this.props.history.push('/admin/settings');
     }
@@ -358,6 +368,7 @@ class ListSkills extends React.Component {
       skillReviewStatus: value,
     });
   };
+
 
   handleEditStatusChange = () => {
     let value = !this.state.skillEditStatus;
@@ -600,6 +611,13 @@ class ListSkills extends React.Component {
       },
     ];
 
+    const tabStyle = {
+      width: '100%',
+      animated: false,
+      textAlign: 'left',
+      display: 'inline-block',
+    };
+
     return (
       <div>
         {cookies.get('showAdmin') === 'true' ? (
@@ -624,6 +642,7 @@ class ListSkills extends React.Component {
                   <TabPane tab="Users" key="2" />
                   <TabPane tab="Skills" key="3">
                     <div>
+
                       <div className="table">
                         <Tabs
                           tabPosition="top"

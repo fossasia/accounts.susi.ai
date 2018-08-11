@@ -27,6 +27,8 @@ import ChatConstants from '../../constants/ChatConstants';
 import { urls, isProduction, getAvatarProps } from '../../Utils';
 import './StaticAppBar.css';
 
+import urls from '../../utils/urls';
+
 const cookieDomain = isProduction() ? '.susi.ai' : '';
 
 const cookies = new Cookies();

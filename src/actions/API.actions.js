@@ -2,6 +2,7 @@ import Cookies from 'universal-cookie';
 import $ from 'jquery';
 import { urls } from '../Utils';
 
+
 const cookies = new Cookies();
 
 // Update Changed Settings on server

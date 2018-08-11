@@ -19,6 +19,8 @@ import susi from '../../../images/susi-logo.svg';
 import { urls, isProduction } from '../../../Utils';
 import ChatConstants from '../../../constants/ChatConstants';
 
+import urls from '../../../utils/urls';
+
 // Static assets
 import './Login.css';
 

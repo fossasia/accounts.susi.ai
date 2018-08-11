@@ -1,6 +1,7 @@
 import ChatAppDispatcher from '../dispatcher/ChatAppDispatcher';
 import ChatConstants from '../constants/ChatConstants';
 import { EventEmitter } from 'events';
+
 import { urls } from '../Utils';
 
 let ActionTypes = ChatConstants.ActionTypes;

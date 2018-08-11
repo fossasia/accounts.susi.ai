@@ -10,6 +10,8 @@ import ChatConstants from '../../constants/ChatConstants';
 
 import { urls } from '../../Utils';
 
+import urls from '../../utils/urls';
+
 export default class NotFound extends Component {
   constructor(props) {
     super(props);

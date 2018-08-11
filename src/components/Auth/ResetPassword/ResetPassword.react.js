@@ -14,8 +14,8 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import ChatConstants from '../../../constants/ChatConstants';
-
 import { urls } from '../../../Utils';
+
 
 import './ResetPassword.css';
 
@@ -59,6 +59,7 @@ class ResetPassword extends Component {
 
   componentDidMount() {
     const { token } = this.props;
+    
     let BASE_URL = urls.API_URL;
     let resetPasswordEndPoint =
       BASE_URL +
