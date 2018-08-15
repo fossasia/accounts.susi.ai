@@ -2,6 +2,8 @@
   "name": "accounts.susi.ai",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://accounts.susi.ai/",
+  "repository": "https://github.com/fossasia/accounts.susi.ai",
   "dependencies": {
     "add-px": "1.0.0",
     "antd": "2.13.14",
@@ -91,5 +93,6 @@
       "eslint --fix",
       "git add ."
     ]
-  }
+  },
+  "license": "LGPL-2.1-only"
 }
