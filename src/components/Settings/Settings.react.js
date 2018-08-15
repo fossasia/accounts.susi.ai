@@ -51,7 +51,6 @@ const cookieDomain = isProduction() ? '.susi.ai' : '';
 
 const cookies = new Cookies();
 const token = cookies.get('loggedIn');
-const url = `${urls.API_URL}/aaa/listUserSettings.json?access_token=` + token;
 
 class Settings extends Component {
   constructor(props) {
@@ -70,7 +69,6 @@ class Settings extends Component {
       centerLat: 0,
       centerLng: 0,
       showRemoveConfirmation: false,
-
       selectedSetting: 'Account',
       UserName: '',
       PrefLanguage: 'en-US',
@@ -83,6 +81,7 @@ class Settings extends Component {
       theme: 'light',
       SpeechOutput: true,
       SpeechOutputAlways: true,
+      avatarType: 'server',
       settingsChanged: false,
       voiceList: [
         {
@@ -228,6 +227,8 @@ class Settings extends Component {
   };
 
   apiCall = () => {
+    const url =
+      `${urls.API_URL}/aaa/listUserSettings.json?access_token=` + token;
     $.ajax({
       url: url,
       type: 'GET',
@@ -252,15 +253,9 @@ class Settings extends Component {
       timeout: 3000,
       async: false,
       success: function(response) {
-        if (
-          response.settings.prefLanguage !== '' &&
-          response.settings.prefLanguage !== undefined
-        ) {
-          this.setState({
-            PrefLanguage: response.settings.prefLanguage,
-          });
-        }
         /* eslint-disable */
+        response.settings.prefLanguage = response.settings.prefLanguage || 'en';
+        response.settings.avatarType = response.settings.avatarType || 'server';
         response.settings.enterAsSend =
           response.settings.enterAsSend === 'false' ? false : true;
         response.settings.micInput =
@@ -272,6 +267,8 @@ class Settings extends Component {
         /* eslint-enable */
         this.setState({
           dataFetched: true,
+          PrefLanguage: response.settings.prefLanguage,
+          avatarType: response.settings.avatarType,
           UserName: response.settings.userName,
           TimeZone: response.settings.timeZone,
           countryCode: response.settings.countryCode,
@@ -283,7 +280,6 @@ class Settings extends Component {
           SpeechOutput: response.settings.speechOutput,
           SpeechOutputAlways: response.settings.speechOutputAlways,
         });
-
         let obj = [];
         let mapObj = [];
         let devicenames = [];
@@ -416,6 +412,8 @@ class Settings extends Component {
     let newCountryDialCode = this.state.CountryDialCode;
     let newPhoneNo = this.state.PhoneNo;
     let newTheme = this.state.theme;
+    const newAvatarType = this.state.avatarType;
+
     let vals = {
       enterAsSend: newEnterAsSend,
       micInput: newMicInput,
@@ -428,6 +426,7 @@ class Settings extends Component {
       countryDialCode: newCountryDialCode,
       phoneNo: newPhoneNo,
       theme: newTheme,
+      avatarType: newAvatarType,
     };
     // Trigger Actions to save the settings in stores and server
     this.implementSettings(vals);
@@ -475,6 +474,13 @@ class Settings extends Component {
   handlePrefLang = (event, index, value) => {
     this.setState({
       PrefLanguage: value,
+      settingsChanged: true,
+    });
+  };
+
+  handleAvatarTypeChange = (event, index, value) => {
+    this.setState({
+      avatarType: value,
       settingsChanged: true,
     });
   };
@@ -558,6 +564,7 @@ class Settings extends Component {
       selectedSetting: window.innerWidth > 1112 ? value : e.target.innerText,
     });
   };
+
   render() {
     countryData.countries.all.sort(function(a, b) {
       if (a.name < b.name) {
@@ -631,14 +638,6 @@ class Settings extends Component {
       lineHeight: '20px',
     };
 
-    const settingsMenuStyle = {
-      marginTop: 20,
-      textAlign: 'center',
-      display: 'inline-block',
-      backgroundColor: themeBackgroundColor,
-      color: themeForegroundColor,
-    };
-
     let currentSetting;
 
     if (!this.state.dataFetched && cookies.get('loggedIn')) {
@@ -649,51 +648,78 @@ class Settings extends Component {
         <div>
           <div className="tabHeading">Account</div>
           <hr className="Divider" style={{ height: '2px' }} />
-          <div>
-            <div className="label">User Name</div>
+          <div style={{ display: 'flex', flexDirection: 'row' }}>
+            <div style={{ width: '50%' }}>
+              <div className="label">User Name</div>
+              <TextField
+                name="userName"
+                style={fieldStyle}
+                value={this.state.UserName}
+                onChange={this.handleUserName}
+                placeholder="Enter your User Name"
+                underlineStyle={{ display: 'none' }}
+              />
 
-            <TextField
-              name="userName"
-              style={fieldStyle}
-              value={this.state.UserName}
-              onChange={this.handleUserName}
-              placeholder="Enter your User Name"
-              underlineStyle={{ display: 'none' }}
-            />
+              <div className="label">Email</div>
+              <TextField
+                name="email"
+                style={fieldStyle}
+                value={cookies.get('emailId')}
+                underlineStyle={{ display: 'none' }}
+              />
+              <div className="label" style={{ marginBottom: '0' }}>
+                Select default language
+              </div>
+              <DropDownMenu
+                value={voiceOutput.voiceLang}
+                style={{ marginLeft: '-20px' }}
+                onChange={this.handlePrefLang}
+              >
+                {voiceOutput.voiceMenu}
+              </DropDownMenu>
 
-            <div className="label">Email</div>
-
-            <TextField
-              name="email"
-              style={fieldStyle}
-              value={cookies.get('emailId')}
-              underlineStyle={{ display: 'none' }}
-            />
-
-            <div className="label" style={{ marginBottom: '0' }}>
-              Select default language
+              <div className="label" style={{ marginBottom: '0' }}>
+                Select TimeZone
+              </div>
+              <br />
+              <TimezonePicker
+                value={this.state.TimeZone}
+                onChange={timezone => this.handleTimeZone(timezone)}
+                inputProps={{
+                  placeholder: 'Select Timezone...',
+                  name: 'timezone',
+                }}
+              />
             </div>
-
-            <DropDownMenu
-              value={voiceOutput.voiceLang}
-              style={{ marginLeft: '-20px' }}
-              onChange={this.handlePrefLang}
-            >
-              {voiceOutput.voiceMenu}
-            </DropDownMenu>
-
-            <div className="label" style={{ marginBottom: '0' }}>
-              Select TimeZone
+            <div style={{ width: '50%' }}>
+              <div
+                className="label"
+                style={{ marginBottom: '0', marginLeft: '24px' }}
+              >
+                Select Avatar
+              </div>
+              <DropDownMenu
+                selectedMenuItemStyle={blueThemeColor}
+                onChange={this.handleAvatarTypeChange}
+                value={this.state.avatarType}
+                labelStyle={{ color: themeForegroundColor }}
+                menuStyle={{ backgroundColor: themeBackgroundColor }}
+                menuItemStyle={{ color: themeForegroundColor }}
+                style={{ width: '100%', paddingLeft: 0 }}
+                autoWidth={false}
+              >
+                <MenuItem
+                  primaryText="Uploaded avatar"
+                  value="server"
+                  className="setting-item"
+                />
+                <MenuItem
+                  primaryText="Gravatar"
+                  value="gravatar"
+                  className="setting-item"
+                />
+              </DropDownMenu>
             </div>
-            <br />
-            <TimezonePicker
-              value={this.state.TimeZone}
-              onChange={timezone => this.handleTimeZone(timezone)}
-              inputProps={{
-                placeholder: 'Select Timezone...',
-                name: 'timezone',
-              }}
-            />
           </div>
         </div>
       );
@@ -1302,7 +1328,7 @@ class Settings extends Component {
             </Paper>
           </div>
 
-          <Paper className="settings" styles={settingsMenuStyle} zDepth={1}>
+          <Paper className="settings" zDepth={1}>
             <div className="currentSettings">
               {currentSetting}
               <div style={submitButton}>

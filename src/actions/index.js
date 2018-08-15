@@ -1,6 +1,10 @@
 import { pushSettingsToServer } from './API.actions';
-import { serverChanged, themeChanged } from './Settings.actions';
+import {
+  serverChanged,
+  themeChanged,
+  avatarTypeChanged,
+} from './Settings.actions';
 
 // exports
 export { pushSettingsToServer };
-export { serverChanged, themeChanged };
+export { serverChanged, themeChanged, avatarTypeChanged };

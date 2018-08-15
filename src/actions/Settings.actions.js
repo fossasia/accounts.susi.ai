@@ -18,6 +18,13 @@ export function themeChanged(theme) {
   });
 }
 
+export function avatarTypeChanged(avatarType) {
+  ChatAppDispatcher.dispatch({
+    type: ActionTypes.AVATAR_TYPE_CHANGED,
+    avatarType,
+  });
+}
+
 export function settingsChanged(settings) {
   ChatAppDispatcher.dispatch({
     type: ActionTypes.SETTINGS_CHANGED,
