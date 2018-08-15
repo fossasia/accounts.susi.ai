@@ -10,7 +10,7 @@ let _defaults = {
   Theme: 'light',
   Server: `${urls.API_URL}`,
   StandardServer: `${urls.API_URL}`,
-  avatarType: 'server',
+  avatarType: 'default',
 };
 
 let UserPreferencesStore = {

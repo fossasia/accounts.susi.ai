@@ -6,6 +6,7 @@ import Cookies from 'universal-cookie';
 import $ from 'jquery';
 
 // Components
+import CircularProgress from 'material-ui/CircularProgress';
 import TextField from 'material-ui/TextField';
 import StaticAppBar from '../StaticAppBar/StaticAppBar';
 import Paper from 'material-ui/Paper';
@@ -81,8 +82,9 @@ class Settings extends Component {
       theme: 'light',
       SpeechOutput: true,
       SpeechOutputAlways: true,
-      avatarType: 'server',
+      avatarType: 'default',
       settingsChanged: false,
+      uploadingAvatar: false,
       voiceList: [
         {
           lang: 'am-AM',
@@ -565,6 +567,39 @@ class Settings extends Component {
     });
   };
 
+  handleAvatarUpload = avatarImage => {
+    let files = avatarImage.target.files;
+    if (files.length === 0) {
+      console.log('Some error happened');
+      return;
+    }
+
+    // eslint-disable-next-line no-undef
+    let form = new FormData();
+    form.append('access_token', cookies.get('loggedIn'));
+    form.append('image', files[0]);
+    let settings = {
+      async: true,
+      crossDomain: true,
+      url: `${urls.API_URL}/aaa/uploadAvatar.json`,
+      method: 'POST',
+      processData: false,
+      contentType: false,
+      mimeType: 'multipart/form-data',
+      data: form,
+    };
+    this.setState({ uploadingAvatar: true });
+    let self = this;
+    $.ajax(settings).done(function(response) {
+      self.setState(
+        {
+          uploadingAvatar: false,
+        },
+        self.handleSave(),
+      );
+    });
+  };
+
   render() {
     countryData.countries.all.sort(function(a, b) {
       if (a.name < b.name) {
@@ -709,6 +744,11 @@ class Settings extends Component {
                 autoWidth={false}
               >
                 <MenuItem
+                  primaryText="Default"
+                  value="default"
+                  className="setting-item"
+                />
+                <MenuItem
                   primaryText="Uploaded avatar"
                   value="server"
                   className="setting-item"
@@ -719,6 +759,22 @@ class Settings extends Component {
                   className="setting-item"
                 />
               </DropDownMenu>
+              {this.state.avatarType === 'server' && (
+                <form style={{ display: 'inline-block', marginLeft: '24px' }}>
+                  <label className="file-upload-btn" title="Upload Avatar">
+                    <input
+                      type="file"
+                      onChange={this.handleAvatarUpload}
+                      accept="image/x-png,image/gif,image/jpeg"
+                    />
+                    {this.state.uploadingAvatar ? (
+                      <CircularProgress color="#ffffff" size={32} />
+                    ) : (
+                      'Upload Avatar'
+                    )}
+                  </label>
+                </form>
+              )}
             </div>
           </div>
         </div>
