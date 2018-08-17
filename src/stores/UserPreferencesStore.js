@@ -10,6 +10,7 @@ let _defaults = {
   Theme: 'light',
   Server: `${urls.API_URL}`,
   StandardServer: `${urls.API_URL}`,
+  avatarType: 'server',
 };
 
 let UserPreferencesStore = {
@@ -25,6 +26,10 @@ let UserPreferencesStore = {
 
   getTheme() {
     return _defaults.Theme;
+  },
+
+  getAvatarType() {
+    return _defaults.avatarType;
   },
 
   addChangeListener(callback) {
@@ -45,6 +50,11 @@ UserPreferencesStore.dispatchToken = ChatAppDispatcher.register(action => {
     }
     case ActionTypes.SERVER_CHANGED: {
       _defaults.Server = action.server;
+      UserPreferencesStore.emitChange();
+      break;
+    }
+    case ActionTypes.AVATAR_TYPE_CHANGED: {
+      _defaults.avatarType = action.avatarType;
       UserPreferencesStore.emitChange();
       break;
     }
