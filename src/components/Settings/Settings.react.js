@@ -29,6 +29,7 @@ import { Link } from 'react-router-dom';
 import ChangePassword from '../Auth/ChangePassword/ChangePassword.react';
 import * as Actions from '../../actions/';
 import ChatConstants from '../../constants/ChatConstants';
+import ThemeChanger from './ThemeChanger';
 
 // Keys
 import { MAP_KEY } from '../../../src/config.js';
@@ -56,6 +57,7 @@ class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      themeOpen: false,
       dataFetched: false,
       deviceData: false,
       obj: [],
@@ -139,6 +141,89 @@ class Settings extends Component {
       ],
     };
   }
+
+  onThemeRequestClose = () => {
+    this.setState({ themeOpen: false });
+  };
+  handleThemeChanger = () => {
+    this.setState({ themeOpen: true });
+    switch (this.state.currTheme) {
+      case 'light': {
+        this.applyLightTheme();
+        break;
+      }
+      case 'dark': {
+        this.applyDarkTheme();
+        break;
+      }
+      default: {
+        var prevThemeSettings = {};
+        var state = this.state;
+        prevThemeSettings.currTheme = state.currTheme;
+        prevThemeSettings.bodyColor = state.body;
+        prevThemeSettings.TopBarColor = state.header;
+        prevThemeSettings.composerColor = state.composer;
+        prevThemeSettings.messagePane = state.pane;
+        prevThemeSettings.textArea = state.textarea;
+        prevThemeSettings.buttonColor = state.button;
+        prevThemeSettings.bodyBackgroundImage = state.bodyBackgroundImage;
+        prevThemeSettings.messageBackgroundImage = state.messageBackgroundImage;
+        this.setState({ prevThemeSettings });
+      }
+    }
+  };
+  applyLightTheme = () => {
+    this.setState({
+      prevThemeSettings: null,
+      body: '#fff',
+      header: '#4285f4',
+      composer: '#f3f2f4',
+      pane: '#f3f2f4',
+      textarea: '#fff',
+      button: '#4285f4',
+      currTheme: 'light',
+    });
+    let customData = '';
+    Object.keys(this.customTheme).forEach(key => {
+      customData = customData + this.customTheme[key] + ',';
+    });
+    let settingsChanged = {};
+    settingsChanged.theme = 'light';
+    settingsChanged.customThemeValue = customData;
+    if (this.state.bodyBackgroundImage || this.state.messageBackgroundImage) {
+      settingsChanged.backgroundImage =
+        this.state.bodyBackgroundImage +
+        ',' +
+        this.state.messageBackgroundImage;
+    }
+    Actions.settingsChanged(settingsChanged);
+  };
+  applyDarkTheme = () => {
+    this.setState({
+      prevThemeSettings: null,
+      body: '#fff',
+      header: '#4285f4',
+      composer: '#f3f2f4',
+      pane: '#f3f2f4',
+      textarea: '#fff',
+      button: '#4285f4',
+      currTheme: 'dark',
+    });
+    let customData = '';
+    Object.keys(this.customTheme).forEach(key => {
+      customData = customData + this.customTheme[key] + ',';
+    });
+    let settingsChanged = {};
+    settingsChanged.theme = 'dark';
+    settingsChanged.customThemeValue = customData;
+    if (this.state.bodyBackgroundImage || this.state.messageBackgroundImage) {
+      settingsChanged.backgroundImage =
+        this.state.bodyBackgroundImage +
+        ',' +
+        this.state.messageBackgroundImage;
+    }
+    Actions.settingsChanged(settingsChanged);
+  };
 
   handleRemove = i => {
     let data = this.state.obj;
@@ -889,7 +974,7 @@ class Settings extends Component {
             <hr className="Divider" style={{ height: '2px' }} />
           </span>
           <RadioButtonGroup
-            style={{ textAlign: 'left', margin: '20px', marginBottom: '43px' }}
+            style={{ textAlign: 'left', margin: '20px', marginBottom: '23px' }}
             onChange={this.handleSelectChange}
             name="Theme"
             valueSelected={this.state.theme}
@@ -916,6 +1001,16 @@ class Settings extends Component {
               label={<span style={{ fontSize: '16px' }}>Custom</span>}
             />
           </RadioButtonGroup>
+          <RaisedButton
+            label="Edit theme"
+            backgroundColor="#4285f4"
+            labelColor="#fff"
+            onClick={this.handleThemeChanger}
+          />
+          <ThemeChanger
+            themeOpen={this.state.themeOpen}
+            onRequestClose={() => this.onThemeRequestClose}
+          />
         </div>
       );
     }
@@ -1382,6 +1477,7 @@ Settings.propTypes = {
   history: PropTypes.object,
   location: PropTypes.object,
   google: PropTypes.object,
+  handleThemeChanger: PropTypes.func,
 };
 
 export default GoogleApiWrapper({
