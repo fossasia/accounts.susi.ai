@@ -24,7 +24,7 @@ import List from 'material-ui/svg-icons/action/list';
 import susiWhite from '../../images/susi-logo-white.png';
 import CircleImage from '../CircleImage/CircleImage';
 import ChatConstants from '../../constants/ChatConstants';
-import { urls, isProduction, getAvatarProps } from '../../Utils';
+import { urls, isProduction } from '../../Utils';
 import './StaticAppBar.css';
 
 const cookieDomain = isProduction() ? '.susi.ai' : '';
@@ -108,7 +108,12 @@ class StaticAppBar extends Component {
     const isLoggedIn = !!cookies.get('loggedIn');
     let avatarProps = null;
     if (isLoggedIn) {
-      avatarProps = getAvatarProps(cookies.get('emailId'));
+      avatarProps = {
+        name: cookies.get('emailId'),
+        src: `${urls.API_URL}/getAvatar.png?access_token=${cookies.get(
+          'loggedIn',
+        )}`,
+      };
     }
 
     let ListMenu = props => (
