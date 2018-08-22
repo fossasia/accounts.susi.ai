@@ -249,7 +249,7 @@ class Login extends Component {
       borderRadius: 4,
       border: '1px solid #ced4da',
       fontSize: 16,
-      padding: '0px 10px',
+      padding: '0px 5px',
       margin: '10px',
       paddingRight: '0',
       width: '',
