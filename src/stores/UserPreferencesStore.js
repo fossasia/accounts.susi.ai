@@ -12,7 +12,7 @@ let _defaults = {
   BackgroundImage: '',
   Server: `${urls.API_URL}`,
   StandardServer: `${urls.API_URL}`,
-  avatarType: 'server',
+  avatarType: 'default',
 };
 
 let UserPreferencesStore = {
