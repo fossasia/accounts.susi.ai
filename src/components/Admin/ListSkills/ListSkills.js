@@ -44,6 +44,7 @@ class ListSkills extends React.Component {
       skillReviewStatus: false,
       skillEditStatus: true,
       skillStaffPickStatus: false,
+      systemSkillStatus: false,
       changeStatusSuccessDialog: false,
       changeStatusFailureDialog: false,
       deleteSuccessDialog: false,
@@ -77,7 +78,8 @@ class ListSkills extends React.Component {
         this.state.skillReviewStatus
       }&editable=${this.state.skillEditStatus}&staffPick=${
         this.state.skillStaffPickStatus
-      }&access_token=` + cookies.get('loggedIn');
+      }&systemSkill=${this.state.systemSkillStatus}&access_token=` +
+      cookies.get('loggedIn');
     $.ajax({
       url: url,
       dataType: 'jsonp',
@@ -236,20 +238,21 @@ class ListSkills extends React.Component {
       success: function(data) {
         let skills = [];
         if (data) {
-          for (let i of data.filteredData) {
+          for (let skillMetadata of data.filteredData) {
             let skill = {
-              skillName: i.skill_name,
-              model: i.model,
-              group: i.group,
-              language: i.language,
-              skillTag: i.skill_tag,
-              reviewStatus: i.reviewed,
-              editStatus: i.editable,
-              staffPickStatus: i.staffPick,
+              skillName: skillMetadata.skill_name,
+              model: skillMetadata.model,
+              group: skillMetadata.group,
+              language: skillMetadata.language,
+              skillTag: skillMetadata.skill_tag,
+              reviewStatus: skillMetadata.reviewed,
+              editStatus: skillMetadata.editable,
+              staffPickStatus: skillMetadata.staffPick,
+              systemSkillStatus: skillMetadata.systemSkill,
               type: 'public',
-              author: i.author,
-              reviewed: i.reviewed ? 'Approved' : 'Not Reviewed',
-              editable: i.editable ? 'Editable' : 'Not Editable',
+              author: skillMetadata.author,
+              reviewed: skillMetadata.reviewed ? 'Approved' : 'Not Reviewed',
+              editable: skillMetadata.editable ? 'Editable' : 'Not Editable',
             };
             skills.push(skill);
           }
@@ -318,6 +321,7 @@ class ListSkills extends React.Component {
     reviewStatus,
     editStatus,
     staffPickStatus,
+    systemSkillStatus,
     skillTag,
   ) => {
     this.setState({
@@ -329,6 +333,7 @@ class ListSkills extends React.Component {
       skillReviewStatus: reviewStatus,
       skillEditStatus: editStatus,
       skillStaffPickStatus: staffPickStatus,
+      systemSkillStatus: systemSkillStatus,
       showDialog: true,
       zIndex: 1500,
     });
@@ -381,6 +386,13 @@ class ListSkills extends React.Component {
     let value = !this.state.skillStaffPickStatus;
     this.setState({
       skillStaffPickStatus: value,
+    });
+  };
+
+  handleSystemSkillStatusChange = () => {
+    let value = !this.state.systemSkillStatus;
+    this.setState({
+      systemSkillStatus: value,
     });
   };
 
@@ -534,6 +546,7 @@ class ListSkills extends React.Component {
                     record.reviewStatus,
                     record.editStatus,
                     record.staffPickStatus,
+                    record.systemSkillStatus,
                     record.skillTag,
                   )
                 }
@@ -695,6 +708,20 @@ class ListSkills extends React.Component {
                                   }}
                                   onCheck={this.handleStaffPickStatusChange}
                                 />
+                                <Checkbox
+                                  label="System Skill"
+                                  labelPosition="right"
+                                  className="select"
+                                  checked={this.state.systemSkillStatus}
+                                  labelStyle={{ fontSize: '14px' }}
+                                  iconStyle={{ left: '4px', fill: '#4285f4' }}
+                                  style={{
+                                    width: 'auto',
+                                    marginTop: '3px',
+                                    whiteSpace: 'nowrap',
+                                  }}
+                                  onCheck={this.handleSystemSkillStatusChange}
+                                />
                               </div>
                             </Dialog>
 
@@ -706,7 +733,9 @@ class ListSkills extends React.Component {
                             >
                               <div>
                                 Are you sure you want to delete{' '}
-                                {this.state.skillName}?
+                                <span className="skillName">
+                                  {this.state.skillName}
+                                </span>?
                               </div>
                             </Dialog>
                             <Dialog
@@ -717,7 +746,9 @@ class ListSkills extends React.Component {
                             >
                               <div>
                                 Are you sure you want to restore{' '}
-                                {this.state.skillName}?
+                                <span className="skillName">
+                                  {this.state.skillName}
+                                </span>?
                               </div>
                             </Dialog>
                             <Dialog
@@ -736,13 +767,8 @@ class ListSkills extends React.Component {
                               open={this.state.restoreSuccessDialog}
                             >
                               <div>
-                                You successfully restored
-                                <span
-                                  style={{
-                                    fontWeight: 'bold',
-                                    margin: '0 5px',
-                                  }}
-                                >
+                                You successfully restored{' '}
+                                <span className="skillName">
                                   {this.state.skillName}
                                 </span>
                                 !
@@ -764,13 +790,8 @@ class ListSkills extends React.Component {
                               open={this.state.restoreFailureDialog}
                             >
                               <div>
-                                Error!
-                                <span
-                                  style={{
-                                    fontWeight: 'bold',
-                                    margin: '0 5px',
-                                  }}
-                                >
+                                Error!{' '}
+                                <span className="skillName">
                                   {this.state.skillName}
                                 </span>
                                 could not be restored!
@@ -792,13 +813,8 @@ class ListSkills extends React.Component {
                               open={this.state.deleteSuccessDialog}
                             >
                               <div>
-                                You successfully deleted
-                                <span
-                                  style={{
-                                    fontWeight: 'bold',
-                                    margin: '0 5px',
-                                  }}
-                                >
+                                You successfully deleted{' '}
+                                <span className="skillName">
                                   {this.state.skillName}
                                 </span>
                                 !
@@ -820,13 +836,8 @@ class ListSkills extends React.Component {
                               open={this.state.deleteFailureDialog}
                             >
                               <div>
-                                Error!
-                                <span
-                                  style={{
-                                    fontWeight: 'bold',
-                                    margin: '0 5px',
-                                  }}
-                                >
+                                Error!{' '}
+                                <span className="skillName">
                                   {this.state.skillName}
                                 </span>
                                 could not be deleted!
@@ -849,15 +860,10 @@ class ListSkills extends React.Component {
                               open={this.state.changeStatusSuccessDialog}
                             >
                               <div>
-                                Status of
-                                <span
-                                  style={{
-                                    fontWeight: 'bold',
-                                    margin: '0 5px',
-                                  }}
-                                >
+                                Status of{' '}
+                                <span className="skillName">
                                   {this.state.skillName}
-                                </span>
+                                </span>{' '}
                                 has been changed successfully!
                               </div>
                             </Dialog>
@@ -877,13 +883,8 @@ class ListSkills extends React.Component {
                               open={this.state.changeStatusFailureDialog}
                             >
                               <div>
-                                Error! Status of
-                                <span
-                                  style={{
-                                    fontWeight: 'bold',
-                                    margin: '0 5px',
-                                  }}
-                                >
+                                Error! Status of{' '}
+                                <span className="skillName">
                                   {this.state.skillName}
                                 </span>
                                 could not be changed!

@@ -11,7 +11,6 @@ body{
 * {
   box-sizing: unset;
 }
-
 .ant-pagination-options-quick-jumper input {
   height:unset;
   width:30px;
@@ -94,7 +93,33 @@ body{
   float:right;
   background-color: #fff;
 }
+.settingsComponents{
+    width: 75%;
+    margin-top: 80px;
+}
+.image-div{
+    margin-top:-40px;	
+}
+h4 {
+    display: block;
+    -webkit-margin-before: 1.33em;
+    -webkit-margin-after: 1.33em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-weight: bold;
+    color: unset;
+}
 
+h5 {
+    display: block;
+    font-size: 1.5em;
+    -webkit-margin-before: 0.83em;
+    -webkit-margin-after: 0.83em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-weight: bold;
+    color: unset;
+}
 .footer-wrapper {
   z-index: 10;
   height:0px;
@@ -126,7 +151,24 @@ body{
   float: left;
   background-color: #fff;
 }
+.color-box{
+    display: inline-block;
+    width: 23px;
+    height: 23px;
+    border-radius: 3px;
+    border: 1px solid #0000006e;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-bottom: -8px;
+}
 
+.colorPicker{
+    margin-left: 50px;
+    margin-top: -35px;
+}
+.colorPicker>div>div {
+    width: 90px !important; /* csslint allow: known-properties, important */
+}
 @media screen and (max-width: 1112px) {
   .settings {
     float:left;
@@ -166,4 +208,41 @@ body{
   .settings {
     height:500px;
   }
+}
+
+.file-upload-btn{
+  border: 10px;
+  box-sizing: border-box;
+  display: inline-block;
+  font-family: Roboto, sans-serif;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+  text-decoration: none;
+  margin: 0px;
+  padding: 0px 10px;
+  outline: none;
+  font-size: inherit;
+  font-weight: inherit;
+  position: relative;
+  z-index: 1;
+  height: 36px;
+  line-height: 36px;
+  width: 100%;
+  border-radius: 2px;
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  background-color: rgb(66, 133, 244);
+  text-align: center;
+  color: #fff;
+  font-size: 14px;
+  text-transform: uppercase;
+  max-width: 200px;
+  min-width: 88px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+}
+.file-upload-btn:hover{
+  background-color: rgb(90, 147, 241);
+}
+
+input[type=file]{
+  display: none;
 }

@@ -8,8 +8,11 @@ let CHANGE_EVENT = 'change';
 
 let _defaults = {
   Theme: 'light',
+  ThemeValues: '',
+  BackgroundImage: '',
   Server: `${urls.API_URL}`,
   StandardServer: `${urls.API_URL}`,
+  avatarType: 'default',
 };
 
 let UserPreferencesStore = {
@@ -25,6 +28,18 @@ let UserPreferencesStore = {
 
   getTheme() {
     return _defaults.Theme;
+  },
+
+  getThemeValues() {
+    return _defaults.ThemeValues;
+  },
+
+  getBackgroundImage() {
+    return _defaults.BackgroundImage;
+  },
+
+  getAvatarType() {
+    return _defaults.avatarType;
   },
 
   addChangeListener(callback) {
@@ -45,6 +60,24 @@ UserPreferencesStore.dispatchToken = ChatAppDispatcher.register(action => {
     }
     case ActionTypes.SERVER_CHANGED: {
       _defaults.Server = action.server;
+      UserPreferencesStore.emitChange();
+      break;
+    }
+    case ActionTypes.SETTINGS_CHANGED: {
+      let settings = action.settings;
+      if (settings.hasOwnProperty('theme')) {
+        _defaults.Theme = settings.theme;
+      }
+      if (settings.hasOwnProperty('previewTheme')) {
+        _defaults.PreviewTheme = settings.previewTheme;
+      }
+      if (settings.hasOwnProperty('backgroundImage')) {
+        _defaults.BackgroundImage = settings.backgroundImage;
+      }
+      break;
+    }
+    case ActionTypes.AVATAR_TYPE_CHANGED: {
+      _defaults.avatarType = action.avatarType;
       UserPreferencesStore.emitChange();
       break;
     }
