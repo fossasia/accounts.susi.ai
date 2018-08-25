@@ -190,6 +190,7 @@ export default class SignUp extends Component {
       marginBottom: '3%',
       border: '1px solid #ced4da',
       borderRadius: '5px',
+      padding: '20px',
       paddingLeft: '5px',
       boxSizing: 'border-box',
     };

@@ -33,6 +33,10 @@
   width : 50%;
   float : right;
 }
+.signup-container h1{
+  margin-top:10px;
+  font-weight:600;
+}
 .app-body-div{
   height: 80%;
   width : 50%;
