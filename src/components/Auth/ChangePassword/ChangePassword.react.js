@@ -192,9 +192,10 @@ export default class ChangePassword extends Component {
       width: '125%',
     };
     const labelStyle = {
-      width: '30%',
+      minWidth: '30%',
       float: 'left',
       marginTop: '12px',
+      marginBottom: '5px',
     };
     const inputStyle = {
       height: '35px',
@@ -219,17 +220,13 @@ export default class ChangePassword extends Component {
                   visibilityButtonStyle={{ display: 'none' }}
                   visibilityIconStyle={{ display: 'none' }}
                 />
-                <div className="forgot">
-                  <a href={`${window.location.origin}/forgotpwd`}>
-                    Forgot your password?
-                  </a>
-                </div>
               </div>
               <br />
               <div style={labelStyle}>New Password</div>
               <div>
                 <PasswordField
                   name="newPassword"
+                  placeholder="Must be at least 6 characters"
                   style={fieldStyle}
                   value={this.state.newPassword}
                   onChange={this.handleChange}
@@ -247,6 +244,7 @@ export default class ChangePassword extends Component {
               <div>
                 <PasswordField
                   name="confirmPassword"
+                  placeholder="Must match the new password"
                   style={fieldStyle}
                   value={this.state.confirmPassword}
                   onChange={this.handleChange}
@@ -261,14 +259,19 @@ export default class ChangePassword extends Component {
               <br />
               <div>
                 <RaisedButton
-                  label="Save Changes"
+                  label="Save New Password"
                   type="submit"
-                  style={{ marginRight: '50px' }}
+                  style={{ marginLeft: '30%', marginTop: '0px' }}
                   backgroundColor={ChatConstants.standardBlue}
                   labelColor="#fff"
                 />
               </div>
             </form>
+            <div className="forgot">
+              <a href={`${window.location.origin}/forgotpwd`}>
+                Forgot your password?
+              </a>
+            </div>
           </Paper>
           {this.state.msg && (
             <div>
