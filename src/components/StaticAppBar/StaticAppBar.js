@@ -107,12 +107,14 @@ class StaticAppBar extends Component {
   render() {
     const isLoggedIn = !!cookies.get('loggedIn');
     let avatarProps = null;
+    const date = new Date();
+    const timestamp = date.getTime();
     if (isLoggedIn) {
       avatarProps = {
         name: cookies.get('emailId'),
         src: `${urls.API_URL}/getAvatar.png?access_token=${cookies.get(
           'loggedIn',
-        )}`,
+        )}&q=${timestamp}`,
       };
     }
 
