@@ -288,7 +288,6 @@ export default class SignUp extends Component {
               </div>
               <br />
               <h1 style={{ textAlign: 'center' }}>OR</h1>
-
               <div>
                 <h4
                   style={{ textAlign: 'center', margin: 5, fontWeight: 'bold' }}
