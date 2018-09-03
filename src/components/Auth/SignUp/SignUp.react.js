@@ -286,7 +286,7 @@ export default class SignUp extends Component {
                   labelColor="#fff"
                 />
               </div>
-          <br />
+              <br />
               <h1 style={{ textAlign: 'center' }}>OR</h1>
 
               <div>
