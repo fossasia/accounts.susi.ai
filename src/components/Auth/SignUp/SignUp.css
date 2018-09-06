@@ -4,7 +4,7 @@
 	margin: 0 auto;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 838px) {
 	.signUpForm h1{
 		font-size: 16px;
 	}
@@ -39,6 +39,7 @@
   float : left;
   background-color : #EEE;
 }
+
 .About{
   margin: 30vh 8% 0% 8%;
   text-size : 18px;
@@ -166,7 +167,11 @@
 	left: 14%
 }
 
-@media screen and (max-width: 660px) {
+.About p {
+	margin: 5% 3% 0% 0%;
+}
+
+@media screen and (max-width: 838px) {
   .signup-container{
     float : none;
     height: auto;
@@ -185,4 +190,22 @@
   min-height:unset;
   height:unset;
  }
+}
+
+@media screen and (max-width: 838px){
+	.app-body{
+		width: 100%;
+	}
+	.About p{
+		padding-bottom: 15px;
+		margin-left: 20%;
+	}
+	.About h1, .About p{
+		width: 70%;
+		margin: 0 auto;
+	}
+	.signUpForm {
+		width: 70%;
+		margin: 0 auto;
+	}
 }

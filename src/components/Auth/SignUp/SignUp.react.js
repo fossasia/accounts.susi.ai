@@ -222,7 +222,7 @@ export default class SignUp extends Component {
               Meet SUSI.AI, Your Artificial Intelligence for Personal
               Assistants, Robots, Help Desks and Chatbots.
             </h1>
-            <p style={{ margin: '5% 3% 0% 0%', fontSize: '24px' }}>
+            <p style={{ fontSize: '24px' }}>
               Ask it questions.
               <br />
               <br />
