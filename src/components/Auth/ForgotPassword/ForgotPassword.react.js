@@ -11,6 +11,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import ChatConstants from '../../../constants/ChatConstants';
+import Footer from '../../Footer/Footer.react.js';
 
 import { urls } from '../../../Utils';
 
@@ -107,7 +108,7 @@ class ForgotPassword extends Component {
           this.setState(state);
         }.bind(this),
         error: function(errorThrown) {
-          let msg = 'Failed. Try Again';
+          let msg = "Sorry, we can't recognize you";
           let state = this.state;
           state.msg = msg;
           this.setState(state);
@@ -136,49 +137,56 @@ class ForgotPassword extends Component {
         <div className="app-bar">
           <StaticAppBar />
         </div>
-        <div className="forgotPwdForm">
-          <Paper zDepth={1} style={styles}>
-            <h1>Forgot Password?</h1>
-            <form onSubmit={this.handleSubmit}>
+        <div className="forgotPwdContainer">
+          <div className="forgotPwdForm">
+            <Paper zDepth={1} style={styles}>
+              <h1>Reset Your Password</h1>
+              <p style={{ padding: '10px' }}>
+                Enter your email below and we will send you a link to reset your
+                password
+              </p>
+              <form onSubmit={this.handleSubmit}>
+                <div>
+                  <TextField
+                    name="email"
+                    floatingLabelText="Email"
+                    errorText={this.emailErrorMessage}
+                    value={this.state.email}
+                    onChange={this.handleChange}
+                  />
+                </div>
+                <div style={{ margin: '10px 0 10px 0' }}>
+                  <RaisedButton
+                    type="submit"
+                    label="Reset"
+                    backgroundColor={ChatConstants.standardBlue}
+                    labelColor="#fff"
+                    disabled={!this.state.validForm}
+                    style={{ marginRight: '15px' }}
+                  />
+                  <RaisedButton
+                    label="Cancel"
+                    backgroundColor={ChatConstants.standardBlue}
+                    labelColor="#fff"
+                    onTouchTap={this.handleCancel}
+                  />
+                </div>
+              </form>
+            </Paper>
+            {this.state.msg && (
               <div>
-                <TextField
-                  name="email"
-                  floatingLabelText="Email"
-                  errorText={this.emailErrorMessage}
-                  value={this.state.email}
-                  onChange={this.handleChange}
-                />
+                <Dialog
+                  actions={actions}
+                  modal={false}
+                  open={true}
+                  onRequestClose={this.handleClose}
+                >
+                  {this.state.msg}
+                </Dialog>
               </div>
-              <div style={{ margin: '10px 0 10px 0' }}>
-                <RaisedButton
-                  type="submit"
-                  label="Reset"
-                  backgroundColor={ChatConstants.standardBlue}
-                  labelColor="#fff"
-                  disabled={!this.state.validForm}
-                  style={{ marginRight: '15px' }}
-                />
-                <RaisedButton
-                  label="Cancel"
-                  backgroundColor={ChatConstants.standardBlue}
-                  labelColor="#fff"
-                  onTouchTap={this.handleCancel}
-                />
-              </div>
-            </form>
-          </Paper>
-          {this.state.msg && (
-            <div>
-              <Dialog
-                actions={actions}
-                modal={false}
-                open={true}
-                onRequestClose={this.handleClose}
-              >
-                {this.state.msg}
-              </Dialog>
-            </div>
-          )}
+            )}
+          </div>
+          <Footer />
         </div>
       </div>
     );
