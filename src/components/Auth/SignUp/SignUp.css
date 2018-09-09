@@ -222,3 +222,21 @@
 		margin: 0 auto;
 	}
 }
+
+@media screen and (max-width: 838px){
+	.app-body{
+		width: 100%;
+	}
+	.About p{
+		padding-bottom: 15px;
+		margin-left: 20%;
+	}
+	.About h1, .About p{
+		width: 70%;
+		margin: 0 auto;
+	}
+	.signUpForm {
+		width: 70%;
+		margin: 0 auto;
+	}
+}
