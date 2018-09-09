@@ -11,7 +11,6 @@ import SystemSettings from './components/Admin/SystemSettings/SystemSettings.js'
 import SystemLogs from './components/Admin/SystemLogs/SystemLogs.js';
 import VerifyAccount from './components/Auth/VerifyAccount/VerifyAccount.react';
 import Login from './components/Auth/Login/Login.react';
-import ForgotPassword from './components/Auth/ForgotPassword/ForgotPassword.react';
 import NotFound from './components/NotFound/NotFound.react';
 
 import './index.css';
@@ -54,7 +53,6 @@ const App = () => (
           <Route exact path="/verify-account" component={VerifyAccount} />
           <Route exact path="/resetpass" component={ResetPassword} />
           <Route exact path="/delete-account" component={DeleteAccount} />
-          <Route exact path="/forgotpwd" component={ForgotPassword} />
           <Route exact path="*" component={NotFound} />
         </Switch>
       </div>

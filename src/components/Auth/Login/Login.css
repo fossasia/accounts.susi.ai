@@ -345,3 +345,22 @@
     margin-top:0;
   }
 }
+
+.ModalDiv > div > div > div {
+  width: 50%;
+  margin: 0px auto;
+}
+
+@media screen and (max-width : 783px) {
+  .ModalDiv > div > div > div {
+    width: 80%;
+    margin: 0px auto;
+  }
+}
+
+@media screen and (max-width : 573px) {
+  .ModalDiv > div > div > div {
+    width: 90%;
+    margin: 0px auto;
+  }
+}
