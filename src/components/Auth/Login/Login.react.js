@@ -307,7 +307,7 @@ class Login extends Component {
                 />
                 <div id="forgotpwd">
                   <Link to="/forgotpwd" className="forgotpwdlink">
-                    <b>Forgot Password?</b>
+                    <p>Forgot Password?</p>
                   </Link>
                 </div>
               </div>
