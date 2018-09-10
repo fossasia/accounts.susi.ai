@@ -28,9 +28,14 @@ header {
 }
 
 .topRightMenu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media(max-width: 500px){
+  .topRightLabel {
+    display: none;  
+  }
 }
 
 

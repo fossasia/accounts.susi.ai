@@ -131,6 +131,7 @@ class StaticAppBar extends Component {
           >
             <CircleImage {...avatarProps} size="32" />
             <label
+              className="topRightLabel"
               style={{
                 color: 'white',
                 marginRight: '5px',
