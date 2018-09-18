@@ -42,7 +42,7 @@
 
 .About{
   margin: 30vh 8% 0% 8%;
-  text-size : 18px;
+  font-size : 18px;
   height:59vh;
   min-height:580px;
 }
