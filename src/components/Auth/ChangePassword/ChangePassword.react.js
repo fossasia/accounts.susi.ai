@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import PasswordField from 'material-ui-password-field';
 import Cookies from 'universal-cookie';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import ForgotPassword from '../ForgotPassword/ForgotPassword.react';
 
 import { urls } from '../../../Utils';
 import ChatConstants from '../../../constants/ChatConstants';
@@ -33,6 +34,7 @@ export default class ChangePassword extends Component {
       newPasswordError: true,
       confirmPasswordError: true,
       validForm: false,
+      showForgotPwd: false,
     };
     this.currentPasswordErrorMessage = '';
     this.newPasswordErrorMessage = '';
@@ -40,8 +42,17 @@ export default class ChangePassword extends Component {
   }
 
   handleClose = event => {
-    this.setState({ showDialog: false });
-    this.props.history.push('/userhome');
+    this.setState({
+      showDialog: false,
+      showForgotPwd: false,
+    });
+  };
+
+  handleForgotPwd = event => {
+    event.preventDefault();
+    this.setState({
+      showForgotPwd: true,
+    });
   };
 
   handleSubmit = event => {
@@ -220,9 +231,7 @@ export default class ChangePassword extends Component {
                   visibilityIconStyle={{ display: 'none' }}
                 />
                 <div className="forgot">
-                  <a href={`${window.location.origin}/forgotpwd`}>
-                    Forgot your password?
-                  </a>
+                  <a onClick={this.handleForgotPwd}>Forgot your password?</a>
                 </div>
               </div>
               <br />
@@ -270,6 +279,19 @@ export default class ChangePassword extends Component {
               </div>
             </form>
           </Paper>
+
+          {/* Forgot Password Modal */}
+          <div className="ModalDiv">
+            <Dialog
+              modal={false}
+              open={this.state.showForgotPwd}
+              onRequestClose={this.handleClose}
+              className="ModalDiv"
+            >
+              <ForgotPassword closeModal={this.handleClose.bind(this)} />
+            </Dialog>
+          </div>
+
           {this.state.msg && (
             <div>
               <Dialog
