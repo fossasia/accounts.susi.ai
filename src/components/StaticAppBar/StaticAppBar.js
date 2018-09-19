@@ -32,6 +32,12 @@ const cookieDomain = isProduction() ? '.susi.ai' : '';
 const cookies = new Cookies();
 
 class StaticAppBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      timestamp: new Date().getTime(),
+    };
+  }
   handleScroll = event => {
     let scrollTop = event.pageY || event.target.body.scrollTop,
       itemTranslate = scrollTop > 60;
@@ -107,14 +113,12 @@ class StaticAppBar extends Component {
   render() {
     const isLoggedIn = !!cookies.get('loggedIn');
     let avatarProps = null;
-    const date = new Date();
-    const timestamp = date.getTime();
     if (isLoggedIn) {
       avatarProps = {
         name: cookies.get('emailId'),
         src: `${urls.API_URL}/getAvatar.png?access_token=${cookies.get(
           'loggedIn',
-        )}&q=${timestamp}`,
+        )}&q=${this.state.timestamp}`,
       };
     }
 
