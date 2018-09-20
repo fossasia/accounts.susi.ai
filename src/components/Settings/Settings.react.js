@@ -31,6 +31,8 @@ import ChangePassword from '../Auth/ChangePassword/ChangePassword.react';
 import * as Actions from '../../actions/';
 import ChatConstants from '../../constants/ChatConstants';
 import ThemeChanger from './ThemeChanger';
+import Add from 'material-ui/svg-icons/content/add';
+import getGravatarProps from '../../Utils/getGravatarProps';
 
 // Keys
 import { MAP_KEY } from '../../../src/config.js';
@@ -44,6 +46,7 @@ import AccountIcon from 'material-ui/svg-icons/action/account-box';
 import LockIcon from 'material-ui/svg-icons/action/lock';
 import MyDevices from 'material-ui/svg-icons/device/devices';
 import MobileIcon from 'material-ui/svg-icons/hardware/phone-android';
+import defaultAvatar from '../../../public/defaultAvatar.png';
 
 import 'antd/dist/antd.css';
 import './Settings.css';
@@ -53,6 +56,106 @@ const cookieDomain = isProduction() ? '.susi.ai' : '';
 
 const cookies = new Cookies();
 const token = cookies.get('loggedIn');
+
+const AvatarRender = props => {
+  switch (props.avatarType) {
+    case 'server':
+      return (
+        <form
+          style={{ display: 'inline-block', marginTop: '10px' }}
+          onSubmit={e => props.handleAvatarSubmit(e)}
+        >
+          {props.isAvatarAdded && (
+            <div>
+              <div className="close-avatar">
+                <Close
+                  style={{ height: '20px', width: '20px', margin: '2px 2px' }}
+                  onClick={props.removeAvatarImage}
+                />
+              </div>
+              <img
+                alt="User Avatar"
+                className="setting-avatar"
+                src={props.imagePreviewUrl}
+                onClick={e => props.handleAvatarImageChange(e)}
+              />
+            </div>
+          )}
+          <label htmlFor="file-opener">
+            <div onSubmit={e => props.handleAvatarImageChange(e)}>
+              {!props.isAvatarAdded && (
+                <div className="avatar-empty-box">
+                  <div
+                    style={{
+                      margin: '0 auto',
+                      width: '100%',
+                      height: '100%',
+                      display: 'flex',
+                      alignItem: 'centre',
+                    }}
+                  >
+                    <Add
+                      className="avatar-add-button"
+                      style={{
+                        margin: '50px auto',
+                        height: '50px',
+                        width: '50px',
+                      }}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+            <input
+              id="file-opener"
+              type="file"
+              className="input-avatar"
+              onChange={e => props.handleAvatarImageChange(e)}
+              accept="image/x-png,image/gif,image/jpeg"
+              style={{ marginTop: '10px' }}
+              onClick={event => {
+                event.target.value = null;
+              }}
+            />
+          </label>
+          <div
+            style={{ marginTop: '10px', width: '150px' }}
+            className={`upload-btn file-upload-btn${
+              props.file && props.isAvatarAdded ? '' : '-disabled'
+            }`}
+            title="Upload Avatar"
+          >
+            {props.file && props.uploadingAvatar ? (
+              <CircularProgress color="#ffffff" size={32} />
+            ) : (
+              <div
+                disabled={!props.file}
+                onClick={e => props.handleAvatarSubmit(e)}
+              >
+                Upload Image
+              </div>
+            )}
+          </div>
+        </form>
+      );
+    case 'gravatar':
+      return (
+        <img
+          alt="Gravatar avatar"
+          className="setting-avatar"
+          src={getGravatarProps(cookies.get('emailId')).src}
+        />
+      );
+    default:
+      return (
+        <img
+          alt="Default avatar"
+          className="setting-avatar"
+          src={defaultAvatar}
+        />
+      );
+  }
+};
 
 class Settings extends Component {
   constructor(props) {
@@ -85,6 +188,10 @@ class Settings extends Component {
       SpeechOutput: true,
       SpeechOutputAlways: true,
       avatarType: 'default',
+      avatarSrc: defaultAvatar,
+      file: '',
+      imagePreviewUrl: '',
+      isAvatarAdded: false,
       settingsChanged: false,
       uploadingAvatar: false,
       voiceList: [
@@ -565,10 +672,14 @@ class Settings extends Component {
     });
   };
 
-  handleAvatarTypeChange = (event, index, value) => {
+  handleAvatarTypeChange = value => {
     this.setState({
       avatarType: value,
       settingsChanged: true,
+      imagePreviewUrl: '',
+      isAvatarAdded: false,
+      file: '',
+      avatarSrc: '',
     });
   };
 
@@ -652,17 +763,12 @@ class Settings extends Component {
     });
   };
 
-  handleAvatarUpload = avatarImage => {
-    let files = avatarImage.target.files;
-    if (files.length === 0) {
-      console.log('Some error happened');
-      return;
-    }
-
+  handleAvatarSubmit = () => {
+    let file = this.state.file;
     // eslint-disable-next-line no-undef
     let form = new FormData();
     form.append('access_token', cookies.get('loggedIn'));
-    form.append('image', files[0]);
+    form.append('image', file);
     let settings = {
       async: true,
       crossDomain: true,
@@ -679,9 +785,34 @@ class Settings extends Component {
       self.setState(
         {
           uploadingAvatar: false,
+          isAvatarAdded: true,
         },
         self.handleSave(),
       );
+    });
+  };
+
+  handleAvatarImageChange = e => {
+    e.preventDefault();
+    // eslint-disable-next-line no-undef
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    reader.onloadend = () => {
+      this.setState({
+        file: file,
+        imagePreviewUrl: reader.result,
+        isAvatarAdded: true,
+      });
+    };
+    reader.readAsDataURL(file);
+  };
+
+  removeAvatarImage = () => {
+    this.setState({
+      file: '',
+      isAvatarAdded: false,
+      imagePreviewUrl: '',
+      avatarSrc: '',
     });
   };
 
@@ -769,7 +900,7 @@ class Settings extends Component {
           <div className="tabHeading">Account</div>
           <hr className="Divider" style={{ height: '2px' }} />
           <div style={{ display: 'flex', flexDirection: 'row' }}>
-            <div style={{ width: '50%' }}>
+            <div style={{ width: '50%', marginLeft: '24px' }}>
               <div className="label">User Name</div>
               <TextField
                 name="userName"
@@ -812,10 +943,7 @@ class Settings extends Component {
               />
             </div>
             <div style={{ width: '50%' }}>
-              <div
-                className="label"
-                style={{ marginBottom: '0', marginLeft: '24px' }}
-              >
+              <div className="label" style={{ marginBottom: '0' }}>
                 Select Avatar
               </div>
               <DropDownMenu
@@ -825,7 +953,12 @@ class Settings extends Component {
                 labelStyle={{ color: themeForegroundColor }}
                 menuStyle={{ backgroundColor: themeBackgroundColor }}
                 menuItemStyle={{ color: themeForegroundColor }}
-                style={{ width: '100%', paddingLeft: 0 }}
+                style={{
+                  width: '50%',
+                  paddingLeft: 0,
+                  marginLeft: '-24px',
+                  minWidth: '200px',
+                }}
                 autoWidth={false}
               >
                 <MenuItem
@@ -834,7 +967,7 @@ class Settings extends Component {
                   className="setting-item"
                 />
                 <MenuItem
-                  primaryText="Uploaded avatar"
+                  primaryText="Upload"
                   value="server"
                   className="setting-item"
                 />
@@ -844,22 +977,17 @@ class Settings extends Component {
                   className="setting-item"
                 />
               </DropDownMenu>
-              {this.state.avatarType === 'server' && (
-                <form style={{ display: 'inline-block', marginLeft: '24px' }}>
-                  <label className="file-upload-btn" title="Upload Avatar">
-                    <input
-                      type="file"
-                      onChange={this.handleAvatarUpload}
-                      accept="image/x-png,image/gif,image/jpeg"
-                    />
-                    {this.state.uploadingAvatar ? (
-                      <CircularProgress color="#ffffff" size={32} />
-                    ) : (
-                      'Upload Avatar'
-                    )}
-                  </label>
-                </form>
-              )}
+              <AvatarRender
+                avatarType={this.state.avatarType}
+                handleAvatarSubmit={this.handleAvatarSubmit}
+                uploadingAvatar={this.state.uploadingAvatar}
+                imagePreviewUrl={this.state.imagePreviewUrl}
+                isAvatarAdded={this.state.isAvatarAdded}
+                handleAvatarImageChange={this.handleAvatarImageChange}
+                removeAvatarImage={this.removeAvatarImage}
+                file={this.state.file}
+                avatarSrc={this.state.avatarSrc}
+              />
             </div>
           </div>
         </div>
