@@ -236,9 +236,11 @@ export default class SignUp extends Component {
 
         <div className="signup-container">
           <div className="signUpForm">
-            <img src={susi} alt="SUSI" className="susi-logo" />
-            <h1>See whats happening in the world right now</h1>
-            <h1>Sign Up with SUSI</h1>
+            <img src={susi} alt="SUSI" className="susi-signup-logo" />
+            <h1 className="signup-header-text">
+              See whats happening in the world right now
+            </h1>
+            <h1 style={{ fontSize: '40px', paddingTop: '10px' }}>Sign Up</h1>
             <br />
             <form onSubmit={this.handleSubmit}>
               <div>
@@ -287,10 +289,19 @@ export default class SignUp extends Component {
                 />
               </div>
               <br />
-              <h1 style={{ textAlign: 'center' }}>OR</h1>
+              <h4
+                style={{
+                  fontSize: '15px',
+                  textAlign: 'center',
+                  color: 'grey',
+                  marginTop: '20px',
+                }}
+              >
+                OR
+              </h4>
               <div>
                 <h4
-                  style={{ textAlign: 'center', margin: 5, fontWeight: 'bold' }}
+                  style={{ textAlign: 'center', margin: 5, fontWeight: '300' }}
                 >
                   If you have an account, Please Login
                 </h4>
