@@ -13,4 +13,5 @@ $.ajax({
   async: false,
 }).done(function(output) {
   module.exports.MAP_KEY = output.keys.MAP_KEY;
+  module.exports.CAPTCHA_KEY = '6LcUf3EUAAAAAH8yy0iTTorsgMOasLiTkVje33hu';
 });
