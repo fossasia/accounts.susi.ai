@@ -4,7 +4,7 @@ import './ListUser.css';
 import $ from 'jquery';
 import Cookies from 'universal-cookie';
 import Table from 'antd/lib/table';
-import { Input } from 'antd';
+import Input from 'antd/lib/input';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar.js';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
@@ -14,7 +14,7 @@ import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
 import Tabs from 'antd/lib/tabs';
 import NotFound from '../../NotFound/NotFound.react';
-import { LocaleProvider } from 'antd';
+import LocaleProvider from 'antd/lib/locale-provider';
 import enUS from 'antd/lib/locale-provider/en_US';
 
 import { urls } from '../../../Utils';

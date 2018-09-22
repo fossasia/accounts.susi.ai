@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import Table from 'antd/lib/table';
 import Tabs from 'antd/lib/tabs';
-import { LocaleProvider } from 'antd';
+import LocaleProvider from 'antd/lib/locale-provider';
 import enUS from 'antd/lib/locale-provider/en_US';
 import NotFound from '../../NotFound/NotFound.react';
 

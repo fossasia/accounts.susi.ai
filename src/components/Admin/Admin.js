@@ -5,10 +5,10 @@ import StaticAppBar from '../StaticAppBar/StaticAppBar.js';
 import Cookies from 'universal-cookie';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
-import { Card } from 'antd';
+import Card from 'antd/lib/card';
 import Tabs from 'antd/lib/tabs';
 import 'antd/lib/tabs/style/index.css';
-import { Avatar } from 'antd';
+import Avatar from 'antd/lib/avatar';
 import NotFound from './../NotFound/NotFound.react';
 
 import { urls } from '../../Utils';

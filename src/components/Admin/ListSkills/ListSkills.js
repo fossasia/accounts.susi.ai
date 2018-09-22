@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Table from 'antd/lib/table';
-import { LocaleProvider } from 'antd';
+import LocaleProvider from 'antd/lib/locale-provider';
 import enUS from 'antd/lib/locale-provider/en_US';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
