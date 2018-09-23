@@ -283,10 +283,31 @@ class Login extends Component {
           <StaticAppBar />
         </div>
 
+        <div className="app-body-div">
+          <div className="About">
+            <div className="About-heading">
+              <h1>
+                Meet SUSI.AI, Your Artificial Intelligence for Personal
+                Assistants, Robots, Help Desks and Chatbots.
+              </h1>
+            </div>
+            <div className="points">
+              <p>
+                Ask it questions.
+                <br />
+                <br /> Tell it to do things.
+                <br />
+                <br /> Always ready to help.
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div className="login-container">
           <div className="loginForm">
             <form id="loginform" onSubmit={this.handleSubmit}>
               <div className="login-div">
+                <h2>Log In</h2>
                 <TextField
                   name="email"
                   style={fieldStyle}
@@ -347,26 +368,6 @@ class Login extends Component {
               />
             </Link>
             <br />
-          </div>
-        </div>
-
-        <div className="app-body-div">
-          <div className="About">
-            <div className="About-heading">
-              <h1>
-                Meet SUSI.AI, Your Artificial Intelligence for Personal
-                Assistants, Robots, Help Desks and Chatbots.
-              </h1>
-            </div>
-            <div className="points">
-              <p>
-                Ask it questions.
-                <br />
-                <br /> Tell it to do things.
-                <br />
-                <br /> Always ready to help.
-              </p>
-            </div>
           </div>
         </div>
 

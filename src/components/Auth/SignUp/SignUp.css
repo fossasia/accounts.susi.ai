@@ -233,11 +233,17 @@
 		margin-left: 20%;
 	}
 	.About h1, .About p{
-		width: 70%;
+		width: 80%;
 		margin: 0 auto;
 	}
 	.signUpForm {
 		width: 70%;
 		margin: 0 auto;
 	}
+}
+
+@media screen and (max-width: 475px) {
+  .About h1, .About p{
+		width: 100%;
+  }
 }
