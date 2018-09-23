@@ -207,6 +207,12 @@ export default class ChangePassword extends Component {
       float: 'left',
       marginTop: '12px',
       marginBottom: '5px',
+      width: '150px',
+    };
+    const submitBtn = {
+      float: 'left',
+      maxWidth: '300px',
+      margin: '0 auto',
     };
     const inputStyle = {
       height: '35px',
@@ -268,19 +274,22 @@ export default class ChangePassword extends Component {
                 />
               </div>
               <br />
-              <div>
-                <RaisedButton
-                  label="Save New Password"
-                  type="submit"
-                  style={{ marginLeft: '30%', marginTop: '0px' }}
-                  backgroundColor={ChatConstants.standardBlue}
-                  labelColor="#fff"
-                />
+              <div style={submitBtn}>
+                <div className="forgot">
+                  <a onClick={this.handleForgotPwd}>Forgot your password?</a>
+                </div>
+                <br />
+                <div>
+                  <RaisedButton
+                    label="Save New Password"
+                    type="submit"
+                    style={{ marginTop: '0px' }}
+                    backgroundColor={ChatConstants.standardBlue}
+                    labelColor="#fff"
+                  />
+                </div>
               </div>
             </form>
-            <div className="forgot">
-              <a onClick={this.handleForgotPwd}>Forgot your password?</a>
-            </div>
           </Paper>
 
           {/* Forgot Password Modal */}
