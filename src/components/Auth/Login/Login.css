@@ -56,7 +56,7 @@
 }
 .About {
   margin: 30vh 8% 0% 8%;
-  text-size : 18px;
+  font-size : 18px;
   height:59vh;
 }
 .menu-icon {
@@ -142,6 +142,10 @@
   width: 200px;
 }
 
+.login-div > h2 {
+  margin-left: 10px;
+}
+
 @media screen and (max-width: 1588px) {
   .loginForm{
     margin:10px;
@@ -194,27 +198,29 @@
   }
 }
 
+.About-heading { 
+  margin-bottom: 10px;
+}
+
 @media screen and (max-width: 937px) {
   .loginbtn {
     width:87%;
   }
 }
-@media screen and (max-width: 660px) {
-  .login-div {
-    margin:0%;
-  }
-
+@media screen and (max-width: 838px) {
   .login-container {
     float : none;
     height: auto;
     width : auto;
     margin-top:50px;
+    margin-bottom: 50px;
   }
   .app-body-div {
     height:auto;
     width : auto;
-    margin:0 0 10px 0;
-    float : none;;
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    float : none;
     background-color : #EEE;
   }
   .About {
@@ -223,30 +229,39 @@
   .About-heading{
     padding-top:10px;
   }
+
+  .About h1 {
+    font-size: 30px;
+  }
+
+  .About p {
+    font-size: 18px;
+  }
+
   .signup{
-   margin: 15% 20% 0 15%;
+   width: 450px;
+   margin:0 auto;
   }
-  .loginForm{
-    width:90%;
-    margin:0;
-    padding-top:20px;
-  }
-  #loginForm{
-    margin:0;
-  }
-  .fieldStyle {
-    width: 100%;
-  }
-  #forgotpwd {
-    margin: 10px 25% 10px 15px;
-  }
-  .loginbtn {
-    width:100%;
+  
+  .loginForm {
+    width: 450px;
+    margin: 0 auto;
   }
 
   #loginform {
-    margin:0 20%;
+    width: 450px;
   }
+
+  .login-div {
+    width: 450px;
+    margin: 0 auto;
+  }
+
+  .login-div > .fieldStyle, .login-div > .loginbtn {
+    width: 95%;
+    margin: 0 auto;
+  }
+
   .passfieldStyle {
     width:100%;
   }
@@ -277,7 +292,7 @@
   .login-container {
     float : none;
     height: auto;
-    width : auto;
+    width : 100%;
     margin-top:50px;
   }
   .app-body-div {
@@ -292,14 +307,20 @@
   }
   .About-heading{
     padding-top:2px;
-    padding-left:10px;
   }
+
+  .About h1 {
+    font-size: 25px;
+  }
+
   .signup{
     margin: 0% 10% 0 10%;
   }
-  .points{
-    padding-left:10px;
+
+  .About p {
+    font-size: 18px;
   }
+
   .loginForm{
     margin:0;
     padding-top:20px;
@@ -343,5 +364,43 @@
   }
   .footer{
     margin-top:0;
+  }
+
+  .loginForm {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  #loginform {
+    width: 100%;
+    margin: 0px;
+  }
+
+  .login-div {
+    width: 100%;
+    margin: 0px;
+  }
+
+  .signup {
+    width: auto;
+  }
+}
+
+.ModalDiv > div > div > div {
+  width: 50%;
+  margin: 0px auto;
+}
+
+@media screen and (max-width : 783px) {
+  .ModalDiv > div > div > div {
+    width: 80%;
+    margin: 0px auto;
+  }
+}
+
+@media screen and (max-width : 573px) {
+  .ModalDiv > div > div > div {
+    width: 90%;
+    margin: 0px auto;
   }
 }

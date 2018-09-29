@@ -1059,6 +1059,7 @@ class Settings extends Component {
           </RadioButtonGroup>
           <RaisedButton
             label="Edit theme"
+            disabled={this.state.theme !== 'custom'}
             backgroundColor="#4285f4"
             labelColor="#fff"
             onClick={this.handleThemeChanger}
@@ -1510,6 +1511,7 @@ class Settings extends Component {
                     style={{
                       textAlign: 'center',
                       marginTop: '20px',
+                      marginBottom: '20px',
                       display: 'flex',
                       justifyContent: 'center',
                     }}

@@ -1,6 +1,5 @@
 // Packages
 import React, { Component } from 'react';
-import Paper from 'material-ui/Paper';
 import $ from 'jquery';
 import PropTypes from 'prop-types';
 
@@ -9,9 +8,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import ChatConstants from '../../../constants/ChatConstants';
-import Footer from '../../Footer/Footer.react.js';
 
 import { urls } from '../../../Utils';
 
@@ -34,15 +31,19 @@ class ForgotPassword extends Component {
     this.emailErrorMessage = '';
   }
 
-  handleCancel = () => {
-    this.props.history.push('/', { showLogin: false });
-    window.location.reload();
-  };
-
   handleClose = () => {
     let state = this.state;
     if (state.success) {
-      this.props.history.push('/', { showLogin: true });
+      this.setState({
+        email: '',
+        msg: '',
+        success: true,
+        checked: true,
+        emailError: false,
+        validEmail: true,
+        validForm: true,
+      });
+      this.props.closeModal();
     } else {
       this.setState({
         email: '',
@@ -118,11 +119,6 @@ class ForgotPassword extends Component {
   };
 
   render() {
-    const styles = {
-      margin: '60px auto',
-      padding: '10px',
-      textAlign: 'center',
-    };
     const actions = (
       <FlatButton
         label="OK"
@@ -134,59 +130,47 @@ class ForgotPassword extends Component {
 
     return (
       <div>
-        <div className="app-bar">
-          <StaticAppBar />
-        </div>
-        <div className="forgotPwdContainer">
-          <div className="forgotPwdForm">
-            <Paper zDepth={1} style={styles}>
-              <h1>Reset Your Password</h1>
-              <p style={{ padding: '10px' }}>
-                Enter your email below and we will send you a link to reset your
-                password
-              </p>
-              <form onSubmit={this.handleSubmit}>
-                <div>
-                  <TextField
-                    name="email"
-                    floatingLabelText="Email"
-                    errorText={this.emailErrorMessage}
-                    value={this.state.email}
-                    onChange={this.handleChange}
-                  />
-                </div>
-                <div style={{ margin: '10px 0 10px 0' }}>
-                  <RaisedButton
-                    type="submit"
-                    label="Reset"
-                    backgroundColor={ChatConstants.standardBlue}
-                    labelColor="#fff"
-                    disabled={!this.state.validForm}
-                    style={{ marginRight: '15px' }}
-                  />
-                  <RaisedButton
-                    label="Cancel"
-                    backgroundColor={ChatConstants.standardBlue}
-                    labelColor="#fff"
-                    onTouchTap={this.handleCancel}
-                  />
-                </div>
-              </form>
-            </Paper>
-            {this.state.msg && (
-              <div>
-                <Dialog
-                  actions={actions}
-                  modal={false}
-                  open={true}
-                  onRequestClose={this.handleClose}
-                >
-                  {this.state.msg}
-                </Dialog>
-              </div>
-            )}
-          </div>
-          <Footer />
+        <div className="forgotPwdForm">
+          <h1>Forgot Password?</h1>
+          <form onSubmit={this.handleSubmit}>
+            <div>
+              <TextField
+                name="email"
+                floatingLabelText="Email"
+                errorText={this.emailErrorMessage}
+                value={this.state.email}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div style={{ margin: '10px 0 10px 30px' }}>
+              <RaisedButton
+                type="submit"
+                label="Reset"
+                backgroundColor={ChatConstants.standardBlue}
+                labelColor="#fff"
+                disabled={!this.state.validForm}
+                style={{ marginRight: '15px' }}
+              />
+              <RaisedButton
+                label="Cancel"
+                backgroundColor={ChatConstants.standardBlue}
+                labelColor="#fff"
+                onTouchTap={this.props.closeModal}
+              />
+            </div>
+          </form>
+          {this.state.msg && (
+            <div>
+              <Dialog
+                actions={actions}
+                modal={false}
+                open={true}
+                onRequestClose={this.handleClose}
+              >
+                {this.state.msg}
+              </Dialog>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -195,6 +179,7 @@ class ForgotPassword extends Component {
 
 ForgotPassword.propTypes = {
   history: PropTypes.object,
+  closeModal: PropTypes.func,
 };
 
 export default ForgotPassword;

@@ -4,6 +4,11 @@
 	margin: 0 auto;
 }
 
+.susi-signup-logo{
+  margin: 5px 0px;
+  width: 70px;
+}
+
 @media screen and (max-width: 838px) {
 	.signUpForm h1{
 		font-size: 16px;
@@ -17,6 +22,7 @@
 .app-bar{
 	position: absolute;
 }
+
 .app-bar-div{
 	position: fixed;
   top: 0;
@@ -27,6 +33,7 @@
   user-select: none;
   -webkit-user-select: none;
 }
+
 .signup-container{
   margin-top:5%;
   height: 80%;
@@ -34,11 +41,14 @@
   float : right;
 }
 
+
 .signup-container h1:nth-child(2){
   margin-top:10px;
   font-weight:600;
 }
-.app-body-div{
+
+.app-body{
+
   height: 80%;
   width : 50%;
   float : left;
@@ -48,7 +58,7 @@
 
 .About{
   margin: 30vh 8% 0% 8%;
-  text-size : 18px;
+  font-size : 18px;
   height:59vh;
   min-height:580px;
 }
@@ -60,7 +70,6 @@
   transform-origin: 50% 50% 0px;
 }
 
-
 .bm-burger-button {
 	position: absolute;
   width: 36px;
@@ -69,6 +78,7 @@
   top: 8px;
 	z-index: 1;
 }
+
 .bm-burger-button{
 	background: #607D8B;
 }
@@ -76,7 +86,6 @@
 .bm-burger-bars {
   background: #ffffff;
 }
-
 
 .bm-cross-button {
   height: 24px;
@@ -116,6 +125,7 @@
 .menu-new ul{
     border-top: 1px solid #333;
 }
+
 .menu-new a:hover,
 .menu-new a:focus {
   color: #000;
@@ -173,6 +183,12 @@
 	left: 14%
 }
 
+.signup-header-text{
+  padding-top: 10px;
+  font-weight: 350;
+  max-width: 75%; 
+}
+
 .About p {
 	margin: 5% 3% 0% 0%;
 }
@@ -195,7 +211,7 @@
   padding:0px 20px;
   min-height:unset;
   height:unset;
- }
+  }
 }
 
 @media screen and (max-width: 838px){
@@ -214,4 +230,28 @@
 		width: 70%;
 		margin: 0 auto;
 	}
+}
+
+@media screen and (max-width: 838px){
+	.app-body{
+		width: 100%;
+	}
+	.About p{
+		padding-bottom: 15px;
+		margin-left: 20%;
+	}
+	.About h1, .About p{
+		width: 80%;
+		margin: 0 auto;
+	}
+	.signUpForm {
+		width: 70%;
+		margin: 0 auto;
+	}
+}
+
+@media screen and (max-width: 475px) {
+  .About h1, .About p{
+		width: 100%;
+  }
 }

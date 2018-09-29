@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import PasswordField from 'material-ui-password-field';
 import Cookies from 'universal-cookie';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import ForgotPassword from '../ForgotPassword/ForgotPassword.react';
 
 import { urls } from '../../../Utils';
 import ChatConstants from '../../../constants/ChatConstants';
@@ -33,6 +34,7 @@ export default class ChangePassword extends Component {
       newPasswordError: true,
       confirmPasswordError: true,
       validForm: false,
+      showForgotPwd: false,
     };
     this.currentPasswordErrorMessage = '';
     this.newPasswordErrorMessage = '';
@@ -40,8 +42,17 @@ export default class ChangePassword extends Component {
   }
 
   handleClose = event => {
-    this.setState({ showDialog: false });
-    this.props.history.push('/userhome');
+    this.setState({
+      showDialog: false,
+      showForgotPwd: false,
+    });
+  };
+
+  handleForgotPwd = event => {
+    event.preventDefault();
+    this.setState({
+      showForgotPwd: true,
+    });
   };
 
   handleSubmit = event => {
@@ -192,9 +203,16 @@ export default class ChangePassword extends Component {
       width: '125%',
     };
     const labelStyle = {
-      width: '30%',
+      minWidth: '30%',
       float: 'left',
       marginTop: '12px',
+      marginBottom: '5px',
+      width: '150px',
+    };
+    const submitBtn = {
+      float: 'left',
+      maxWidth: '300px',
+      margin: '0 auto',
     };
     const inputStyle = {
       height: '35px',
@@ -219,17 +237,13 @@ export default class ChangePassword extends Component {
                   visibilityButtonStyle={{ display: 'none' }}
                   visibilityIconStyle={{ display: 'none' }}
                 />
-                <div className="forgot">
-                  <a href={`${window.location.origin}/forgotpwd`}>
-                    Forgot your password?
-                  </a>
-                </div>
               </div>
               <br />
               <div style={labelStyle}>New Password</div>
               <div>
                 <PasswordField
                   name="newPassword"
+                  placeholder="Must be at least 6 characters"
                   style={fieldStyle}
                   value={this.state.newPassword}
                   onChange={this.handleChange}
@@ -247,6 +261,7 @@ export default class ChangePassword extends Component {
               <div>
                 <PasswordField
                   name="confirmPassword"
+                  placeholder="Must match the new password"
                   style={fieldStyle}
                   value={this.state.confirmPassword}
                   onChange={this.handleChange}
@@ -259,17 +274,36 @@ export default class ChangePassword extends Component {
                 />
               </div>
               <br />
-              <div>
-                <RaisedButton
-                  label="Save Changes"
-                  type="submit"
-                  style={{ marginRight: '50px' }}
-                  backgroundColor={ChatConstants.standardBlue}
-                  labelColor="#fff"
-                />
+              <div style={submitBtn}>
+                <div className="forgot">
+                  <a onClick={this.handleForgotPwd}>Forgot your password?</a>
+                </div>
+                <br />
+                <div>
+                  <RaisedButton
+                    label="Save New Password"
+                    type="submit"
+                    style={{ marginTop: '0px' }}
+                    backgroundColor={ChatConstants.standardBlue}
+                    labelColor="#fff"
+                  />
+                </div>
               </div>
             </form>
           </Paper>
+
+          {/* Forgot Password Modal */}
+          <div className="ModalDiv">
+            <Dialog
+              modal={false}
+              open={this.state.showForgotPwd}
+              onRequestClose={this.handleClose}
+              className="ModalDiv"
+            >
+              <ForgotPassword closeModal={this.handleClose.bind(this)} />
+            </Dialog>
+          </div>
+
           {this.state.msg && (
             <div>
               <Dialog
