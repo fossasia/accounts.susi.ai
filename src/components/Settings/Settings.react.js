@@ -1178,7 +1178,14 @@ class Settings extends Component {
                 fontSize: '14px',
               }}
             >
-              Country/region :
+              <div
+                style={{
+                  display: 'inline-block',
+                  width: '101px',
+                }}
+              >
+                Country/region :
+              </div>
               <span style={menuStyle}>
                 <DropDownMenu
                   maxHeight={300}
@@ -1200,17 +1207,26 @@ class Settings extends Component {
             </div>
             <div
               style={{
-                marginTop: '30px',
+                marginTop: '35px',
                 marginBottom: '0px',
                 marginLeft: '0px',
                 fontSize: '14px',
               }}
             >
-              <span style={{ float: 'left' }}>Phone number :</span>
               <span
+                style={{
+                  float: 'left',
+                  marginBottom: '35px',
+                  width: '101px',
+                }}
+              >
+                Phone number :
+              </span>
+              <div
                 style={{
                   width: '250px',
                   marginLeft: '4px',
+                  display: 'inline-block',
                 }}
               >
                 <TextField
@@ -1252,7 +1268,7 @@ class Settings extends Component {
                   errorText={this.state.phoneNoError}
                   floatingLabelText="Phone number"
                 />
-              </span>
+              </div>
             </div>
           </div>
         </div>
