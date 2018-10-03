@@ -185,6 +185,13 @@
 	margin: 5% 3% 0% 0%;
 }
 
+.error-message{
+  font-size: 12px;
+  line-height: 12px;
+  color: rgb(244, 67, 54);
+  margin-top: 5.7px;
+}
+
 @media screen and (max-width: 838px) {
   .signup-container{
     float : none;
