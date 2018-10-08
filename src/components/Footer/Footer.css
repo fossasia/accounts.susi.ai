@@ -85,16 +85,6 @@ li{
     }
 
 }
-@media only screen and (max-width: 1400px){
-    .footer{
-        max-width: 100%;
-    }
-    .footer-container{
-        width: 100%;
-        margin: 0 auto;
-    }
-
-}
 @media only screen and (max-width: 800px){
     .alignLeft,.alignRight{
         flex:1 100%;
