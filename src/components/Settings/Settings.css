@@ -248,7 +248,7 @@ input[type=file]{
 }
 
 @media screen and (max-width: 500px) {
-  .speechSettingDiv {
+  .decreaseSettingDiv {
     width: 70%;
   }
 }

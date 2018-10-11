@@ -965,6 +965,7 @@ class Settings extends Component {
           <hr className="Divider" style={{ height: '2px' }} />
           <br />
           <div
+            className="decreaseSettingDiv"
             style={{
               float: 'left',
               padding: '0px 5px 0px 0px',
@@ -997,6 +998,7 @@ class Settings extends Component {
               <hr className="Divider" style={{ height: '2px' }} />
               <br />
               <div
+                className="decreaseSettingDiv"
                 style={{
                   float: 'left',
                   padding: '0px 5px 0px 0px',
@@ -1084,7 +1086,7 @@ class Settings extends Component {
                 float: 'left',
                 padding: '0px 5px 0px 0px',
               }}
-              className="speechSettingDiv"
+              className="decreaseSettingDiv"
             >
               Enable speech output only for speech input
             </div>
@@ -1109,7 +1111,7 @@ class Settings extends Component {
                 fontSize: '15px',
                 fontWeight: 'bold',
               }}
-              className="speechSettingDiv"
+              className="decreaseSettingDiv"
             >
               Speech Output Always ON
             </div>
@@ -1119,7 +1121,7 @@ class Settings extends Component {
                 float: 'left',
                 padding: '5px 5px 0px 0px',
               }}
-              className="speechSettingDiv"
+              className="decreaseSettingDiv"
             >
               Enable speech output regardless of input type
             </div>
