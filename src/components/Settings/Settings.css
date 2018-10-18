@@ -200,13 +200,13 @@ h5 {
   }
 
 }
-@media screen and (max-width: 395px) {
+@media screen and (max-width: 454px) {
   .settings-app {
-    height:500px;
+    height:auto;
   }
 
   .settings {
-    height:500px;
+    height:auto;
   }
 }
 
@@ -299,7 +299,7 @@ input[type=file]{
 }
 
 @media screen and (max-width: 500px) {
-  .speechSettingDiv {
+  .decreaseSettingDiv {
     width: 70%;
   }
 }

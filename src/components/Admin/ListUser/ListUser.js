@@ -4,9 +4,10 @@ import './ListUser.css';
 import $ from 'jquery';
 import Cookies from 'universal-cookie';
 import Table from 'antd/lib/table';
-import { Input } from 'antd';
+import Input from 'antd/lib/input';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar.js';
 import FlatButton from 'material-ui/FlatButton';
+import Snackbar from 'material-ui/Snackbar';
 import Dialog from 'material-ui/Dialog';
 import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu';
@@ -14,7 +15,7 @@ import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
 import Tabs from 'antd/lib/tabs';
 import NotFound from '../../NotFound/NotFound.react';
-import { LocaleProvider } from 'antd';
+import LocaleProvider from 'antd/lib/locale-provider';
 import enUS from 'antd/lib/locale-provider/en_US';
 
 import { urls } from '../../../Utils';
@@ -33,6 +34,8 @@ export default class ListUser extends Component {
       username: [],
       userEmail: '',
       data: [],
+      openSnackbar: false,
+      msgSnackbar: '',
       middle: '50',
       pagination: {},
       loading: true,
@@ -345,6 +348,7 @@ export default class ListUser extends Component {
       `${urls.API_URL}/aaa/getUsers.json?access_token=` +
       cookies.get('loggedIn') +
       '&getUserCount=true';
+    let self = this;
     $.ajax({
       url: getPagesUrl,
       dataType: 'jsonp',
@@ -355,12 +359,17 @@ export default class ListUser extends Component {
         pagination.total = data.userCount;
         pagination.pageSize = 50;
         pagination.showQuickJumper = true;
-        this.setState({
+        self.setState({
           pagination,
         });
         this.fetch();
       }.bind(this),
       error: function(errorThrown) {
+        self.setState({
+          loading: false,
+          openSnackbar: true,
+          msgSnackbar: "Error. Couldn't fetch users.",
+        });
         console.log(errorThrown);
       },
     });
@@ -865,7 +874,14 @@ export default class ListUser extends Component {
                           </div>
                         </Dialog>
                       </div>
-
+                      <Snackbar
+                        open={this.state.openSnackbar}
+                        message={this.state.msgSnackbar}
+                        autoHideDuration={2000}
+                        onRequestClose={() => {
+                          this.setState({ openSnackbar: false });
+                        }}
+                      />
                       <Search
                         placeholder="Search by email"
                         style={{
@@ -876,7 +892,6 @@ export default class ListUser extends Component {
                         size="default"
                         onSearch={value => this.handleSearch(value)}
                       />
-
                       <LocaleProvider locale={enUS}>
                         {this.state.search ? (
                           <Table

@@ -1093,6 +1093,7 @@ class Settings extends Component {
           <hr className="Divider" style={{ height: '2px' }} />
           <br />
           <div
+            className="decreaseSettingDiv"
             style={{
               float: 'left',
               padding: '0px 5px 0px 0px',
@@ -1125,6 +1126,7 @@ class Settings extends Component {
               <hr className="Divider" style={{ height: '2px' }} />
               <br />
               <div
+                className="decreaseSettingDiv"
                 style={{
                   float: 'left',
                   padding: '0px 5px 0px 0px',
@@ -1187,6 +1189,7 @@ class Settings extends Component {
           </RadioButtonGroup>
           <RaisedButton
             label="Edit theme"
+            disabled={this.state.theme !== 'custom'}
             backgroundColor="#4285f4"
             labelColor="#fff"
             onClick={this.handleThemeChanger}
@@ -1211,6 +1214,7 @@ class Settings extends Component {
                 float: 'left',
                 padding: '0px 5px 0px 0px',
               }}
+              className="decreaseSettingDiv"
             >
               Enable speech output only for speech input
             </div>
@@ -1235,6 +1239,7 @@ class Settings extends Component {
                 fontSize: '15px',
                 fontWeight: 'bold',
               }}
+              className="decreaseSettingDiv"
             >
               Speech Output Always ON
             </div>
@@ -1244,6 +1249,7 @@ class Settings extends Component {
                 float: 'left',
                 padding: '5px 5px 0px 0px',
               }}
+              className="decreaseSettingDiv"
             >
               Enable speech output regardless of input type
             </div>
@@ -1305,7 +1311,14 @@ class Settings extends Component {
                 fontSize: '14px',
               }}
             >
-              Country/region :
+              <div
+                style={{
+                  display: 'inline-block',
+                  width: '101px',
+                }}
+              >
+                Country/region :
+              </div>
               <span style={menuStyle}>
                 <DropDownMenu
                   maxHeight={300}
@@ -1327,17 +1340,26 @@ class Settings extends Component {
             </div>
             <div
               style={{
-                marginTop: '30px',
+                marginTop: '35px',
                 marginBottom: '0px',
                 marginLeft: '0px',
                 fontSize: '14px',
               }}
             >
-              <span style={{ float: 'left' }}>Phone number :</span>
               <span
+                style={{
+                  float: 'left',
+                  marginBottom: '35px',
+                  width: '101px',
+                }}
+              >
+                Phone number :
+              </span>
+              <div
                 style={{
                   width: '250px',
                   marginLeft: '4px',
+                  display: 'inline-block',
                 }}
               >
                 <TextField
@@ -1379,7 +1401,7 @@ class Settings extends Component {
                   errorText={this.state.phoneNoError}
                   floatingLabelText="Phone number"
                 />
-              </span>
+              </div>
             </div>
           </div>
         </div>
@@ -1638,6 +1660,7 @@ class Settings extends Component {
                     style={{
                       textAlign: 'center',
                       marginTop: '20px',
+                      marginBottom: '20px',
                       display: 'flex',
                       justifyContent: 'center',
                     }}

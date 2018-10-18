@@ -203,9 +203,16 @@ export default class ChangePassword extends Component {
       width: '125%',
     };
     const labelStyle = {
-      width: '30%',
+      minWidth: '30%',
       float: 'left',
       marginTop: '12px',
+      marginBottom: '5px',
+      width: '150px',
+    };
+    const submitBtn = {
+      float: 'left',
+      maxWidth: '300px',
+      margin: '0 auto',
     };
     const inputStyle = {
       height: '35px',
@@ -230,15 +237,13 @@ export default class ChangePassword extends Component {
                   visibilityButtonStyle={{ display: 'none' }}
                   visibilityIconStyle={{ display: 'none' }}
                 />
-                <div className="forgot">
-                  <a onClick={this.handleForgotPwd}>Forgot your password?</a>
-                </div>
               </div>
               <br />
               <div style={labelStyle}>New Password</div>
               <div>
                 <PasswordField
                   name="newPassword"
+                  placeholder="Must be at least 6 characters"
                   style={fieldStyle}
                   value={this.state.newPassword}
                   onChange={this.handleChange}
@@ -256,6 +261,7 @@ export default class ChangePassword extends Component {
               <div>
                 <PasswordField
                   name="confirmPassword"
+                  placeholder="Must match the new password"
                   style={fieldStyle}
                   value={this.state.confirmPassword}
                   onChange={this.handleChange}
@@ -268,14 +274,20 @@ export default class ChangePassword extends Component {
                 />
               </div>
               <br />
-              <div>
-                <RaisedButton
-                  label="Save Changes"
-                  type="submit"
-                  style={{ marginRight: '50px' }}
-                  backgroundColor={ChatConstants.standardBlue}
-                  labelColor="#fff"
-                />
+              <div style={submitBtn}>
+                <div className="forgot">
+                  <a onClick={this.handleForgotPwd}>Forgot your password?</a>
+                </div>
+                <br />
+                <div>
+                  <RaisedButton
+                    label="Save New Password"
+                    type="submit"
+                    style={{ marginTop: '0px' }}
+                    backgroundColor={ChatConstants.standardBlue}
+                    labelColor="#fff"
+                  />
+                </div>
               </div>
             </form>
           </Paper>
