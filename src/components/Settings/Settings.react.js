@@ -672,7 +672,7 @@ class Settings extends Component {
     });
   };
 
-  handleAvatarTypeChange = value => {
+  handleAvatarTypeChange = (event, index, value) => {
     this.setState({
       avatarType: value,
       settingsChanged: true,
