@@ -1,7 +1,7 @@
 import md5 from 'md5';
 import { urls } from './';
 
-let getAvatarProps = emailId => {
+let getGravatarProps = emailId => {
   const emailHash = md5(emailId);
   const GRAVATAR_IMAGE_URL = `${urls.GRAVATAR_URL}/${emailHash}.jpg`;
   const avatarProps = {
@@ -11,4 +11,4 @@ let getAvatarProps = emailId => {
   return avatarProps;
 };
 
-export default getAvatarProps;
+export default getGravatarProps;

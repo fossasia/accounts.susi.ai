@@ -148,7 +148,7 @@ h5 {
 
 .settings-toggle {
   max-width: 5%;
-  float: right;
+  float: left;
   background-color: #fff;
 }
 .color-box{
@@ -210,13 +210,12 @@ h5 {
   }
 }
 
-.file-upload-btn{
+.upload-btn {
   border: 10px;
   box-sizing: border-box;
   display: inline-block;
   font-family: Roboto, sans-serif;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  cursor: pointer;
   text-decoration: none;
   margin: 0px;
   padding: 0px 10px;
@@ -230,21 +229,73 @@ h5 {
   width: 100%;
   border-radius: 2px;
   transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-  background-color: rgb(66, 133, 244);
   text-align: center;
-  color: #fff;
   font-size: 14px;
   text-transform: uppercase;
   max-width: 200px;
   min-width: 88px;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
 }
+
+.file-upload-btn{
+  background-color: rgb(66, 133, 244);
+  color: #fff;
+  cursor: pointer;
+}
 .file-upload-btn:hover{
   background-color: rgb(90, 147, 241);
 }
 
+.file-upload-btn-disabled{
+  color: rgba(0, 0, 0, 0.3);
+  background-color: rgb(229, 229, 229);
+  user-select: none;
+  cursor: not-allowed;
+}
+
 input[type=file]{
   display: none;
+}
+
+.setting-avatar{
+  width: 150px;
+  border-radius: 6px;
+  display: block;
+  height: 150px;
+}
+
+.input-avatar{
+  width: 50px;
+}
+
+.avatar-empty-box{
+  border: 1px solid #CED4DA;
+  height: 148px;
+  border-radius: 6px;
+  width: 148px;
+}
+
+.avatar-add-button{
+  width: 40px;
+  display: block;
+}
+
+.avatar-empty-box:hover {
+  background-color: #CED4DA;
+  cursor: pointer;
+}
+
+.close-avatar{
+  float: right;
+  border-radius: 50%;
+  border: 1px solid #CED4DA;
+  position: relative;
+  top: 5px;
+  height: 25px;
+  width: 25px;
+  right: 30px;
+  background-color: white;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 500px) {
