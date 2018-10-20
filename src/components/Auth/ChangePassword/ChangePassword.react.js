@@ -281,6 +281,7 @@ export default class ChangePassword extends Component {
                 <br />
                 <div>
                   <RaisedButton
+                    disabled={!this.state.validForm}
                     label="Save New Password"
                     type="submit"
                     style={{ marginTop: '0px' }}
