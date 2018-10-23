@@ -330,7 +330,7 @@ export default class SignUp extends Component {
             </h1>
             <h1 style={{ fontSize: '40px', paddingTop: '10px' }}>Sign Up</h1>
             <br />
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit} style={{ float: 'left' }}>
               <div>
                 <TextField
                   name="email"
