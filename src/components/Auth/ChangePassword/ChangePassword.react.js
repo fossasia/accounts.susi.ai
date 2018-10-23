@@ -34,7 +34,6 @@ export default class ChangePassword extends Component {
       newPasswordError: true,
       confirmPasswordError: true,
       validForm: false,
-      showForgotPwd: false,
     };
     this.currentPasswordErrorMessage = '';
     this.newPasswordErrorMessage = '';
@@ -44,14 +43,6 @@ export default class ChangePassword extends Component {
   handleClose = event => {
     this.setState({
       showDialog: false,
-      showForgotPwd: false,
-    });
-  };
-
-  handleForgotPwd = event => {
-    event.preventDefault();
-    this.setState({
-      showForgotPwd: true,
     });
   };
 
@@ -274,10 +265,10 @@ export default class ChangePassword extends Component {
                 />
               </div>
               <br />
+              <div className="forgot">
+                <ForgotPassword />
+              </div>
               <div style={submitBtn}>
-                <div className="forgot">
-                  <a onClick={this.handleForgotPwd}>Forgot your password?</a>
-                </div>
                 <br />
                 <div>
                   <RaisedButton
@@ -291,18 +282,6 @@ export default class ChangePassword extends Component {
               </div>
             </form>
           </Paper>
-
-          {/* Forgot Password Modal */}
-          <div className="ModalDiv">
-            <Dialog
-              modal={false}
-              open={this.state.showForgotPwd}
-              onRequestClose={this.handleClose}
-              className="ModalDiv"
-            >
-              <ForgotPassword closeModal={this.handleClose.bind(this)} />
-            </Dialog>
-          </div>
 
           {this.state.msg && (
             <div>

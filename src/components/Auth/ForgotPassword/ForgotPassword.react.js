@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 // Components
 import TextField from 'material-ui/TextField';
@@ -26,6 +27,7 @@ class ForgotPassword extends Component {
       emailError: true,
       validEmail: true,
       validForm: false,
+      forgotPwdDialog: false,
     };
 
     this.emailErrorMessage = '';
@@ -36,14 +38,13 @@ class ForgotPassword extends Component {
     if (state.success) {
       this.setState({
         email: '',
-        msg: '',
         success: true,
         checked: true,
         emailError: false,
         validEmail: true,
         validForm: true,
       });
-      this.props.closeModal();
+      this.closeModal();
     } else {
       this.setState({
         email: '',
@@ -118,6 +119,13 @@ class ForgotPassword extends Component {
     }
   };
 
+  closeModal = () => this.setState({ forgotPwdDialog: false, msg: '' });
+
+  openModal = e => {
+    e.preventDefault();
+    this.setState({ forgotPwdDialog: true });
+  };
+
   render() {
     const actions = (
       <FlatButton
@@ -130,47 +138,58 @@ class ForgotPassword extends Component {
 
     return (
       <div>
-        <div className="forgotPwdForm">
-          <h1>Forgot Password?</h1>
-          <form onSubmit={this.handleSubmit}>
-            <div>
-              <TextField
-                name="email"
-                floatingLabelText="Email"
-                errorText={this.emailErrorMessage}
-                value={this.state.email}
-                onChange={this.handleChange}
-              />
+        <Link to="" className="forgotpwdlink" onClick={this.openModal}>
+          <p>Forgot Password?</p>
+        </Link>
+
+        <div>
+          <Dialog
+            modal={false}
+            open={this.state.forgotPwdDialog}
+            className="modalDiv"
+            onRequestClose={this.closeModal}
+          >
+            <div className="forgotPwdForm">
+              <h1>Forgot Password?</h1>
+              <form onSubmit={this.handleSubmit}>
+                <div>
+                  <TextField
+                    name="email"
+                    floatingLabelText="Email"
+                    errorText={this.emailErrorMessage}
+                    value={this.state.email}
+                    onChange={this.handleChange}
+                  />
+                </div>
+                <div style={{ margin: '10px 0 10px 30px' }}>
+                  <RaisedButton
+                    type="submit"
+                    label="Reset"
+                    backgroundColor={ChatConstants.standardBlue}
+                    labelColor="#fff"
+                    disabled={!this.state.validForm}
+                    style={{ marginRight: '15px' }}
+                  />
+                  <RaisedButton
+                    label="Cancel"
+                    backgroundColor={ChatConstants.standardBlue}
+                    labelColor="#fff"
+                    onTouchTap={this.closeModal}
+                  />
+                </div>
+              </form>
+              <div>
+                <Dialog
+                  actions={actions}
+                  modal={false}
+                  open={this.state.msg}
+                  onRequestClose={this.handleClose}
+                >
+                  {this.state.msg}
+                </Dialog>
+              </div>
             </div>
-            <div style={{ margin: '10px 0 10px 30px' }}>
-              <RaisedButton
-                type="submit"
-                label="Reset"
-                backgroundColor={ChatConstants.standardBlue}
-                labelColor="#fff"
-                disabled={!this.state.validForm}
-                style={{ marginRight: '15px' }}
-              />
-              <RaisedButton
-                label="Cancel"
-                backgroundColor={ChatConstants.standardBlue}
-                labelColor="#fff"
-                onTouchTap={this.props.closeModal}
-              />
-            </div>
-          </form>
-          {this.state.msg && (
-            <div>
-              <Dialog
-                actions={actions}
-                modal={false}
-                open={true}
-                onRequestClose={this.handleClose}
-              >
-                {this.state.msg}
-              </Dialog>
-            </div>
-          )}
+          </Dialog>
         </div>
       </div>
     );
@@ -179,7 +198,6 @@ class ForgotPassword extends Component {
 
 ForgotPassword.propTypes = {
   history: PropTypes.object,
-  closeModal: PropTypes.func,
 };
 
 export default ForgotPassword;
