@@ -14,6 +14,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Login from '../Login/Login.react';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import ChatConstants from '../../../constants/ChatConstants';
+import './SignUp.css';
 
 // Static assets
 import Footer from '../../Footer/Footer.react.js';
@@ -22,8 +23,7 @@ import susi from '../../../images/susi-logo.svg';
 import { urls } from '../../../Utils';
 import { CAPTCHA_KEY } from '../../../config.js';
 import Recaptcha from 'react-recaptcha';
-
-import './SignUp.css';
+import zxcvbn from 'zxcvbn';
 
 export default class SignUp extends Component {
   constructor(props) {
@@ -47,6 +47,8 @@ export default class SignUp extends Component {
       passwordConfirmErrorMessage: '',
       passwordErrorMessage: '',
       emailErrorMessage: '',
+      passwordStrength: '',
+      passwordScore: -1,
     };
 
     this.emailErrorMessage = '';
@@ -72,6 +74,7 @@ export default class SignUp extends Component {
         passwordError: true,
         passwordConfirmError: true,
         passwordValue: '',
+        passwordStrength: '',
         passwordScore: -1,
         confirmPasswordValue: '',
         msg: '',
@@ -101,7 +104,7 @@ export default class SignUp extends Component {
       // eslint-disable-next-line
       captchaVerifyErrorMessage,
     } = this.state;
-
+    let state = this.state;
     if (event.target.name === 'email') {
       email = event.target.value.trim();
       isEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
@@ -110,9 +113,19 @@ export default class SignUp extends Component {
       passwordValue = event.target.value;
       validPassword = passwordValue.length >= 6;
       passwordError = !(passwordValue && validPassword);
+      state.passwordValue = passwordValue;
       passwordConfirmError = !(
         passwordValue === this.state.confirmPasswordValue
       );
+      if (validPassword) {
+        let result = zxcvbn(passwordValue);
+        state.passwordScore = result.score;
+        let strength = ['Worst', 'Bad', 'Weak', 'Good', 'Strong'];
+        state.passwordStrength = strength[result.score];
+      } else {
+        state.passwordStrength = '';
+        state.passwordScore = -1;
+      }
     } else if (event.target.name === 'confirmPassword') {
       confirmPasswordValue = event.target.value;
       validPassword = confirmPasswordValue === passwordValue;
@@ -330,7 +343,7 @@ export default class SignUp extends Component {
             </h1>
             <h1 style={{ fontSize: '40px', paddingTop: '10px' }}>Sign Up</h1>
             <br />
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit} style={{ float: 'left' }}>
               <div>
                 <TextField
                   name="email"
@@ -364,6 +377,11 @@ export default class SignUp extends Component {
                   textFieldStyle={{ padding: '0px' }}
                 />
                 <div className="ReactPasswordStrength-strength-bar" />
+                <div className={PasswordClass.join(' ')}>
+                  <div>
+                    <p>{this.state.passwordStrength}</p>
+                  </div>
+                </div>
               </div>
               <div>
                 <PasswordField

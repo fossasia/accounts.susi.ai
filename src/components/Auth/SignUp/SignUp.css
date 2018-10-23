@@ -134,6 +134,12 @@
   transition: width 300ms ease-out;
 }
 
+.is-strength-0 { color: #D1462F; text-align: center; }
+.is-strength-1 { color: #D1462F; text-align: center; }
+.is-strength-2 { color: #57B8FF; text-align: center; }
+.is-strength-3 { color: #57B8FF; text-align: center; }
+.is-strength-4 { color: #2FBF71; text-align: center; }
+
 .is-strength--1 .ReactPasswordStrength-strength-bar {
   background: #D1462F;
   display: none;
@@ -158,14 +164,15 @@
   background: #57B8FF;
   width: 141px;
   display: block;
-	left: 30%
+	left: 30%;
+	text-align: center;
 }
 
 .is-strength-3 .ReactPasswordStrength-strength-bar {
   background: #57B8FF;
   width: 192px;
   display: block;
-	left: 20%
+	left: 25%;
 }
 
 .is-strength-4 .ReactPasswordStrength-strength-bar {
@@ -178,7 +185,7 @@
 .signup-header-text{
   padding-top: 10px;
   font-weight: 350;
-  max-width: 75%; 
+  max-width: 75%;
 }
 
 .About p {
