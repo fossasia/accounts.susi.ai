@@ -57,14 +57,14 @@ export default class ChangePassword extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    var password = this.state.currentPassword.trim();
-    var newPassword = this.state.newPassword.trim();
+    let password = this.state.currentPassword.trim();
+    let newPassword = this.state.newPassword.trim();
 
     let BASE_URL = urls.API_URL;
     if (!newPassword || !password) {
       return this.state.isFilled;
     }
-    var email = '';
+    let email = '';
     if (cookies.get('emailId')) {
       email = cookies.get('emailId');
     }
@@ -106,75 +106,58 @@ export default class ChangePassword extends Component {
       });
     }
   };
+
   handleChange = event => {
-    let currentPassword;
-    let newPassword;
-    let confirmPassword;
     let state = this.state;
-    if (event.target.name === 'currentPassword') {
-      currentPassword = event.target.value;
-      let validPassword = currentPassword.length >= 6;
-      state.currentPassword = currentPassword;
-      state.currentPasswordError = !(currentPassword && validPassword);
-    } else if (event.target.name === 'newPassword') {
-      newPassword = event.target.value;
-      let validPassword = newPassword.length >= 6;
-      state.newPassword = newPassword;
-      state.newPasswordError = !(validPassword && newPassword);
-    } else if (event.target.name === 'confirmPassword') {
-      confirmPassword = event.target.value;
-      newPassword = this.state.newPassword;
-      let validConfirmPassword = newPassword === confirmPassword;
-      state.confirmPassword = confirmPassword;
-      state.confirmPasswordError = !(validConfirmPassword && confirmPassword);
+    let value = event.target.value;
+    state[event.target.name] = value;
+
+    // eslint-disable-next-line
+    switch (event.target.name) {
+      case 'currentPassword':
+        state.currentPasswordError = !(state.currentPassword.length >= 6);
+        this.currentPasswordErrorMessage = state.currentPasswordError
+          ? 'Minimum 6 characters required'
+          : '';
+        break;
+
+      case 'newPassword':
+        state.newPasswordError = !(state.newPassword.length >= 6);
+        state.confirmPasswordError = !(value === state.confirmPassword);
+        if (state.newPasswordError) {
+          this.newPasswordErrorMessage = 'Minimum 6 characters required';
+        } else if (state.confirmPasswordError) {
+          this.newPasswordErrorMessage = '';
+          this.confirmPasswordErrorMessage =
+            'Password does not match new Password';
+        } else {
+          this.confirmPasswordErrorMessage = '';
+          this.newPasswordErrorMessage = '';
+        }
+        break;
+
+      case 'confirmPassword':
+        state.confirmPasswordError = !(state.newPassword === value);
+        this.confirmPasswordErrorMessage = state.confirmPasswordError
+          ? 'Password does not match new Password'
+          : '';
+        break;
     }
 
-    if (
-      !this.state.currentPasswordError &&
-      !this.state.newPasswordError &&
-      !this.state.confirmPasswordError
-    ) {
-      state.validForm = true;
-    } else {
-      state.validForm = false;
-    }
     this.setState(state);
-    if (
-      this.state.currentPasswordError &&
-      event.target.name === 'currentPassword'
-    ) {
-      this.currentPasswordErrorMessage = 'Minimum 6 characters required';
-      this.newPasswordErrorMessage = '';
-      this.confirmPasswordErrorMessage = '';
-    } else if (
-      this.state.newPasswordError &&
-      event.target.name === 'newPassword'
-    ) {
-      this.currentPasswordErrorMessage = '';
-      this.newPasswordErrorMessage = 'Minimum 6 characters required';
-      this.confirmPasswordErrorMessage = '';
-    } else if (
-      this.state.confirmPasswordError &&
-      event.target.name === 'confirmPassword'
-    ) {
-      this.currentPasswordErrorMessage = '';
-      this.newPasswordErrorMessage = '';
-      this.confirmPasswordErrorMessage =
-        'Password does not matches new Password';
-    } else {
-      this.currentPasswordErrorMessage = '';
-      this.newPasswordErrorMessage = '';
-      this.confirmPasswordErrorMessage = '';
-    }
 
-    if (
+    let passwordError =
       this.state.currentPasswordError ||
       this.state.newPasswordError ||
-      this.state.confirmPasswordError
-    ) {
-      this.setState({ validForm: false });
-    } else {
+      this.state.confirmPasswordError;
+
+    if (!passwordError) {
+      this.currentPasswordErrorMessage = '';
+      this.newPasswordErrorMessage = '';
+      this.confirmPasswordErrorMessage = '';
       this.setState({ validForm: true });
+    } else {
+      this.setState({ validForm: false });
     }
   };
 
@@ -281,6 +264,7 @@ export default class ChangePassword extends Component {
                 <br />
                 <div>
                   <RaisedButton
+                    disabled={!this.state.validForm}
                     label="Save New Password"
                     type="submit"
                     style={{ marginTop: '0px' }}
@@ -300,7 +284,7 @@ export default class ChangePassword extends Component {
               onRequestClose={this.handleClose}
               className="ModalDiv"
             >
-              <ForgotPassword closeModal={this.handleClose.bind(this)} />
+              <ForgotPassword closeModal={this.handleClose} />
             </Dialog>
           </div>
 
