@@ -301,7 +301,7 @@ export default class ChangePassword extends Component {
               onRequestClose={this.handleClose}
               className="ModalDiv"
             >
-              <ForgotPassword closeModal={this.handleClose.bind(this)} />
+              <ForgotPassword closeModal={this.handleClose} />
             </Dialog>
           </div>
 
