@@ -12,8 +12,8 @@ import $ from 'jquery';
 import PropTypes from 'prop-types';
 import PreviewThemeChat from './PreviewThemeChat';
 function getStateFromStores() {
-  var themeValue = [];
-  var backgroundValue = [];
+  let themeValue = [];
+  let backgroundValue = [];
   // get Theme data from server
   if (UserPreferencesStore.getThemeValues()) {
     themeValue = UserPreferencesStore.getThemeValues().split(',');
@@ -162,7 +162,7 @@ class ThemeChanger extends Component {
   };
   invertColorTextArea = () => {
     // get the text are code
-    var hex = this.state.textarea;
+    let hex = this.state.textarea;
     hex = hex.slice(1);
     // convert 3-digit hex to 6-digits.
     if (hex.length === 3) {
@@ -171,15 +171,15 @@ class ThemeChanger extends Component {
     if (hex.length !== 6) {
       throw new Error('Invalid HEX color.');
     }
-    var r = parseInt(hex.slice(0, 2), 16),
+    const r = parseInt(hex.slice(0, 2), 16),
       g = parseInt(hex.slice(2, 4), 16),
       b = parseInt(hex.slice(4, 6), 16);
     return r * 0.299 + g * 0.587 + b * 0.114 > 186 ? '#000000' : '#FFFFFF';
   };
   handleRestoreDefaultThemeClick = () => {
     this.props.onRequestClose()();
-    var prevTheme = this.state.prevThemeSettings.currTheme;
-    var currTheme = this.state.currTheme;
+    let prevTheme = this.state.prevThemeSettings.currTheme;
+    let currTheme = this.state.currTheme;
     if (
       (currTheme === 'custom' && prevTheme === 'dark') ||
       currTheme === 'dark'
@@ -227,7 +227,7 @@ class ThemeChanger extends Component {
   };
 
   render() {
-    var buttonColor;
+    let buttonColor;
     buttonColor = this.state.button;
     const customSettingsDone = (
       <div>

@@ -80,8 +80,8 @@ class Login extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    var email = this.state.email.trim();
-    var password = this.state.password.trim();
+    let email = this.state.email.trim();
+    let password = this.state.password.trim();
 
     let BASE_URL = `${urls.API_URL}`;
 
@@ -360,7 +360,6 @@ class Login extends Component {
         </div>
 
         <Footer />
-
         <div>
           <Dialog
             actions={actions}
