@@ -473,7 +473,7 @@ class ThemeChanger extends Component {
         actions={customSettingsDone}
         modal={false}
         open={this.props.themeOpen}
-        autoScrollBodyContent={true}
+        autoScrollBodyContent={false}
         bodyStyle={customThemeBodyStyle}
         contentStyle={{
           minWidth: '300px',
