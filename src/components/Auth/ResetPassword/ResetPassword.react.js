@@ -92,13 +92,13 @@ class ResetPassword extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    var newPassword = this.state.newPassword.trim();
+    let newPassword = this.state.newPassword.trim();
 
     let BASE_URL = urls.API_URL;
     if (!newPassword) {
       return this.state.isFilled;
     }
-    var resetToken = '';
+    let resetToken = '';
     if (cookies.get('resetPassword')) {
       resetToken = cookies.get('resetPassword');
     }

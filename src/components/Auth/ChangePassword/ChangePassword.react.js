@@ -57,14 +57,14 @@ export default class ChangePassword extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    var password = this.state.currentPassword.trim();
-    var newPassword = this.state.newPassword.trim();
+    let password = this.state.currentPassword.trim();
+    let newPassword = this.state.newPassword.trim();
 
     let BASE_URL = urls.API_URL;
     if (!newPassword || !password) {
       return this.state.isFilled;
     }
-    var email = '';
+    let email = '';
     if (cookies.get('emailId')) {
       email = cookies.get('emailId');
     }
