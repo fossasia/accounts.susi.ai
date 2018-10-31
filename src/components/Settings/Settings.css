@@ -63,6 +63,8 @@ body{
   width: 935px;
   min-height:455px;
   height:71.5vh;
+  margin-top:20px;
+  background-color: #fff;
 }
 
 .settings-list{
@@ -78,11 +80,6 @@ body{
   user-select: none;
   width: 100%;
   display: none;
-}
-
-.settings-app {
-  margin-top:20px;
-  background-color: #fff;
 }
 
 .settings {
