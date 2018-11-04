@@ -155,7 +155,7 @@ export default class ChangePassword extends Component {
       case 'newPassword':
         state.newPasswordError = !(state.newPassword.length >= 6);
         state.confirmPasswordError = !(value === state.confirmPassword);
-        newPassword = event.target.value;
+        let newPassword = event.target.value;
         if (state.newPasswordError) {
           this.newPasswordErrorMessage = 'Minimum 6 characters required';
         } else if (state.confirmPasswordError) {
