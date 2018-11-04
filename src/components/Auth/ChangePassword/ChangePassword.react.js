@@ -139,13 +139,13 @@ export default class ChangePassword extends Component {
           this.newPasswordErrorMessage = '';
         }
         if (!state.newPasswordError) {
-        let result = zxcvbn(newPassword);
-        state.newPasswordScore = result.score;
-        let strength = ['Worst', 'Bad', 'Weak', 'Good', 'Strong'];
-        state.newPasswordStrength = strength[result.score];
+          let result = zxcvbn(newPassword);
+          state.newPasswordScore = result.score;
+          let strength = ['Worst', 'Bad', 'Weak', 'Good', 'Strong'];
+          state.newPasswordStrength = strength[result.score];
         } else {
-        state.newPasswordStrength = '';
-        state.newPasswordScore = -1;
+          state.newPasswordStrength = '';
+          state.newPasswordScore = -1;
         }
         break;
 
