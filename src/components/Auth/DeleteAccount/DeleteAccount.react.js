@@ -135,7 +135,7 @@ class DeleteAccount extends Component {
   };
 
   handleSubmit = event => {
-    var password = this.state.password.trim();
+    let password = this.state.password.trim();
     let url =
       `${urls.API_URL}/aaa/login.json?type=check_password&login=` +
       cookies.get('emailId') +
