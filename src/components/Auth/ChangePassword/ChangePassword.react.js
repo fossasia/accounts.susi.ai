@@ -112,34 +112,6 @@ export default class ChangePassword extends Component {
 
   handleChange = event => {
     let state = this.state;
-// <<<<<<< setting-pass-strength
-//     if (event.target.name === 'currentPassword') {
-//       currentPassword = event.target.value;
-//       let validPassword = currentPassword.length >= 6;
-//       state.currentPassword = currentPassword;
-//       state.currentPasswordError = !(currentPassword && validPassword);
-//     } else if (event.target.name === 'newPassword') {
-//       newPassword = event.target.value;
-//       let validPassword = newPassword.length >= 6;
-//       state.newPassword = newPassword;
-//       state.newPasswordError = !(validPassword && newPassword);
-//       if (validPassword) {
-//         let result = zxcvbn(newPassword);
-//         state.newPasswordScore = result.score;
-//         let strength = ['Worst', 'Bad', 'Weak', 'Good', 'Strong'];
-//         state.newPasswordStrength = strength[result.score];
-//       } else {
-//         state.newPasswordStrength = '';
-//         state.newPasswordScore = -1;
-//       }
-//     } else if (event.target.name === 'confirmPassword') {
-//       confirmPassword = event.target.value;
-//       newPassword = this.state.newPassword;
-//       let validConfirmPassword = newPassword === confirmPassword;
-//       state.confirmPassword = confirmPassword;
-//       state.confirmPasswordError = !(validConfirmPassword && confirmPassword);
-//     }
-// =======
     let value = event.target.value;
     state[event.target.name] = value;
 
