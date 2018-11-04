@@ -140,9 +140,8 @@ export default class ChangePassword extends Component {
 //       state.confirmPasswordError = !(validConfirmPassword && confirmPassword);
 //     }
 // =======
-//     let value = event.target.value;
-//     state[event.target.name] = value;
-// >>>>>>> master
+    let value = event.target.value;
+    state[event.target.name] = value;
 
     // eslint-disable-next-line
     switch (event.target.name) {
@@ -156,6 +155,7 @@ export default class ChangePassword extends Component {
       case 'newPassword':
         state.newPasswordError = !(state.newPassword.length >= 6);
         state.confirmPasswordError = !(value === state.confirmPassword);
+        newPassword = event.target.value;
         if (state.newPasswordError) {
           this.newPasswordErrorMessage = 'Minimum 6 characters required';
         } else if (state.confirmPasswordError) {
