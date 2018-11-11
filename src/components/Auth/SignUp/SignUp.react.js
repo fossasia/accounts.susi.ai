@@ -20,7 +20,6 @@ import Footer from '../../Footer/Footer.react.js';
 import susi from '../../../images/susi-logo.svg';
 
 import { urls } from '../../../Utils';
-import { CAPTCHA_KEY } from '../../../config.js';
 import Recaptcha from 'react-recaptcha';
 
 import './SignUp.css';
@@ -386,7 +385,7 @@ export default class SignUp extends Component {
               </div>
               <div style={{ width: '304px', margin: '10px auto 10px' }}>
                 <Recaptcha
-                  sitekey={CAPTCHA_KEY}
+                  sitekey="6LcUf3EUAAAAAH8yy0iTTorsgMOasLiTkVje33hu"
                   render="explicit"
                   onloadCallback={this.onCaptchaLoad}
                   verifyCallback={this.verifyCaptchaCallback}
