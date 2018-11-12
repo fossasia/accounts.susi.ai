@@ -148,7 +148,7 @@ class ResetPassword extends Component {
     let state = this.state;
     if (event.target.name === 'newPassword') {
       newPassword = event.target.value;
-      let validPassword = newPassword.length >= 6;
+      let validPassword = newPassword.length >= 6 && newPassword.length <= 64;
       state.newPassword = newPassword;
       state.newPasswordError = !(newPassword && validPassword);
     } else if (event.target.name === 'confirmPassword') {
@@ -168,7 +168,8 @@ class ResetPassword extends Component {
     this.setState(state);
 
     if (this.state.newPasswordError && event.target.name === 'newPassword') {
-      this.newPasswordErrorMessage = 'Minimum 6 characters required';
+      this.newPasswordErrorMessage =
+        'Allowed password length is 6 to 64 characters';
       this.confirmPasswordErrorMessage = '';
     } else if (
       this.state.confirmPasswordError &&
