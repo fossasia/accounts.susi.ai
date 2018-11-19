@@ -122,10 +122,13 @@ export default class ChangePassword extends Component {
         break;
 
       case 'newPassword':
-        state.newPasswordError = !(state.newPassword.length >= 6);
+        state.newPasswordError = !(
+          state.newPassword.length >= 6 && state.newPassword.length <= 64
+        );
         state.confirmPasswordError = !(value === state.confirmPassword);
         if (state.newPasswordError) {
-          this.newPasswordErrorMessage = 'Minimum 6 characters required';
+          this.newPasswordErrorMessage =
+            'Allowed password length is 6 to 64 characters';
         } else if (state.confirmPasswordError) {
           this.newPasswordErrorMessage = '';
           this.confirmPasswordErrorMessage =
