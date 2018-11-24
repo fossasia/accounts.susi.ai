@@ -428,13 +428,15 @@ export default class SignUp extends Component {
                 </h4>
                 <br />
                 <Link to={'/'}>
-                  <RaisedButton
-                    // onTouchTap={this.handleOpen}
-                    label="Login"
-                    style={button}
-                    backgroundColor={ChatConstants.standardBlue}
-                    labelColor="#fff"
-                  />
+                  <div className="loginButton">
+                    <RaisedButton
+                      // onTouchTap={this.handleOpen}
+                      label="Login"
+                      style={button}
+                      backgroundColor={ChatConstants.standardBlue}
+                      labelColor="#fff"
+                    />
+                  </div>
                 </Link>
               </div>
             </form>
