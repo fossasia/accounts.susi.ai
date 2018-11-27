@@ -118,24 +118,28 @@ const AvatarRender = props => {
               }}
             />
           </label>
-          <div
-            style={{ marginTop: '10px', width: '150px' }}
-            className={`upload-btn file-upload-btn${
-              props.file && props.isAvatarAdded ? '' : '-disabled'
-            }`}
-            title="Upload Avatar"
-          >
-            {props.file && props.uploadingAvatar ? (
-              <CircularProgress color="#ffffff" size={32} />
-            ) : (
-              <div
-                disabled={!props.file}
-                onClick={e => props.handleAvatarSubmit(e)}
-              >
-                Upload Image
-              </div>
-            )}
-          </div>
+          <RaisedButton
+            label={
+              props.file && props.uploadingAvatar ? undefined : 'Upload Image'
+            }
+            style={{
+              margin: '16px 0px',
+              width: '100%',
+              minWidth: '88px',
+              maxWidth: '150px',
+            }}
+            disabled={!props.file}
+            backgroundColor={'#4285f4'}
+            labelColor="#fff"
+            icon={
+              props.file && props.uploadingAvatar ? (
+                <CircularProgress size={24} />
+              ) : (
+                undefined
+              )
+            }
+            onTouchTap={e => props.handleAvatarSubmit(e)}
+          />
         </form>
       );
     case 'gravatar':
