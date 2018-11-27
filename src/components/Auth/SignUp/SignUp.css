@@ -4,6 +4,10 @@
 	margin: 0 auto;
 }
 
+.loginButton {
+	padding-bottom: 10px;
+}
+
 .susi-signup-logo{
   margin: 5px 0px;
   width: 70px;
@@ -178,7 +182,7 @@
 .signup-header-text{
   padding-top: 10px;
   font-weight: 350;
-  max-width: 75%; 
+  max-width: 75%;
 }
 
 .About p {
