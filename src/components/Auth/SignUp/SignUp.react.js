@@ -324,7 +324,7 @@ export default class SignUp extends Component {
             </h1>
             <h1 style={{ fontSize: '40px', paddingTop: '10px' }}>Sign Up</h1>
             <br />
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit} style={{ float: 'left' }}>
               <div>
                 <TextField
                   name="email"
@@ -422,13 +422,15 @@ export default class SignUp extends Component {
                 </h4>
                 <br />
                 <Link to={'/'}>
-                  <RaisedButton
-                    // onTouchTap={this.handleOpen}
-                    label="Login"
-                    style={button}
-                    backgroundColor={ChatConstants.standardBlue}
-                    labelColor="#fff"
-                  />
+                  <div className="loginButton">
+                    <RaisedButton
+                      // onTouchTap={this.handleOpen}
+                      label="Login"
+                      style={button}
+                      backgroundColor={ChatConstants.standardBlue}
+                      labelColor="#fff"
+                    />
+                  </div>
                 </Link>
               </div>
             </form>

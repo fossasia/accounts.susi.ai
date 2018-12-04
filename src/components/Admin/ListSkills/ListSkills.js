@@ -53,12 +53,6 @@ class ListSkills extends React.Component {
       restoreFailureDialog: false,
       zIndex: -1,
     };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-    this.handleOpen = this.handleOpen.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
-    this.handleFinish = this.handleFinish.bind(this);
   }
 
   componentDidMount() {
