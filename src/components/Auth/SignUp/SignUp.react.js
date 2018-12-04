@@ -50,6 +50,11 @@ export default class SignUp extends Component {
       emailErrorMessage: '',
       passwordStrength: '',
       passwordScore: -1,
+      touched: {
+        email: false,
+        password: false,
+        confirmPassword: false,
+      },
     };
 
     this.emailErrorMessage = '';
@@ -86,6 +91,12 @@ export default class SignUp extends Component {
     }
   };
 
+  handleBlur = field => event => {
+    this.setState({
+      touched: { ...this.state.touched, [field]: true },
+    });
+  };
+
   handleChange = event => {
     let {
       email,
@@ -105,19 +116,16 @@ export default class SignUp extends Component {
       isCaptchaVerified,
       // eslint-disable-next-line
       captchaVerifyErrorMessage,
+      touched,
     } = this.state;
 
     if (event.target.name === 'email') {
       email = event.target.value.trim();
       isEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
-      emailError = !(email && isEmail);
     } else if (event.target.name === 'password') {
       passwordValue = event.target.value;
       validPassword = passwordValue.length >= 6 && passwordValue.length <= 64;
       passwordError = !(passwordValue && validPassword);
-      passwordConfirmError = !(
-        passwordValue === this.state.confirmPasswordValue
-      );
       if (validPassword) {
         const result = zxcvbn(passwordValue);
         passwordScore = result.score;
@@ -130,7 +138,23 @@ export default class SignUp extends Component {
     } else if (event.target.name === 'confirmPassword') {
       confirmPasswordValue = event.target.value;
       validPassword = confirmPasswordValue === passwordValue;
+    }
+    if (touched.email) {
+      emailError = !(email && isEmail);
+    } else {
+      emailError = false;
+    }
+    if (touched.password) {
+      passwordConfirmError = !(
+        passwordValue === this.state.confirmPasswordValue
+      );
+    } else {
+      passwordError = false;
+    }
+    if (touched.confirmPassword) {
       passwordConfirmError = !(validPassword && confirmPasswordValue);
+    } else {
+      passwordConfirmError = false;
     }
 
     if (emailError) {
@@ -352,6 +376,7 @@ export default class SignUp extends Component {
                   name="email"
                   type="email"
                   value={email}
+                  onBlur={this.handleBlur('email')}
                   onChange={this.handleChange}
                   style={styles.emailStyle}
                   inputStyle={styles.inputStyle}
@@ -369,6 +394,7 @@ export default class SignUp extends Component {
                   value={passwordValue}
                   placeholder="Password"
                   underlineStyle={{ display: 'none' }}
+                  onBlur={this.handleBlur('password')}
                   onChange={this.handleChange}
                   errorText={passwordErrorMessage}
                   visibilityButtonStyle={{
@@ -393,6 +419,7 @@ export default class SignUp extends Component {
                   inputStyle={styles.inputpassStyle}
                   value={confirmPasswordValue}
                   placeholder="Confirm Password"
+                  onBlur={this.handleBlur('confirmPassword')}
                   underlineStyle={{ display: 'none' }}
                   onChange={this.handleChange}
                   errorText={passwordConfirmErrorMessage}
