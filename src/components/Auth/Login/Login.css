@@ -74,8 +74,6 @@
   left: 36px;
   top: 8px;
   z-index: 1;
-}
-.bm-burger-button {
   background: #607D8B;
 }
 
@@ -321,13 +319,6 @@
     font-size: 18px;
   }
 
-  .loginForm{
-    margin:0;
-    padding-top:20px;
-  }
-  #loginForm{
-    margin:0;
-  }
   .fieldStyle {
     width: 103%;
   }
@@ -338,9 +329,6 @@
     width:104%;
   }
 
-  #loginform {
-    margin:0;
-  }
   .passfieldStyle {
     width:100%;
   }
@@ -369,6 +357,7 @@
   .loginForm {
     width: 100%;
     margin: 0 auto;
+    padding-top:20px;
   }
 
   #loginform {

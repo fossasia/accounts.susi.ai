@@ -12,6 +12,9 @@
 }
 .chat-input{
     border-radius: 6px;
+    padding: 0 20px 0 5px;
+    border: none;
+    font-size: 14px;
 }
 .chat-footer{
     height: 40px;
@@ -42,11 +45,6 @@
     width:50px;
     height: 10px;
     margin-left:10px;
-}
-.chat-input{
-    padding: 0 20px 0 5px;
-    border: none;
-    font-size: 14px;
 }
 .chat-input-send{
     cursor: pointer;
