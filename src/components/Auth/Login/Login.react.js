@@ -56,7 +56,6 @@ class Login extends Component {
       emailError: true,
       showDialog: false,
       checked: false,
-      showForgotPwd: false,
     };
     this.emailErrorMessage = '';
     this.passwordErrorMessage = '';
@@ -65,14 +64,6 @@ class Login extends Component {
   handleClose = event => {
     this.setState({
       showDialog: false,
-      showForgotPwd: false,
-    });
-  };
-
-  handleForgotPwd = event => {
-    event.preventDefault;
-    this.setState({
-      showForgotPwd: true,
     });
   };
 
@@ -246,9 +237,6 @@ class Login extends Component {
       });
     }
   };
-  handleOpen = () => {
-    this.setState({ open: true });
-  };
 
   render() {
     const { token } = this.props;
@@ -345,13 +333,7 @@ class Login extends Component {
                   disabled={!this.state.validForm}
                 />
                 <div id="forgotpwd">
-                  <Link
-                    to=""
-                    className="forgotpwdlink"
-                    onClick={this.handleForgotPwd}
-                  >
-                    <p>Forgot Password?</p>
-                  </Link>
+                  <ForgotPassword />
                 </div>
               </div>
               <div id="message">
@@ -378,18 +360,6 @@ class Login extends Component {
         </div>
 
         <Footer />
-
-        <div className="ModalDiv">
-          <Dialog
-            modal={false}
-            open={this.state.showForgotPwd}
-            onRequestClose={this.handleClose}
-            className="ModalDiv"
-          >
-            <ForgotPassword closeModal={this.handleClose} />
-          </Dialog>
-        </div>
-
         <div>
           <Dialog
             actions={actions}
