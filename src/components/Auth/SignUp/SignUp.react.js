@@ -102,9 +102,6 @@ export default class SignUp extends Component {
       validForm,
       passwordScore,
       passwordStrength,
-      isCaptchaVerified,
-      // eslint-disable-next-line
-      captchaVerifyErrorMessage,
     } = this.state;
 
     // eslint-disable-next-line
