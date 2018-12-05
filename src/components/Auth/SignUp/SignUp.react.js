@@ -22,6 +22,7 @@ import susi from '../../../images/susi-logo.svg';
 import { urls } from '../../../Utils';
 import { CAPTCHA_KEY } from '../../../config.js';
 import Recaptcha from 'react-recaptcha';
+import zxcvbn from 'zxcvbn';
 
 import './SignUp.css';
 
@@ -47,6 +48,8 @@ export default class SignUp extends Component {
       passwordConfirmErrorMessage: '',
       passwordErrorMessage: '',
       emailErrorMessage: '',
+      passwordStrength: '',
+      passwordScore: -1,
     };
 
     this.emailErrorMessage = '';
@@ -97,6 +100,11 @@ export default class SignUp extends Component {
       passwordErrorMessage,
       passwordConfirmErrorMessage,
       validForm,
+      passwordScore,
+      passwordStrength,
+      isCaptchaVerified,
+      // eslint-disable-next-line
+      captchaVerifyErrorMessage,
     } = this.state;
 
     // eslint-disable-next-line
@@ -107,7 +115,6 @@ export default class SignUp extends Component {
         emailError = !(email && isEmail);
         emailErrorMessage = emailError ? 'Enter a valid Email Address' : '';
         break;
-
       case 'password':
         passwordValue = event.target.value;
         validPassword = passwordValue.length >= 6;
@@ -116,6 +123,15 @@ export default class SignUp extends Component {
         passwordConfirmError = !(
           passwordValue === this.state.confirmPasswordValue
         );
+        if (validPassword) {
+          const result = zxcvbn(passwordValue);
+          passwordScore = result.score;
+          let strength = ['Worst', 'Bad', 'Weak', 'Good', 'Strong'];
+          passwordStrength = strength[result.score];
+        } else {
+          passwordStrength = '';
+          passwordScore = -1;
+        }
         passwordErrorMessage = passwordError
           ? 'Minimum 6 characters required'
           : '';
@@ -156,6 +172,8 @@ export default class SignUp extends Component {
       passwordErrorMessage,
       passwordConfirmErrorMessage,
       validForm,
+      passwordScore,
+      passwordStrength,
     });
   };
 
@@ -289,7 +307,7 @@ export default class SignUp extends Component {
       />
     );
 
-    const PasswordClass = [`is-strength-${this.state.passwordScore}`];
+    const PasswordClass = `is-strength-${this.state.passwordScore}`;
 
     return (
       <div>
@@ -339,7 +357,7 @@ export default class SignUp extends Component {
                   errorText={emailErrorMessage}
                 />
               </div>
-              <div className={PasswordClass.join(' ')}>
+              <div className={PasswordClass}>
                 <PasswordField
                   name="password"
                   style={styles.fieldStyle}
@@ -358,6 +376,11 @@ export default class SignUp extends Component {
                   textFieldStyle={{ padding: '0px' }}
                 />
                 <div className="ReactPasswordStrength-strength-bar" />
+                <div>
+                  <span className="PasswordClassName">
+                    {this.state.passwordStrength}
+                  </span>
+                </div>
               </div>
               <div>
                 <PasswordField

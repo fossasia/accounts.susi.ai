@@ -131,6 +131,17 @@
     color: #fff;
 }
 
+.is-strength-0 { color: #D1462F; width: 390px; }
+.is-strength-1 { color: #D1462F; width: 390px; }
+.is-strength-2 { color: #57B8FF; width: 390px; }
+.is-strength-3 { color: #57B8FF; width: 390px; }
+.is-strength-4 { color: #2FBF71; width: 390px; }
+
+.PasswordClassName { 
+  margin: auto;
+  display: table;
+ }
+
 .ReactPasswordStrength-strength-bar {
   box-sizing: border-box;
   height: 2px;
@@ -141,14 +152,13 @@
 .is-strength--1 .ReactPasswordStrength-strength-bar {
   background: #D1462F;
   display: none;
-	left: 20%
 }
 
 .is-strength-0 .ReactPasswordStrength-strength-bar {
   background: #D1462F;
   width: 50px;
   display: block;
-	left: 20%
+	left: 43%
 }
 
 .is-strength-1 .ReactPasswordStrength-strength-bar {
@@ -169,14 +179,14 @@
   background: #57B8FF;
   width: 192px;
   display: block;
-	left: 20%
+	left: 26%
 }
 
 .is-strength-4 .ReactPasswordStrength-strength-bar {
   background: #2FBF71;
   width: 256px;
   display: block;
-	left: 14%
+	left: 18%
 }
 
 .signup-header-text{
