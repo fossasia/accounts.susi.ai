@@ -103,82 +103,88 @@ export default class SignUp extends Component {
       passwordScore,
       passwordStrength,
       isCaptchaVerified,
-      // eslint-disable-next-line
       captchaVerifyErrorMessage,
     } = this.state;
-
-    if (event.target.name === 'email') {
-      email = event.target.value.trim();
-      isEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
-      emailError = !(email && isEmail);
-    } else if (event.target.name === 'password') {
-      passwordValue = event.target.value;
-      validPassword = passwordValue.length >= 6 && passwordValue.length <= 64;
-      passwordError = !(passwordValue && validPassword);
-      passwordConfirmError = !(
-        passwordValue === this.state.confirmPasswordValue
-      );
-      if (validPassword) {
-        const result = zxcvbn(passwordValue);
-        passwordScore = result.score;
-        let strength = ['Worst', 'Bad', 'Weak', 'Good', 'Strong'];
-        passwordStrength = strength[result.score];
-      } else {
-        passwordStrength = '';
-        passwordScore = -1;
+    switch (event.target.name) {
+      case 'email': {
+        email = event.target.value.trim();
+        isEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+        emailError = !(email && isEmail);
+        if (emailError) {
+          emailErrorMessage = 'Enter a valid Email Address';
+        } else {
+          emailErrorMessage = '';
+        }
+        this.setState({
+          email,
+          isEmail,
+          emailError,
+          emailErrorMessage,
+        });
+        break;
       }
-    } else if (event.target.name === 'confirmPassword') {
-      confirmPasswordValue = event.target.value;
-      validPassword = confirmPasswordValue === passwordValue;
-      passwordConfirmError = !(validPassword && confirmPasswordValue);
+      case 'password': {
+        passwordValue = event.target.value;
+        validPassword = passwordValue.length >= 6 && passwordValue.length <= 64;
+        passwordError = !(passwordValue && validPassword);
+        if (validPassword) {
+          const result = zxcvbn(passwordValue);
+          passwordScore = result.score;
+          let strength = ['Worst', 'Bad', 'Weak', 'Good', 'Strong'];
+          passwordStrength = strength[result.score];
+        } else {
+          passwordStrength = '';
+          passwordScore = -1;
+        }
+        if (passwordError) {
+          passwordErrorMessage =
+            'Allowed password length is 6 to 64 characters';
+        } else {
+          passwordErrorMessage = '';
+        }
+        this.setState({
+          passwordValue,
+          confirmPasswordValue,
+          validPassword,
+          passwordError,
+          passwordErrorMessage,
+          passwordScore,
+          passwordStrength,
+        });
+        break;
+      }
+      case 'confirmPassword': {
+        confirmPasswordValue = event.target.value;
+        validPassword = confirmPasswordValue === passwordValue;
+        passwordConfirmError = !(validPassword && confirmPasswordValue);
+        if (passwordConfirmError) {
+          passwordConfirmErrorMessage = 'Check your password again';
+        } else {
+          passwordConfirmErrorMessage = '';
+        }
+        this.setState({
+          confirmPasswordValue,
+          validPassword,
+          passwordConfirmErrorMessage,
+        });
+        break;
+      }
+      default:
+        break;
     }
-
-    if (emailError) {
-      emailErrorMessage = 'Enter a valid Email Address';
-    } else if (passwordError) {
-      emailErrorMessage = '';
-      passwordErrorMessage = 'Allowed password length is 6 to 64 characters';
-      passwordConfirmErrorMessage = '';
-      captchaVerifyErrorMessage = '';
-    } else if (passwordConfirmError) {
-      emailErrorMessage = '';
-      passwordErrorMessage = '';
-      passwordConfirmErrorMessage = 'Check your password again';
-      captchaVerifyErrorMessage = '';
-    } else if (!isCaptchaVerified) {
-      emailErrorMessage = '';
-      passwordErrorMessage = '';
-      passwordConfirmErrorMessage = '';
+    if (!isCaptchaVerified) {
       captchaVerifyErrorMessage = 'Please confirm you are a human';
     } else {
-      emailErrorMessage = '';
-      passwordErrorMessage = '';
-      passwordConfirmErrorMessage = '';
       captchaVerifyErrorMessage = '';
     }
+    this.setState({ captchaVerifyErrorMessage });
 
     if (!emailError && !passwordError && !passwordConfirmError) {
       validForm = true;
     } else {
       validForm = false;
     }
-
-    this.setState({
-      email,
-      passwordValue,
-      confirmPasswordValue,
-      isEmail,
-      emailError,
-      validPassword,
-      passwordError,
-      passwordConfirmError,
-      emailErrorMessage,
-      passwordErrorMessage,
-      passwordConfirmErrorMessage,
-      validForm,
-      passwordScore,
-      passwordStrength,
-    });
+    this.setState({ validForm });
   };
 
   handleSubmit = event => {
@@ -288,6 +294,7 @@ export default class SignUp extends Component {
     const {
       email,
       passwordValue,
+      // passwordError,
       passwordErrorMessage,
       emailErrorMessage,
       validForm,
@@ -370,6 +377,7 @@ export default class SignUp extends Component {
                   placeholder="Password"
                   underlineStyle={{ display: 'none' }}
                   onChange={this.handleChange}
+                  // error={passwordError}
                   errorText={passwordErrorMessage}
                   visibilityButtonStyle={{
                     marginTop: '-3px',
