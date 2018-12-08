@@ -34,7 +34,7 @@ body{
 }
 
 .setting-item{
-  width:97%;
+  width: 322px;
 }
 
 .Link a {
@@ -185,6 +185,10 @@ h5 {
 
   .settings-list{
     display: none;
+  }
+
+  .setting-item{
+    width: 100%;
   }
 
   .settings-list-dropdown{
