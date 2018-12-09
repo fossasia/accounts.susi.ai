@@ -198,7 +198,7 @@ export default class ChangePassword extends Component {
       border: '1px solid #ced4da',
       fontSize: 16,
       padding: '0px 12px',
-      width: '125%',
+      width: '243px',
     };
     const labelStyle = {
       minWidth: '30%',
