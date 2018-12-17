@@ -1670,7 +1670,7 @@ class Settings extends Component {
                     }}
                   >
                     <span className="Link">
-                      <Link to="/delete-account">Deactivate your account</Link>
+                      <Link to="/delete-account">Delete your account</Link>
                     </span>
                   </p>
                 </div>
