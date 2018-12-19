@@ -51,6 +51,7 @@ import defaultAvatar from '../../../public/defaultAvatar.png';
 import 'antd/dist/antd.css';
 import './Settings.css';
 import { urls, isProduction } from '../../Utils';
+import isPhoneNumber from '../../Utils/isPhoneNumber.js';
 
 const cookieDomain = isProduction() ? '.susi.ai' : '';
 
@@ -747,14 +748,14 @@ class Settings extends Component {
 
   handlePhoneNo = event => {
     const re = /^\d*$/;
-    const verify = /^(?:[0-9] ?){6,14}[0-9]$/;
+    // const verify = /^(?:[0-9] ?){6,14}[0-9]$/;
     if (event.target.value === '' || re.test(event.target.value)) {
       this.setState({
         PhoneNo: event.target.value,
         settingsChanged: true,
       });
     }
-    if (!verify.test(event.target.value)) {
+    if (!isPhoneNumber(event.target.value)) {
       this.setState({ phoneNoError: 'Invalid phone number' });
     } else {
       this.setState({ phoneNoError: '' });
