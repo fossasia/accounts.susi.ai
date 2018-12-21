@@ -6,7 +6,6 @@ import Cookies from 'universal-cookie';
 import $ from 'jquery';
 
 // Components
-import requireAuth from '../HOC/requireAuth';
 import CircularProgress from 'material-ui/CircularProgress';
 import TextField from 'material-ui/TextField';
 import StaticAppBar from '../StaticAppBar/StaticAppBar';
@@ -1692,8 +1691,6 @@ Settings.propTypes = {
   handleThemeChanger: PropTypes.func,
 };
 
-export default requireAuth(
-  GoogleApiWrapper({
-    apiKey: MAP_KEY,
-  })(Settings),
-);
+export default GoogleApiWrapper({
+  apiKey: MAP_KEY,
+})(Settings);

@@ -12,7 +12,7 @@ import SystemLogs from './components/Admin/SystemLogs/SystemLogs.js';
 import VerifyAccount from './components/Auth/VerifyAccount/VerifyAccount.react';
 import Login from './components/Auth/Login/Login.react';
 import NotFound from './components/NotFound/NotFound.react';
-
+import PrivateRoute from './components/ProtectedRoute/ProtectedRoute';
 import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -44,7 +44,7 @@ const App = () => (
           <Route exact path="/changepassword" component={ChangePassword} />
           <Route exact path="/signup" component={SignUp} />
           <Route exact path="/logout" component={Logout} />
-          <Route exact path="/settings" component={Settings} />
+          <PrivateRoute path="/settings" component={Settings} />
           <Route exact path="/admin" component={Admin} />
           <Route exact path="/admin/users" component={Users} />
           <Route exact path="/admin/skills" component={Skills} />
