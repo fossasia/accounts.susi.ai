@@ -1418,6 +1418,7 @@ class Settings extends Component {
           backgroundColor: '#F2F2F2',
           position: 'absolute',
           width: '100%',
+          minHeight: '100%',
         }}
       >
         <Dialog
