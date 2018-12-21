@@ -83,7 +83,7 @@ class ResetPassword extends Component {
       }.bind(this),
       error: function(errorThrown) {
         let state = this.state;
-        state.msg = 'Invalid token!';
+        state.msg = 'Invalid request!';
         state.showDialog = true;
         this.setState(state);
       }.bind(this),
