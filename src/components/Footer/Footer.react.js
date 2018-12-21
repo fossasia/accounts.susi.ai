@@ -14,38 +14,42 @@ class Footer extends Component {
   render() {
     // Footer Component
     return (
-      <div className="footer">
+      <div className="footer-wrap">
         <div className="footer-container">
-          <Link to="/">
-            <img src={susi} alt="SUSI" className="susi-logo" />
+          <Link className="susi-logo-container" to="/">
+            <img src={susi} alt="SUSI" className="susi-logo-footer" />
           </Link>
-          <ul className="alignLeft">
-            <li>
-              <a href={`${urls.CHAT_URL}/overview`}>Overview</a>
-            </li>
-            <li>
-              <a href={`${urls.CHAT_URL}/blog`}>Blog</a>
-            </li>
-            <li>
-              <a href={`${urls.API_URL}`}>API</a>
-            </li>
-            <li>
-              <a href="https://github.com/fossasia?utf8=%E2%9C%93&q=susi">
-                Code
-              </a>
-            </li>
-          </ul>
-          <ul className="alignRight">
-            <li>
-              <a href={`${urls.CHAT_URL}/contact`}>Contact</a>
-            </li>
-            <li>
-              <a href={`${urls.CHAT_URL}/terms`}>Terms</a>
-            </li>
-            <li>
-              <a href={`${urls.CHAT_URL}/privacy`}>Privacy</a>
-            </li>
-          </ul>
+          <div className="footer-content">
+            <div className="footer-left">
+              <ul>
+                <li>
+                  <a href={`${urls.CHAT_URL}/overview`}>Overview</a>
+                </li>
+                <li>
+                  <a href={`${urls.CHAT_URL}/blog`}>Blog</a>
+                </li>
+                <li>
+                  <a href={`${urls.API_URL}`}>API</a>
+                </li>
+                <li>
+                  <a href="https://github.com/fossasia?utf8=%E2%9C%93&q=susi">
+                    Code
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <ul>
+              <li>
+                <a href={`${urls.CHAT_URL}/contact`}>Contact</a>
+              </li>
+              <li>
+                <a href={`${urls.CHAT_URL}/terms`}>Terms</a>
+              </li>
+              <li>
+                <a href={`${urls.CHAT_URL}/privacy`}>Privacy</a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     );
