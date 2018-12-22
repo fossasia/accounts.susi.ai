@@ -75,11 +75,10 @@ class DeleteAccount extends Component {
     let password;
     let state = this.state;
     password = event.target.value;
-    let validPassword = password.length >= 6;
     state.password = password;
-    state.passwordError = !(password && validPassword);
+    state.passwordError = !password;
     if (this.state.passwordError) {
-      this.passwordErrorMessage = 'Minimum 6 characters required';
+      this.passwordErrorMessage = 'Password field cannot be blank';
       state.validForm = false;
     } else {
       this.passwordErrorMessage = '';

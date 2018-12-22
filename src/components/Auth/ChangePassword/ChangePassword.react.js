@@ -106,9 +106,9 @@ export default class ChangePassword extends Component {
     // eslint-disable-next-line
     switch (event.target.name) {
       case 'currentPassword':
-        state.currentPasswordError = !(state.currentPassword.length >= 6);
+        state.currentPasswordError = !state.currentPassword;
         this.currentPasswordErrorMessage = state.currentPasswordError
-          ? 'Minimum 6 characters required'
+          ? 'Password field cannot be blank'
           : '';
         break;
 
