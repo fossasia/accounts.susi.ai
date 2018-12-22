@@ -52,3 +52,15 @@ Upon clicking that link, the user is redirected to a reset password service app 
  >- New Password
 
 Reset password Redirect : `BASE_URL+'/apps/resetpass/index.html?token=TOKEN'`
+
+##### **Change Password**
+In case the user wants to change his password, he can login using his current password and preferred server and use the `Change Password` option to set a new password for his account.
+This service is different from `Password Recovery` service where the user has forgotten his password and wants a new password. Here the user knows his current password and wants to change it.
+The Change Password service uses:
+>- Email
+>- Current Password
+>- New Password
+
+Change Password endpoint : `BASE_URL+'/aaa/changepassword.json? 'changepassword=EMAIL&password=PASSWORD&newpassword=NEW_PASSWORD &access_token=ACCESS_TOKEN'`
+
+Upon successfully changing the password, the user is automatically logged out and is prompted to login again.
