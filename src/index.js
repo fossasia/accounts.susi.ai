@@ -51,7 +51,7 @@ const App = () => (
           <Route exact path="/verify-account" component={VerifyAccount} />
           <Route exact path="/resetpass" component={ResetPassword} />
           <Route exact path="/delete-account" component={DeleteAccount} />
-          <Route exact path="*" component={NotFound} />
+          <Route exact path="/*:path(error-404|)" component={NotFound} />
         </Switch>
       </div>
     </MuiThemeProvider>

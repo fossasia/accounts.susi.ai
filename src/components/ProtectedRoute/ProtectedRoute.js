@@ -13,7 +13,7 @@ export default function PrivateRoute({ component: Component, ...rest }) {
         ) : (
           <Redirect
             to={{
-              pathname: '*',
+              pathname: '/error-404',
               state: { from: props.location },
             }}
           />
