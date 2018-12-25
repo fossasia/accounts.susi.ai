@@ -938,14 +938,18 @@ class Settings extends Component {
                 Select TimeZone
               </div>
               <br />
-              <TimezonePicker
-                value={this.state.TimeZone}
-                onChange={timezone => this.handleTimeZone(timezone)}
-                inputProps={{
-                  placeholder: 'Select Timezone...',
-                  name: 'timezone',
-                }}
-              />
+              <div className="time-zone">
+                <div className="time-zone-dropdown">
+                  <TimezonePicker
+                    value={this.state.TimeZone}
+                    onChange={timezone => this.handleTimeZone(timezone)}
+                    inputProps={{
+                      placeholder: 'Select Timezone...',
+                      name: 'timezone',
+                    }}
+                  />
+                </div>
+              </div>
             </div>
             <div style={{ width: '50%' }}>
               <div className="label" style={{ marginBottom: '0' }}>
