@@ -113,19 +113,15 @@ class Login extends Component {
             let accessToken = response.access_token;
             let uuid = response.uuid;
             let time = response.valid_seconds;
-
+            this.handleOnSubmit(email, accessToken, time, uuid);
+            let msg = 'You are logged in';
             this.setState({
+              msg,
               isFilled: true,
               accessToken,
               success: true,
               msg: response.message,
               time,
-            });
-
-            this.handleOnSubmit(email, accessToken, time, uuid);
-            let msg = 'You are logged in';
-            this.setState({
-              msg,
             });
           } else {
             this.setState({
