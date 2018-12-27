@@ -116,16 +116,16 @@ class Login extends Component {
 
             this.setState({
               isFilled: true,
-              accessToken: accessToken,
+              accessToken,
               success: true,
               msg: response.message,
-              time: time,
+              time,
             });
 
             this.handleOnSubmit(email, accessToken, time, uuid);
             let msg = 'You are logged in';
             this.setState({
-              msg: msg,
+              msg,
             });
           } else {
             this.setState({
@@ -154,14 +154,14 @@ class Login extends Component {
       email = event.target.value.trim();
       let validEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
       this.setState({
-        email: email,
+        email,
         emailError: !(email && validEmail),
       });
     } else if (event.target.name === 'password') {
       password = event.target.value;
       let validPassword = password.length >= 6;
       this.setState({
-        password: password,
+        password,
         passwordError: !(password && validPassword),
       });
     }
