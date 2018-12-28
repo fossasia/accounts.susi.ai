@@ -64,7 +64,7 @@ class StaticAppBar extends Component {
         });
       },
       error: function(errorThrown) {
-        console.log(errorThrown);
+        console.error(errorThrown);
       },
     });
     window.addEventListener('scroll', this.handleScroll);

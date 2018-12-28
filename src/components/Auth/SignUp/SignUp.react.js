@@ -340,7 +340,6 @@ export default class SignUp extends Component {
                   onChange={this.handleChange}
                   style={styles.emailStyle}
                   inputStyle={styles.inputStyle}
-                  labelText={{ color: '#878faf' }}
                   underlineStyle={{ display: 'none' }}
                   placeholder="Email"
                   errorText={emailErrorMessage}
