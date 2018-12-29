@@ -112,26 +112,23 @@ class Login extends Component {
             });
             let accessToken = response.access_token;
             let uuid = response.uuid;
-            let state = this.state;
             let time = response.valid_seconds;
-
-            state.isFilled = true;
-            state.accessToken = accessToken;
-            state.success = true;
-            state.msg = response.message;
-            state.time = time;
-            this.setState(state);
-
             this.handleOnSubmit(email, accessToken, time, uuid);
             let msg = 'You are logged in';
-            state.msg = msg;
-            this.setState(state);
+            this.setState({
+              msg,
+              isFilled: true,
+              accessToken,
+              success: true,
+              msg: response.message,
+              time,
+            });
           } else {
-            let state = this.state;
-            state.msg = 'Login Failed. Try Again';
-            state.password = '';
-            state.showDialog = true;
-            this.setState(state);
+            this.setState({
+              msg: 'Login Failed. Try Again',
+              password: '',
+              showDialog: true,
+            });
           }
         }.bind(this),
         error: function(errorThrown) {
@@ -148,18 +145,21 @@ class Login extends Component {
   handleChange = event => {
     let email;
     let password;
-    let state = this.state;
 
     if (event.target.name === 'email') {
       email = event.target.value.trim();
       let validEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
-      state.email = email;
-      state.emailError = !(email && validEmail);
+      this.setState({
+        email,
+        emailError: !(email && validEmail),
+      });
     } else if (event.target.name === 'password') {
       password = event.target.value;
       let validPassword = password.length >= 6;
-      state.password = password;
-      state.passwordError = !(password && validPassword);
+      this.setState({
+        password,
+        passwordError: !(password && validPassword),
+      });
     }
 
     if (this.state.emailError) {
@@ -173,18 +173,17 @@ class Login extends Component {
     } else {
       this.passwordErrorMessage = '';
     }
-    if (!state.emailError && !state.passwordError) {
-      state.validForm = true;
+    if (!this.state.emailError && !this.state.passwordError) {
+      this.setState({ validForm: true });
     } else {
-      state.validForm = false;
+      this.setState({ validForm: false });
     }
 
     this.setState(state);
   };
 
   handleOnSubmit = (email, loggedIn, time, uuid) => {
-    let state = this.state;
-    if (state.success) {
+    if (this.state.success) {
       cookies.set('loggedIn', loggedIn, {
         path: '/',
         maxAge: time,
