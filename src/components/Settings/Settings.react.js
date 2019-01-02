@@ -51,6 +51,7 @@ import defaultAvatar from '../../../public/defaultAvatar.png';
 import 'antd/dist/antd.css';
 import './Settings.css';
 import { urls, isProduction } from '../../Utils';
+import isPhoneNumber from '../../Utils/isPhoneNumber.js';
 
 const cookieDomain = isProduction() ? '.susi.ai' : '';
 
@@ -118,24 +119,28 @@ const AvatarRender = props => {
               }}
             />
           </label>
-          <div
-            style={{ marginTop: '10px', width: '150px' }}
-            className={`upload-btn file-upload-btn${
-              props.file && props.isAvatarAdded ? '' : '-disabled'
-            }`}
-            title="Upload Avatar"
-          >
-            {props.file && props.uploadingAvatar ? (
-              <CircularProgress color="#ffffff" size={32} />
-            ) : (
-              <div
-                disabled={!props.file}
-                onClick={e => props.handleAvatarSubmit(e)}
-              >
-                Upload Image
-              </div>
-            )}
-          </div>
+          <RaisedButton
+            label={
+              props.file && props.uploadingAvatar ? undefined : 'Upload Image'
+            }
+            style={{
+              margin: '16px 0px',
+              width: '100%',
+              minWidth: '88px',
+              maxWidth: '150px',
+            }}
+            disabled={!props.file}
+            backgroundColor={'#4285f4'}
+            labelColor="#fff"
+            icon={
+              props.file && props.uploadingAvatar ? (
+                <CircularProgress size={24} />
+              ) : (
+                undefined
+              )
+            }
+            onTouchTap={e => props.handleAvatarSubmit(e)}
+          />
         </form>
       );
     case 'gravatar':
@@ -743,14 +748,14 @@ class Settings extends Component {
 
   handlePhoneNo = event => {
     const re = /^\d*$/;
-    const verify = /^(?:[0-9] ?){6,14}[0-9]$/;
+    // const verify = /^(?:[0-9] ?){6,14}[0-9]$/;
     if (event.target.value === '' || re.test(event.target.value)) {
       this.setState({
         PhoneNo: event.target.value,
         settingsChanged: true,
       });
     }
-    if (!verify.test(event.target.value)) {
+    if (!isPhoneNumber(event.target.value)) {
       this.setState({ phoneNoError: 'Invalid phone number' });
     } else {
       this.setState({ phoneNoError: '' });
@@ -1413,6 +1418,7 @@ class Settings extends Component {
           backgroundColor: '#F2F2F2',
           position: 'absolute',
           width: '100%',
+          minHeight: '100%',
         }}
       >
         <Dialog
@@ -1666,7 +1672,7 @@ class Settings extends Component {
                     }}
                   >
                     <span className="Link">
-                      <Link to="/delete-account">Deactivate your account</Link>
+                      <Link to="/delete-account">Delete your account</Link>
                     </span>
                   </p>
                 </div>
