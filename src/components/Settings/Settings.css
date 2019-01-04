@@ -258,7 +258,7 @@ input[type=file]{
   }
 }
 .time-zone{
-   padding-bottom: 30px
+   padding-bottom: 30px;
 }
 .time-zone-dropdown{
   position: absolute;
