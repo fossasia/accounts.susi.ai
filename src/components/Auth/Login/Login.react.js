@@ -13,6 +13,7 @@ import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import ForgotPassword from '../ForgotPassword/ForgotPassword.react';
+import Description from './../SignUp/Description.js';
 
 // Static assets
 import Footer from '../../Footer/Footer.react.js';
@@ -266,7 +267,7 @@ class Login extends Component {
       marginBottom: '10px',
     };
     const button = {
-      width: '100%',
+      minWidth: '35%',
       marginLeft: 0,
     };
 
@@ -275,27 +276,7 @@ class Login extends Component {
         <div className="app-bar">
           <StaticAppBar />
         </div>
-
-        <div className="app-body-div">
-          <div className="About">
-            <div className="About-heading">
-              <h1>
-                Meet SUSI.AI, Your Artificial Intelligence for Personal
-                Assistants, Robots, Help Desks and Chatbots.
-              </h1>
-            </div>
-            <div className="points">
-              <p>
-                Ask it questions.
-                <br />
-                <br /> Tell it to do things.
-                <br />
-                <br /> Always ready to help.
-              </p>
-            </div>
-          </div>
-        </div>
-
+        <Description />
         <div className="login-container">
           <div className="loginForm">
             <form id="loginform" onSubmit={this.handleSubmit}>
@@ -343,9 +324,10 @@ class Login extends Component {
 
           <div className="signup">
             <img src={susi} alt="SUSI" className="susi-logo" />
-            <h1>See what's happening in the world right now</h1>
-            <p style={{ fontSize: '18px' }}>Join SUSI.AI Today.</p>
-            <br />
+            <h1 className="signup-header-text">
+              See what's happening in the world right now
+            </h1>
+            <p className="description-text">Join SUSI.AI Today.</p>
             <Link to={'/signup'} className="signupbtn">
               <RaisedButton
                 style={button}
@@ -354,7 +336,6 @@ class Login extends Component {
                 labelColor="#fff"
               />
             </Link>
-            <br />
           </div>
         </div>
 
