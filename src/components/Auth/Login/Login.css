@@ -5,8 +5,8 @@
 }
 
 .signup {
-  margin-left:25%;
-  margin-right:25%;
+  margin-left: 12%;
+  margin-right: 15%;
   margin-top: 10%;
 }
 
@@ -21,9 +21,20 @@
   margin-left:230px;
 }
 
-.points{
-  margin: 5% 3% 5% 0%;
+.susi-logo{
+  margin: 5px -5px;
+  width: 70px;
+}
+
+.signup-header-text{
+  padding-top: 10px;
+  font-weight: 350;
+  max-width: 75%;
+}
+
+.description-text{
   font-size: 24px;
+  padding: 3% 0;
 }
 
 .app-bar {
@@ -48,17 +59,6 @@
   float : right;
 }
 
-.app-body-div {
-  height: 80%;
-  width : 50%;
-  float : left;
-  background-color : #eee;
-}
-.About {
-  margin: 30vh 8% 0% 8%;
-  font-size : 18px;
-  height:59vh;
-}
 .menu-icon {
   top: -7px;
   height: 24px;
@@ -196,10 +196,6 @@
   }
 }
 
-.About-heading { 
-  margin-bottom: 10px;
-}
-
 @media screen and (max-width: 937px) {
   .loginbtn {
     width:87%;
@@ -212,28 +208,6 @@
     width : auto;
     margin-top:50px;
     margin-bottom: 50px;
-  }
-  .app-body-div {
-    height:auto;
-    width : auto;
-    margin-bottom: 30px;
-    padding-bottom: 30px;
-    float : none;
-    background-color : #EEE;
-  }
-  .About {
-    margin:50px 0 5px 0;
-  }
-  .About-heading{
-    padding-top:10px;
-  }
-
-  .About h1 {
-    font-size: 30px;
-  }
-
-  .About p {
-    font-size: 18px;
   }
 
   .signup{
@@ -263,24 +237,7 @@
   .passfieldStyle {
     width:100%;
   }
-  .points{
-    max-width: none;
-    position: relative;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    display: -ms-flexbox;
-    display: -webkit-box;
-    display: flex;
-    -ms-flex-pack: justify;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -ms-flex-flow: row wrap;
-    flex-flow: row wrap;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
-    margin: 0 auto;
-    width: 100%;
-  }
+
   .footer{
     margin-top:0;
   }
@@ -293,30 +250,9 @@
     width : 100%;
     margin-top:50px;
   }
-  .app-body-div {
-    height:auto;
-    width : auto;
-    margin:0 0 10px 0;
-    float : none;;
-    background-color : #EEE;
-  }
-  .About {
-    margin:50px 0 5px 0;
-  }
-  .About-heading{
-    padding-top:2px;
-  }
-
-  .About h1 {
-    font-size: 25px;
-  }
 
   .signup{
     margin: 0% 10% 0 10%;
-  }
-
-  .About p {
-    font-size: 18px;
   }
 
   .fieldStyle {
@@ -332,24 +268,7 @@
   .passfieldStyle {
     width:100%;
   }
-  .points{
-    max-width: none;
-    position: relative;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    display: -ms-flexbox;
-    display: -webkit-box;
-    display: flex;
-    -ms-flex-pack: justify;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -ms-flex-flow: row wrap;
-    flex-flow: row wrap;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
-    margin: 0 auto;
-    width: 100%;
-  }
+
   .footer{
     margin-top:0;
   }
