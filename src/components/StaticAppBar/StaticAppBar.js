@@ -186,7 +186,8 @@ class StaticAppBar extends Component {
               rightIcon={<Extension />}
             />
           ) : null}
-          {cookies.get('loggedIn') ? (
+          {cookies.get('loggedIn') &&
+          !(window.location.href === 'https://accounts.susi.ai/settings') ? (
             <MenuItem
               primaryText="Settings"
               containerElement={<Link to="/settings" />}
