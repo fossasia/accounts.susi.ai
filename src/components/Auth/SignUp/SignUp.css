@@ -53,7 +53,7 @@
 }
 
 .About{
-  margin: 30vh 8% 0% 8%;
+  margin: 25vh 8% 0% 8%;
   font-size : 18px;
   height:59vh;
   min-height:580px;
@@ -203,6 +203,20 @@
   margin-top: 5.7px;
 }
 
+.description-heading{
+  font-weight: 400;
+}
+
+.description-text{
+  font-size: 24px;
+  font-weight: 300;
+  padding: 3% 0;
+}
+
+.learnMoreButton{
+  margin: 5% 0
+}
+
 @media screen and (max-width: 838px) {
   .signup-container{
     float : none;
@@ -257,11 +271,17 @@
 	.signUpForm {
 		width: 70%;
 		margin: 0 auto;
-	}
+  }
+  .learnMoreButton{
+    margin: 0% 10% 3%;
+  }
 }
 
 @media screen and (max-width: 475px) {
   .About h1, .About p{
 		width: 100%;
+  }
+  .learnMoreButton{
+    margin: 2% 0 4% 0;
   }
 }

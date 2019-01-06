@@ -220,7 +220,7 @@ export default class ChangePassword extends Component {
               <div>
                 <PasswordField
                   name="newPassword"
-                  placeholder="Must be at least 6 characters"
+                  placeholder="Must be from 6 to 64 characters"
                   style={fieldStyle}
                   value={this.state.newPassword}
                   onChange={this.handleChange}
