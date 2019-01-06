@@ -947,7 +947,7 @@ class Settings extends Component {
                 }}
               />
             </div>
-            <div style={{ width: '50%' }}>
+            <div style={{ width: '50%', padding: '10px' }}>
               <div className="label" style={{ marginBottom: '0' }}>
                 Select Avatar
               </div>
