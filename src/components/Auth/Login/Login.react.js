@@ -23,6 +23,7 @@ import ChatConstants from '../../../constants/ChatConstants';
 
 // Static assets
 import './Login.css';
+import PasswordField from 'material-ui-password-field';
 
 const cookieDomain = isProduction() ? '.susi.ai' : '';
 
@@ -251,7 +252,7 @@ class Login extends Component {
     );
 
     const fieldStyle = {
-      height: '35px',
+      height: '44px',
       borderRadius: 4,
       border: '1px solid #ced4da',
       fontSize: 16,
@@ -259,6 +260,17 @@ class Login extends Component {
       margin: '10px',
       paddingRight: '0',
       width: '',
+      boxSizing: 'border-box',
+    };
+    const passwordStyle = {
+      height: '44px',
+      borderRadius: 4,
+      border: '1px solid #ced4da',
+      fontSize: 14,
+      padding: '0px 5px',
+      margin: '10px',
+      paddingRight: '0',
+      width: '100% !important',
       boxSizing: 'border-box',
     };
 
@@ -292,10 +304,10 @@ class Login extends Component {
                   underlineStyle={{ display: 'none' }}
                 />
 
-                <TextField
+                <PasswordField
                   name="password"
                   type="password"
-                  style={fieldStyle}
+                  style={passwordStyle}
                   className="fieldStyle"
                   value={this.state.password}
                   placeholder="Password"
