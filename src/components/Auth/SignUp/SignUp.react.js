@@ -113,8 +113,7 @@ export default class SignUp extends Component {
       isEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
       emailError = !(email && isEmail);
     } else if (event.target.name === 'password') {
-      x = event.target.value;
-      passwordValue = x.split(' ').join('').split('	').join('');
+      passwordValue  = event.target.value.split(' ').join('').split('	').join('');
       validPassword = passwordValue.length >= 6 && passwordValue.length <= 64;
       passwordError = !(passwordValue && validPassword);
       passwordConfirmError = !(
