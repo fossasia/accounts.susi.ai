@@ -7,6 +7,9 @@ import userPreferencesStore from '../../stores/UserPreferencesStore';
 import Dialog from 'material-ui/Dialog';
 import Login from '../Auth/Login/Login.react';
 import ChatConstants from '../../constants/ChatConstants';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 import { urls } from '../../Utils';
 
@@ -57,32 +60,49 @@ export default class NotFound extends Component {
               />
             </a>
             <br />
-            <Link to={'/signup'} className="actionButton">
-              <RaisedButton
-                className="notfound-button"
-                label="SignUp to SUSI"
-                backgroundColor={
-                  userPreferencesStore.getTheme()
-                    ? ChatConstants.standardBlue
-                    : '#19314B'
-                }
-                labelColor="#fff"
-              />
-            </Link>
-            <br />
-            <Link to={'/'} className="actionButton">
-              <RaisedButton
-                className="notfound-button"
-                label="LogIn to SUSI"
-                backgroundColor={
-                  userPreferencesStore.getTheme()
-                    ? ChatConstants.standardBlue
-                    : '#19314B'
-                }
-                labelColor="#fff"
-              />
-            </Link>
-            <br />
+            {cookies.get('loggedIn') ? (
+              <Link to={'/settings'} className="actionButton">
+                <RaisedButton
+                  className="notfound-button"
+                  label="Back to Settings"
+                  backgroundColor={
+                    userPreferencesStore.getTheme()
+                      ? ChatConstants.standardBlue
+                      : '#19314B'
+                  }
+                  labelColor="#fff"
+                />
+              </Link>
+            ) : (
+              <div>
+                <Link to={'/signup'} className="actionButton">
+                  <RaisedButton
+                    className="notfound-button"
+                    label="SignUp to SUSI"
+                    backgroundColor={
+                      userPreferencesStore.getTheme()
+                        ? ChatConstants.standardBlue
+                        : '#19314B'
+                    }
+                    labelColor="#fff"
+                  />
+                </Link>
+                <br />
+                <Link to={'/'} className="actionButton">
+                  <RaisedButton
+                    className="notfound-button"
+                    label="LogIn to SUSI"
+                    backgroundColor={
+                      userPreferencesStore.getTheme()
+                        ? ChatConstants.standardBlue
+                        : '#19314B'
+                    }
+                    labelColor="#fff"
+                  />
+                </Link>
+                <br />
+              </div>
+            )}
           </div>
         </div>
         <Dialog
