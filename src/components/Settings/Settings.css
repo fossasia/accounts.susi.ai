@@ -82,11 +82,18 @@ body{
   display: none;
 }
 
+.settings-app {
+  margin-top:20px;
+  max-height: 500px;
+  background-color: #fff;
+}
+
 .settings {
   padding:20px 20px 0px 30px;
   width:598.5px;
   min-height:500px;
   height: fit-content;
+  max-height: inherit;
   float:right;
   background-color: #fff;
 }
