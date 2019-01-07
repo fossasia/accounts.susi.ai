@@ -904,7 +904,7 @@ class Settings extends Component {
         <div>
           <div className="tabHeading">Account</div>
           <hr className="Divider" style={{ height: '2px' }} />
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <div className="fields">
             <div style={{ width: '50%', marginLeft: '24px' }}>
               <div className="label">User Name</div>
               <TextField
