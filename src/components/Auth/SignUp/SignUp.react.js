@@ -14,6 +14,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Login from '../Login/Login.react';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import ChatConstants from '../../../constants/ChatConstants';
+import Description from './Description.js';
 
 // Static assets
 import Footer from '../../Footer/Footer.react.js';
@@ -320,23 +321,7 @@ export default class SignUp extends Component {
             <StaticAppBar />
           </div>
         </div>
-        <div className="app-body">
-          <div className="About">
-            <h1>
-              Meet SUSI.AI, Your Artificial Intelligence for Personal
-              Assistants, Robots, Help Desks and Chatbots.
-            </h1>
-            <p style={{ fontSize: '24px' }}>
-              Ask it questions.
-              <br />
-              <br />
-              Tell it to do things.
-              <br />
-              <br />
-              Always ready to help.
-            </p>
-          </div>
-        </div>
+        <Description />
 
         <div className="signup-container">
           <div className="signUpForm">

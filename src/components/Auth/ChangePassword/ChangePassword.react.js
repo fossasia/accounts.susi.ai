@@ -34,7 +34,6 @@ export default class ChangePassword extends Component {
       newPasswordError: true,
       confirmPasswordError: true,
       validForm: false,
-      showForgotPwd: false,
     };
     this.currentPasswordErrorMessage = '';
     this.newPasswordErrorMessage = '';
@@ -44,14 +43,6 @@ export default class ChangePassword extends Component {
   handleClose = event => {
     this.setState({
       showDialog: false,
-      showForgotPwd: false,
-    });
-  };
-
-  handleForgotPwd = event => {
-    event.preventDefault();
-    this.setState({
-      showForgotPwd: true,
     });
   };
 
@@ -115,9 +106,9 @@ export default class ChangePassword extends Component {
     // eslint-disable-next-line
     switch (event.target.name) {
       case 'currentPassword':
-        state.currentPasswordError = !(state.currentPassword.length >= 6);
+        state.currentPasswordError = !state.currentPassword;
         this.currentPasswordErrorMessage = state.currentPasswordError
-          ? 'Minimum 6 characters required'
+          ? 'Password field cannot be blank'
           : '';
         break;
 
@@ -229,7 +220,7 @@ export default class ChangePassword extends Component {
               <div>
                 <PasswordField
                   name="newPassword"
-                  placeholder="Must be at least 6 characters"
+                  placeholder="Must be from 6 to 64 characters"
                   style={fieldStyle}
                   value={this.state.newPassword}
                   onChange={this.handleChange}
@@ -260,10 +251,10 @@ export default class ChangePassword extends Component {
                 />
               </div>
               <br />
+              <div className="forgot">
+                <ForgotPassword />
+              </div>
               <div style={submitBtn}>
-                <div className="forgot">
-                  <a onClick={this.handleForgotPwd}>Forgot your password?</a>
-                </div>
                 <br />
                 <div>
                   <RaisedButton
@@ -278,19 +269,6 @@ export default class ChangePassword extends Component {
               </div>
             </form>
           </Paper>
-
-          {/* Forgot Password Modal */}
-          <div className="ModalDiv">
-            <Dialog
-              modal={false}
-              open={this.state.showForgotPwd}
-              onRequestClose={this.handleClose}
-              className="ModalDiv"
-            >
-              <ForgotPassword closeModal={this.handleClose} />
-            </Dialog>
-          </div>
-
           {this.state.msg && (
             <div>
               <Dialog

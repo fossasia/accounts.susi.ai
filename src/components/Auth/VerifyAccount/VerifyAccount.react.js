@@ -76,7 +76,7 @@ class VerifyAccount extends Component {
           if (response.accepted === true) {
             this.setState({
               message:
-                'Thank you, your account is now verified.' +
+                'Thank you! Your account is now verified. ' +
                 'Please login to continue.',
               showDialog: true,
             });
