@@ -215,7 +215,8 @@ class StaticAppBar extends Component {
             <MenuItem
               primaryText="Login"
               containerElement={<Link to="/" />}
-              rightIcon={<LoginIcon />}
+              disabled={true}
+              rightIcon={<LoginIcon color="#eee" />}
             />
           )}
         </IconMenu>
