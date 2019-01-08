@@ -5,8 +5,8 @@
 }
 
 .signup {
-  margin-left:25%;
-  margin-right:25%;
+  margin-left: 12%;
+  margin-right: 15%;
   margin-top: 10%;
 }
 
@@ -18,12 +18,23 @@
   margin-left:20%;
 }
 #forgotpwd {
-  margin-left:60px;
+  margin-left:230px;
 }
 
-.points{
-  margin: 5% 3% 5% 0%;
+.susi-logo{
+  margin: 5px -5px;
+  width: 70px;
+}
+
+.signup-header-text{
+  padding-top: 10px;
+  font-weight: 350;
+  max-width: 75%;
+}
+
+.description-text{
   font-size: 24px;
+  padding: 3% 0;
 }
 
 .app-bar {
@@ -48,17 +59,6 @@
   float : right;
 }
 
-.app-body-div {
-  height: 80%;
-  width : 50%;
-  float : left;
-  background-color : #eee;
-}
-.About {
-  margin: 30vh 8% 0% 8%;
-  font-size : 18px;
-  height:59vh;
-}
 .menu-icon {
   top: -7px;
   height: 24px;
@@ -74,8 +74,6 @@
   left: 36px;
   top: 8px;
   z-index: 1;
-}
-.bm-burger-button {
   background: #607D8B;
 }
 
@@ -146,11 +144,6 @@
   margin-left: 10px;
 }
 
-.login-div {
-  margin: 0 auto;
-  text-align: center;
-}
-
 @media screen and (max-width: 1588px) {
   .loginForm{
     margin:10px;
@@ -158,20 +151,6 @@
 
   #loginform {
     margin-left:10%;
-  }
-
-  .login-div {
-    margin: 0 auto;
-    text-align: auto;
-  }
-
-  .login-div > h2 {
-    margin-left: -88px; 
-  }
-
-  .loginbtn {
-    margin-left: 20px;
-    width: 5%;
   }
 }
 
@@ -203,10 +182,6 @@
     margin:10% 15%;
   }
 
-  .login-div > h2 {
-    margin-left: 0px; 
-  }
-
   #forgotpwd {
     margin:20px 10px;
   }
@@ -216,20 +191,14 @@
   }
 
   .loginbtn {
-    margin-left: 0px;
-    width: 220px;
-    margin-top: 10px;
+    width:86%;
+    margin-bottom:-5px;
   }
-}
-
-.About-heading { 
-  margin-bottom: 10px;
 }
 
 @media screen and (max-width: 937px) {
   .loginbtn {
-    width: 220px;
-    margin-top: 10px;
+    width:87%;
   }
 }
 @media screen and (max-width: 838px) {
@@ -239,28 +208,6 @@
     width : auto;
     margin-top:50px;
     margin-bottom: 50px;
-  }
-  .app-body-div {
-    height:auto;
-    width : auto;
-    margin-bottom: 30px;
-    padding-bottom: 30px;
-    float : none;
-    background-color : #EEE;
-  }
-  .About {
-    margin:50px 0 5px 0;
-  }
-  .About-heading{
-    padding-top:10px;
-  }
-
-  .About h1 {
-    font-size: 30px;
-  }
-
-  .About p {
-    font-size: 18px;
   }
 
   .signup{
@@ -282,36 +229,15 @@
     margin: 0 auto;
   }
 
-  .login-div > h2 {
-    margin-left: 0px; 
-  }
-
   .login-div > .fieldStyle, .login-div > .loginbtn {
-    width: 220px;
+    width: 95%;
     margin: 0 auto;
   }
 
   .passfieldStyle {
     width:100%;
   }
-  .points{
-    max-width: none;
-    position: relative;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    display: -ms-flexbox;
-    display: -webkit-box;
-    display: flex;
-    -ms-flex-pack: justify;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -ms-flex-flow: row wrap;
-    flex-flow: row wrap;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
-    margin: 0 auto;
-    width: 100%;
-  }
+
   .footer{
     margin-top:0;
   }
@@ -324,39 +250,11 @@
     width : 100%;
     margin-top:50px;
   }
-  .app-body-div {
-    height:auto;
-    width : auto;
-    margin:0 0 10px 0;
-    float : none;;
-    background-color : #EEE;
-  }
-  .About {
-    margin:50px 0 5px 0;
-  }
-  .About-heading{
-    padding-top:2px;
-  }
-
-  .About h1 {
-    font-size: 25px;
-  }
 
   .signup{
     margin: 0% 10% 0 10%;
   }
 
-  .About p {
-    font-size: 18px;
-  }
-
-  .loginForm{
-    margin:0;
-    padding-top:20px;
-  }
-  #loginForm{
-    margin:0;
-  }
   .fieldStyle {
     width: 103%;
   }
@@ -364,34 +262,13 @@
     margin: 10px 25% 10px 15px;
   }
   .loginbtn {
-    width: 235px!important;
-    margin-top: 10px;
+    width:104%;
   }
 
-  #loginform {
-    margin:0;
-  }
   .passfieldStyle {
     width:100%;
   }
-  .points{
-    max-width: none;
-    position: relative;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    display: -ms-flexbox;
-    display: -webkit-box;
-    display: flex;
-    -ms-flex-pack: justify;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -ms-flex-flow: row wrap;
-    flex-flow: row wrap;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
-    margin: 0 auto;
-    width: 100%;
-  }
+
   .footer{
     margin-top:0;
   }
@@ -399,6 +276,7 @@
   .loginForm {
     width: 100%;
     margin: 0 auto;
+    padding-top:20px;
   }
 
   #loginform {
@@ -411,24 +289,8 @@
     margin: 0px;
   }
 
-  .login-div > h2 {
-    margin-left: 0px; 
-  }
-
   .signup {
     width: auto;
-  }
-}
-
-.ModalDiv > div > div > div {
-  width: 50%;
-  margin: 0px auto;
-}
-
-@media screen and (max-width : 783px) {
-  .ModalDiv > div > div > div {
-    width: 80%;
-    margin: 0px auto;
   }
 }
 
