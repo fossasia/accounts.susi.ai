@@ -14,6 +14,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import ForgotPassword from '../ForgotPassword/ForgotPassword.react';
 import Description from './../SignUp/Description.js';
+import CircularProgress from 'material-ui/CircularProgress';
 
 // Static assets
 import Footer from '../../Footer/Footer.react.js';
@@ -57,6 +58,7 @@ class Login extends Component {
       emailError: true,
       showDialog: false,
       checked: false,
+      loading: false,
     };
     this.emailErrorMessage = '';
     this.passwordErrorMessage = '';
@@ -99,6 +101,7 @@ class Login extends Component {
       encodeURIComponent(this.state.password);
 
     if (email && validEmail) {
+      this.setState({ loading: true });
       $.ajax({
         url: loginEndPoint,
         dataType: 'jsonp',
@@ -120,6 +123,7 @@ class Login extends Component {
               accessToken,
               success: true,
               msg: response.message,
+              loading: false,
               time,
             });
             let msg = 'You are logged in';
@@ -129,6 +133,7 @@ class Login extends Component {
               msg: 'Login Failed. Try Again',
               password: '',
               showDialog: true,
+              loading: false,
             });
           }
         }.bind(this),
@@ -137,6 +142,7 @@ class Login extends Component {
           let state = this.state;
           state.msg1 = msg1;
           state.showDialog = true;
+          state.loading = false;
           this.setState(state);
         }.bind(this),
       });
@@ -240,7 +246,7 @@ class Login extends Component {
 
   render() {
     const { token } = this.props;
-
+    const { loading } = this.state;
     const actions = (
       <FlatButton
         label="OK"
@@ -304,13 +310,14 @@ class Login extends Component {
                 />
 
                 <RaisedButton
-                  label="Login"
+                  label={!loading ? 'Login' : undefined}
                   type="submit"
                   className="loginbtn"
                   style={{ marginLeft: '10px' }}
                   backgroundColor={ChatConstants.standardBlue}
                   labelColor="#fff"
                   disabled={!this.state.validForm}
+                  icon={loading ? <CircularProgress size={24} /> : undefined}
                 />
                 <div id="forgotpwd">
                   <ForgotPassword />
