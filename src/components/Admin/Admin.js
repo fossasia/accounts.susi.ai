@@ -9,7 +9,7 @@ import Card from 'antd/lib/card';
 import Tabs from 'antd/lib/tabs';
 import 'antd/lib/tabs/style/index.css';
 import Avatar from 'antd/lib/avatar';
-import NotFound from './../NotFound/NotFound.react';
+import { NotFound } from '../../component';
 
 import { urls } from '../../Utils';
 

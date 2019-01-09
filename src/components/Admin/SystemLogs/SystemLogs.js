@@ -7,7 +7,7 @@ import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import Paper from 'material-ui/Paper';
 import Tabs from 'antd/lib/tabs';
-import NotFound from '../../NotFound/NotFound.react';
+import { NotFound } from '../../../component';
 import Spin from 'antd/lib/spin';
 import Alert from 'antd/lib/alert';
 

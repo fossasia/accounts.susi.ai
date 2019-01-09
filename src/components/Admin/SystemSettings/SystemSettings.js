@@ -8,7 +8,7 @@ import Table from 'antd/lib/table';
 import Tabs from 'antd/lib/tabs';
 import LocaleProvider from 'antd/lib/locale-provider';
 import enUS from 'antd/lib/locale-provider/en_US';
-import NotFound from '../../NotFound/NotFound.react';
+import { NotFound } from '../../../component';
 
 import urls from '../../../Utils/urls';
 

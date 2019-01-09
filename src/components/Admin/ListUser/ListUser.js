@@ -14,7 +14,7 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
 import Tabs from 'antd/lib/tabs';
-import NotFound from '../../NotFound/NotFound.react';
+import { NotFound } from '../../../component';
 import LocaleProvider from 'antd/lib/locale-provider';
 import enUS from 'antd/lib/locale-provider/en_US';
 

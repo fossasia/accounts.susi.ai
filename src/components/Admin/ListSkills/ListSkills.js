@@ -9,7 +9,7 @@ import Checkbox from 'material-ui/Checkbox';
 import Snackbar from 'material-ui/Snackbar';
 import Paper from 'material-ui/Paper';
 import Tabs from 'antd/lib/tabs';
-import NotFound from '../../NotFound/NotFound.react';
+import { NotFound } from '../../../component';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar.js';
 import Cookies from 'universal-cookie';
 import './ListSkills.css';
