@@ -114,8 +114,6 @@ class Login extends Component {
             let accessToken = response.access_token;
             let uuid = response.uuid;
             let time = response.valid_seconds;
-            this.handleOnSubmit(email, accessToken, time, uuid);
-            let msg = 'You are logged in';
             this.setState({
               msg,
               isFilled: true,
@@ -124,6 +122,8 @@ class Login extends Component {
               msg: response.message,
               time,
             });
+            let msg = 'You are logged in';
+            this.handleOnSubmit(email, accessToken, time, uuid);
           } else {
             this.setState({
               msg: 'Login Failed. Try Again',
