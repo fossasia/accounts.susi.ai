@@ -120,9 +120,9 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Login} />
               <Route exact path="/changepassword" component={ChangePassword} />
-              <ProtectedRoute exact path="/signup" component={SignUp} />
+              <Route exact path="/signup" component={SignUp} />
               <Route exact path="/logout" component={Logout} />
-              <Route exact path="/settings" component={Settings} />
+              <ProtectedRoute exact path="/settings" component={Settings} />
               <Route exact path="/admin" component={Admin} />
               <Route exact path="/admin/users" component={Users} />
               <Route exact path="/admin/skills" component={Skills} />
