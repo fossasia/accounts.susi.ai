@@ -16,6 +16,16 @@ body{
   width:30px;
 }
 
+.info {
+  width: 50%;
+  margin-left: 24px;
+}
+
+.img-upld {
+  width: 50%;
+  padding: 10px;
+}
+
 .navBar {
   background-color:#EEE;
   width:327px;
@@ -212,6 +222,17 @@ h5 {
 
   .settings {
     height:auto;
+  }
+
+  .info {
+    width: 100%;
+    margin-left: 13%;
+  }
+
+  .img-upld {
+    width: 100%;
+    padding: 25px;
+    margin-left: 5%;
   }
 }
 

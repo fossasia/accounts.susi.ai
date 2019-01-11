@@ -905,7 +905,7 @@ class Settings extends Component {
           <div className="tabHeading">Account</div>
           <hr className="Divider" style={{ height: '2px' }} />
           <div className="fields">
-            <div style={{ width: '50%', marginLeft: '24px' }}>
+            <div className="info">
               <div className="label">User Name</div>
               <TextField
                 name="userName"
@@ -947,7 +947,7 @@ class Settings extends Component {
                 }}
               />
             </div>
-            <div style={{ width: '50%', padding: '10px' }}>
+            <div className="img-upld">
               <div className="label" style={{ marginBottom: '0' }}>
                 Select Avatar
               </div>
