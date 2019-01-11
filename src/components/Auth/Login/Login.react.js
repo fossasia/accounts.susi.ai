@@ -217,15 +217,15 @@ class Login extends Component {
             maxAge: time,
             domain: cookieDomain,
           });
-        }.bind(this),
+        },
         error: function(errorThrown) {
           cookies.set('showAdmin', 'false', {
             path: '/',
             maxAge: time,
             domain: cookieDomain,
           });
-          console.log(errorThrown);
-        }.bind(this),
+          console.error(errorThrown);
+        },
       });
 
       this.props.history.push('/settings', { showLogin: false });
