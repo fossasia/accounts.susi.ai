@@ -211,7 +211,7 @@ h5 {
   }
 
 }
-@media screen and (max-width: 454px) {
+@media screen and (max-width: 500px) {
   .settings-app {
     height:auto;
   }
@@ -230,7 +230,6 @@ h5 {
   }
 
   .img-upld {
-    width: 100%;
     padding: 25px;
     margin-left: 5%;
   }
