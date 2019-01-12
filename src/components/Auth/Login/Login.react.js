@@ -230,7 +230,7 @@ class Login extends Component {
             maxAge: time,
             domain: cookieDomain,
           });
-          console.log(errorThrown);
+          console.error(errorThrown);
         }.bind(this),
       });
 

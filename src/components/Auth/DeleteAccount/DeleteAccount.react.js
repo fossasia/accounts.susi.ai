@@ -123,7 +123,7 @@ class DeleteAccount extends Component {
           });
         }.bind(this),
         error: function(errorThrown) {
-          console.log(errorThrown);
+          console.error('some error occured');
           this.setState({
             showDialog: true,
             dialogMessage: 'Invalid Password! Try again later',

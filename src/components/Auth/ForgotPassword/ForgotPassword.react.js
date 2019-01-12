@@ -135,7 +135,6 @@ class ForgotPassword extends Component {
         onTouchTap={this.handleClose}
       />
     );
-
     return (
       <div>
         <Link to="" className="forgotpwdlink" onClick={this.openModal}>
@@ -182,7 +181,7 @@ class ForgotPassword extends Component {
                 <Dialog
                   actions={actions}
                   modal={false}
-                  open={this.state.msg}
+                  open={this.state.msg.length !== 0}
                   onRequestClose={this.handleClose}
                 >
                   {this.state.msg}

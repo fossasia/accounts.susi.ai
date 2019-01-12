@@ -104,7 +104,7 @@ CircleImage.propTypes = {
   borderRadius: PropTypes.string,
   src: PropTypes.string,
   srcset: PropTypes.string,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   color: PropTypes.string,
   colors: PropTypes.array,
   size: PropTypes.string,

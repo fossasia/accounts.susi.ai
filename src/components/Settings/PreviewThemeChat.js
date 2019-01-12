@@ -35,7 +35,7 @@ class PreviewThemeChat extends Component {
         }
       },
       error: function(e) {
-        console.log(e);
+        console.error('some erroe occured');
       },
     });
     this.setState({ message: '' });
