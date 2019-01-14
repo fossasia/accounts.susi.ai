@@ -4,13 +4,12 @@ html {
 .footer-wrap{
     background: #f6f6f6;
     width: 100%;
-    position: relative;
     z-index: 10;
     border: 1px solid #ddd;
     display: flex;
-    bottom: 0;
     left: 0;
-    margin-top: 35px;
+    position: absolute;
+    bottom: 0;
 }
 
 .footer-container {
@@ -100,6 +99,17 @@ html {
     -webkit-box-pack: justify;
     justify-content: space-between;
 }
+@media only screen and (max-width: 838px) {
+    .footer-wrap {
+        position: relative;
+    }
+}
+@media only screen and (max-height: 900px) {
+    .footer-wrap {
+        position: relative;
+    }
+}
+
 @media only screen and (max-width: 800px) {
     .susi-logo{
         display: block;

@@ -1684,7 +1684,9 @@ class Settings extends Component {
             </div>
           </Paper>
         </div>
-        <Footer />
+        <div className="footer-wrapper">
+          <Footer />
+        </div>
       </div>
     );
   }
