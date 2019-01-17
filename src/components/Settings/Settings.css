@@ -234,6 +234,10 @@ h5 {
     padding: 25px;
     margin-left: 5%;
   }
+
+  .footer-wrap {
+    margin-top: 360px;
+  }
 }
 
 input[type=file]{
