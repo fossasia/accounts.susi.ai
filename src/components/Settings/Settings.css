@@ -103,6 +103,7 @@ body{
   height: fit-content;
   float:right;
   background-color: #fff;
+  max-height: none;
 }
 .settingsComponents{
     width: 75%;
