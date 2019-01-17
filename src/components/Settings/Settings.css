@@ -238,6 +238,10 @@ h5 {
   .footer-wrap {
     margin-top: 360px;
   }
+
+  .submitButton {
+    margin-left: 13%;
+  }
 }
 
 input[type=file]{

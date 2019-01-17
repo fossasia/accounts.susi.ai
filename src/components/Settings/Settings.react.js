@@ -1638,7 +1638,7 @@ class Settings extends Component {
           <Paper className="settings" zDepth={1}>
             <div className="currentSettings">
               {currentSetting}
-              <div style={submitButton}>
+              <div className="submitButton" style={submitButton}>
                 {this.state.selectedSetting === 'Password' ||
                 this.state.selectedSetting === 'Devices' ? (
                   ''
