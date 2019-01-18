@@ -258,6 +258,11 @@ input[type=file]{
   background-color: white;
   cursor: pointer;
 }
+.footer-wrapper {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
 
 @media screen and (max-width: 500px) {
   .decreaseSettingDiv {
