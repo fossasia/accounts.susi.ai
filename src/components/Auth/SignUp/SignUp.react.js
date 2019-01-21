@@ -17,9 +17,10 @@ import ChatConstants from '../../../constants/ChatConstants';
 import Description from './Description.js';
 
 // Static assets
+
 import Footer from '../../Footer/Footer.react.js';
 import susi from '../../../images/susi-logo.svg';
-
+import Cookies from 'universal-cookie';
 import { urls } from '../../../Utils';
 import { CAPTCHA_KEY } from '../../../config.js';
 import Recaptcha from 'react-recaptcha';
@@ -27,7 +28,14 @@ import zxcvbn from 'zxcvbn';
 
 import './SignUp.css';
 
+const cookies = new Cookies();
 export default class SignUp extends Component {
+  componentDidMount() {
+    const isLoggedIn = !!cookies.get('loggedIn');
+    if (isLoggedIn) {
+      return this.props.history.push('/settings');
+    }
+  }
   constructor(props) {
     super(props);
 
