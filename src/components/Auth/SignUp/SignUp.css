@@ -50,6 +50,7 @@
   width : 50%;
   float : left;
   background-color : #EEE;
+  min-height: 100vh;
 }
 
 .About{
@@ -222,7 +223,10 @@
     float : none;
     height: auto;
     width : auto;
-	}
+  }
+  .app-body {
+    min-height: unset;
+  }
   .app-body-div{
     height:auto;
     width : auto;
