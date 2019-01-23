@@ -1,7 +1,14 @@
-.h1{
-      font-size: 300px;
+.delete-account {
+  width: 400px;
 }
-.h2{
-  margin-top: 100px;
-  padding-top: 100px;
+@media only screen and (max-width: 450px) {
+  .delete-account {
+    width: 300px;
+  }
+  .delete-account h1 {
+    font-size: 1.8em;
+  }
+  .delete-account h5 {
+    font-size: 1.2em;
+  }
 }

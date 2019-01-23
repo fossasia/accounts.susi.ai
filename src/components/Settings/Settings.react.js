@@ -33,6 +33,7 @@ import ChatConstants from '../../constants/ChatConstants';
 import ThemeChanger from './ThemeChanger';
 import Add from 'material-ui/svg-icons/content/add';
 import getGravatarProps from '../../Utils/getGravatarProps';
+import { FlatButton } from 'material-ui';
 
 // Keys
 import { MAP_KEY } from '../../../src/config.js';
@@ -1676,7 +1677,11 @@ class Settings extends Component {
                     }}
                   >
                     <span className="Link">
-                      <Link to="/delete-account">Delete your account</Link>
+                      <Link to="/delete-account">
+                        <FlatButton style={{ padding: '0 5px' }}>
+                          Delete your account
+                        </FlatButton>
+                      </Link>
                     </span>
                   </p>
                 </div>
