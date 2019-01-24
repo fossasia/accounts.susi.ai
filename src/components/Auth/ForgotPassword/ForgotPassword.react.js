@@ -155,6 +155,7 @@ class ForgotPassword extends Component {
                 <div>
                   <TextField
                     name="email"
+                    style={{ width: '100%' }}
                     floatingLabelText="Email"
                     errorText={this.emailErrorMessage}
                     value={this.state.email}
