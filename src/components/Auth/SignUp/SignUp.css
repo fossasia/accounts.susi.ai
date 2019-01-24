@@ -217,6 +217,9 @@
 .learnMoreButton{
   margin: 5% 0
 }
+.Signupform{
+  float: left;
+}
 
 @media screen and (max-width: 838px) {
   .signup-container{
@@ -287,5 +290,14 @@
   }
   .learnMoreButton{
     margin: 2% 0 4% 0;
+  }
+  .passwordfield{
+   width:100% !important;
+  }
+  .Signupform{
+    float: none;
+  }
+  .EmailField{
+    width:92% !important ;
   }
 }

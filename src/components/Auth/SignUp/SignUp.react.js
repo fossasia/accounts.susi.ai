@@ -331,9 +331,10 @@ export default class SignUp extends Component {
             </h1>
             <h1 style={{ fontSize: '40px', paddingTop: '10px' }}>Sign Up</h1>
             <br />
-            <form onSubmit={this.handleSubmit} style={{ float: 'left' }}>
+            <form onSubmit={this.handleSubmit} className="Signupform">
               <div>
                 <TextField
+                  className="EmailField"
                   name="email"
                   type="email"
                   value={email}
@@ -348,6 +349,7 @@ export default class SignUp extends Component {
               </div>
               <div className={PasswordClass}>
                 <PasswordField
+                  className="passwordfield"
                   name="password"
                   style={styles.fieldStyle}
                   inputStyle={styles.inputpassStyle}
@@ -373,6 +375,7 @@ export default class SignUp extends Component {
               </div>
               <div>
                 <PasswordField
+                  className="passwordfield"
                   name="confirmPassword"
                   style={styles.fieldStyle}
                   inputStyle={styles.inputpassStyle}
