@@ -8,14 +8,40 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
-
 import EditIcon from 'material-ui/svg-icons/image/edit';
 import TrashIcon from 'material-ui/svg-icons/action/delete';
 import CheckIcon from 'material-ui/svg-icons/navigation/check';
 import TextField from 'material-ui/TextField';
 
-// eslint-disable-next-line
-export default class TableComplex extends Component {
+const styles = {
+  tableHeaderColumnStyle: {
+    width: '120px',
+    whiteSpace: 'normal',
+    wordWrap: 'break-word',
+  },
+  tableRowStyle: {
+    whiteSpace: 'normal',
+    wordWrap: 'break-word',
+  },
+  tableRowColumnStyle: {
+    width: '40px',
+    whiteSpace: 'normal',
+    wordWrap: 'break-word',
+    paddingLeft: '0px',
+  },
+};
+
+class TableComplex extends Component {
+  static propTypes = {
+    tableData: PropTypes.array,
+    startEditing: PropTypes.func,
+    stopEditing: PropTypes.func,
+    handleChange: PropTypes.func,
+    handleRemove: PropTypes.func,
+    handleRemoveConfirmation: PropTypes.func,
+    editIdx: PropTypes.number,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -31,84 +57,81 @@ export default class TableComplex extends Component {
   }
 
   render() {
+    const {
+      height,
+      selectable,
+      multiSelectable,
+      showCheckboxes,
+      enableSelectAll,
+      deselectOnClickaway,
+      showRowHover,
+      stripedRows,
+    } = this.state;
+    const {
+      tableData,
+      editIdx,
+      handleChange,
+      stopEditing,
+      startEditing,
+      handleRemoveConfirmation,
+    } = this.props;
+    const {
+      tableHeaderColumnStyle,
+      tableRowColumnStyle,
+      tableRowStyle,
+    } = styles;
+
     return (
       <div>
         <Table
-          height={this.state.height}
-          selectable={this.state.selectable}
-          multiSelectable={this.state.multiSelectable}
+          height={height}
+          selectable={selectable}
+          multiSelectable={multiSelectable}
           fixedHeader={false}
           style={{ width: 'auto', tableLayout: 'auto', marginLeft: 'unset' }}
         >
           <TableHeader
-            displaySelectAll={this.state.showCheckboxes}
-            adjustForCheckbox={this.state.showCheckboxes}
-            enableSelectAll={this.state.enableSelectAll}
+            displaySelectAll={showCheckboxes}
+            adjustForCheckbox={showCheckboxes}
+            enableSelectAll={enableSelectAll}
           >
             <TableRow>
-              <TableHeaderColumn
-                style={{
-                  width: '120px',
-                  whiteSpace: 'normal',
-                  wordWrap: 'break-word',
-                }}
-              >
+              <TableHeaderColumn style={tableHeaderColumnStyle}>
                 Device Name
               </TableHeaderColumn>
-              <TableHeaderColumn
-                style={{
-                  width: '120px',
-                  whiteSpace: 'normal',
-                  wordWrap: 'break-word',
-                }}
-              >
+              <TableHeaderColumn style={tableHeaderColumnStyle}>
                 Mac Address
               </TableHeaderColumn>
-              <TableHeaderColumn
-                style={{
-                  width: '120px',
-                  whiteSpace: 'normal',
-                  wordWrap: 'break-word',
-                }}
-              >
+              <TableHeaderColumn style={tableHeaderColumnStyle}>
                 Room
               </TableHeaderColumn>
-              <TableHeaderColumn
-                style={{
-                  width: '120px',
-                  whiteSpace: 'normal',
-                  wordWrap: 'break-word',
-                }}
-              >
+              <TableHeaderColumn style={tableHeaderColumnStyle}>
                 Geolocation
               </TableHeaderColumn>
               <TableHeaderColumn
                 style={{
                   width: '40px',
-                  whiteSpace: 'normal',
-                  wordWrap: 'break-word',
                   paddingLeft: '0px',
                 }}
               />
               <TableHeaderColumn
                 style={{
+                  ...tableHeaderColumnStyle,
                   width: '40px',
-                  whiteSpace: 'normal',
-                  wordWrap: 'break-word',
                   paddingLeft: '0px',
                 }}
               />
             </TableRow>
           </TableHeader>
           <TableBody
-            displayRowCheckbox={this.state.showCheckboxes}
-            deselectOnClickaway={this.state.deselectOnClickaway}
-            showRowHover={this.state.showRowHover}
-            stripedRows={this.state.stripedRows}
+            displayRowCheckbox={showCheckboxes}
+            deselectOnClickaway={deselectOnClickaway}
+            showRowHover={showRowHover}
+            stripedRows={stripedRows}
           >
             {/* eslint-disable-next-line */}
-            {this.props.tableData &&
-              this.props.tableData.map((row, index) => (
+            {tableData &&
+              tableData.map((row, index) => (
                 <TableRow key={index}>
                   <TableRowColumn
                     style={{
@@ -116,12 +139,10 @@ export default class TableComplex extends Component {
                       wordWrap: 'break-word',
                     }}
                   >
-                    {this.props.editIdx === index ? (
+                    {editIdx === index ? (
                       <TextField
                         name={index.toString()}
-                        onChange={e =>
-                          this.props.handleChange(e, 'devicename', index)
-                        }
+                        onChange={e => handleChange(e, 'devicename', index)}
                         value={row.devicename}
                         style={{ fontSize: '13px', width: '80px' }}
                       />
@@ -131,26 +152,18 @@ export default class TableComplex extends Component {
                   </TableRowColumn>
                   <TableRowColumn
                     style={{
-                      whiteSpace: 'normal',
-                      wordWrap: 'break-word',
+                      ...tableRowStyle,
                       paddingLeft: '0px',
                       paddingRight: '0px',
                     }}
                   >
                     {row.macid}
                   </TableRowColumn>
-                  <TableRowColumn
-                    style={{
-                      whiteSpace: 'normal',
-                      wordWrap: 'break-word',
-                    }}
-                  >
-                    {this.props.editIdx === index ? (
+                  <TableRowColumn style={tableRowStyle}>
+                    {editIdx === index ? (
                       <TextField
                         name={index.toString()}
-                        onChange={e =>
-                          this.props.handleChange(e, 'room', index)
-                        }
+                        onChange={e => handleChange(e, 'room', index)}
                         value={row.room}
                         style={{ fontSize: '13px', width: '80px' }}
                       />
@@ -171,36 +184,22 @@ export default class TableComplex extends Component {
                       ? row.latitude + ', ' + row.longitude
                       : 'Location not available'}
                   </TableRowColumn>
-                  <TableRowColumn
-                    style={{
-                      width: '40px',
-                      whiteSpace: 'normal',
-                      wordWrap: 'break-word',
-                      paddingLeft: '0px',
-                    }}
-                  >
-                    {this.props.editIdx === index ? (
+                  <TableRowColumn style={tableRowColumnStyle}>
+                    {editIdx === index ? (
                       <CheckIcon
-                        onClick={() => this.props.stopEditing(index)}
+                        onClick={() => stopEditing(index)}
                         style={{ cursor: 'pointer' }}
                       />
                     ) : (
                       <EditIcon
-                        onClick={() => this.props.startEditing(index)}
+                        onClick={() => startEditing(index)}
                         style={{ cursor: 'pointer' }}
                       />
                     )}
                   </TableRowColumn>
-                  <TableRowColumn
-                    style={{
-                      width: '40px',
-                      whiteSpace: 'normal',
-                      wordWrap: 'break-word',
-                      paddingLeft: '0px',
-                    }}
-                  >
+                  <TableRowColumn style={tableRowColumnStyle}>
                     <TrashIcon
-                      onClick={() => this.props.handleRemoveConfirmation(index)}
+                      onClick={() => handleRemoveConfirmation(index)}
                       style={{ cursor: 'pointer' }}
                     />
                   </TableRowColumn>
@@ -213,12 +212,4 @@ export default class TableComplex extends Component {
   }
 }
 
-TableComplex.propTypes = {
-  tableData: PropTypes.array,
-  startEditing: PropTypes.func,
-  stopEditing: PropTypes.func,
-  handleChange: PropTypes.func,
-  handleRemove: PropTypes.func,
-  handleRemoveConfirmation: PropTypes.func,
-  editIdx: PropTypes.number,
-};
+export default TableComplex;
