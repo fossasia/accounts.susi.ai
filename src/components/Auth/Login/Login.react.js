@@ -13,6 +13,8 @@ import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import ForgotPassword from '../ForgotPassword/ForgotPassword.react';
+import Description from './../SignUp/Description.js';
+import CircularProgress from 'material-ui/CircularProgress';
 
 // Static assets
 import Footer from '../../Footer/Footer.react.js';
@@ -56,7 +58,7 @@ class Login extends Component {
       emailError: true,
       showDialog: false,
       checked: false,
-      showForgotPwd: false,
+      loading: false,
     };
     this.emailErrorMessage = '';
     this.passwordErrorMessage = '';
@@ -65,14 +67,6 @@ class Login extends Component {
   handleClose = event => {
     this.setState({
       showDialog: false,
-      showForgotPwd: false,
-    });
-  };
-
-  handleForgotPwd = event => {
-    event.preventDefault;
-    this.setState({
-      showForgotPwd: true,
     });
   };
 
@@ -89,8 +83,8 @@ class Login extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    var email = this.state.email.trim();
-    var password = this.state.password.trim();
+    let email = this.state.email.trim();
+    let password = this.state.password.trim();
 
     let BASE_URL = `${urls.API_URL}`;
 
@@ -107,6 +101,7 @@ class Login extends Component {
       encodeURIComponent(this.state.password);
 
     if (email && validEmail) {
+      this.setState({ loading: true });
       $.ajax({
         url: loginEndPoint,
         dataType: 'jsonp',
@@ -121,26 +116,25 @@ class Login extends Component {
             });
             let accessToken = response.access_token;
             let uuid = response.uuid;
-            let state = this.state;
             let time = response.valid_seconds;
-
-            state.isFilled = true;
-            state.accessToken = accessToken;
-            state.success = true;
-            state.msg = response.message;
-            state.time = time;
-            this.setState(state);
-
-            this.handleOnSubmit(email, accessToken, time, uuid);
+            this.setState({
+              msg,
+              isFilled: true,
+              accessToken,
+              success: true,
+              msg: response.message,
+              loading: false,
+              time,
+            });
             let msg = 'You are logged in';
-            state.msg = msg;
-            this.setState(state);
+            this.handleOnSubmit(email, accessToken, time, uuid);
           } else {
-            let state = this.state;
-            state.msg = 'Login Failed. Try Again';
-            state.password = '';
-            state.showDialog = true;
-            this.setState(state);
+            this.setState({
+              msg: 'Login Failed. Try Again',
+              password: '',
+              showDialog: true,
+              loading: false,
+            });
           }
         }.bind(this),
         error: function(errorThrown) {
@@ -148,6 +142,7 @@ class Login extends Component {
           let state = this.state;
           state.msg1 = msg1;
           state.showDialog = true;
+          state.loading = false;
           this.setState(state);
         }.bind(this),
       });
@@ -157,18 +152,21 @@ class Login extends Component {
   handleChange = event => {
     let email;
     let password;
-    let state = this.state;
 
     if (event.target.name === 'email') {
       email = event.target.value.trim();
       let validEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
-      state.email = email;
-      state.emailError = !(email && validEmail);
+      this.setState({
+        email,
+        emailError: !(email && validEmail),
+      });
     } else if (event.target.name === 'password') {
       password = event.target.value;
       let validPassword = password.length >= 6;
-      state.password = password;
-      state.passwordError = !(password && validPassword);
+      this.setState({
+        password,
+        passwordError: !(password && validPassword),
+      });
     }
 
     if (this.state.emailError) {
@@ -182,18 +180,17 @@ class Login extends Component {
     } else {
       this.passwordErrorMessage = '';
     }
-    if (!state.emailError && !state.passwordError) {
-      state.validForm = true;
+    if (!this.state.emailError && !this.state.passwordError) {
+      this.setState({ validForm: true });
     } else {
-      state.validForm = false;
+      this.setState({ validForm: false });
     }
 
     this.setState(state);
   };
 
   handleOnSubmit = (email, loggedIn, time, uuid) => {
-    let state = this.state;
-    if (state.success) {
+    if (this.state.success) {
       cookies.set('loggedIn', loggedIn, {
         path: '/',
         maxAge: time,
@@ -246,13 +243,10 @@ class Login extends Component {
       });
     }
   };
-  handleOpen = () => {
-    this.setState({ open: true });
-  };
 
   render() {
     const { token } = this.props;
-
+    const { loading } = this.state;
     const actions = (
       <FlatButton
         label="OK"
@@ -279,7 +273,7 @@ class Login extends Component {
       marginBottom: '10px',
     };
     const button = {
-      width: '100%',
+      minWidth: '35%',
       marginLeft: 0,
     };
 
@@ -288,27 +282,7 @@ class Login extends Component {
         <div className="app-bar">
           <StaticAppBar />
         </div>
-
-        <div className="app-body-div">
-          <div className="About">
-            <div className="About-heading">
-              <h1>
-                Meet SUSI.AI, Your Artificial Intelligence for Personal
-                Assistants, Robots, Help Desks and Chatbots.
-              </h1>
-            </div>
-            <div className="points">
-              <p>
-                Ask it questions.
-                <br />
-                <br /> Tell it to do things.
-                <br />
-                <br /> Always ready to help.
-              </p>
-            </div>
-          </div>
-        </div>
-
+        <Description />
         <div className="login-container">
           <div className="loginForm">
             <form id="loginform" onSubmit={this.handleSubmit}>
@@ -336,22 +310,17 @@ class Login extends Component {
                 />
 
                 <RaisedButton
-                  label="Login"
+                  label={!loading ? 'Login' : undefined}
                   type="submit"
                   className="loginbtn"
                   style={{ marginLeft: '10px' }}
                   backgroundColor={ChatConstants.standardBlue}
                   labelColor="#fff"
                   disabled={!this.state.validForm}
+                  icon={loading ? <CircularProgress size={24} /> : undefined}
                 />
                 <div id="forgotpwd">
-                  <Link
-                    to=""
-                    className="forgotpwdlink"
-                    onClick={this.handleForgotPwd}
-                  >
-                    <p>Forgot Password?</p>
-                  </Link>
+                  <ForgotPassword />
                 </div>
               </div>
               <div id="message">
@@ -362,9 +331,10 @@ class Login extends Component {
 
           <div className="signup">
             <img src={susi} alt="SUSI" className="susi-logo" />
-            <h1>See what's happening in the world right now</h1>
-            <p style={{ fontSize: '18px' }}>Join SUSI.AI Today.</p>
-            <br />
+            <h1 className="signup-header-text">
+              See what's happening in the world right now
+            </h1>
+            <p className="description-text">Join SUSI.AI Today.</p>
             <Link to={'/signup'} className="signupbtn">
               <RaisedButton
                 style={button}
@@ -373,23 +343,10 @@ class Login extends Component {
                 labelColor="#fff"
               />
             </Link>
-            <br />
           </div>
         </div>
 
         <Footer />
-
-        <div className="ModalDiv">
-          <Dialog
-            modal={false}
-            open={this.state.showForgotPwd}
-            onRequestClose={this.handleClose}
-            className="ModalDiv"
-          >
-            <ForgotPassword closeModal={this.handleClose.bind(this)} />
-          </Dialog>
-        </div>
-
         <div>
           <Dialog
             actions={actions}

@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
+import $ from 'jquery';
+import PropTypes from 'prop-types';
+import { Col, Row } from 'react-flexbox-grid';
 import Dialog from 'material-ui/Dialog';
 import Close from 'material-ui/svg-icons/navigation/close';
 import RaisedButton from 'material-ui/RaisedButton';
-import UserPreferencesStore from '../../stores/UserPreferencesStore';
 import TextField from 'material-ui/TextField';
-import { Col, Row } from 'react-flexbox-grid';
 import Toggle from 'material-ui/Toggle';
 import ColorPicker from 'material-ui-color-picker';
+import UserPreferencesStore from '../../stores/UserPreferencesStore';
 import * as Actions from '../../actions/';
-import $ from 'jquery';
-import PropTypes from 'prop-types';
 import PreviewThemeChat from './PreviewThemeChat';
-function getStateFromStores() {
-  var themeValue = [];
-  var backgroundValue = [];
+
+const getStateFromStores = () => {
+  let themeValue = [];
+  let backgroundValue = [];
   // get Theme data from server
   if (UserPreferencesStore.getThemeValues()) {
     themeValue = UserPreferencesStore.getThemeValues().split(',');
@@ -35,22 +36,26 @@ function getStateFromStores() {
     messageBackgroundImage:
       backgroundValue.length > 1 ? backgroundValue[1] : '',
   };
-}
-const closingStyle = {
-  position: 'absolute',
-  zIndex: 1200,
-  fill: '#444',
-  width: '26px',
-  height: '26px',
-  right: '10px',
-  top: '10px',
-  cursor: 'pointer',
 };
-const customThemeBodyStyle = {
-  padding: 0,
-  textAlign: 'center',
-  backgroundColor: '#f9f9f9',
+
+const styles = {
+  closingStyle: {
+    position: 'absolute',
+    zIndex: 1200,
+    fill: '#444',
+    width: '26px',
+    height: '26px',
+    right: '10px',
+    top: '10px',
+    cursor: 'pointer',
+  },
+  customThemeBodyStyle: {
+    padding: 0,
+    textAlign: 'center',
+    backgroundColor: '#f9f9f9',
+  },
 };
+
 const componentsList = [
   { id: 1, component: 'header', name: 'Header' },
   { id: 2, component: 'pane', name: 'Message Pane' },
@@ -59,7 +64,13 @@ const componentsList = [
   { id: 5, component: 'textarea', name: 'Textarea' },
   { id: 6, component: 'button', name: 'Button' },
 ];
+
 class ThemeChanger extends Component {
+  static propTypes = {
+    themeOpen: PropTypes.bool,
+    onRequestClose: PropTypes.func,
+  };
+
   constructor(props) {
     super(props);
     this.state = getStateFromStores();
@@ -72,17 +83,18 @@ class ThemeChanger extends Component {
       button: this.state.button.substring(1),
     };
   }
-  handleColorChange = (name, color) => {
-    // Current Changes
+
+  handleChangeBodyBackgroundImage = backgroundImage => {
+    this.setState({ bodyBackgroundImage: backgroundImage });
   };
-  handleChangeBodyBackgroundImage = backImage => {
-    this.setState({ bodyBackgroundImage: backImage });
+
+  handleChangeMessageBackgroundImage = backgroundImage => {
+    this.setState({ messageBackgroundImage: backgroundImage });
   };
-  handleChangeMessageBackgroundImage = backImage => {
-    this.setState({ messageBackgroundImage: backImage });
-  };
+
   handleRemoveUrlMessage = () => {
-    if (!this.state.messageBackgroundImage) {
+    const { messageBackgroundImage } = this.state;
+    if (!messageBackgroundImage) {
       this.setState({ SnackbarOpenBackground: true });
       setTimeout(() => {
         this.setState({
@@ -95,8 +107,10 @@ class ThemeChanger extends Component {
       });
     }
   };
+
   handleRemoveUrlBody = () => {
-    if (!this.state.bodyBackgroundImage) {
+    const { bodyBackgroundImage } = this.state;
+    if (!bodyBackgroundImage) {
       this.setState({ SnackbarOpenBackground: true });
       setTimeout(() => {
         this.setState({
@@ -110,8 +124,10 @@ class ThemeChanger extends Component {
       this.handleChangeBodyBackgroundImage('');
     }
   };
+
   handleRemoveUrlMessage = () => {
-    if (!this.state.messageBackgroundImage) {
+    const { messageBackgroundImage } = this.state;
+    if (!messageBackgroundImage) {
       this.setState({ SnackbarOpenBackground: true });
       setTimeout(() => {
         this.setState({
@@ -124,46 +140,67 @@ class ThemeChanger extends Component {
       });
     }
   };
+
   // get the selected custom colour
   handleChangeComplete = (name, color) => {
     this.setState({ currTheme: 'custom' });
-    let currSettings = UserPreferencesStore.getPreferences();
+    const currSettings = UserPreferencesStore.getPreferences();
     let settingsChanged = {};
     if (currSettings.Theme !== 'custom') {
       settingsChanged.theme = 'custom';
       Actions.pushSettingsToServer(settingsChanged);
     }
-    // Send these Settings to Server
-    let state = this.state;
-    if (name === 'header') {
-      state.header = color;
-      this.customTheme.header = state.header.substring(1);
-    } else if (name === 'body') {
-      state.body = color;
-      this.customTheme.body = state.body.substring(1);
-    } else if (name === 'pane') {
-      state.pane = color;
-      this.customTheme.pane = state.pane.substring(1);
-    } else if (name === 'composer') {
-      state.composer = color;
-      this.customTheme.composer = state.composer.substring(1);
-    } else if (name === 'textarea') {
-      state.textarea = color;
-      this.customTheme.textarea = state.textarea.substring(1);
-    } else if (name === 'button') {
-      state.button = color;
-      this.customTheme.button = state.button.substring(1);
+    switch (name) {
+      case 'header':
+        this.setState({
+          header: color,
+        });
+        this.customTheme.header = color.substring(1);
+        break;
+      case 'body':
+        this.setState({
+          body: color,
+        });
+        this.customTheme.body = color.substring(1);
+        break;
+      case 'pane':
+        this.setState({
+          pane: color,
+        });
+        this.customTheme.pane = color.substring(1);
+        break;
+      case 'composer':
+        this.setState({
+          composer: color,
+        });
+        this.customTheme.composer = color.substring(1);
+        break;
+      case 'textarea':
+        this.setState({
+          textarea: color,
+        });
+        this.customTheme.textarea = color.substring(1);
+        break;
+      case 'button':
+        this.setState({
+          button: color,
+        });
+        this.customTheme.button = color.substring(1);
+        break;
+      default:
+        break;
     }
-    this.setState(state);
     document.body.style.setProperty('background-color', this.state.body);
   };
+
   onRequestClose = () => {
     this.setState({ open: false });
   };
+
   invertColorTextArea = () => {
     // get the text are code
-    var hex = this.state.textarea;
-    hex = hex.slice(1);
+    let { textarea } = this.state;
+    let hex = textarea.slice(1);
     // convert 3-digit hex to 6-digits.
     if (hex.length === 3) {
       hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
@@ -171,15 +208,16 @@ class ThemeChanger extends Component {
     if (hex.length !== 6) {
       throw new Error('Invalid HEX color.');
     }
-    var r = parseInt(hex.slice(0, 2), 16),
+    const r = parseInt(hex.slice(0, 2), 16),
       g = parseInt(hex.slice(2, 4), 16),
       b = parseInt(hex.slice(4, 6), 16);
     return r * 0.299 + g * 0.587 + b * 0.114 > 186 ? '#000000' : '#FFFFFF';
   };
+
   handleRestoreDefaultThemeClick = () => {
+    const { currTheme, prevThemeSettings } = this.state;
     this.props.onRequestClose()();
-    var prevTheme = this.state.prevThemeSettings.currTheme;
-    var currTheme = this.state.currTheme;
+    const prevTheme = prevThemeSettings.currTheme;
     if (
       (currTheme === 'custom' && prevTheme === 'dark') ||
       currTheme === 'dark'
@@ -189,7 +227,9 @@ class ThemeChanger extends Component {
       this.applyLightTheme();
     }
   };
+
   saveThemeSettings = () => {
+    const { bodyBackgroundImage, messageBackgroundImage } = this.state;
     let customData = '';
     Object.keys(this.customTheme).forEach(key => {
       customData = customData + this.customTheme[key] + ',';
@@ -197,11 +237,9 @@ class ThemeChanger extends Component {
     let settingsChanged = {};
     settingsChanged.theme = 'custom';
     settingsChanged.customThemeValue = customData;
-    if (this.state.bodyBackgroundImage || this.state.messageBackgroundImage) {
-      settingsChanged.backgroundImage =
-        this.state.bodyBackgroundImage +
-        ',' +
-        this.state.messageBackgroundImage;
+    if (bodyBackgroundImage || messageBackgroundImage) {
+      //eslint-disable-next-line
+      settingsChanged.backgroundImage = `${bodyBackgroundImage},${messageBackgroundImage}`;
     } else {
       settingsChanged.backgroundImage = '';
     }
@@ -215,25 +253,36 @@ class ThemeChanger extends Component {
   };
 
   showMessageBackgroundImageToggle = () => {
-    let isInputChecked = !this.state.showMessageBackgroundImage;
-    this.setState({ showMessageBackgroundImage: isInputChecked });
+    const { showMessageBackgroundImage } = this.state;
+    this.setState({ showMessageBackgroundImage: !showMessageBackgroundImage });
     this.handleRemoveUrlMessage();
   };
 
   showBodyBackgroundImageToggle = () => {
-    let isInputChecked = !this.state.showBodyBackgroundImage;
-    this.setState({ showBodyBackgroundImage: isInputChecked });
+    const { showBodyBackgroundImage } = this.state;
+    this.setState({ showBodyBackgroundImage: !showBodyBackgroundImage });
     this.handleRemoveUrlBody();
   };
 
   render() {
-    var buttonColor;
-    buttonColor = this.state.button;
+    const {
+      button,
+      showMessageBackgroundImage,
+      showBodyBackgroundImage,
+      header,
+      pane,
+      body,
+      composer,
+      textarea,
+      messageBackgroundImage,
+      bodyBackgroundImage,
+    } = this.state;
+    const { themeOpen } = this.props;
     const customSettingsDone = (
       <div>
         <RaisedButton
           label="Save"
-          backgroundColor={buttonColor ? buttonColor : '#4285f4'}
+          backgroundColor={button ? button : '#4285f4'}
           labelColor="#fff"
           width="200px"
           keyboardFocused={false}
@@ -242,7 +291,7 @@ class ThemeChanger extends Component {
         />
         <RaisedButton
           label="Reset"
-          backgroundColor={buttonColor ? buttonColor : '#4285f4'}
+          backgroundColor={button ? button : '#4285f4'}
           labelColor="#fff"
           width="200px"
           keyboardFocused={false}
@@ -283,7 +332,7 @@ class ThemeChanger extends Component {
                         fontSize: '14px',
                         fontWeight: '300',
                       }}
-                      defaultToggled={this.state.showMessageBackgroundImage}
+                      defaultToggled={showMessageBackgroundImage}
                       onToggle={this.showMessageBackgroundImageToggle}
                       style={{
                         textAlign: 'right',
@@ -316,7 +365,7 @@ class ThemeChanger extends Component {
                         fontSize: '14px',
                         fontWeight: '300',
                       }}
-                      defaultToggled={this.state.showBodyBackgroundImage}
+                      defaultToggled={showBodyBackgroundImage}
                       onToggle={this.showBodyBackgroundImageToggle}
                       style={{
                         textAlign: 'right',
@@ -365,7 +414,7 @@ class ThemeChanger extends Component {
                     </div>
                   )}
                 {component.id === 2 &&
-                  !this.state.showMessageBackgroundImage && (
+                  !showMessageBackgroundImage && (
                     <div className="color-picker-wrap">
                       <span
                         className="color-box"
@@ -392,7 +441,7 @@ class ThemeChanger extends Component {
                     </div>
                   )}
                 {component.id === 2 &&
-                  this.state.showMessageBackgroundImage && (
+                  showMessageBackgroundImage && (
                     <div className="image-div">
                       <TextField
                         name="messageImg"
@@ -404,7 +453,7 @@ class ThemeChanger extends Component {
                         onChange={(e, value) =>
                           this.handleChangeMessageBackgroundImage(value)
                         }
-                        value={this.state.messageBackgroundImage}
+                        value={messageBackgroundImage}
                         floatingLabelText={
                           <span style={{ fontSize: 'unset' }}>
                             Message Image URL
@@ -414,7 +463,7 @@ class ThemeChanger extends Component {
                     </div>
                   )}
                 {component.id === 3 &&
-                  !this.state.showBodyBackgroundImage && (
+                  !showBodyBackgroundImage && (
                     <div className="color-picker-wrap">
                       <span
                         className="color-box"
@@ -441,7 +490,7 @@ class ThemeChanger extends Component {
                     </div>
                   )}
                 {component.id === 3 &&
-                  this.state.showBodyBackgroundImage && (
+                  showBodyBackgroundImage && (
                     <div className="image-div">
                       <TextField
                         name="backgroundImg"
@@ -453,7 +502,7 @@ class ThemeChanger extends Component {
                         onChange={(e, value) =>
                           this.handleChangeBodyBackgroundImage(value)
                         }
-                        value={this.state.bodyBackgroundImage}
+                        value={bodyBackgroundImage}
                         floatingLabelText={
                           <span style={{ fontSize: 'unset' }}>
                             Background Image URL
@@ -472,9 +521,9 @@ class ThemeChanger extends Component {
       <Dialog
         actions={customSettingsDone}
         modal={false}
-        open={this.props.themeOpen}
+        open={themeOpen}
         autoScrollBodyContent={false}
-        bodyStyle={customThemeBodyStyle}
+        bodyStyle={styles.customThemeBodyStyle}
         contentStyle={{
           minWidth: '300px',
           maxWidth: 'unset',
@@ -501,18 +550,18 @@ class ThemeChanger extends Component {
             }}
           >
             <PreviewThemeChat
-              header={this.state.header}
-              pane={this.state.pane}
-              messageBackgroundImage={this.state.messageBackgroundImage}
-              body={this.state.body}
-              bodyBackgroundImage={this.state.bodyBackgroundImage}
-              composer={this.state.composer}
-              textarea={this.state.textarea}
-              button={this.state.button}
+              header={header}
+              pane={pane}
+              messageBackgroundImage={messageBackgroundImage}
+              body={body}
+              bodyBackgroundImage={bodyBackgroundImage}
+              composer={composer}
+              textarea={textarea}
+              button={button}
             />
           </div>
           <Close
-            style={closingStyle}
+            style={styles.closingStyle}
             onTouchTap={this.props.onRequestClose()}
           />
         </div>
@@ -520,8 +569,5 @@ class ThemeChanger extends Component {
     );
   }
 }
-ThemeChanger.propTypes = {
-  themeOpen: PropTypes.bool,
-  onRequestClose: PropTypes.func,
-};
+
 export default ThemeChanger;
