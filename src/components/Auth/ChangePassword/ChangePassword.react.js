@@ -13,6 +13,7 @@ import ForgotPassword from '../ForgotPassword/ForgotPassword.react';
 
 import { urls } from '../../../Utils';
 import ChatConstants from '../../../constants/ChatConstants';
+import zxcvbn from 'zxcvbn';
 
 const cookies = new Cookies();
 injectTapEventPlugin();
@@ -26,6 +27,8 @@ export default class ChangePassword extends Component {
       currentPassword: '',
       newPassword: '',
       confirmPassword: '',
+      newPasswordStrength: '',
+      newPasswordScore: -1,
       showDialog: false,
       serverUrl: '',
       success: false,
@@ -117,6 +120,7 @@ export default class ChangePassword extends Component {
           state.newPassword.length >= 6 && state.newPassword.length <= 64
         );
         state.confirmPasswordError = !(value === state.confirmPassword);
+        let newPassword = event.target.value;
         if (state.newPasswordError) {
           this.newPasswordErrorMessage =
             'Allowed password length is 6 to 64 characters';
@@ -127,6 +131,15 @@ export default class ChangePassword extends Component {
         } else {
           this.confirmPasswordErrorMessage = '';
           this.newPasswordErrorMessage = '';
+        }
+        if (!state.newPasswordError) {
+          let result = zxcvbn(newPassword);
+          state.newPasswordScore = result.score;
+          const strength = ['Worst', 'Bad', 'Weak', 'Good', 'Strong'];
+          state.newPasswordStrength = strength[result.score];
+        } else {
+          state.newPasswordStrength = '';
+          state.newPasswordScore = -1;
         }
         break;
 
@@ -171,13 +184,15 @@ export default class ChangePassword extends Component {
       />
     );
 
+    const PasswordClass = [`is-strength-${this.state.newPasswordScore}`];
+
     const fieldStyle = {
       height: '35px',
       borderRadius: 4,
       border: '1px solid #ced4da',
       fontSize: 16,
       padding: '0px 12px',
-      width: '125%',
+      width: '243px',
     };
     const labelStyle = {
       minWidth: '30%',
@@ -217,7 +232,7 @@ export default class ChangePassword extends Component {
               </div>
               <br />
               <div style={labelStyle}>New Password</div>
-              <div>
+              <div className={PasswordClass.join(' ')}>
                 <PasswordField
                   name="newPassword"
                   placeholder="Must be from 6 to 64 characters"
@@ -231,24 +246,32 @@ export default class ChangePassword extends Component {
                   visibilityButtonStyle={{ display: 'none' }}
                   visibilityIconStyle={{ display: 'none' }}
                 />
+
+                <div className="ReactPasswordStrength-strength-bar" />
+
+                <div className="is-strength-name">
+                  {this.state.newPasswordStrength}
+                </div>
               </div>
               <br />
-              <div style={labelStyle}>Verify Password</div>
-
               <div>
-                <PasswordField
-                  name="confirmPassword"
-                  placeholder="Must match the new password"
-                  style={fieldStyle}
-                  value={this.state.confirmPassword}
-                  onChange={this.handleChange}
-                  inputStyle={inputStyle}
-                  errorText={this.confirmPasswordErrorMessage}
-                  underlineStyle={{ display: 'none' }}
-                  disableButton={true}
-                  visibilityButtonStyle={{ display: 'none' }}
-                  visibilityIconStyle={{ display: 'none' }}
-                />
+                <div style={labelStyle}>Verify Password</div>
+
+                <div>
+                  <PasswordField
+                    name="confirmPassword"
+                    placeholder="Must match the new password"
+                    style={fieldStyle}
+                    value={this.state.confirmPassword}
+                    onChange={this.handleChange}
+                    inputStyle={inputStyle}
+                    errorText={this.confirmPasswordErrorMessage}
+                    underlineStyle={{ display: 'none' }}
+                    disableButton={true}
+                    visibilityButtonStyle={{ display: 'none' }}
+                    visibilityIconStyle={{ display: 'none' }}
+                  />
+                </div>
               </div>
               <br />
               <div className="forgot">
