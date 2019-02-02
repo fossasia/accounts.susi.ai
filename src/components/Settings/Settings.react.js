@@ -58,6 +58,87 @@ const cookieDomain = isProduction() ? '.susi.ai' : '';
 const cookies = new Cookies();
 const token = cookies.get('loggedIn');
 
+const styles = {
+  closeAvatarButtonStyle: {
+    height: '20px',
+    width: '20px',
+    margin: '2px 2px',
+  },
+  avatarEmptyBoxStyle: {
+    margin: '0 auto',
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    alignItem: 'centre',
+  },
+  avatarAddButtonStyle: {
+    margin: '50px auto',
+    height: '50px',
+    width: '50px',
+  },
+  uploadButtonStyle: {
+    width: '100%',
+    margin: '16px 0px',
+    maxWidht: '150px',
+    minWidth: '88px',
+  },
+  fieldStyle: {
+    height: '35px',
+    borderRadius: 4,
+    border: '1px solid #ced4da',
+    fontSize: 16,
+    padding: '0px 12px',
+    width: 'auto',
+  },
+  radioIconStyle: {
+    fill: ChatConstants.standardBlue,
+  },
+  menuStyle: {
+    width: '250px',
+    marginLeft: '-6px',
+  },
+  submitButton: {
+    marginTop: '20px',
+    paddingRight: 10,
+  },
+  closingStyle: {
+    position: 'absolute',
+    zIndex: 1200,
+    fill: '#444',
+    width: '26px',
+    height: '26px',
+    right: '10px',
+    top: '10px',
+    cursor: 'pointer',
+  },
+  blueThemeColor: { color: 'rgb(66, 133, 244)' },
+  themeBackgroundColor: { backgroundColor: '#fff' },
+  themeForegroundColor: { color: '#272727' },
+  floatingLabelStyle: {
+    color: '#9e9e9e',
+    fontSize: 'unset',
+    lineHeight: '20px',
+  },
+  selectAvatarDropDownStyle: {
+    width: '50%',
+    paddingLeft: 0,
+    marginLeft: '-24px',
+    minWidth: '200px',
+  },
+  currentSettingDevicesStyle: {
+    marginTop: '10px',
+    marginBottom: '10px',
+    fontSize: '16px',
+    fontWeight: 'bold',
+  },
+  speechOutputStyle: {
+    marginTop: '10px',
+    marginBottom: '0px',
+    fontSize: '15px',
+    fontWeight: 'bold',
+  },
+};
+
 const AvatarRender = props => {
   switch (props.avatarType) {
     case 'server':
@@ -70,7 +151,7 @@ const AvatarRender = props => {
             <div>
               <div className="close-avatar">
                 <Close
-                  style={{ height: '20px', width: '20px', margin: '2px 2px' }}
+                  style={styles.closeAvatarButtonStyle}
                   onClick={props.removeAvatarImage}
                 />
               </div>
@@ -86,22 +167,10 @@ const AvatarRender = props => {
             <div onSubmit={e => props.handleAvatarImageChange(e)}>
               {!props.isAvatarAdded && (
                 <div className="avatar-empty-box">
-                  <div
-                    style={{
-                      margin: '0 auto',
-                      width: '100%',
-                      height: '100%',
-                      display: 'flex',
-                      alignItem: 'centre',
-                    }}
-                  >
+                  <div style={styles.avatarEmptyBoxStyle}>
                     <Add
                       className="avatar-add-button"
-                      style={{
-                        margin: '50px auto',
-                        height: '50px',
-                        width: '50px',
-                      }}
+                      style={styles.avatarAddButtonStyle}
                     />
                   </div>
                 </div>
@@ -123,12 +192,7 @@ const AvatarRender = props => {
             label={
               props.file && props.uploadingAvatar ? undefined : 'Upload Image'
             }
-            style={{
-              margin: '16px 0px',
-              width: '100%',
-              minWidth: '88px',
-              maxWidth: '150px',
-            }}
+            style={styles.uploadButtonStyle}
             disabled={!props.file}
             backgroundColor={'#4285f4'}
             labelColor="#fff"
@@ -163,6 +227,13 @@ const AvatarRender = props => {
 };
 
 class Settings extends Component {
+  static propTypes = {
+    history: PropTypes.object,
+    location: PropTypes.object,
+    google: PropTypes.object,
+    handleThemeChanger: PropTypes.func,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -199,69 +270,81 @@ class Settings extends Component {
       isAvatarAdded: false,
       settingsChanged: false,
       uploadingAvatar: false,
-      voiceList: [
-        {
-          lang: 'am-AM',
-          name: 'Armenian',
-        },
-        {
-          lang: 'zh-CH',
-          name: 'Chinese',
-        },
-        {
-          lang: 'de-DE',
-          name: 'Deutsch',
-        },
-        {
-          lang: 'gr-GR',
-          name: 'Greek',
-        },
-        {
-          lang: 'hi-IN',
-          name: 'Hindi',
-        },
-        {
-          lang: 'pb-IN',
-          name: 'Punjabi',
-        },
-        {
-          lang: 'np-NP',
-          name: 'Nepali',
-        },
-        {
-          lang: 'ru-RU',
-          name: 'Russian',
-        },
-        {
-          lang: 'es-SP',
-          name: 'Spanish',
-        },
-        {
-          lang: 'fr-FR',
-          name: 'French',
-        },
-        {
-          lang: 'jp-JP',
-          name: 'Japanese',
-        },
-        {
-          lang: 'nl-NL',
-          name: 'Dutch',
-        },
-        {
-          lang: 'en-US',
-          name: 'US English',
-        },
-      ],
     };
+    this.voiceList = [
+      {
+        lang: 'am-AM',
+        name: 'Armenian',
+      },
+      {
+        lang: 'zh-CH',
+        name: 'Chinese',
+      },
+      {
+        lang: 'de-DE',
+        name: 'Deutsch',
+      },
+      {
+        lang: 'gr-GR',
+        name: 'Greek',
+      },
+      {
+        lang: 'hi-IN',
+        name: 'Hindi',
+      },
+      {
+        lang: 'pb-IN',
+        name: 'Punjabi',
+      },
+      {
+        lang: 'np-NP',
+        name: 'Nepali',
+      },
+      {
+        lang: 'ru-RU',
+        name: 'Russian',
+      },
+      {
+        lang: 'es-SP',
+        name: 'Spanish',
+      },
+      {
+        lang: 'fr-FR',
+        name: 'French',
+      },
+      {
+        lang: 'jp-JP',
+        name: 'Japanese',
+      },
+      {
+        lang: 'nl-NL',
+        name: 'Dutch',
+      },
+      {
+        lang: 'en-US',
+        name: 'US English',
+      },
+    ];
   }
 
   onThemeRequestClose = () => {
     this.setState({ themeOpen: false });
   };
+
   handleThemeChanger = () => {
+    const {
+      currTheme,
+      body,
+      header,
+      composer,
+      pane,
+      textarea,
+      button,
+      bodyBackgroundImage,
+      messageBackgroundImage,
+    } = this.state;
     this.setState({ themeOpen: true });
-    switch (this.state.currTheme) {
+    switch (currTheme) {
       case 'light': {
         this.applyLightTheme();
         break;
@@ -272,21 +355,22 @@ class Settings extends Component {
       }
       default: {
         let prevThemeSettings = {};
-        let state = this.state;
-        prevThemeSettings.currTheme = state.currTheme;
-        prevThemeSettings.bodyColor = state.body;
-        prevThemeSettings.TopBarColor = state.header;
-        prevThemeSettings.composerColor = state.composer;
-        prevThemeSettings.messagePane = state.pane;
-        prevThemeSettings.textArea = state.textarea;
-        prevThemeSettings.buttonColor = state.button;
-        prevThemeSettings.bodyBackgroundImage = state.bodyBackgroundImage;
-        prevThemeSettings.messageBackgroundImage = state.messageBackgroundImage;
+        prevThemeSettings.currTheme = currTheme;
+        prevThemeSettings.bodyColor = body;
+        prevThemeSettings.TopBarColor = header;
+        prevThemeSettings.composerColor = composer;
+        prevThemeSettings.messagePane = pane;
+        prevThemeSettings.textArea = textarea;
+        prevThemeSettings.buttonColor = button;
+        prevThemeSettings.bodyBackgroundImage = bodyBackgroundImage;
+        prevThemeSettings.messageBackgroundImage = messageBackgroundImage;
         this.setState({ prevThemeSettings });
       }
     }
   };
+
   applyLightTheme = () => {
+    const { bodyBackgroundImage, messageBackgroundImage } = this.state;
     this.setState({
       prevThemeSettings: null,
       body: '#fff',
@@ -299,20 +383,20 @@ class Settings extends Component {
     });
     let customData = '';
     Object.keys(this.customTheme).forEach(key => {
-      customData = customData + this.customTheme[key] + ',';
+      customData = `customData${this.customTheme[key]},`;
     });
     let settingsChanged = {};
     settingsChanged.theme = 'light';
     settingsChanged.customThemeValue = customData;
-    if (this.state.bodyBackgroundImage || this.state.messageBackgroundImage) {
-      settingsChanged.backgroundImage =
-        this.state.bodyBackgroundImage +
-        ',' +
-        this.state.messageBackgroundImage;
+    if (bodyBackgroundImage || messageBackgroundImage) {
+      //eslint-disable-next-line
+      settingsChanged.backgroundImage = `${bodyBackgroundImage},${messageBackgroundImage}`;
     }
     Actions.settingsChanged(settingsChanged);
   };
+
   applyDarkTheme = () => {
+    const { bodyBackgroundImage, messageBackgroundImage } = this.state;
     this.setState({
       prevThemeSettings: null,
       body: '#fff',
@@ -330,37 +414,35 @@ class Settings extends Component {
     let settingsChanged = {};
     settingsChanged.theme = 'dark';
     settingsChanged.customThemeValue = customData;
-    if (this.state.bodyBackgroundImage || this.state.messageBackgroundImage) {
-      settingsChanged.backgroundImage =
-        this.state.bodyBackgroundImage +
-        ',' +
-        this.state.messageBackgroundImage;
+    if (bodyBackgroundImage || messageBackgroundImage) {
+      //eslint-disable-next-line
+      settingsChanged.backgroundImage = `${bodyBackgroundImage},${messageBackgroundImage}`;
     }
     Actions.settingsChanged(settingsChanged);
   };
 
   handleRemove = i => {
-    let data = this.state.obj;
-    let macid = data[i].macid;
+    const { obj } = this.state;
+    const macid = obj[i].macid;
 
     this.setState({
-      obj: data.filter((row, j) => j !== i),
+      obj: obj.filter((row, j) => j !== i),
     });
 
     $.ajax({
-      url:
-        `${urls.API_URL}/aaa/removeUserDevices.json?macid=` +
-        macid +
-        '&access_token=' +
-        cookies.get('loggedIn'),
+      url: `${
+        urls.API_URL
+      }/aaa/removeUserDevices.json?macid=${macid}&access_token=${cookies.get(
+        'loggedIn',
+      )}`,
       dataType: 'jsonp',
       crossDomain: true,
       timeout: 3000,
       async: false,
-      error: function(errorThrown) {
-        console.error(errorThrown);
+      error: error => {
+        console.log(error);
       },
-      complete: function(jqXHR, textStatus) {
+      complete: (jqXHR, textStatus) => {
         window.location.reload();
       },
     });
@@ -371,13 +453,13 @@ class Settings extends Component {
   };
 
   stopEditing = i => {
-    let data = this.state.obj;
-    let macid = data[i].macid;
-    let devicename = data[i].devicename;
-    let room = data[i].room;
-    let latitude = data[i].latitude;
-    let longitude = data[i].longitude;
-    let devicenames = this.state.devicenames;
+    const { obj } = this.state;
+    let { devicenames } = this.state;
+    const macid = obj[i].macid;
+    const devicename = obj[i].devicename;
+    const room = obj[i].room;
+    const latitude = obj[i].latitude;
+    const longitude = obj[i].longitude;
     devicenames[i] = devicename;
     let rooms = this.state.rooms;
     rooms[i] = room;
@@ -388,34 +470,27 @@ class Settings extends Component {
     });
 
     $.ajax({
-      url:
-        `${urls.API_URL}/aaa/addNewDevice.json?macid=` +
-        macid +
-        '&name=' +
-        devicename +
-        '&room=' +
-        room +
-        '&latitude=' +
-        latitude +
-        '&longitude=' +
-        longitude +
-        '&access_token=' +
-        cookies.get('loggedIn'),
+      url: `${
+        urls.API_URL
+        //eslint-disable-next-line
+      }/aaa/addNewDevice.json?macid=${macid}&name=${devicename}&room=${room}&latitude=${latitude}&longitude=${longitude}&access_token=${cookies.get(
+        'loggedIn',
+      )}`,
       dataType: 'jsonp',
       crossDomain: true,
       timeout: 3000,
       async: false,
-      error: function(errorThrown) {
-        console.error('Some error occurred');
+      error: error => {
+        console.log(error);
       },
     });
   };
 
   handleChange = (e, name, i) => {
     const value = e.target.value;
-    let data = this.state.obj;
+    const { obj } = this.state;
     this.setState({
-      obj: data.map((row, j) => (j === i ? { ...row, [name]: value } : row)),
+      obj: obj.map((row, j) => (j === i ? { ...row, [name]: value } : row)),
     });
   };
 
@@ -426,21 +501,22 @@ class Settings extends Component {
   };
 
   apiCall = () => {
-    const url =
-      `${urls.API_URL}/aaa/listUserSettings.json?access_token=` + token;
+    const url = `${
+      urls.API_URL
+    }/aaa/listUserSettings.json?access_token=${token}`;
     $.ajax({
       url: url,
       type: 'GET',
       dataType: 'jsonp',
       statusCode: {
-        404: function(xhr) {
+        404: xhr => {
           if (window.console) {
             console.error(xhr.responseText);
           }
           console.error('Error 404: Resources not found!');
           document.location.reload();
         },
-        503: function(xhr) {
+        503: xhr => {
           if (window.console) {
             console.error(xhr.responseText);
           }
@@ -451,7 +527,7 @@ class Settings extends Component {
       crossDomain: true,
       timeout: 3000,
       async: false,
-      success: function(response) {
+      success: response => {
         /* eslint-disable */
         response.settings.prefLanguage = response.settings.prefLanguage || 'en';
         response.settings.avatarType = response.settings.avatarType || 'server';
@@ -487,17 +563,17 @@ class Settings extends Component {
         let centerLat = 0;
         let centerLng = 0;
         if (response.devices) {
-          let keys = Object.keys(response.devices);
+          const keys = Object.keys(response.devices);
           let devicesNotAvailable = 0;
           keys.forEach(i => {
-            let myObj = {
+            const myObj = {
               macid: i,
               devicename: response.devices[i].name,
               room: response.devices[i].room,
               latitude: response.devices[i].geolocation.latitude,
               longitude: response.devices[i].geolocation.longitude,
             };
-            let locationData = {
+            const locationData = {
               lat: parseFloat(response.devices[i].geolocation.latitude),
               lng: parseFloat(response.devices[i].geolocation.longitude),
             };
@@ -513,7 +589,7 @@ class Settings extends Component {
               );
             }
 
-            let location = {
+            const location = {
               location: locationData,
             };
             obj.push(myObj);
@@ -557,28 +633,28 @@ class Settings extends Component {
             });
           }
         }
-      }.bind(this),
-      error: function(errorThrown) {
-        console.error('some error occured');
+      },
+      error: error => {
+        console.log(error);
       },
     });
   };
 
   populateVoiceList = () => {
-    let voices = this.state.voiceList;
+    const { PrefLanguage } = this.state;
     let langCodes = [];
-    let voiceMenu = voices.map((voice, index) => {
+    const voiceMenu = this.voiceList.map((voice, index) => {
       langCodes.push(voice.lang);
       return (
         <MenuItem
           value={voice.lang}
           key={index}
-          primaryText={voice.name + ' (' + voice.lang + ')'}
+          primaryText={`${voice.name} (${voice.lang})`}
         />
       );
     });
-    let currLang = this.state.PrefLanguage;
-    let voiceOutput = {
+    const currLang = PrefLanguage;
+    const voiceOutput = {
       voiceMenu: voiceMenu,
       voiceLang: currLang,
     };
@@ -600,37 +676,37 @@ class Settings extends Component {
   };
 
   handleSave = () => {
-    let newEnterAsSend = this.state.EnterAsSend;
-    let newMicInput = this.state.MicInput;
-    let newSpeechOutput = this.state.SpeechOutput;
-    let newSpeechOutputAlways = this.state.SpeechOutputAlways;
-    let newUserName = this.state.UserName;
-    let newPrefLanguage = this.state.PrefLanguage;
-    let newTimeZone = this.state.TimeZone;
-    let newCountryCode = this.state.countryCode;
-    let newCountryDialCode = this.state.CountryDialCode;
-    let newPhoneNo = this.state.PhoneNo;
-    let newTheme = this.state.theme;
-    const newAvatarType = this.state.avatarType;
+    const {
+      EnterAsSend,
+      MicInput,
+      SpeechOutput,
+      SpeechOutputAlways,
+      UserName,
+      PrefLanguage,
+      TimeZone,
+      countryCode,
+      CountryDialCode,
+      PhoneNo,
+      theme,
+      avatarType,
+    } = this.state;
 
-    let vals = {
-      enterAsSend: newEnterAsSend,
-      micInput: newMicInput,
-      speechOutput: newSpeechOutput,
-      speechOutputAlways: newSpeechOutputAlways,
-      userName: newUserName,
-      prefLanguage: newPrefLanguage,
-      timeZone: newTimeZone,
-      countryCode: newCountryCode,
-      countryDialCode: newCountryDialCode,
-      phoneNo: newPhoneNo,
-      theme: newTheme,
-      avatarType: newAvatarType,
-    };
     // Trigger Actions to save the settings in stores and server
-    this.implementSettings(vals);
-    let userName = vals.userName;
-    cookies.set('username', userName, {
+    this.implementSettings({
+      enterAsSend: EnterAsSend,
+      micInput: MicInput,
+      speechOutput: SpeechOutput,
+      speechOutputAlways: SpeechOutputAlways,
+      userName: UserName,
+      prefLanguage: PrefLanguage,
+      timeZone: TimeZone,
+      countryCode: countryCode,
+      countryDialCode: CountryDialCode,
+      phoneNo: PhoneNo,
+      theme: theme,
+      avatarType: avatarType,
+    });
+    cookies.set('username', UserName, {
       path: '/',
       domain: cookieDomain,
     });
@@ -645,8 +721,8 @@ class Settings extends Component {
 
   // Open Remove Device Confirmation dialog
   handleRemoveConfirmation = i => {
-    let data = this.state.obj;
-    let devicename = data[i].devicename;
+    const { obj } = this.state;
+    const devicename = obj[i].devicename;
     this.setState({
       showRemoveConfirmation: true,
       showForgotPassword: false,
@@ -739,6 +815,7 @@ class Settings extends Component {
         countryData.countries[value ? value : 'US'].countryCallingCodes[0],
     });
   };
+
   handleSelectChange = (event, value) => {
     this.setState({
       theme: value,
@@ -769,7 +846,7 @@ class Settings extends Component {
   };
 
   handleAvatarSubmit = () => {
-    let file = this.state.file;
+    const { file } = this.state;
     // eslint-disable-next-line no-undef
     let form = new FormData();
     form.append('access_token', cookies.get('loggedIn'));
@@ -785,14 +862,13 @@ class Settings extends Component {
       data: form,
     };
     this.setState({ uploadingAvatar: true });
-    let self = this;
     $.ajax(settings).done(function(response) {
-      self.setState(
+      this.setState(
         {
           uploadingAvatar: false,
           isAvatarAdded: true,
         },
-        self.handleSave(),
+        this.handleSave(),
       );
     });
   };
@@ -801,7 +877,7 @@ class Settings extends Component {
     e.preventDefault();
     // eslint-disable-next-line no-undef
     let reader = new FileReader();
-    let file = e.target.files[0];
+    const file = e.target.files[0];
     reader.onloadend = () => {
       this.setState({
         file: file,
@@ -822,7 +898,57 @@ class Settings extends Component {
   };
 
   render() {
-    countryData.countries.all.sort(function(a, b) {
+    const {
+      dataFetched,
+      selectedSetting,
+      UserName,
+      TimeZone,
+      avatarType,
+      uploadingAvatar,
+      imagePreviewUrl,
+      isAvatarAdded,
+      file,
+      avatarSrc,
+      deviceData,
+      editIdx,
+      obj,
+      mapObj,
+      centerLat,
+      centerLng,
+      devicenames,
+      rooms,
+      macids,
+      slideIndex,
+      devicesNotAvailable,
+      EnterAsSend,
+      MicInput,
+      theme,
+      themeOpen,
+      SpeechOutput,
+      SpeechOutputAlways,
+      countryCode,
+      showRemoveConfirmation,
+      removeDevice,
+      removeDeviceName,
+      PhoneNo,
+      phoneNoError,
+      settingsChanged,
+    } = this.state;
+    const {
+      fieldStyle,
+      blueThemeColor,
+      themeBackgroundColor,
+      themeForegroundColor,
+      selectAvatarDropDownStyle,
+      currentSettingDevicesStyle,
+      radioIconStyle,
+      speechOutputStyle,
+      menuStyle,
+      floatingLabelStyle,
+      closingStyle,
+      submitButton,
+    } = styles;
+    countryData.countries.all.sort((a, b) => {
       if (a.name < b.name) {
         return -1;
       }
@@ -831,75 +957,28 @@ class Settings extends Component {
       }
       return 0;
     });
-    let countries = countryData.countries.all.map((country, i) => {
+    const countries = countryData.countries.all.map((country, i) => {
       if (countryData.countries.all[i].countryCallingCodes[0]) {
         return (
           <MenuItem
             value={countryData.countries.all[i].alpha2}
             key={i}
-            primaryText={
-              countryData.countries.all[i].name +
-              ' ' +
+            primaryText={`${countryData.countries.all[i].name} ${
               countryData.countries.all[i].countryCallingCodes[0]
-            }
+            }`}
           />
         );
       }
       return null;
     });
 
-    let voiceOutput = this.populateVoiceList();
-
-    const fieldStyle = {
-      height: '35px',
-      borderRadius: 4,
-      border: '1px solid #ced4da',
-      fontSize: 16,
-      padding: '0px 12px',
-      width: 'auto',
-    };
-
-    const radioIconStyle = {
-      fill: ChatConstants.standardBlue,
-    };
-
-    const menuStyle = {
-      width: '250px',
-      marginLeft: '-6px',
-    };
-
-    const submitButton = {
-      marginTop: '20px',
-      paddingRight: 10,
-    };
-
-    const closingStyle = {
-      position: 'absolute',
-      zIndex: 1200,
-      fill: '#444',
-      width: '26px',
-      height: '26px',
-      right: '10px',
-      top: '10px',
-      cursor: 'pointer',
-    };
-
-    const blueThemeColor = { color: 'rgb(66, 133, 244)' };
-    const themeBackgroundColor = '#fff';
-    const themeForegroundColor = '#272727';
-
-    const floatingLabelStyle = {
-      color: '#9e9e9e',
-      fontSize: 'unset',
-      lineHeight: '20px',
-    };
-
+    const voiceOutput = this.populateVoiceList();
     let currentSetting;
 
-    if (!this.state.dataFetched && cookies.get('loggedIn')) {
+    if (!dataFetched && cookies.get('loggedIn')) {
       this.apiCall();
     }
-    if (this.state.selectedSetting === 'Account') {
+    if (selectedSetting === 'Account') {
       currentSetting = (
         <div>
           <div className="tabHeading">Account</div>
@@ -910,12 +989,11 @@ class Settings extends Component {
               <TextField
                 name="userName"
                 style={fieldStyle}
-                value={this.state.UserName}
+                value={UserName}
                 onChange={this.handleUserName}
                 placeholder="Enter your User Name"
                 underlineStyle={{ display: 'none' }}
               />
-
               <div className="label">Email</div>
               <TextField
                 name="email"
@@ -941,7 +1019,7 @@ class Settings extends Component {
               <div className="time-zone">
                 <div className="time-zone-dropdown">
                   <TimezonePicker
-                    value={this.state.TimeZone}
+                    value={TimeZone}
                     onChange={timezone => this.handleTimeZone(timezone)}
                     inputProps={{
                       placeholder: 'Select Timezone...',
@@ -958,16 +1036,11 @@ class Settings extends Component {
               <DropDownMenu
                 selectedMenuItemStyle={blueThemeColor}
                 onChange={this.handleAvatarTypeChange}
-                value={this.state.avatarType}
-                labelStyle={{ color: themeForegroundColor }}
-                menuStyle={{ backgroundColor: themeBackgroundColor }}
-                menuItemStyle={{ color: themeForegroundColor }}
-                style={{
-                  width: '50%',
-                  paddingLeft: 0,
-                  marginLeft: '-24px',
-                  minWidth: '200px',
-                }}
+                value={avatarType}
+                labelStyle={themeForegroundColor}
+                menuStyle={themeBackgroundColor}
+                menuItemStyle={themeForegroundColor}
+                style={selectAvatarDropDownStyle}
                 autoWidth={false}
               >
                 <MenuItem
@@ -987,15 +1060,15 @@ class Settings extends Component {
                 />
               </DropDownMenu>
               <AvatarRender
-                avatarType={this.state.avatarType}
+                avatarType={avatarType}
                 handleAvatarSubmit={this.handleAvatarSubmit}
-                uploadingAvatar={this.state.uploadingAvatar}
-                imagePreviewUrl={this.state.imagePreviewUrl}
-                isAvatarAdded={this.state.isAvatarAdded}
+                uploadingAvatar={uploadingAvatar}
+                imagePreviewUrl={imagePreviewUrl}
+                isAvatarAdded={isAvatarAdded}
                 handleAvatarImageChange={this.handleAvatarImageChange}
                 removeAvatarImage={this.removeAvatarImage}
-                file={this.state.file}
-                avatarSrc={this.state.avatarSrc}
+                file={file}
+                avatarSrc={avatarSrc}
               />
             </div>
           </div>
@@ -1003,7 +1076,7 @@ class Settings extends Component {
       );
     }
 
-    if (this.state.selectedSetting === 'Password') {
+    if (selectedSetting === 'Password') {
       currentSetting = (
         <div>
           <div className="tabHeading" style={{ marginBottom: '10px' }}>
@@ -1018,27 +1091,18 @@ class Settings extends Component {
       );
     }
 
-    if (this.state.selectedSetting === 'Devices') {
+    if (selectedSetting === 'Devices') {
       currentSetting = (
         <span style={{ right: '40px' }}>
           <div>
             <span>
-              <div
-                style={{
-                  marginTop: '10px',
-                  marginBottom: '10px',
-                  fontSize: '16px',
-                  fontWeight: 'bold',
-                }}
-              >
-                Devices
-              </div>
+              <div style={currentSettingDevicesStyle}>Devices</div>
             </span>
             <hr
               className="Divider"
               style={{ height: '2px', marginBottom: '10px' }}
             />
-            {this.state.deviceData ? (
+            {deviceData ? (
               <div>
                 <SwipeableViews>
                   <div>
@@ -1056,29 +1120,29 @@ class Settings extends Component {
                             this.handleRemoveConfirmation
                           }
                           startEditing={this.startEditing}
-                          editIdx={this.state.editIdx}
+                          editIdx={editIdx}
                           stopEditing={this.stopEditing}
                           handleChange={this.handleChange}
-                          tableData={this.state.obj}
+                          tableData={obj}
                         />
                       </div>
                       <div>
                         <div style={{ maxHeight: '300px', marginTop: '10px' }}>
                           <MapContainer
                             google={this.props.google}
-                            mapData={this.state.mapObj}
-                            centerLat={this.state.centerLat}
-                            centerLng={this.state.centerLng}
-                            devicenames={this.state.devicenames}
-                            rooms={this.state.rooms}
-                            macids={this.state.macids}
+                            mapData={mapObj}
+                            centerLat={centerLat}
+                            centerLng={centerLng}
+                            devicenames={devicenames}
+                            rooms={rooms}
+                            macids={macids}
                           />
                         </div>
                       </div>
                     </div>
                   </div>
                 </SwipeableViews>
-                {this.state.slideIndex && this.state.devicesNotAvailable ? (
+                {slideIndex && devicesNotAvailable ? (
                   <div style={{ marginTop: '10px' }}>
                     <b>NOTE: </b>
                     Location info of one or more devices could not be retrieved.
@@ -1095,7 +1159,7 @@ class Settings extends Component {
       );
     }
 
-    if (this.state.selectedSetting === 'ChatApp') {
+    if (selectedSetting === 'ChatApp') {
       currentSetting = (
         <div>
           <div className="tabHeading">Preferences</div>
@@ -1113,8 +1177,8 @@ class Settings extends Component {
           <Toggle
             className="settings-toggle"
             onToggle={this.handleEnterAsSend}
-            labelStyle={{ color: themeForegroundColor }}
-            toggled={this.state.EnterAsSend}
+            labelStyle={themeForegroundColor}
+            toggled={EnterAsSend}
             thumbStyle={ChatConstants.thumbStyle}
             trackStyle={ChatConstants.trackStyle}
             thumbSwitchedStyle={ChatConstants.thumbSwitchedStyle}
@@ -1125,7 +1189,7 @@ class Settings extends Component {
       );
     }
 
-    if (this.state.selectedSetting === 'Microphone') {
+    if (selectedSetting === 'Microphone') {
       currentSetting = '';
       currentSetting = (
         <div>
@@ -1145,9 +1209,9 @@ class Settings extends Component {
               </div>
               <Toggle
                 className="settings-toggle"
-                labelStyle={{ color: themeForegroundColor }}
+                labelStyle={themeForegroundColor}
                 onToggle={this.handleMicInput}
-                toggled={this.state.MicInput}
+                toggled={MicInput}
                 thumbStyle={ChatConstants.thumbStyle}
                 trackStyle={ChatConstants.trackStyle}
                 thumbSwitchedStyle={ChatConstants.thumbSwitchedStyle}
@@ -1160,7 +1224,7 @@ class Settings extends Component {
       );
     }
 
-    if (this.state.selectedSetting === 'Theme') {
+    if (selectedSetting === 'Theme') {
       currentSetting = '';
       currentSetting = (
         <div>
@@ -1172,46 +1236,46 @@ class Settings extends Component {
             style={{ textAlign: 'left', margin: '20px', marginBottom: '23px' }}
             onChange={this.handleSelectChange}
             name="Theme"
-            valueSelected={this.state.theme}
+            valueSelected={theme}
           >
             <RadioButton
               style={{ width: '20%', display: 'block' }}
               iconStyle={radioIconStyle}
-              labelStyle={{ color: themeForegroundColor }}
+              labelStyle={themeForegroundColor}
               value="light"
               label={<span style={{ fontSize: '16px' }}>Light</span>}
             />
             <RadioButton
               style={{ width: '20%', display: 'block', marginTop: '-1px' }}
               iconStyle={radioIconStyle}
-              labelStyle={{ color: themeForegroundColor }}
+              labelStyle={themeForegroundColor}
               value="dark"
               label={<span style={{ fontSize: '16px' }}>Dark</span>}
             />
             <RadioButton
               style={{ width: '20%', display: 'block', marginTop: '-1px' }}
               iconStyle={radioIconStyle}
-              labelStyle={{ color: themeForegroundColor }}
+              labelStyle={themeForegroundColor}
               value="custom"
               label={<span style={{ fontSize: '16px' }}>Custom</span>}
             />
           </RadioButtonGroup>
           <RaisedButton
             label="Edit theme"
-            disabled={this.state.theme !== 'custom'}
+            disabled={theme !== 'custom'}
             backgroundColor="#4285f4"
             labelColor="#fff"
             onClick={this.handleThemeChanger}
           />
           <ThemeChanger
-            themeOpen={this.state.themeOpen}
+            themeOpen={themeOpen}
             onRequestClose={() => this.onThemeRequestClose}
           />
         </div>
       );
     }
 
-    if (this.state.selectedSetting === 'Speech') {
+    if (selectedSetting === 'Speech') {
       currentSetting = (
         <div>
           <div>
@@ -1229,9 +1293,9 @@ class Settings extends Component {
             </div>
             <Toggle
               className="settings-toggle"
-              labelStyle={{ color: themeForegroundColor }}
+              labelStyle={themeForegroundColor}
               onToggle={this.handleSpeechOutput}
-              toggled={this.state.SpeechOutput}
+              toggled={SpeechOutput}
               thumbStyle={ChatConstants.thumbStyle}
               trackStyle={ChatConstants.trackStyle}
               thumbSwitchedStyle={ChatConstants.thumbSwitchedStyle}
@@ -1241,15 +1305,7 @@ class Settings extends Component {
             <br />
           </div>
           <div>
-            <div
-              style={{
-                marginTop: '10px',
-                marginBottom: '0px',
-                fontSize: '15px',
-                fontWeight: 'bold',
-              }}
-              className="decreaseSettingDiv"
-            >
+            <div style={speechOutputStyle} className="decreaseSettingDiv">
               Speech Output Always ON
             </div>
             <br />
@@ -1264,9 +1320,9 @@ class Settings extends Component {
             </div>
             <Toggle
               className="settings-toggle"
-              labelStyle={{ color: themeForegroundColor }}
+              labelStyle={themeForegroundColor}
               onToggle={this.handleSpeechOutputAlways}
-              toggled={this.state.SpeechOutputAlways}
+              toggled={SpeechOutputAlways}
               thumbStyle={ChatConstants.thumbStyle}
               trackStyle={ChatConstants.trackStyle}
               thumbSwitchedStyle={ChatConstants.thumbSwitchedStyle}
@@ -1279,7 +1335,7 @@ class Settings extends Component {
       );
     }
 
-    if (this.state.selectedSetting === 'Mobile') {
+    if (selectedSetting === 'Mobile') {
       currentSetting = (
         <div style={{ marginBottom: '-2px' }}>
           <div className="tabHeading" style={{ marginTop: '8px' }}>
@@ -1337,10 +1393,10 @@ class Settings extends Component {
                     top: '15px',
                     marginLeft: '10px',
                   }}
-                  labelStyle={{ color: themeForegroundColor }}
-                  menuStyle={{ backgroundColor: themeBackgroundColor }}
-                  menuItemStyle={{ color: themeForegroundColor }}
-                  value={this.state.countryCode ? this.state.countryCode : 'US'}
+                  labelStyle={themeForegroundColor}
+                  menuStyle={themeBackgroundColor}
+                  menuItemStyle={themeForegroundColor}
+                  value={countryCode ? countryCode : 'US'}
                   onChange={this.handleCountryChange}
                 >
                   {countries}
@@ -1379,9 +1435,8 @@ class Settings extends Component {
                   }}
                   floatingLabelStyle={floatingLabelStyle}
                   value={
-                    countryData.countries[
-                      this.state.countryCode ? this.state.countryCode : 'US'
-                    ].countryCallingCodes[0]
+                    countryData.countries[countryCode ? countryCode : 'US']
+                      .countryCallingCodes[0]
                   }
                   style={{
                     width: '45px',
@@ -1406,8 +1461,8 @@ class Settings extends Component {
                     fontSize: '16px',
                   }}
                   floatingLabelStyle={floatingLabelStyle}
-                  value={this.state.PhoneNo}
-                  errorText={this.state.phoneNoError}
+                  value={PhoneNo}
+                  errorText={phoneNoError}
                   floatingLabelText="Phone number"
                 />
               </div>
@@ -1428,15 +1483,15 @@ class Settings extends Component {
         <Dialog
           className="dialogStyle"
           modal={false}
-          open={this.state.showRemoveConfirmation}
+          open={showRemoveConfirmation}
           autoScrollBodyContent={true}
           contentStyle={{ width: '35%', minWidth: '300px' }}
           onRequestClose={this.handleClose}
         >
           <RemoveDeviceDialog
             {...this.props}
-            deviceIndex={this.state.removeDevice}
-            devicename={this.state.removeDeviceName}
+            deviceIndex={removeDevice}
+            devicename={removeDeviceName}
             handleRemove={this.handleRemove}
           />
           <Close style={closingStyle} onTouchTap={this.handleClose} />
@@ -1460,115 +1515,115 @@ class Settings extends Component {
                   onChange={this.loadSettings}
                   selectedMenuItemStyle={blueThemeColor}
                   style={{ width: '100%' }}
-                  value={this.state.selectedSetting}
+                  value={selectedSetting}
                 >
                   <MenuItem
-                    style={{ color: themeForegroundColor }}
+                    style={themeForegroundColor}
                     value="Account"
                     className="setting-item"
                     leftIcon={<AccountIcon />}
                   >
                     Account
                     <ChevronRight
-                      style={{ color: themeForegroundColor }}
+                      style={themeForegroundColor}
                       className="right-chevron"
                     />
                   </MenuItem>
                   <hr className="Divider" />
 
                   <MenuItem
-                    style={{ color: themeForegroundColor }}
+                    style={themeForegroundColor}
                     value="Password"
                     className="setting-item"
                     leftIcon={<LockIcon />}
                   >
                     Password
                     <ChevronRight
-                      style={{ color: themeForegroundColor }}
+                      style={themeForegroundColor}
                       className="right-chevron"
                     />
                   </MenuItem>
                   <hr className="Divider" />
 
                   <MenuItem
-                    style={{ color: themeForegroundColor }}
+                    style={themeForegroundColor}
                     value="Mobile"
                     className="setting-item"
                     leftIcon={<MobileIcon />}
                   >
                     Mobile
                     <ChevronRight
-                      style={{ color: themeForegroundColor }}
+                      style={themeForegroundColor}
                       className="right-chevron"
                     />
                   </MenuItem>
                   <hr className="Divider" />
 
                   <MenuItem
-                    style={{ color: themeForegroundColor }}
+                    style={themeForegroundColor}
                     value="ChatApp"
                     className="setting-item"
                     leftIcon={<ChatIcon />}
                   >
                     ChatApp
                     <ChevronRight
-                      style={{ color: themeForegroundColor }}
+                      style={themeForegroundColor}
                       className="right-chevron"
                     />
                   </MenuItem>
                   <hr className="Divider" />
 
                   <MenuItem
-                    style={{ color: themeForegroundColor }}
+                    style={themeForegroundColor}
                     value="Theme"
                     className="setting-item"
                     leftIcon={<ThemeIcon />}
                   >
                     Theme
                     <ChevronRight
-                      style={{ color: themeForegroundColor }}
+                      style={themeForegroundColor}
                       className="right-chevron"
                     />
                   </MenuItem>
                   <hr className="Divider" />
 
                   <MenuItem
-                    style={{ color: themeForegroundColor }}
+                    style={themeForegroundColor}
                     value="Microphone"
                     className="setting-item"
                     leftIcon={<VoiceIcon />}
                   >
                     Microphone
                     <ChevronRight
-                      style={{ color: themeForegroundColor }}
+                      style={themeForegroundColor}
                       className="right-chevron"
                     />
                   </MenuItem>
                   <hr className="Divider" />
 
                   <MenuItem
-                    style={{ color: themeForegroundColor }}
+                    style={themeForegroundColor}
                     value="Speech"
                     className="setting-item"
                     leftIcon={<SpeechIcon />}
                   >
                     Speech
                     <ChevronRight
-                      style={{ color: themeForegroundColor }}
+                      style={themeForegroundColor}
                       className="right-chevron"
                     />
                   </MenuItem>
                   <hr className="Divider" />
 
                   <MenuItem
-                    style={{ color: themeForegroundColor }}
+                    style={themeForegroundColor}
                     value="Devices"
                     className="setting-item"
                     leftIcon={<MyDevices />}
                   >
                     Devices
                     <ChevronRight
-                      style={{ color: themeForegroundColor }}
+                      style={themeForegroundColor}
                       className="right-chevron"
                     />
                   </MenuItem>
@@ -1587,10 +1642,10 @@ class Settings extends Component {
                 <DropDownMenu
                   selectedMenuItemStyle={blueThemeColor}
                   onChange={this.loadSettings}
-                  value={this.state.selectedSetting}
-                  labelStyle={{ color: themeForegroundColor }}
-                  menuStyle={{ backgroundColor: themeBackgroundColor }}
-                  menuItemStyle={{ color: themeForegroundColor }}
+                  value={selectedSetting}
+                  labelStyle={themeForegroundColor}
+                  menuStyle={themeBackgroundColor}
+                  menuItemStyle={themeForegroundColor}
                   style={{ width: '100%' }}
                   autoWidth={false}
                 >
@@ -1651,14 +1706,12 @@ class Settings extends Component {
                     label="save changes"
                     backgroundColor={ChatConstants.standardBlue}
                     labelColor="#fff"
-                    disabled={
-                      !this.state.settingsChanged || this.state.phoneNoError
-                    }
+                    disabled={!settingsChanged || phoneNoError}
                     onTouchTap={this.handleSave}
                   />
                 )}
               </div>
-              {this.state.selectedSetting !== 'Account' ? (
+              {selectedSetting !== 'Account' ? (
                 ''
               ) : (
                 <div>
@@ -1691,13 +1744,6 @@ class Settings extends Component {
     );
   }
 }
-
-Settings.propTypes = {
-  history: PropTypes.object,
-  location: PropTypes.object,
-  google: PropTypes.object,
-  handleThemeChanger: PropTypes.func,
-};
 
 export default GoogleApiWrapper({
   apiKey: MAP_KEY,
