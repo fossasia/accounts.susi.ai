@@ -18,7 +18,7 @@
   margin-left:20%;
 }
 #forgotpwd {
-  margin-left:230px;
+  margin-left:60px;
 }
 
 .susi-logo{
@@ -144,6 +144,11 @@
   margin-left: 10px;
 }
 
+.login-div {
+  margin: 0 auto;
+  text-align: center;
+}
+
 @media screen and (max-width: 1588px) {
   .loginForm{
     margin:10px;
@@ -151,6 +156,20 @@
 
   #loginform {
     margin-left:10%;
+  }
+
+  .login-div {
+    margin: 0 auto;
+    text-align: auto;
+  }
+
+  .login-div > h2 {
+    margin-left: -88px; 
+  }
+
+  .loginbtn {
+    margin-left: 20px;
+    width: 5%;
   }
 }
 
@@ -182,6 +201,10 @@
     margin:10% 15%;
   }
 
+  .login-div > h2 {
+    margin-left: 0px; 
+  }
+
   #forgotpwd {
     margin:20px 10px;
   }
@@ -191,14 +214,16 @@
   }
 
   .loginbtn {
-    width:86%;
-    margin-bottom:-5px;
+    margin-left: 0px;
+    width: 220px;
+    margin-top: 10px;
   }
 }
 
 @media screen and (max-width: 937px) {
   .loginbtn {
-    width:87%;
+    width: 220px;
+    margin-top: 10px;
   }
 }
 @media screen and (max-width: 838px) {
@@ -229,8 +254,12 @@
     margin: 0 auto;
   }
 
+  .login-div > h2 {
+    margin-left: 0px; 
+  }
+
   .login-div > .fieldStyle, .login-div > .loginbtn {
-    width: 95%;
+    width: 220px;
     margin: 0 auto;
   }
 
@@ -262,7 +291,8 @@
     margin: 10px 25% 10px 15px;
   }
   .loginbtn {
-    width:104%;
+    width: 235px!important;
+    margin-top: 10px;
   }
 
   .passfieldStyle {
@@ -287,6 +317,10 @@
   .login-div {
     width: 100%;
     margin: 0px;
+  }
+
+  .login-div > h2 {
+    margin-left: 0px; 
   }
 
   .signup {

@@ -8,6 +8,7 @@ import Cookies from 'universal-cookie';
 
 // Components
 import TextField from 'material-ui/TextField';
+import PasswordField from 'material-ui-password-field';
 import RaisedButton from 'material-ui/RaisedButton';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import FlatButton from 'material-ui/FlatButton';
@@ -256,15 +257,25 @@ class Login extends Component {
       />
     );
 
-    const fieldStyle = {
+    const fieldStylEmail = {
       height: '35px',
       borderRadius: 4,
       border: '1px solid #ced4da',
       fontSize: 16,
-      padding: '0px 5px',
+      padding: '0px 10px',
+      width: '220px',
       margin: '10px',
-      paddingRight: '0',
-      width: '',
+      boxSizing: 'border-box',
+    };
+
+    const fieldStylePass = {
+      height: '35px',
+      borderRadius: 4,
+      border: '1px solid #ced4da',
+      fontSize: 16,
+      padding: '0px 10px',
+      width: '200px',
+      margin: '10px',
       boxSizing: 'border-box',
     };
 
@@ -275,6 +286,15 @@ class Login extends Component {
     const button = {
       minWidth: '35%',
       marginLeft: 0,
+      margin: '10px',
+    };
+
+    const inputpassStyle = {
+      height: '35px',
+      marginBottom: '10px',
+      marginRight: '0px',
+      width: '90%',
+      webkitTextFillColor: 'unset',
     };
 
     return (
@@ -290,7 +310,7 @@ class Login extends Component {
                 <h2>Log In</h2>
                 <TextField
                   name="email"
-                  style={fieldStyle}
+                  style={fieldStylEmail}
                   className="fieldStyle"
                   value={this.state.email}
                   placeholder="Email"
@@ -298,22 +318,27 @@ class Login extends Component {
                   underlineStyle={{ display: 'none' }}
                 />
 
-                <TextField
+                <PasswordField
                   name="password"
-                  type="password"
-                  style={fieldStyle}
-                  className="fieldStyle"
+                  style={fieldStylePass}
+                  inputStyle={inputpassStyle}
                   value={this.state.password}
                   placeholder="Password"
-                  onChange={this.handleChange}
                   underlineStyle={{ display: 'none' }}
+                  onChange={this.handleChange}
+                  visibilityButtonStyle={{
+                    marginTop: '-3px',
+                  }}
+                  visibilityIconStyle={{
+                    marginTop: '-3px',
+                  }}
                 />
 
                 <RaisedButton
                   label={!loading ? 'Login' : undefined}
                   type="submit"
                   className="loginbtn"
-                  style={{ marginLeft: '10px' }}
+                  style={{ marginLeft: '0px' }}
                   backgroundColor={ChatConstants.standardBlue}
                   labelColor="#fff"
                   disabled={!this.state.validForm}
