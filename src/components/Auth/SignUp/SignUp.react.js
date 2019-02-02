@@ -27,6 +27,7 @@ import Recaptcha from 'react-recaptcha';
 import zxcvbn from 'zxcvbn';
 
 import './SignUp.css';
+import './SignupMobileFix.min.css';
 
 const cookies = new Cookies();
 export default class SignUp extends Component {
@@ -326,13 +327,17 @@ export default class SignUp extends Component {
 
         <div className="signup-container">
           <div className="signUpForm">
-            <img src={susi} alt="SUSI" className="susi-signup-logo" />
-            <h1 className="signup-header-text">
-              See whats happening in the world right now
-            </h1>
-            <h1 style={{ fontSize: '40px', paddingTop: '10px' }}>Sign Up</h1>
-            <br />
-            <form onSubmit={this.handleSubmit} style={{ float: 'left' }}>
+            <form
+              onSubmit={this.handleSubmit}
+              style={{ float: 'left' }}
+              className="form"
+            >
+              <img src={susi} alt="SUSI" className="susi-signup-logo" />
+              <h1 className="signup-header-text">
+                See whats happening in the world right now
+              </h1>
+              <h1 style={{ fontSize: '40px', paddingTop: '10px' }}>Sign Up</h1>
+              <br />
               <div>
                 <TextField
                   name="email"
