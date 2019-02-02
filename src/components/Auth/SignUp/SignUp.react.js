@@ -111,59 +111,52 @@ export default class SignUp extends Component {
       validForm,
       passwordScore,
       passwordStrength,
-      isCaptchaVerified,
-      // eslint-disable-next-line
-      captchaVerifyErrorMessage,
     } = this.state;
 
-    if (event.target.name === 'email') {
-      email = event.target.value.trim();
-      isEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
-      emailError = !(email && isEmail);
-    } else if (event.target.name === 'password') {
-      passwordValue = event.target.value;
-      validPassword = passwordValue.length >= 6 && passwordValue.length <= 64;
-      passwordError = !(passwordValue && validPassword);
-      passwordConfirmError = !(
-        passwordValue === this.state.confirmPasswordValue
-      );
-      if (validPassword) {
-        const result = zxcvbn(passwordValue);
-        passwordScore = result.score;
-        let strength = ['Worst', 'Bad', 'Weak', 'Good', 'Strong'];
-        passwordStrength = strength[result.score];
-      } else {
-        passwordStrength = '';
-        passwordScore = -1;
-      }
-    } else if (event.target.name === 'confirmPassword') {
-      confirmPasswordValue = event.target.value;
-      validPassword = confirmPasswordValue === passwordValue;
-      passwordConfirmError = !(validPassword && confirmPasswordValue);
-    }
+    // eslint-disable-next-line
+    switch (event.target.name) {
+      case 'email':
+        email = event.target.value.trim();
+        isEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+        emailError = !(email && isEmail);
+        emailErrorMessage = emailError ? 'Enter a valid Email Address' : '';
+        break;
+      case 'password':
+        passwordValue = event.target.value;
+        validPassword = passwordValue.length >= 6;
+        const validConfirmPassword = confirmPasswordValue.length >= 1;
+        passwordError = !(passwordValue && validPassword);
+        passwordConfirmError = !(
+          passwordValue === this.state.confirmPasswordValue
+        );
+        if (validPassword) {
+          const result = zxcvbn(passwordValue);
+          passwordScore = result.score;
+          let strength = ['Worst', 'Bad', 'Weak', 'Good', 'Strong'];
+          passwordStrength = strength[result.score];
+        } else {
+          passwordStrength = '';
+          passwordScore = -1;
+        }
+        passwordErrorMessage = passwordError
+          ? 'Minimum 6 characters required'
+          : '';
+        passwordConfirmErrorMessage =
+          passwordConfirmError && validConfirmPassword
+            ? 'Check your password again'
+            : '';
+        break;
 
-    if (emailError) {
-      emailErrorMessage = 'Enter a valid Email Address';
-    } else if (passwordError) {
-      emailErrorMessage = '';
-      passwordErrorMessage = 'Allowed password length is 6 to 64 characters';
-      passwordConfirmErrorMessage = '';
-      captchaVerifyErrorMessage = '';
-    } else if (passwordConfirmError) {
-      emailErrorMessage = '';
-      passwordErrorMessage = '';
-      passwordConfirmErrorMessage = 'Check your password again';
-      captchaVerifyErrorMessage = '';
-    } else if (!isCaptchaVerified) {
-      emailErrorMessage = '';
-      passwordErrorMessage = '';
-      passwordConfirmErrorMessage = '';
-      captchaVerifyErrorMessage = 'Please confirm you are a human';
-    } else {
-      emailErrorMessage = '';
-      passwordErrorMessage = '';
-      passwordConfirmErrorMessage = '';
-      captchaVerifyErrorMessage = '';
+      case 'confirmPassword':
+        confirmPasswordValue = event.target.value;
+        const validConfirmPasswordLength = confirmPasswordValue.length >= 6;
+        validPassword = confirmPasswordValue === passwordValue;
+        passwordConfirmError = !(validPassword && confirmPasswordValue);
+        passwordConfirmErrorMessage =
+          passwordConfirmError && validConfirmPasswordLength
+            ? 'Check your password again'
+            : '';
+        break;
     }
 
     if (!emailError && !passwordError && !passwordConfirmError) {
