@@ -358,7 +358,7 @@ class Settings extends Component {
       timeout: 3000,
       async: false,
       error: function(errorThrown) {
-        console.log(errorThrown);
+        console.error(errorThrown);
       },
       complete: function(jqXHR, textStatus) {
         window.location.reload();
@@ -406,7 +406,7 @@ class Settings extends Component {
       timeout: 3000,
       async: false,
       error: function(errorThrown) {
-        console.log(errorThrown);
+        console.error('Some error occurred');
       },
     });
   };
@@ -435,16 +435,16 @@ class Settings extends Component {
       statusCode: {
         404: function(xhr) {
           if (window.console) {
-            console.log(xhr.responseText);
+            console.error(xhr.responseText);
           }
-          console.log('Error 404: Resources not found!');
+          console.error('Error 404: Resources not found!');
           document.location.reload();
         },
         503: function(xhr) {
           if (window.console) {
-            console.log(xhr.responseText);
+            console.error(xhr.responseText);
           }
-          console.log('Error 503: Server not responding!');
+          console.error('Error 503: Server not responding!');
           document.location.reload();
         },
       },
@@ -559,7 +559,7 @@ class Settings extends Component {
         }
       }.bind(this),
       error: function(errorThrown) {
-        console.log(errorThrown);
+        console.error('some error occured');
       },
     });
   };
