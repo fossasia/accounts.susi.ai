@@ -211,13 +211,21 @@ class StaticAppBar extends Component {
               containerElement={<Link to="/logout" />}
               rightIcon={<Exit />}
             />
-          ) : (
-            <MenuItem
-              primaryText="Login"
-              containerElement={<Link to="/" />}
-              rightIcon={<LoginIcon />}
-            />
-          )}
+          ) : null}
+          {!cookies.get('loggedIn') &&
+            (window.location.href === 'https://accounts.susi.ai/' ? (
+              <MenuItem
+                primaryText="Sign Up"
+                containerElement={<Link to="/signup" />}
+                rightIcon={<LoginIcon />}
+              />
+            ) : (
+              <MenuItem
+                primaryText="Login"
+                containerElement={<Link to="/" />}
+                rightIcon={<LoginIcon />}
+              />
+            ))}
         </IconMenu>
       </div>
     );
