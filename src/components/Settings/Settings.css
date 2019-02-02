@@ -48,8 +48,11 @@ body{
 }
 
 .Link a {
-  color : #1DA1F5;
   text-decoration : none;
+}
+
+.Link div {
+  color : #ff0000;
 }
 
 .settings-app {

@@ -17,6 +17,8 @@ import Close from 'material-ui/svg-icons/navigation/close';
 import { urls } from '../../../Utils';
 import ChatConstants from '../../../constants/ChatConstants';
 
+import './DeleteAccount.css';
+
 const cookies = new Cookies();
 
 let deleteCookie = function(name, options = {}) {
@@ -174,7 +176,6 @@ class DeleteAccount extends Component {
       margin: '60px auto',
       padding: '10px',
       textAlign: 'center',
-      width: '400px',
     };
     const body = {
       margin: '60px auto',
@@ -219,10 +220,12 @@ class DeleteAccount extends Component {
           <StaticAppBar />
         </div>
         <div style={body}>
-          <Paper style={style} zDepth={5}>
+          <Paper style={style} className="delete-account" zDepth={5}>
             <h1 style={{ marginBottom: '30px' }}>Delete Account</h1>
             <div>
-              <h5>Please enter your password to confirm deletion</h5>
+              <h5 style={{ fontWeight: 'normal' }}>
+                Please enter your password to confirm deletion
+              </h5>
             </div>
             <div>
               <form onSubmit={this.handleSubmit}>
