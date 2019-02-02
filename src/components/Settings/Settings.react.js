@@ -904,8 +904,8 @@ class Settings extends Component {
         <div>
           <div className="tabHeading">Account</div>
           <hr className="Divider" style={{ height: '2px' }} />
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
-            <div style={{ width: '50%', marginLeft: '24px' }}>
+          <div className="fields">
+            <div className="info">
               <div className="label">User Name</div>
               <TextField
                 name="userName"
@@ -951,7 +951,7 @@ class Settings extends Component {
                 </div>
               </div>
             </div>
-            <div style={{ width: '50%' }}>
+            <div className="img-upld">
               <div className="label" style={{ marginBottom: '0' }}>
                 Select Avatar
               </div>
@@ -1642,7 +1642,7 @@ class Settings extends Component {
           <Paper className="settings" zDepth={1}>
             <div className="currentSettings">
               {currentSetting}
-              <div style={submitButton}>
+              <div className="submitButton" style={submitButton}>
                 {this.state.selectedSetting === 'Password' ||
                 this.state.selectedSetting === 'Devices' ? (
                   ''
