@@ -123,7 +123,7 @@ export default class SignUp extends Component {
         emailErrorMessage = emailError ? 'Enter a valid Email Address' : '';
         break;
       case 'password':
-        passwordValue = event.target.value;
+        passwordValue = event.target.value.trim();
         validPassword = passwordValue.length >= 6;
         const validConfirmPassword = confirmPasswordValue.length >= 1;
         passwordError = !(passwordValue && validPassword);
