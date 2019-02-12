@@ -423,12 +423,11 @@ class Settings extends Component {
   };
 
   handleRemove = i => {
-    const { obj } = this.state;
-    const macid = obj[i].macid;
+    const macid = this.state.obj[i].macid;
 
-    this.setState({
-      obj: obj.filter((row, j) => j !== i),
-    });
+    this.setState(prevState => ({
+      obj: prevState.obj.filter(row => row.macid !== macid),
+    }));
 
     $.ajax({
       url: `${
@@ -489,10 +488,9 @@ class Settings extends Component {
 
   handleChange = (e, name, i) => {
     const value = e.target.value;
-    const { obj } = this.state;
-    this.setState({
-      obj: obj.map((row, j) => (j === i ? { ...row, [name]: value } : row)),
-    });
+    this.setState(prevState => ({
+      obj: prevState.obj.map((row, j) => (j === i ? { ...row, [name]: value } : row)),
+    }));
   };
 
   handleTabSlide = value => {

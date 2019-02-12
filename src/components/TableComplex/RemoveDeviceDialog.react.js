@@ -101,11 +101,10 @@ class RemoveDeviceDialog extends Component {
   };
 
   handleDeviceNameChange = event => {
-    const { devicename } = this.props;
-    this.setState({
+    this.setState((state, props) => ({
       devicename: event.target.value,
-      correctName: event.target.value === devicename,
-    });
+      correctName: event.target.value === props.devicename,
+    }));
   };
 
   render() {
