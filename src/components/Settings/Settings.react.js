@@ -453,8 +453,10 @@ class Settings extends Component {
       async: false,
       success: function(response) {
         /* eslint-disable */
-        response.settings.prefLanguage = response.settings.prefLanguage || 'en';
-        response.settings.avatarType = response.settings.avatarType || 'server';
+        response.settings.prefLanguage =
+          (response.settings && response.settings.prefLanguage) || 'en';
+        response.settings.avatarType =
+          (response.settings && response.settings.avatarType) || 'server';
         response.settings.enterAsSend =
           response.settings.enterAsSend === 'false' ? false : true;
         response.settings.micInput =
@@ -466,19 +468,23 @@ class Settings extends Component {
         /* eslint-enable */
         this.setState({
           dataFetched: true,
-          PrefLanguage: response.settings.prefLanguage,
-          avatarType: response.settings.avatarType,
-          UserName: response.settings.userName,
-          TimeZone: response.settings.timeZone,
-          countryCode: response.settings.countryCode,
-          CountryDialCode: response.settings.countryDialCode,
-          PhoneNo: response.settings.phoneNo,
-          EnterAsSend: response.settings.enterAsSend,
-          MicInput: response.settings.micInput,
-          theme: response.settings.theme,
-          SpeechOutput: response.settings.speechOutput,
-          SpeechOutputAlways: response.settings.speechOutputAlways,
         });
+        if (response.settings) {
+          this.setState({
+            PrefLanguage: response.settings.prefLanguage,
+            avatarType: response.settings.avatarType,
+            UserName: response.settings.userName,
+            TimeZone: response.settings.timeZone,
+            countryCode: response.settings.countryCode,
+            CountryDialCode: response.settings.countryDialCode,
+            PhoneNo: response.settings.phoneNo,
+            EnterAsSend: response.settings.enterAsSend,
+            MicInput: response.settings.micInput,
+            theme: response.settings.theme,
+            SpeechOutput: response.settings.speechOutput,
+            SpeechOutputAlways: response.settings.speechOutputAlways,
+          });
+        }
         let obj = [];
         let mapObj = [];
         let devicenames = [];

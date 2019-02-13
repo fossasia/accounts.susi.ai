@@ -57,7 +57,7 @@ class StaticAppBar extends Component {
       jsonp: 'callback',
       crossDomain: true,
       success: function(data) {
-        let userName = data.settings.userName;
+        let userName = data.settings && data.settings.userName;
         cookies.set('username', userName, {
           path: '/',
           domain: cookieDomain,
