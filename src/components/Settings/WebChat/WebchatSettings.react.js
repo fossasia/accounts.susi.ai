@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { addUrlProps, UrlQueryParamTypes } from 'react-url-query';
 import PropTypes from 'prop-types';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import ChatConstants from '../../../constants/ChatConstants';
+import Snackbar from 'material-ui/Snackbar';
 
 const urlPropsQueryConfig = {
   client: { type: UrlQueryParamTypes.string },
@@ -25,8 +23,8 @@ class WebChatSettings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showDialog: false,
-      msg: '',
+      openSnackbar: false,
+      msgSnackbar: '',
     };
   }
   ComponentDidMount() {
@@ -39,33 +37,23 @@ class WebChatSettings extends Component {
       client !== 'web'
     ) {
       this.setState({
-        msg: 'Invalid client name',
-        showDialog: true,
+        openSnackbar: true,
+        msgSnackbar: 'Invalid client name',
       });
     }
   }
 
   render() {
-    const actions = (
-      <FlatButton
-        label="OK"
-        backgroundColor={ChatConstants.standardBlue}
-        labelStyle={{ color: '#fff' }}
-        onTouchTap={this.handleClose}
-      />
-    );
     return (
       <div>
-        <div>
-          <Dialog
-            actions={actions}
-            modal={false}
-            open={this.state.showDialog}
-            onRequestClose={this.handleClose}
-          >
-            {this.state.msg}
-          </Dialog>
-        </div>
+        <Snackbar
+          open={this.state.openSnackbar}
+          message={this.state.msgSnackbar}
+          autoHideDuration={4000}
+          onRequestClose={() => {
+            this.setState({ openSnackbar: false });
+          }}
+        />
       </div>
     );
   }

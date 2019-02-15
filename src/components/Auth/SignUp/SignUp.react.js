@@ -10,6 +10,7 @@ import PasswordField from 'material-ui-password-field';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
+import Snackbar from 'material-ui/Snackbar';
 import FlatButton from 'material-ui/FlatButton';
 import Login from '../Login/Login.react';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
@@ -60,6 +61,8 @@ export default class SignUp extends Component {
       emailErrorMessage: '',
       passwordStrength: '',
       passwordScore: -1,
+      openSnackbar: false,
+      msgSnackbar: '',
     };
 
     this.emailErrorMessage = '';
@@ -217,18 +220,18 @@ export default class SignUp extends Component {
         timeout: 3000,
         async: false,
         success: function(response) {
-          let msg = response.message;
-          let state = this.state;
-          state.msg = msg;
-          state.success = true;
-          this.setState(state);
+          this.setState({
+            msgSnackbar: response.message,
+            openSnackbar: true,
+            success: true,
+          });
         }.bind(this),
         error: function(errorThrown) {
-          let msg = 'Failed. Try Again';
-          let state = this.state;
-          state.msg = msg;
-          state.success = false;
-          this.setState(state);
+          this.setState({
+            openSnackbar: true,
+            msgSnackbar: 'Failed. Try Again',
+            success: false,
+          });
         }.bind(this),
       });
     }
@@ -452,18 +455,6 @@ export default class SignUp extends Component {
                 </Link>
               </div>
             </form>
-            {this.state.msg && (
-              <div>
-                <Dialog
-                  actions={actions}
-                  modal={false}
-                  open={true}
-                  onRequestClose={this.handleClose}
-                >
-                  {this.state.msg}
-                </Dialog>
-              </div>
-            )}
             <Dialog
               actions={actions}
               modal={false}
@@ -479,6 +470,14 @@ export default class SignUp extends Component {
           </div>
         </div>
         <Footer />
+        <Snackbar
+          open={this.state.openSnackbar}
+          message={this.state.msgSnackbar}
+          autoHideDuration={4000}
+          onRequestClose={() => {
+            this.setState({ openSnackbar: false });
+          }}
+        />
       </div>
     );
   }

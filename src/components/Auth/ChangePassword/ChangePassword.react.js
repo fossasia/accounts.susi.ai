@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
-import Dialog from 'material-ui/Dialog';
+import Snackbar from 'material-ui/Snackbar';
 import RaisedButton from 'material-ui/RaisedButton';
 import $ from 'jquery';
 import './ChangePassword.css';
-import FlatButton from 'material-ui/FlatButton';
 import PropTypes from 'prop-types';
 import PasswordField from 'material-ui-password-field';
 import Cookies from 'universal-cookie';
@@ -29,7 +28,6 @@ export default class ChangePassword extends Component {
       confirmPassword: '',
       newPasswordStrength: '',
       newPasswordScore: -1,
-      showDialog: false,
       serverUrl: '',
       success: false,
       serverFieldError: false,
@@ -37,17 +35,13 @@ export default class ChangePassword extends Component {
       newPasswordError: true,
       confirmPasswordError: true,
       validForm: false,
+      openSnackbar: false,
+      msgSnackbar: '',
     };
     this.currentPasswordErrorMessage = '';
     this.newPasswordErrorMessage = '';
     this.confirmPasswordErrorMessage = '';
   }
-
-  handleClose = event => {
-    this.setState({
-      showDialog: false,
-    });
-  };
 
   handleSubmit = event => {
     event.preventDefault();
@@ -83,19 +77,16 @@ export default class ChangePassword extends Component {
           'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
         },
         success: function(response) {
-          let state = this.state;
-          state.success = true;
-          let msg = response.message;
-          state.msg = msg;
-          state.showDialog = true;
-          this.setState(state);
+          this.setState({
+            openSnackbar: true,
+            msgSnackbar: response.message,
+          });
         }.bind(this),
         error: function(errorThrown) {
-          let msg = 'Incorrect password.Try again.';
-          let state = this.state;
-          state.msg = msg;
-          state.showDialog = true;
-          this.setState(state);
+          this.setState({
+            openSnackbar: true,
+            msgSnackbar: 'Incorrect password.Try again.',
+          });
         }.bind(this),
       });
     }
@@ -175,14 +166,6 @@ export default class ChangePassword extends Component {
       padding: '10px',
       paddingTop: '0px',
     };
-    const actions = (
-      <FlatButton
-        label="OK"
-        backgroundColor={'#607D8B'}
-        labelStyle={{ color: '#fff' }}
-        onTouchTap={this.handleClose}
-      />
-    );
 
     const PasswordClass = [`is-strength-${this.state.newPasswordScore}`];
 
@@ -292,18 +275,14 @@ export default class ChangePassword extends Component {
               </div>
             </form>
           </Paper>
-          {this.state.msg && (
-            <div>
-              <Dialog
-                actions={actions}
-                modal={false}
-                open={this.state.showDialog}
-                onRequestClose={this.handleClose}
-              >
-                {this.state.msg}
-              </Dialog>
-            </div>
-          )}
+          <Snackbar
+            open={this.state.openSnackbar}
+            message={this.state.msgSnackbar}
+            autoHideDuration={4000}
+            onRequestClose={() => {
+              this.setState({ openSnackbar: false });
+            }}
+          />
         </div>
       </div>
     );
