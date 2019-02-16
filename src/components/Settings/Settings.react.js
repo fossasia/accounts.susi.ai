@@ -1031,7 +1031,7 @@ class Settings extends Component {
               </div>
             </div>
             <div className="img-upld">
-              <div className="label" style={{ marginTop: '0' }}>
+              <div className="label" style={{ marginBottom: '0' }}>
                 Select Avatar
               </div>
               <DropDownMenu
