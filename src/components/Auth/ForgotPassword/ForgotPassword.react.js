@@ -119,7 +119,8 @@ class ForgotPassword extends Component {
     }
   };
 
-  closeModal = () => this.setState({ forgotPwdDialog: false, msg: '' });
+  closeModal = () =>
+    this.setState({ forgotPwdDialog: false, msg: '', email: '' });
 
   openModal = e => {
     e.preventDefault();
