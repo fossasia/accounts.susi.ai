@@ -145,7 +145,7 @@ const AvatarRender = props => {
     case 'server':
       return (
         <form
-          style={{ display: 'inline-block', marginTop: '10px' }}
+          style={{ display: 'inline-block' }}
           onSubmit={e => props.handleAvatarSubmit(e)}
         >
           {props.isAvatarAdded && (
@@ -1723,8 +1723,8 @@ class Settings extends Component {
                   <p
                     style={{
                       textAlign: 'center',
-                      marginTop: '20px',
-                      marginBottom: '20px',
+                      marginTop: '12px',
+                      marginBottom: '0',
                       display: 'flex',
                       justifyContent: 'center',
                     }}
