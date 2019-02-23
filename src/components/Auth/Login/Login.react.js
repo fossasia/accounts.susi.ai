@@ -12,7 +12,7 @@ import PasswordField from 'material-ui-password-field';
 import RaisedButton from 'material-ui/RaisedButton';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import FlatButton from 'material-ui/FlatButton';
-import Dialog from 'material-ui/Dialog';
+import Snackbar from 'material-ui/Snackbar';
 import ForgotPassword from '../ForgotPassword/ForgotPassword.react';
 import Description from './../SignUp/Description.js';
 import CircularProgress from 'material-ui/CircularProgress';
@@ -58,19 +58,14 @@ class Login extends Component {
       validForm: false,
       emailError: true,
       passwordError: true,
-      showDialog: false,
       checked: false,
       loading: false,
+      openSnackbar: false,
+      msgSnackbar: '',
     };
     this.emailErrorMessage = '';
     this.passwordErrorMessage = '';
   }
-
-  handleClose = event => {
-    this.setState({
-      showDialog: false,
-    });
-  };
 
   componentDidMount() {
     const { token } = this.props;
@@ -132,20 +127,20 @@ class Login extends Component {
             this.handleOnSubmit(email, accessToken, time, uuid);
           } else {
             this.setState({
-              msg: 'Login Failed. Try Again',
+              openSnackbar: true,
+              msgSnackbar: 'Login Failed. Try Again',
               password: '',
-              showDialog: true,
               loading: false,
             });
           }
         }.bind(this),
         error: function(errorThrown) {
-          let msg1 = 'Login Failed.Try Again.';
-          let state = this.state;
-          state.msg1 = msg1;
-          state.showDialog = true;
-          state.loading = false;
-          this.setState(state);
+          this.setState({
+            openSnackbar: true,
+            msgSnackbar: 'Login Failed. Try Again',
+            password: '',
+            loading: false,
+          });
         }.bind(this),
       });
     }
@@ -373,16 +368,14 @@ class Login extends Component {
         </div>
 
         <Footer />
-        <div>
-          <Dialog
-            actions={actions}
-            modal={false}
-            open={this.state.showDialog}
-            onRequestClose={this.handleClose}
-          >
-            {this.state.msg1}
-          </Dialog>
-        </div>
+        <Snackbar
+          open={this.state.openSnackbar}
+          message={this.state.msgSnackbar}
+          autoHideDuration={4000}
+          onRequestClose={() => {
+            this.setState({ openSnackbar: false });
+          }}
+        />
       </div>
     );
   }

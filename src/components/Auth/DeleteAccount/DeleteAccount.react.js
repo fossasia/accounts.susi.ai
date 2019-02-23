@@ -8,9 +8,9 @@ import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
 import PasswordField from 'material-ui-password-field';
 import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 import Dialog from 'material-ui/Dialog';
+import Snackbar from 'material-ui/Snackbar';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import Close from 'material-ui/svg-icons/navigation/close';
 
@@ -40,7 +40,7 @@ class DeleteAccount extends Component {
       email: '',
       password: '',
       dialogMessage: '',
-      showDialog: false,
+      openSnackbar: false,
       confirmed: false,
       showConfirmationDialog: false,
       passwordError: false,
@@ -50,7 +50,6 @@ class DeleteAccount extends Component {
   }
 
   componentDidMount() {
-    let state = this.state;
     if (cookies.get('loggedIn')) {
       let url =
         `${urls.API_URL}/aaa/account-permissions.json?access_token=` +
@@ -61,15 +60,17 @@ class DeleteAccount extends Component {
         jsonpCallback: 'p',
         crossDomain: true,
         error: function(errorThrown) {
-          state.dialogMessage = 'Not logged In!';
-          state.showDialog = true;
-          this.setState(state);
+          this.setState({
+            openSnackbar: true,
+            msgSnackbar: 'Not logged In!',
+          });
         }.bind(this),
       });
     } else {
-      state.dialogMessage = 'Not logged In!';
-      state.showDialog = true;
-      this.setState(state);
+      this.setState({
+        openSnackbar: true,
+        msgSnackbar: 'Not logged In!',
+      });
     }
   }
 
@@ -120,15 +121,15 @@ class DeleteAccount extends Component {
           deleteCookie('loggedIn', { domain: '.susi.ai', path: '/' });
           deleteCookie('emailId', { domain: '.susi.ai', path: '/' });
           this.setState({
-            showDialog: true,
-            dialogMessage: 'Account deleted successfully',
+            openSnackbar: true,
+            msgSnackbar: 'Account deleted successfully',
           });
         }.bind(this),
         error: function(errorThrown) {
           console.error('some error occured');
           this.setState({
-            showDialog: true,
-            dialogMessage: 'Invalid Password! Try again later',
+            openSnackbar: true,
+            msgSnackbar: 'Invalid Password! Try again later',
           });
         }.bind(this),
       });
@@ -156,8 +157,8 @@ class DeleteAccount extends Component {
       }.bind(this),
       error: function(errorThrown) {
         this.setState({
-          showDialog: true,
-          dialogMessage: 'Account deletion failed! Incorrect Password.',
+          openSnackbar: true,
+          msgSnackbar: 'Account deletion failed! Incorrect Password.',
         });
       }.bind(this),
     });
@@ -204,15 +205,6 @@ class DeleteAccount extends Component {
       height: '35px',
       marginBottom: '10px',
     };
-
-    const actions = (
-      <FlatButton
-        label="OK"
-        backgroundColor={ChatConstants.standardBlue}
-        labelStyle={{ color: '#fff' }}
-        onTouchTap={this.handleClose}
-      />
-    );
 
     return (
       <div>
@@ -362,14 +354,14 @@ class DeleteAccount extends Component {
               </div>
             </div>
           </Dialog>
-          <Dialog
-            actions={actions}
-            modal={false}
-            open={this.state.showDialog}
-            onRequestClose={this.handleClose}
-          >
-            {this.state.dialogMessage}
-          </Dialog>
+          <Snackbar
+            open={this.state.openSnackbar}
+            message={this.state.msgSnackbar}
+            autoHideDuration={4000}
+            onRequestClose={() => {
+              this.setState({ openSnackbar: false });
+            }}
+          />
         </div>
       </div>
     );

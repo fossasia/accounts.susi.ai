@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
+import Snackbar from 'material-ui/Snackbar';
 import ChatConstants from '../../../constants/ChatConstants';
 
 import { urls } from '../../../Utils';
@@ -21,19 +21,20 @@ class ForgotPassword extends Component {
 
     this.state = {
       email: '',
-      msg: '',
       success: false,
       checked: false,
       emailError: true,
       validEmail: true,
       validForm: false,
       forgotPwdDialog: false,
+      openSnackbar: false,
+      msgSnackbar: '',
     };
 
     this.emailErrorMessage = '';
   }
 
-  handleClose = () => {
+  closeSnackbar = () => {
     let state = this.state;
     if (state.success) {
       this.setState({
@@ -43,17 +44,20 @@ class ForgotPassword extends Component {
         emailError: false,
         validEmail: true,
         validForm: true,
+        openSnackbar: false,
+        msgSnackbar: '',
       });
       this.closeModal();
     } else {
       this.setState({
         email: '',
-        msg: '',
         success: false,
         checked: false,
         emailError: true,
         validEmail: false,
         validForm: false,
+        openSnackbar: false,
+        msgSnackbar: '',
       });
     }
   };
@@ -103,24 +107,23 @@ class ForgotPassword extends Component {
         timeout: 3000,
         async: false,
         success: function(response) {
-          let msg = response.message;
-          let state = this.state;
-          state.msg = msg;
-          state.success = true;
-          this.setState(state);
+          this.setState({
+            openSnackbar: true,
+            msgSnackbar: response.message,
+            success: true,
+          });
         }.bind(this),
         error: function(errorThrown) {
-          let msg = "Sorry, we can't recognize you";
-          let state = this.state;
-          state.msg = msg;
-          this.setState(state);
+          this.setState({
+            openSnackbar: true,
+            msgSnackbar: "Sorry, we can't recognize you",
+          });
         }.bind(this),
       });
     }
   };
 
-  closeModal = () =>
-    this.setState({ forgotPwdDialog: false, msg: '', email: '' });
+  closeModal = () => this.setState({ forgotPwdDialog: false });
 
   openModal = e => {
     e.preventDefault();
@@ -128,14 +131,6 @@ class ForgotPassword extends Component {
   };
 
   render() {
-    const actions = (
-      <FlatButton
-        label="OK"
-        backgroundColor={ChatConstants.standardBlue}
-        labelStyle={{ color: '#fff' }}
-        onTouchTap={this.handleClose}
-      />
-    );
     return (
       <div>
         <Link to="" className="forgotpwdlink" onClick={this.openModal}>
@@ -179,19 +174,15 @@ class ForgotPassword extends Component {
                   />
                 </div>
               </form>
-              <div>
-                <Dialog
-                  actions={actions}
-                  modal={false}
-                  open={this.state.msg.length !== 0}
-                  onRequestClose={this.handleClose}
-                >
-                  {this.state.msg}
-                </Dialog>
-              </div>
             </div>
           </Dialog>
         </div>
+        <Snackbar
+          open={this.state.openSnackbar}
+          message={this.state.msgSnackbar}
+          autoHideDuration={4000}
+          onRequestClose={this.closeSnackbar}
+        />
       </div>
     );
   }
