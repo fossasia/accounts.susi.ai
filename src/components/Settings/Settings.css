@@ -22,7 +22,8 @@ body{
 }
 
 .img-upld {
-  width: 50%;
+  width: 20%;
+  padding: 0px;
 }
 
 .navBar {
