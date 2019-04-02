@@ -5,10 +5,10 @@ import StaticAppBar from '../StaticAppBar/StaticAppBar.js';
 import Cookies from 'universal-cookie';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
-import { Card } from 'antd';
+import Card from 'antd/lib/card';
 import Tabs from 'antd/lib/tabs';
 import 'antd/lib/tabs/style/index.css';
-import { Avatar } from 'antd';
+import Avatar from 'antd/lib/avatar';
 import NotFound from './../NotFound/NotFound.react';
 
 import { urls } from '../../Utils';
@@ -300,7 +300,8 @@ class Admin extends Component {
                               size="large"
                               shape="square"
                             >
-                              {this.state.skillStats.totalSkills
+                              {this.state.skillStats &&
+                              this.state.skillStats.totalSkills
                                 ? this.state.skillStats.totalSkills
                                 : 0}
                             </Avatar>
@@ -316,7 +317,8 @@ class Admin extends Component {
                               size="large"
                               shape="square"
                             >
-                              {this.state.skillStats.reviewedSkills
+                              {this.state.skillStats &&
+                              this.state.skillStats.reviewedSkills
                                 ? this.state.skillStats.reviewedSkills
                                 : 0}
                             </Avatar>
@@ -333,7 +335,8 @@ class Admin extends Component {
                               shape="square"
                             >
                               {' '}
-                              {this.state.skillStats.nonReviewedSkills
+                              {this.state.skillStats &&
+                              this.state.skillStats.nonReviewedSkills
                                 ? this.state.skillStats.nonReviewedSkills
                                 : 0}
                             </Avatar>
@@ -370,25 +373,29 @@ class Admin extends Component {
                       >
                         <p>
                           System Skills:{' '}
-                          {this.state.skillStats.systemSkills
+                          {this.state.skillStats &&
+                          this.state.skillStats.systemSkills
                             ? this.state.skillStats.systemSkills
                             : 0}
                         </p>
                         <p>
                           Staff Picks:{' '}
-                          {this.state.skillStats.staffPicks
+                          {this.state.skillStats &&
+                          this.state.skillStats.staffPicks
                             ? this.state.skillStats.staffPicks
                             : 0}
                         </p>
                         <p>
                           Editable:{' '}
-                          {this.state.skillStats.editableSkills
+                          {this.state.skillStats &&
+                          this.state.skillStats.editableSkills
                             ? this.state.skillStats.editableSkills
                             : 0}
                         </p>
                         <p>
                           Non Editable:{' '}
-                          {this.state.skillStats.nonEditableSkills
+                          {this.state.skillStats &&
+                          this.state.skillStats.nonEditableSkills
                             ? this.state.skillStats.nonEditableSkills
                             : 0}
                         </p>

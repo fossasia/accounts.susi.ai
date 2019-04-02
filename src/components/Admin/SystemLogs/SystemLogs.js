@@ -8,7 +8,8 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import Paper from 'material-ui/Paper';
 import Tabs from 'antd/lib/tabs';
 import NotFound from '../../NotFound/NotFound.react';
-import { Spin, Alert } from 'antd';
+import Spin from 'antd/lib/spin';
+import Alert from 'antd/lib/alert';
 
 import urls from '../../../Utils/urls';
 

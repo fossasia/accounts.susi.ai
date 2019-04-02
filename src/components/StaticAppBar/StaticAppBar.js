@@ -57,22 +57,22 @@ class StaticAppBar extends Component {
       jsonp: 'callback',
       crossDomain: true,
       success: function(data) {
-        let userName = data.settings.userName;
+        let userName = data.settings && data.settings.userName;
         cookies.set('username', userName, {
           path: '/',
           domain: cookieDomain,
         });
       },
       error: function(errorThrown) {
-        console.log(errorThrown);
+        console.error('some error occured');
       },
     });
     window.addEventListener('scroll', this.handleScroll);
 
-    var didScroll;
-    var lastScrollTop = 0;
-    var delta = 5;
-    var navbarHeight = $('header').outerHeight();
+    let didScroll;
+    let lastScrollTop = 0;
+    let delta = 5;
+    let navbarHeight = $('header').outerHeight();
     $(window).scroll(function(event) {
       didScroll = true;
     });
@@ -87,7 +87,7 @@ class StaticAppBar extends Component {
     }
     /* eslint-enable */
     function hasScrolled() {
-      var st = $(window).scrollTop();
+      let st = $(window).scrollTop();
       // Make sure they scroll more than delta
       if (Math.abs(lastScrollTop - st) <= delta) {
         return;
@@ -211,13 +211,21 @@ class StaticAppBar extends Component {
               containerElement={<Link to="/logout" />}
               rightIcon={<Exit />}
             />
-          ) : (
-            <MenuItem
-              primaryText="Login"
-              containerElement={<Link to="/" />}
-              rightIcon={<LoginIcon />}
-            />
-          )}
+          ) : null}
+          {!cookies.get('loggedIn') &&
+            (window.location.href === 'https://accounts.susi.ai/' ? (
+              <MenuItem
+                primaryText="Sign Up"
+                containerElement={<Link to="/signup" />}
+                rightIcon={<LoginIcon />}
+              />
+            ) : (
+              <MenuItem
+                primaryText="Login"
+                containerElement={<Link to="/" />}
+                rightIcon={<LoginIcon />}
+              />
+            ))}
         </IconMenu>
       </div>
     );

@@ -8,11 +8,14 @@ import Cookies from 'universal-cookie';
 
 // Components
 import TextField from 'material-ui/TextField';
+import PasswordField from 'material-ui-password-field';
 import RaisedButton from 'material-ui/RaisedButton';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import FlatButton from 'material-ui/FlatButton';
-import Dialog from 'material-ui/Dialog';
+import Snackbar from 'material-ui/Snackbar';
 import ForgotPassword from '../ForgotPassword/ForgotPassword.react';
+import Description from './../SignUp/Description.js';
+import CircularProgress from 'material-ui/CircularProgress';
 
 // Static assets
 import Footer from '../../Footer/Footer.react.js';
@@ -54,27 +57,15 @@ class Login extends Component {
       success: false,
       validForm: false,
       emailError: true,
-      showDialog: false,
+      passwordError: true,
       checked: false,
-      showForgotPwd: false,
+      loading: false,
+      openSnackbar: false,
+      msgSnackbar: '',
     };
     this.emailErrorMessage = '';
     this.passwordErrorMessage = '';
   }
-
-  handleClose = event => {
-    this.setState({
-      showDialog: false,
-      showForgotPwd: false,
-    });
-  };
-
-  handleForgotPwd = event => {
-    event.preventDefault;
-    this.setState({
-      showForgotPwd: true,
-    });
-  };
 
   componentDidMount() {
     const { token } = this.props;
@@ -89,8 +80,8 @@ class Login extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    var email = this.state.email.trim();
-    var password = this.state.password.trim();
+    let email = this.state.email.trim();
+    let password = this.state.password.trim();
 
     let BASE_URL = `${urls.API_URL}`;
 
@@ -107,6 +98,7 @@ class Login extends Component {
       encodeURIComponent(this.state.password);
 
     if (email && validEmail) {
+      this.setState({ loading: true });
       $.ajax({
         url: loginEndPoint,
         dataType: 'jsonp',
@@ -120,34 +112,35 @@ class Login extends Component {
               domain: cookieDomain,
             });
             let accessToken = response.access_token;
-            let state = this.state;
+            let uuid = response.uuid;
             let time = response.valid_seconds;
-
-            state.isFilled = true;
-            state.accessToken = accessToken;
-            state.success = true;
-            state.msg = response.message;
-            state.time = time;
-            this.setState(state);
-
-            this.handleOnSubmit(email, accessToken, time);
+            this.setState({
+              msg,
+              isFilled: true,
+              accessToken,
+              success: true,
+              msg: response.message,
+              loading: false,
+              time,
+            });
             let msg = 'You are logged in';
-            state.msg = msg;
-            this.setState(state);
+            this.handleOnSubmit(email, accessToken, time, uuid);
           } else {
-            let state = this.state;
-            state.msg = 'Login Failed. Try Again';
-            state.password = '';
-            state.showDialog = true;
-            this.setState(state);
+            this.setState({
+              openSnackbar: true,
+              msgSnackbar: 'Login Failed. Try Again',
+              password: '',
+              loading: false,
+            });
           }
         }.bind(this),
         error: function(errorThrown) {
-          let msg1 = 'Login Failed.Try Again.';
-          let state = this.state;
-          state.msg1 = msg1;
-          state.showDialog = true;
-          this.setState(state);
+          this.setState({
+            openSnackbar: true,
+            msgSnackbar: 'Login Failed. Try Again',
+            password: '',
+            loading: false,
+          });
         }.bind(this),
       });
     }
@@ -156,18 +149,21 @@ class Login extends Component {
   handleChange = event => {
     let email;
     let password;
-    let state = this.state;
 
     if (event.target.name === 'email') {
       email = event.target.value.trim();
       let validEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
-      state.email = email;
-      state.emailError = !(email && validEmail);
+      this.setState({
+        email,
+        emailError: !(email && validEmail),
+      });
     } else if (event.target.name === 'password') {
       password = event.target.value;
       let validPassword = password.length >= 6;
-      state.password = password;
-      state.passwordError = !(password && validPassword);
+      this.setState({
+        password,
+        passwordError: !(password && validPassword),
+      });
     }
 
     if (this.state.emailError) {
@@ -181,24 +177,28 @@ class Login extends Component {
     } else {
       this.passwordErrorMessage = '';
     }
-    if (!state.emailError && !state.passwordError) {
-      state.validForm = true;
+    if (!this.state.emailError && !this.state.passwordError) {
+      this.setState({ validForm: true });
     } else {
-      state.validForm = false;
+      this.setState({ validForm: false });
     }
 
     this.setState(state);
   };
 
-  handleOnSubmit = (email, loggedIn, time) => {
-    let state = this.state;
-    if (state.success) {
+  handleOnSubmit = (email, loggedIn, time, uuid) => {
+    if (this.state.success) {
       cookies.set('loggedIn', loggedIn, {
         path: '/',
         maxAge: time,
         domain: cookieDomain,
       });
       cookies.set('emailId', this.state.email, {
+        path: '/',
+        maxAge: time,
+        domain: cookieDomain,
+      });
+      cookies.set('uuid', uuid, {
         path: '/',
         maxAge: time,
         domain: cookieDomain,
@@ -227,7 +227,7 @@ class Login extends Component {
             maxAge: time,
             domain: cookieDomain,
           });
-          console.log(errorThrown);
+          console.error(errorThrown);
         }.bind(this),
       });
 
@@ -240,13 +240,10 @@ class Login extends Component {
       });
     }
   };
-  handleOpen = () => {
-    this.setState({ open: true });
-  };
 
   render() {
     const { token } = this.props;
-
+    const { loading } = this.state;
     const actions = (
       <FlatButton
         label="OK"
@@ -256,15 +253,25 @@ class Login extends Component {
       />
     );
 
-    const fieldStyle = {
+    const fieldStylEmail = {
       height: '35px',
       borderRadius: 4,
       border: '1px solid #ced4da',
       fontSize: 16,
-      padding: '0px 5px',
+      padding: '0px 10px',
+      width: '220px',
       margin: '10px',
-      paddingRight: '0',
-      width: '',
+      boxSizing: 'border-box',
+    };
+
+    const fieldStylePass = {
+      height: '35px',
+      borderRadius: 4,
+      border: '1px solid #ced4da',
+      fontSize: 16,
+      padding: '0px 10px',
+      width: '200px',
+      margin: '10px',
       boxSizing: 'border-box',
     };
 
@@ -273,8 +280,17 @@ class Login extends Component {
       marginBottom: '10px',
     };
     const button = {
-      width: '100%',
+      minWidth: '35%',
       marginLeft: 0,
+      margin: '10px',
+    };
+
+    const inputpassStyle = {
+      height: '35px',
+      marginBottom: '10px',
+      marginRight: '0px',
+      width: '90%',
+      webkitTextFillColor: 'unset',
     };
 
     return (
@@ -282,27 +298,7 @@ class Login extends Component {
         <div className="app-bar">
           <StaticAppBar />
         </div>
-
-        <div className="app-body-div">
-          <div className="About">
-            <div className="About-heading">
-              <h1>
-                Meet SUSI.AI, Your Artificial Intelligence for Personal
-                Assistants, Robots, Help Desks and Chatbots.
-              </h1>
-            </div>
-            <div className="points">
-              <p>
-                Ask it questions.
-                <br />
-                <br /> Tell it to do things.
-                <br />
-                <br /> Always ready to help.
-              </p>
-            </div>
-          </div>
-        </div>
-
+        <Description />
         <div className="login-container">
           <div className="loginForm">
             <form id="loginform" onSubmit={this.handleSubmit}>
@@ -310,7 +306,7 @@ class Login extends Component {
                 <h2>Log In</h2>
                 <TextField
                   name="email"
-                  style={fieldStyle}
+                  style={fieldStylEmail}
                   className="fieldStyle"
                   value={this.state.email}
                   placeholder="Email"
@@ -318,34 +314,34 @@ class Login extends Component {
                   underlineStyle={{ display: 'none' }}
                 />
 
-                <TextField
+                <PasswordField
                   name="password"
-                  type="password"
-                  style={fieldStyle}
-                  className="fieldStyle"
+                  style={fieldStylePass}
+                  inputStyle={inputpassStyle}
                   value={this.state.password}
                   placeholder="Password"
-                  onChange={this.handleChange}
                   underlineStyle={{ display: 'none' }}
+                  onChange={this.handleChange}
+                  visibilityButtonStyle={{
+                    marginTop: '-3px',
+                  }}
+                  visibilityIconStyle={{
+                    marginTop: '-3px',
+                  }}
                 />
 
                 <RaisedButton
-                  label="Login"
+                  label={!loading ? 'Login' : undefined}
                   type="submit"
                   className="loginbtn"
-                  style={{ marginLeft: '10px' }}
+                  style={{ marginLeft: '0px' }}
                   backgroundColor={ChatConstants.standardBlue}
                   labelColor="#fff"
                   disabled={!this.state.validForm}
+                  icon={loading ? <CircularProgress size={24} /> : undefined}
                 />
                 <div id="forgotpwd">
-                  <Link
-                    to=""
-                    className="forgotpwdlink"
-                    onClick={this.handleForgotPwd}
-                  >
-                    <p>Forgot Password?</p>
-                  </Link>
+                  <ForgotPassword />
                 </div>
               </div>
               <div id="message">
@@ -356,9 +352,10 @@ class Login extends Component {
 
           <div className="signup">
             <img src={susi} alt="SUSI" className="susi-logo" />
-            <h1>See what's happening in the world right now</h1>
-            <p style={{ fontSize: '18px' }}>Join SUSI.AI Today.</p>
-            <br />
+            <h1 className="signup-header-text">
+              See what's happening in the world right now
+            </h1>
+            <p className="description-text">Join SUSI.AI Today.</p>
             <Link to={'/signup'} className="signupbtn">
               <RaisedButton
                 style={button}
@@ -367,33 +364,18 @@ class Login extends Component {
                 labelColor="#fff"
               />
             </Link>
-            <br />
           </div>
         </div>
 
         <Footer />
-
-        <div className="ModalDiv">
-          <Dialog
-            modal={false}
-            open={this.state.showForgotPwd}
-            onRequestClose={this.handleClose}
-            className="ModalDiv"
-          >
-            <ForgotPassword closeModal={this.handleClose.bind(this)} />
-          </Dialog>
-        </div>
-
-        <div>
-          <Dialog
-            actions={actions}
-            modal={false}
-            open={this.state.showDialog}
-            onRequestClose={this.handleClose}
-          >
-            {this.state.msg1}
-          </Dialog>
-        </div>
+        <Snackbar
+          open={this.state.openSnackbar}
+          message={this.state.msgSnackbar}
+          autoHideDuration={4000}
+          onRequestClose={() => {
+            this.setState({ openSnackbar: false });
+          }}
+        />
       </div>
     );
   }

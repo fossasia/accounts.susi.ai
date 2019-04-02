@@ -4,6 +4,10 @@
 	margin: 0 auto;
 }
 
+.loginButton {
+	padding-bottom: 10px;
+}
+
 .susi-signup-logo{
   margin: 5px 0px;
   width: 70px;
@@ -53,11 +57,12 @@
   width : 50%;
   float : left;
   background-color : #EEE;
+  min-height: 100vh;
 }
 
 
 .About{
-  margin: 30vh 8% 0% 8%;
+  margin: 25vh 8% 0% 8%;
   font-size : 18px;
   height:59vh;
   min-height:580px;
@@ -77,9 +82,6 @@
   left: 36px;
   top: 8px;
 	z-index: 1;
-}
-
-.bm-burger-button{
 	background: #607D8B;
 }
 
@@ -135,6 +137,17 @@
     color: #fff;
 }
 
+.is-strength-0 { color: #D1462F; width: 390px; }
+.is-strength-1 { color: #D1462F; width: 390px; }
+.is-strength-2 { color: #57B8FF; width: 390px; }
+.is-strength-3 { color: #57B8FF; width: 390px; }
+.is-strength-4 { color: #2FBF71; width: 390px; }
+
+.PasswordClassName { 
+  margin: auto;
+  display: table;
+ }
+
 .ReactPasswordStrength-strength-bar {
   box-sizing: border-box;
   height: 2px;
@@ -145,14 +158,13 @@
 .is-strength--1 .ReactPasswordStrength-strength-bar {
   background: #D1462F;
   display: none;
-	left: 20%
 }
 
 .is-strength-0 .ReactPasswordStrength-strength-bar {
   background: #D1462F;
   width: 50px;
   display: block;
-	left: 20%
+	left: 43%
 }
 
 .is-strength-1 .ReactPasswordStrength-strength-bar {
@@ -173,24 +185,45 @@
   background: #57B8FF;
   width: 192px;
   display: block;
-	left: 20%
+	left: 26%
 }
 
 .is-strength-4 .ReactPasswordStrength-strength-bar {
   background: #2FBF71;
   width: 256px;
   display: block;
-	left: 14%
+	left: 18%
 }
 
 .signup-header-text{
   padding-top: 10px;
   font-weight: 350;
-  max-width: 75%; 
+  max-width: 75%;
 }
 
 .About p {
 	margin: 5% 3% 0% 0%;
+}
+
+.error-message{
+  font-size: 12px;
+  line-height: 12px;
+  color: rgb(244, 67, 54);
+  margin-top: 5.7px;
+}
+
+.description-heading{
+  font-weight: 400;
+}
+
+.description-text{
+  font-size: 24px;
+  font-weight: 300;
+  padding: 3% 0;
+}
+
+.learnMoreButton{
+  margin: 5% 0
 }
 
 @media screen and (max-width: 838px) {
@@ -198,7 +231,10 @@
     float : none;
     height: auto;
     width : auto;
-	}
+  }
+  .app-body {
+    min-height: unset;
+  }
   .app-body-div{
     height:auto;
     width : auto;
@@ -247,11 +283,17 @@
 	.signUpForm {
 		width: 70%;
 		margin: 0 auto;
-	}
+  }
+  .learnMoreButton{
+    margin: 0% 10% 3%;
+  }
 }
 
 @media screen and (max-width: 475px) {
   .About h1, .About p{
 		width: 100%;
+  }
+  .learnMoreButton{
+    margin: 2% 0 4% 0;
   }
 }

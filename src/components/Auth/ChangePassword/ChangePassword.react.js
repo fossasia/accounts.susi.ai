@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
-import Dialog from 'material-ui/Dialog';
+import Snackbar from 'material-ui/Snackbar';
 import RaisedButton from 'material-ui/RaisedButton';
 import $ from 'jquery';
 import './ChangePassword.css';
-import FlatButton from 'material-ui/FlatButton';
 import PropTypes from 'prop-types';
 import PasswordField from 'material-ui-password-field';
 import Cookies from 'universal-cookie';
@@ -13,6 +12,7 @@ import ForgotPassword from '../ForgotPassword/ForgotPassword.react';
 
 import { urls } from '../../../Utils';
 import ChatConstants from '../../../constants/ChatConstants';
+import zxcvbn from 'zxcvbn';
 
 const cookies = new Cookies();
 injectTapEventPlugin();
@@ -26,7 +26,8 @@ export default class ChangePassword extends Component {
       currentPassword: '',
       newPassword: '',
       confirmPassword: '',
-      showDialog: false,
+      newPasswordStrength: '',
+      newPasswordScore: -1,
       serverUrl: '',
       success: false,
       serverFieldError: false,
@@ -34,37 +35,24 @@ export default class ChangePassword extends Component {
       newPasswordError: true,
       confirmPasswordError: true,
       validForm: false,
-      showForgotPwd: false,
+      openSnackbar: false,
+      msgSnackbar: '',
     };
     this.currentPasswordErrorMessage = '';
     this.newPasswordErrorMessage = '';
     this.confirmPasswordErrorMessage = '';
   }
 
-  handleClose = event => {
-    this.setState({
-      showDialog: false,
-      showForgotPwd: false,
-    });
-  };
-
-  handleForgotPwd = event => {
-    event.preventDefault();
-    this.setState({
-      showForgotPwd: true,
-    });
-  };
-
   handleSubmit = event => {
     event.preventDefault();
-    var password = this.state.currentPassword.trim();
-    var newPassword = this.state.newPassword.trim();
+    let password = this.state.currentPassword.trim();
+    let newPassword = this.state.newPassword.trim();
 
     let BASE_URL = urls.API_URL;
     if (!newPassword || !password) {
       return this.state.isFilled;
     }
-    var email = '';
+    let email = '';
     if (cookies.get('emailId')) {
       email = cookies.get('emailId');
     }
@@ -89,92 +77,85 @@ export default class ChangePassword extends Component {
           'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
         },
         success: function(response) {
-          let state = this.state;
-          state.success = true;
-          let msg = response.message;
-          state.msg = msg;
-          state.showDialog = true;
-          this.setState(state);
+          this.setState({
+            openSnackbar: true,
+            msgSnackbar: response.message,
+          });
         }.bind(this),
         error: function(errorThrown) {
-          let msg = 'Incorrect password.Try again.';
-          let state = this.state;
-          state.msg = msg;
-          state.showDialog = true;
-          this.setState(state);
+          this.setState({
+            openSnackbar: true,
+            msgSnackbar: 'Incorrect password.Try again.',
+          });
         }.bind(this),
       });
     }
   };
+
   handleChange = event => {
-    let currentPassword;
-    let newPassword;
-    let confirmPassword;
     let state = this.state;
-    if (event.target.name === 'currentPassword') {
-      currentPassword = event.target.value;
-      let validPassword = currentPassword.length >= 6;
-      state.currentPassword = currentPassword;
-      state.currentPasswordError = !(currentPassword && validPassword);
-    } else if (event.target.name === 'newPassword') {
-      newPassword = event.target.value;
-      let validPassword = newPassword.length >= 6;
-      state.newPassword = newPassword;
-      state.newPasswordError = !(validPassword && newPassword);
-    } else if (event.target.name === 'confirmPassword') {
-      confirmPassword = event.target.value;
-      newPassword = this.state.newPassword;
-      let validConfirmPassword = newPassword === confirmPassword;
-      state.confirmPassword = confirmPassword;
-      state.confirmPasswordError = !(validConfirmPassword && confirmPassword);
+    let value = event.target.value;
+    state[event.target.name] = value;
+
+    // eslint-disable-next-line
+    switch (event.target.name) {
+      case 'currentPassword':
+        state.currentPasswordError = !state.currentPassword;
+        this.currentPasswordErrorMessage = state.currentPasswordError
+          ? 'Password field cannot be blank'
+          : '';
+        break;
+
+      case 'newPassword':
+        state.newPasswordError = !(
+          state.newPassword.length >= 6 && state.newPassword.length <= 64
+        );
+        state.confirmPasswordError = !(value === state.confirmPassword);
+        let newPassword = event.target.value;
+        if (state.newPasswordError) {
+          this.newPasswordErrorMessage =
+            'Allowed password length is 6 to 64 characters';
+        } else if (state.confirmPasswordError) {
+          this.newPasswordErrorMessage = '';
+          this.confirmPasswordErrorMessage =
+            'Password does not match new Password';
+        } else {
+          this.confirmPasswordErrorMessage = '';
+          this.newPasswordErrorMessage = '';
+        }
+        if (!state.newPasswordError) {
+          let result = zxcvbn(newPassword);
+          state.newPasswordScore = result.score;
+          const strength = ['Worst', 'Bad', 'Weak', 'Good', 'Strong'];
+          state.newPasswordStrength = strength[result.score];
+        } else {
+          state.newPasswordStrength = '';
+          state.newPasswordScore = -1;
+        }
+        break;
+
+      case 'confirmPassword':
+        state.confirmPasswordError = !(state.newPassword === value);
+        this.confirmPasswordErrorMessage = state.confirmPasswordError
+          ? 'Password does not match new Password'
+          : '';
+        break;
     }
 
-    if (
-      !this.state.currentPasswordError &&
-      !this.state.newPasswordError &&
-      !this.state.confirmPasswordError
-    ) {
-      state.validForm = true;
-    } else {
-      state.validForm = false;
-    }
     this.setState(state);
-    if (
-      this.state.currentPasswordError &&
-      event.target.name === 'currentPassword'
-    ) {
-      this.currentPasswordErrorMessage = 'Minimum 6 characters required';
-      this.newPasswordErrorMessage = '';
-      this.confirmPasswordErrorMessage = '';
-    } else if (
-      this.state.newPasswordError &&
-      event.target.name === 'newPassword'
-    ) {
-      this.currentPasswordErrorMessage = '';
-      this.newPasswordErrorMessage = 'Minimum 6 characters required';
-      this.confirmPasswordErrorMessage = '';
-    } else if (
-      this.state.confirmPasswordError &&
-      event.target.name === 'confirmPassword'
-    ) {
-      this.currentPasswordErrorMessage = '';
-      this.newPasswordErrorMessage = '';
-      this.confirmPasswordErrorMessage =
-        'Password does not matches new Password';
-    } else {
-      this.currentPasswordErrorMessage = '';
-      this.newPasswordErrorMessage = '';
-      this.confirmPasswordErrorMessage = '';
-    }
 
-    if (
+    let passwordError =
       this.state.currentPasswordError ||
       this.state.newPasswordError ||
-      this.state.confirmPasswordError
-    ) {
-      this.setState({ validForm: false });
-    } else {
+      this.state.confirmPasswordError;
+
+    if (!passwordError) {
+      this.currentPasswordErrorMessage = '';
+      this.newPasswordErrorMessage = '';
+      this.confirmPasswordErrorMessage = '';
       this.setState({ validForm: true });
+    } else {
+      this.setState({ validForm: false });
     }
   };
 
@@ -185,14 +166,8 @@ export default class ChangePassword extends Component {
       padding: '10px',
       paddingTop: '0px',
     };
-    const actions = (
-      <FlatButton
-        label="OK"
-        backgroundColor={'#607D8B'}
-        labelStyle={{ color: '#fff' }}
-        onTouchTap={this.handleClose}
-      />
-    );
+
+    const PasswordClass = [`is-strength-${this.state.newPasswordScore}`];
 
     const fieldStyle = {
       height: '35px',
@@ -200,7 +175,7 @@ export default class ChangePassword extends Component {
       border: '1px solid #ced4da',
       fontSize: 16,
       padding: '0px 12px',
-      width: '125%',
+      width: '243px',
     };
     const labelStyle = {
       minWidth: '30%',
@@ -240,10 +215,10 @@ export default class ChangePassword extends Component {
               </div>
               <br />
               <div style={labelStyle}>New Password</div>
-              <div>
+              <div className={PasswordClass.join(' ')}>
                 <PasswordField
                   name="newPassword"
-                  placeholder="Must be at least 6 characters"
+                  placeholder="Must be from 6 to 64 characters"
                   style={fieldStyle}
                   value={this.state.newPassword}
                   onChange={this.handleChange}
@@ -254,33 +229,42 @@ export default class ChangePassword extends Component {
                   visibilityButtonStyle={{ display: 'none' }}
                   visibilityIconStyle={{ display: 'none' }}
                 />
-              </div>
-              <br />
-              <div style={labelStyle}>Verify Password</div>
 
-              <div>
-                <PasswordField
-                  name="confirmPassword"
-                  placeholder="Must match the new password"
-                  style={fieldStyle}
-                  value={this.state.confirmPassword}
-                  onChange={this.handleChange}
-                  inputStyle={inputStyle}
-                  errorText={this.confirmPasswordErrorMessage}
-                  underlineStyle={{ display: 'none' }}
-                  disableButton={true}
-                  visibilityButtonStyle={{ display: 'none' }}
-                  visibilityIconStyle={{ display: 'none' }}
-                />
+                <div className="ReactPasswordStrength-strength-bar" />
+
+                <div className="is-strength-name">
+                  {this.state.newPasswordStrength}
+                </div>
               </div>
               <br />
-              <div style={submitBtn}>
-                <div className="forgot">
-                  <a onClick={this.handleForgotPwd}>Forgot your password?</a>
+              <div>
+                <div style={labelStyle}>Verify Password</div>
+
+                <div>
+                  <PasswordField
+                    name="confirmPassword"
+                    placeholder="Must match the new password"
+                    style={fieldStyle}
+                    value={this.state.confirmPassword}
+                    onChange={this.handleChange}
+                    inputStyle={inputStyle}
+                    errorText={this.confirmPasswordErrorMessage}
+                    underlineStyle={{ display: 'none' }}
+                    disableButton={true}
+                    visibilityButtonStyle={{ display: 'none' }}
+                    visibilityIconStyle={{ display: 'none' }}
+                  />
                 </div>
+              </div>
+              <br />
+              <div className="forgot">
+                <ForgotPassword />
+              </div>
+              <div style={submitBtn}>
                 <br />
                 <div>
                   <RaisedButton
+                    disabled={!this.state.validForm}
                     label="Save New Password"
                     type="submit"
                     style={{ marginTop: '0px' }}
@@ -291,31 +275,14 @@ export default class ChangePassword extends Component {
               </div>
             </form>
           </Paper>
-
-          {/* Forgot Password Modal */}
-          <div className="ModalDiv">
-            <Dialog
-              modal={false}
-              open={this.state.showForgotPwd}
-              onRequestClose={this.handleClose}
-              className="ModalDiv"
-            >
-              <ForgotPassword closeModal={this.handleClose.bind(this)} />
-            </Dialog>
-          </div>
-
-          {this.state.msg && (
-            <div>
-              <Dialog
-                actions={actions}
-                modal={false}
-                open={this.state.showDialog}
-                onRequestClose={this.handleClose}
-              >
-                {this.state.msg}
-              </Dialog>
-            </div>
-          )}
+          <Snackbar
+            open={this.state.openSnackbar}
+            message={this.state.msgSnackbar}
+            autoHideDuration={4000}
+            onRequestClose={() => {
+              this.setState({ openSnackbar: false });
+            }}
+          />
         </div>
       </div>
     );

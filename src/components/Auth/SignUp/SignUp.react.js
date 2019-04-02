@@ -3,25 +3,41 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import $ from 'jquery';
 import { Link } from 'react-router-dom';
-import zxcvbn from 'zxcvbn';
+// import zxcvbn from 'zxcvbn';
 
 // Components
+import PasswordField from 'material-ui-password-field';
+import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
+import Snackbar from 'material-ui/Snackbar';
 import FlatButton from 'material-ui/FlatButton';
 import Login from '../Login/Login.react';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import ChatConstants from '../../../constants/ChatConstants';
+import Description from './Description.js';
 
 // Static assets
+
 import Footer from '../../Footer/Footer.react.js';
 import susi from '../../../images/susi-logo.svg';
-
+import Cookies from 'universal-cookie';
 import { urls } from '../../../Utils';
+import { CAPTCHA_KEY } from '../../../config.js';
+import Recaptcha from 'react-recaptcha';
+import zxcvbn from 'zxcvbn';
 
 import './SignUp.css';
+import './SignupMobileFix.min.css';
 
+const cookies = new Cookies();
 export default class SignUp extends Component {
+  componentDidMount() {
+    const isLoggedIn = !!cookies.get('loggedIn');
+    if (isLoggedIn) {
+      return this.props.history.push('/settings');
+    }
+  }
   constructor(props) {
     super(props);
 
@@ -38,6 +54,15 @@ export default class SignUp extends Component {
       open: false,
       validForm: false,
       checked: false,
+      isCaptchaVerified: false,
+      captchaVerifyErrorMessage: '',
+      passwordConfirmErrorMessage: '',
+      passwordErrorMessage: '',
+      emailErrorMessage: '',
+      passwordStrength: '',
+      passwordScore: -1,
+      openSnackbar: false,
+      msgSnackbar: '',
     };
 
     this.emailErrorMessage = '';
@@ -75,86 +100,119 @@ export default class SignUp extends Component {
   };
 
   handleChange = event => {
-    let email;
-    let password;
-    let confirmPassword;
-    let state = this.state;
-    if (event.target.name === 'email') {
-      email = event.target.value.trim();
-      let validEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
-      state.email = email;
-      state.isEmail = validEmail;
-      state.emailError = !(email && validEmail);
-    } else if (event.target.name === 'password') {
-      password = event.target.value;
-      let validPassword = password.length >= 6;
-      state.passwordValue = password;
-      state.passwordError = !(password && validPassword);
-      if (validPassword) {
-        let result = zxcvbn(password);
-        state.passwordScore = result.score;
-      } else {
-        state.passwordScore = -1;
-      }
-    } else if (event.target.name === 'confirmPassword') {
-      password = this.state.passwordValue;
-      confirmPassword = event.target.value;
-      let validPassword = confirmPassword === password;
-      state.confirmPasswordValue = confirmPassword;
-      state.passwordConfirmError = !(validPassword && confirmPassword);
+    let {
+      email,
+      passwordValue,
+      confirmPasswordValue,
+      isEmail,
+      emailError,
+      validPassword,
+      passwordError,
+      passwordConfirmError,
+      emailErrorMessage,
+      passwordErrorMessage,
+      passwordConfirmErrorMessage,
+      validForm,
+      passwordScore,
+      passwordStrength,
+    } = this.state;
+
+    // eslint-disable-next-line
+    switch (event.target.name) {
+      case 'email':
+        email = event.target.value.trim();
+        isEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+        emailError = !(email && isEmail);
+        emailErrorMessage = emailError ? 'Enter a valid Email Address' : '';
+        break;
+      case 'password':
+        passwordValue = event.target.value.trim();
+        validPassword = passwordValue.length >= 6;
+        const validConfirmPassword = confirmPasswordValue.length >= 1;
+        passwordError = !(passwordValue && validPassword);
+        passwordConfirmError = !(
+          passwordValue === this.state.confirmPasswordValue
+        );
+        if (validPassword) {
+          const result = zxcvbn(passwordValue);
+          passwordScore = result.score;
+          let strength = ['Worst', 'Bad', 'Weak', 'Good', 'Strong'];
+          passwordStrength = strength[result.score];
+        } else {
+          passwordStrength = '';
+          passwordScore = -1;
+        }
+        passwordErrorMessage = passwordError
+          ? 'Minimum 6 characters required'
+          : '';
+        passwordConfirmErrorMessage =
+          passwordConfirmError && validConfirmPassword
+            ? 'Check your password again'
+            : '';
+        break;
+
+      case 'confirmPassword':
+        confirmPasswordValue = event.target.value;
+        const validConfirmPasswordLength = confirmPasswordValue.length >= 6;
+        validPassword = confirmPasswordValue === passwordValue;
+        passwordConfirmError = !(validPassword && confirmPasswordValue);
+        passwordConfirmErrorMessage =
+          passwordConfirmError && validConfirmPasswordLength
+            ? 'Check your password again'
+            : '';
+        break;
     }
 
-    if (
-      !this.state.emailError &&
-      !this.state.passwordError &&
-      !this.state.passwordConfirmError
-    ) {
-      state.validForm = true;
+    if (!emailError && !passwordError && !passwordConfirmError) {
+      validForm = true;
     } else {
-      state.validForm = false;
+      validForm = false;
     }
 
-    this.setState(state);
-
-    if (this.state.emailError) {
-      this.emailErrorMessage = 'Enter a valid Email Address';
-    } else if (this.state.passwordError) {
-      this.emailErrorMessage = '';
-      this.passwordErrorMessage = 'Minimum 6 characters required';
-      this.passwordConfirmErrorMessage = '';
-    } else if (this.state.passwordConfirmError) {
-      this.emailErrorMessage = '';
-      this.passwordErrorMessage = '';
-      this.passwordConfirmErrorMessage = 'Check your password again';
-    } else {
-      this.emailErrorMessage = '';
-      this.passwordErrorMessage = '';
-      this.passwordConfirmErrorMessage = '';
-    }
-
-    if (
-      this.state.emailError ||
-      this.state.passwordError ||
-      this.state.passwordConfirmError
-    ) {
-      this.setState({ validForm: false });
-    } else {
-      this.setState({ validForm: true });
-    }
+    this.setState({
+      email,
+      passwordValue,
+      confirmPasswordValue,
+      isEmail,
+      emailError,
+      validPassword,
+      passwordError,
+      passwordConfirmError,
+      emailErrorMessage,
+      passwordErrorMessage,
+      passwordConfirmErrorMessage,
+      validForm,
+      passwordScore,
+      passwordStrength,
+    });
   };
 
   handleSubmit = event => {
     event.preventDefault();
 
+    const {
+      email,
+      passwordValue,
+      emailError,
+      passwordConfirmError,
+      isCaptchaVerified,
+    } = this.state;
+
     let BASE_URL = urls.API_URL;
     let signupEndPoint =
       BASE_URL +
       '/aaa/signup.json?signup=' +
-      this.state.email +
+      email +
       '&password=' +
-      encodeURIComponent(this.state.passwordValue);
+      encodeURIComponent(passwordValue);
 
-    if (!this.state.emailError && !this.state.passwordConfirmError) {
+    if (!isCaptchaVerified) {
+      this.setState({
+        captchaVerifyErrorMessage: 'Please verify that you are a human.',
+      });
+    }
+
+    if (!emailError && !passwordConfirmError && isCaptchaVerified) {
       $.ajax({
         url: signupEndPoint,
         dataType: 'jsonp',
@@ -162,18 +220,18 @@ export default class SignUp extends Component {
         timeout: 3000,
         async: false,
         success: function(response) {
-          let msg = response.message;
-          let state = this.state;
-          state.msg = msg;
-          state.success = true;
-          this.setState(state);
+          this.setState({
+            msgSnackbar: response.message,
+            openSnackbar: true,
+            success: true,
+          });
         }.bind(this),
         error: function(errorThrown) {
-          let msg = 'Failed. Try Again';
-          let state = this.state;
-          state.msg = msg;
-          state.success = false;
-          this.setState(state);
+          this.setState({
+            openSnackbar: true,
+            msgSnackbar: 'Failed. Try Again',
+            success: false,
+          });
         }.bind(this),
       });
     }
@@ -183,17 +241,68 @@ export default class SignUp extends Component {
     this.setState({ open: true });
   };
 
+  onCaptchaLoad = () => {
+    this.setState({
+      isCaptchaVerified: false,
+      captchaVerifyErrorMessage: '',
+    });
+  };
+
+  verifyCaptchaCallback = response => {
+    if (response) {
+      this.setState({
+        isCaptchaVerified: true,
+        captchaVerifyErrorMessage: '',
+      });
+    }
+  };
+
   render() {
-    const fieldStyle = {
-      width: '100%',
-      height: '30px',
-      marginBottom: '3%',
-      border: '1px solid #ced4da',
-      borderRadius: '5px',
-      padding: '20px',
-      paddingLeft: '5px',
-      boxSizing: 'border-box',
+    const styles = {
+      emailStyle: {
+        height: '35px',
+        borderRadius: 4,
+        border: '1px solid #ced4da',
+        fontSize: 16,
+        padding: '0px 10px',
+        width: '95%',
+        marginTop: '10px',
+      },
+      fieldStyle: {
+        height: '35px',
+        borderRadius: 4,
+        border: '1px solid #ced4da',
+        fontSize: 16,
+        padding: '0px 10px',
+        width: '380px',
+        marginTop: '10px',
+      },
+      inputStyle: {
+        height: '35px',
+        marginBottom: '10px',
+        webkitTextFillColor: 'unset',
+      },
+      inputpassStyle: {
+        height: '35px',
+        marginBottom: '10px',
+        marginRight: '50px',
+        width: '90%',
+        webkitTextFillColor: 'unset',
+      }
     };
+
+    const {
+      email,
+      passwordValue,
+      passwordErrorMessage,
+      emailErrorMessage,
+      validForm,
+      confirmPasswordValue,
+      passwordConfirmErrorMessage,
+      isCaptchaVerified,
+      captchaVerifyErrorMessage,
+    } = this.state;
+
     const button = {
       width: '100%',
       marginTop: '0',
@@ -208,7 +317,7 @@ export default class SignUp extends Component {
       />
     );
 
-    const PasswordClass = [`is-strength-${this.state.passwordScore}`];
+    const PasswordClass = `is-strength-${this.state.passwordScore}`;
 
     return (
       <div>
@@ -217,74 +326,100 @@ export default class SignUp extends Component {
             <StaticAppBar />
           </div>
         </div>
-        <div className="app-body">
-          <div className="About">
-            <h1>
-              Meet SUSI.AI, Your Artificial Intelligence for Personal
-              Assistants, Robots, Help Desks and Chatbots.
-            </h1>
-            <p style={{ fontSize: '24px' }}>
-              Ask it questions.
-              <br />
-              <br />
-              Tell it to do things.
-              <br />
-              <br />
-              Always ready to help.
-            </p>
-          </div>
-        </div>
+        <Description />
 
         <div className="signup-container">
           <div className="signUpForm">
-            <img src={susi} alt="SUSI" className="susi-signup-logo" />
-            <h1 className="signup-header-text">
-              See whats happening in the world right now
-            </h1>
-            <h1 style={{ fontSize: '40px', paddingTop: '10px' }}>Sign Up</h1>
-            <br />
-            <form onSubmit={this.handleSubmit}>
+            <form
+              onSubmit={this.handleSubmit}
+              style={{ float: 'left' }}
+              className="form"
+            >
+              <img src={susi} alt="SUSI" className="susi-signup-logo" />
+              <h1 className="signup-header-text">
+                See whats happening in the world right now
+              </h1>
+              <h1 style={{ fontSize: '40px', paddingTop: '10px' }}>Sign Up</h1>
+              <br />
               <div>
-                <input
-                  type="text"
+                <TextField
                   name="email"
-                  style={fieldStyle}
-                  value={this.state.email}
+                  type="email"
+                  value={email}
                   onChange={this.handleChange}
-                  errorText={this.emailErrorMessage}
+                  style={styles.emailStyle}
+                  inputStyle={styles.inputStyle}
+                  labelText={{ color: '#878faf' }}
+                  underlineStyle={{ display: 'none' }}
                   placeholder="Email"
+                  errorText={emailErrorMessage}
                 />
               </div>
-              <div className={PasswordClass.join(' ')}>
-                <input
-                  type="password"
+              <div className={PasswordClass}>
+                <PasswordField
                   name="password"
-                  style={fieldStyle}
-                  value={this.state.passwordValue}
-                  onChange={this.handleChange}
-                  errorText={this.passwordErrorMessage}
+                  style={styles.fieldStyle}
+                  inputStyle={styles.inputpassStyle}
+                  value={passwordValue}
                   placeholder="Password"
+                  underlineStyle={{ display: 'none' }}
+                  onChange={this.handleChange}
+                  errorText={passwordErrorMessage}
+                  visibilityButtonStyle={{
+                    marginTop: '-3px',
+                  }}
+                  visibilityIconStyle={{
+                    marginTop: '-3px',
+                  }}
+                  textFieldStyle={{ padding: '0px' }}
                 />
                 <div className="ReactPasswordStrength-strength-bar" />
+                <div>
+                  <span className="PasswordClassName">
+                    {this.state.passwordStrength}
+                  </span>
+                </div>
               </div>
               <div>
-                <input
-                  type="password"
+                <PasswordField
                   name="confirmPassword"
-                  style={fieldStyle}
-                  value={this.state.confirmPasswordValue}
-                  onChange={this.handleChange}
-                  errorText={this.passwordConfirmErrorMessage}
+                  style={styles.fieldStyle}
+                  inputStyle={styles.inputpassStyle}
+                  value={confirmPasswordValue}
                   placeholder="Confirm Password"
+                  underlineStyle={{ display: 'none' }}
+                  onChange={this.handleChange}
+                  errorText={passwordConfirmErrorMessage}
+                  visibilityButtonStyle={{
+                    marginTop: '-3px',
+                  }}
+                  visibilityIconStyle={{
+                    marginTop: '-3px',
+                  }}
+                  textFieldStyle={{ padding: '0px' }}
                 />
               </div>
-
+              <div style={{ width: '304px', margin: '10px auto 10px' }}>
+                <Recaptcha
+                  sitekey={CAPTCHA_KEY}
+                  render="explicit"
+                  onloadCallback={this.onCaptchaLoad}
+                  verifyCallback={this.verifyCaptchaCallback}
+                  badge="inline"
+                  type="audio"
+                  size="normal"
+                />
+                {!isCaptchaVerified &&
+                  captchaVerifyErrorMessage && (
+                    <p className="error-message">{captchaVerifyErrorMessage}</p>
+                  )}
+              </div>
               <div>
                 <RaisedButton
                   label="Sign Up"
                   type="submit"
                   style={button}
-                  disabled={!this.state.validForm}
+                  disabled={!validForm || !isCaptchaVerified}
                   backgroundColor={ChatConstants.standardBlue}
                   labelColor="#fff"
                 />
@@ -308,28 +443,18 @@ export default class SignUp extends Component {
                 </h4>
                 <br />
                 <Link to={'/'}>
-                  <RaisedButton
-                    // onTouchTap={this.handleOpen}
-                    label="Login"
-                    style={button}
-                    backgroundColor={ChatConstants.standardBlue}
-                    labelColor="#fff"
-                  />
+                  <div className="loginButton">
+                    <RaisedButton
+                      // onTouchTap={this.handleOpen}
+                      label="Login"
+                      style={button}
+                      backgroundColor={ChatConstants.standardBlue}
+                      labelColor="#fff"
+                    />
+                  </div>
                 </Link>
               </div>
             </form>
-            {this.state.msg && (
-              <div>
-                <Dialog
-                  actions={actions}
-                  modal={false}
-                  open={true}
-                  onRequestClose={this.handleClose}
-                >
-                  {this.state.msg}
-                </Dialog>
-              </div>
-            )}
             <Dialog
               actions={actions}
               modal={false}
@@ -345,6 +470,14 @@ export default class SignUp extends Component {
           </div>
         </div>
         <Footer />
+        <Snackbar
+          open={this.state.openSnackbar}
+          message={this.state.msgSnackbar}
+          autoHideDuration={4000}
+          onRequestClose={() => {
+            this.setState({ openSnackbar: false });
+          }}
+        />
       </div>
     );
   }

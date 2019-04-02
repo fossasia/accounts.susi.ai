@@ -10,8 +10,7 @@ import PasswordField from 'material-ui-password-field';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
+import Snackbar from 'material-ui/Snackbar';
 import StaticAppBar from '../../StaticAppBar/StaticAppBar';
 import ChatConstants from '../../../constants/ChatConstants';
 
@@ -47,7 +46,8 @@ class ResetPassword extends Component {
       newPassword: '',
       confirmPassword: '',
       success: false,
-      showDialog: false,
+      openSnackbar: false,
+      msgSnackbar: '',
       checked: false,
       newPasswordError: true,
       confirmPasswordError: true,
@@ -76,29 +76,30 @@ class ResetPassword extends Component {
           path: '/',
           maxAge: 7 * 24 * 60 * 60,
         });
-        let state = this.state;
-        state.msg = response.message;
-        state.success = true;
-        this.setState(state);
+        this.setState({
+          openSnackbar: true,
+          msgSnackbar: response.message,
+          success: true,
+        });
       }.bind(this),
       error: function(errorThrown) {
-        let state = this.state;
-        state.msg = 'Invalid token!';
-        state.showDialog = true;
-        this.setState(state);
+        this.setState({
+          openSnackbar: true,
+          msgSnackbar: 'Invalid request!',
+        });
       }.bind(this),
     });
   }
 
   handleSubmit = event => {
     event.preventDefault();
-    var newPassword = this.state.newPassword.trim();
+    let newPassword = this.state.newPassword.trim();
 
     let BASE_URL = urls.API_URL;
     if (!newPassword) {
       return this.state.isFilled;
     }
-    var resetToken = '';
+    let resetToken = '';
     if (cookies.get('resetPassword')) {
       resetToken = cookies.get('resetPassword');
     }
@@ -119,27 +120,20 @@ class ResetPassword extends Component {
           'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
         },
         success: function(response) {
-          let state = this.state;
-          state.success = true;
-          let msg = response.message;
-          state.msg = msg;
-          state.showDialog = true;
-          this.setState(state);
+          this.setState({
+            openSnackbar: true,
+            msgSnackbar: response.message,
+            success: true,
+          });
         }.bind(this),
         error: function(errorThrown) {
-          let msg = 'Failed' + errorThrown.message;
-          let state = this.state;
-          state.msg = msg;
-          state.showDialog = true;
-          this.setState(state);
+          this.setState({
+            openSnackbar: true,
+            msgSnackbar: 'Failed' + errorThrown.message,
+          });
         }.bind(this),
       });
     }
-  };
-
-  handleClose = event => {
-    this.setState({ showDialog: false });
-    this.props.history.push('/');
   };
 
   handleChange = event => {
@@ -148,7 +142,7 @@ class ResetPassword extends Component {
     let state = this.state;
     if (event.target.name === 'newPassword') {
       newPassword = event.target.value;
-      let validPassword = newPassword.length >= 6;
+      let validPassword = newPassword.length >= 6 && newPassword.length <= 64;
       state.newPassword = newPassword;
       state.newPasswordError = !(newPassword && validPassword);
     } else if (event.target.name === 'confirmPassword') {
@@ -168,7 +162,8 @@ class ResetPassword extends Component {
     this.setState(state);
 
     if (this.state.newPasswordError && event.target.name === 'newPassword') {
-      this.newPasswordErrorMessage = 'Minimum 6 characters required';
+      this.newPasswordErrorMessage =
+        'Allowed password length is 6 to 64 characters';
       this.confirmPasswordErrorMessage = '';
     } else if (
       this.state.confirmPasswordError &&
@@ -194,14 +189,6 @@ class ResetPassword extends Component {
       padding: '10px',
       textAlign: 'center',
     };
-    const actions = (
-      <FlatButton
-        label="OK"
-        backgroundColor={ChatConstants.standardBlue}
-        labelStyle={{ color: '#fff' }}
-        onTouchTap={this.handleClose}
-      />
-    );
     return (
       <div>
         <div className="app-bar">
@@ -253,19 +240,15 @@ class ResetPassword extends Component {
               </div>
             </form>
           </Paper>
-          {this.state.msg && (
-            <div>
-              <Dialog
-                actions={actions}
-                modal={false}
-                open={this.state.showDialog}
-                onRequestClose={this.handleClose}
-              >
-                {this.state.msg}
-              </Dialog>
-            </div>
-          )}
         </div>
+        <Snackbar
+          open={this.state.openSnackbar}
+          message={this.state.msgSnackbar}
+          autoHideDuration={4000}
+          onRequestClose={() => {
+            this.setState({ openSnackbar: false });
+          }}
+        />
       </div>
     );
   }
