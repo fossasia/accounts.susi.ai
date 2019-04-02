@@ -288,7 +288,7 @@ export default class SignUp extends Component {
         marginRight: '50px',
         width: '90%',
         webkitTextFillColor: 'unset',
-      }
+      },
     };
 
     const {
