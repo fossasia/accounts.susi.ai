@@ -7,6 +7,7 @@ export default {
     AVATAR_TYPE_CHANGED: null,
   }),
   standardBlue: '#4285f4',
+  standardRed: '#FF0000',
   thumbStyle: { backgroundColor: 'rgb(245, 245, 245)' },
   trackStyle: { backgroundColor: 'rgb(189, 189, 189)' },
   thumbSwitchedStyle: { backgroundColor: 'rgb(89, 177, 252)' },

@@ -146,7 +146,7 @@ export default class ListUser extends Component {
               </span>
               <span style={{ marginLeft: '5px', marginRight: '5px' }}> | </span>
               <span
-                style={{ cursor: 'pointer', color: '#49A9EE' }}
+                style={{ cursor: 'pointer', color: ChatConstants.standardRed }}
                 onClick={() => this.handleDelete(record.email)}
               >
                 Delete
@@ -569,7 +569,7 @@ export default class ListUser extends Component {
       <FlatButton
         key={1}
         label="Delete"
-        labelStyle={{ color: ChatConstants.standardBlue }}
+        labelStyle={{ color: ChatConstants.standardRed }}
         onTouchTap={this.deleteUser}
       />,
       <FlatButton
