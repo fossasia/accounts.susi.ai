@@ -1446,7 +1446,7 @@ class Settings extends Component {
                       .countryCallingCodes[0]
                   }
                   style={{
-                    width: '45px',
+                    width: '55px',
                     marginTop: '-18px',
                     marginLeft: '30px',
                     float: 'left',
