@@ -51,6 +51,7 @@ class SystemLogs extends Component {
           logs: response,
           loading: false,
         });
+        this.refactor();
       }.bind(this),
       error: function(errorThrown) {
         console.log(errorThrown);
@@ -81,6 +82,27 @@ class SystemLogs extends Component {
     this.loadSystemLogs(value);
   };
 
+  refactor = () => {
+    let text = this.state.logs;
+    let dateRegex = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/g;
+    let index = -1;
+    let start = 0;
+    let finalText = '';
+    let matches = dateRegex.exec(text);
+    if (matches.index >= 0) {
+      while (dateRegex.exec(text)) {
+        matches = dateRegex.exec(text);
+        index = matches.index;
+        finalText += text.substr(start, index - start);
+        finalText += ' \n ';
+        start = index;
+      }
+    } else {
+      finalText = text;
+    }
+    this.setState({ logs: finalText });
+  };
+
   render() {
     const tabStyle = {
       width: '100%',
@@ -92,7 +114,6 @@ class SystemLogs extends Component {
     const blueThemeColor = { color: 'rgb(66, 133, 244)' };
     const themeForegroundColor = '#272727';
     const themeBackgroundColor = '#fff';
-
     return (
       <div>
         {cookies.get('showAdmin') === 'true' ? (
@@ -183,6 +204,7 @@ class SystemLogs extends Component {
                                 fontSize: '18px',
                                 lineHeight: '2',
                                 overflowWrap: 'break-word',
+                                whiteSpace: 'pre-line',
                               }}
                             >
                               {this.state.logs}
