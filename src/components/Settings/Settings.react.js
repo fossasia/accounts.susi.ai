@@ -782,6 +782,7 @@ class Settings extends Component {
       EnterAsSend: isInputChecked,
       settingsChanged: true,
     });
+    this.handleSave();
   };
 
   handleNewTextToSpeech = settings => {
@@ -798,6 +799,7 @@ class Settings extends Component {
       MicInput: isInputChecked,
       settingsChanged: true,
     });
+    this.handleSave();
   };
 
   handleSpeechOutput = (event, isInputChecked) => {
@@ -805,6 +807,7 @@ class Settings extends Component {
       SpeechOutput: isInputChecked,
       settingsChanged: true,
     });
+    this.handleSave();
   };
 
   handleSpeechOutputAlways = (event, isInputChecked) => {
@@ -812,6 +815,7 @@ class Settings extends Component {
       SpeechOutputAlways: isInputChecked,
       settingsChanged: true,
     });
+    this.handleSave();
   };
 
   handleCountryChange = (event, index, value) => {
@@ -1705,10 +1709,9 @@ class Settings extends Component {
             <div className="currentSettings">
               {currentSetting}
               <div className="submitButton" style={submitButton}>
-                {this.state.selectedSetting === 'Password' ||
-                this.state.selectedSetting === 'Devices' ? (
-                  ''
-                ) : (
+                {this.state.selectedSetting === 'Account' ||
+                this.state.selectedSetting === 'Mobile' ||
+                this.state.selectedSetting === 'Theme' ? (
                   <RaisedButton
                     label="save changes"
                     backgroundColor={ChatConstants.standardBlue}
@@ -1716,6 +1719,8 @@ class Settings extends Component {
                     disabled={!settingsChanged || phoneNoError}
                     onTouchTap={this.handleSave}
                   />
+                ) : (
+                  ''
                 )}
               </div>
               {selectedSetting !== 'Account' ? (
