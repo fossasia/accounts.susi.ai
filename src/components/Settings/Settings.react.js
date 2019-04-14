@@ -34,6 +34,7 @@ import ThemeChanger from './ThemeChanger';
 import Add from 'material-ui/svg-icons/content/add';
 import getGravatarProps from '../../Utils/getGravatarProps';
 import { FlatButton } from 'material-ui';
+import Snackbar from 'material-ui/Snackbar';
 
 // Keys
 import { MAP_KEY } from '../../../src/config.js';
@@ -271,6 +272,8 @@ class Settings extends Component {
       isAvatarAdded: false,
       settingsChanged: false,
       uploadingAvatar: false,
+      openSnackbar: false,
+      msgSnackbar: '',
     };
     this.voiceList = [
       {
@@ -721,7 +724,17 @@ class Settings extends Component {
 
   // Store the settings in server
   implementSettings = values => {
-    Actions.pushSettingsToServer(values);
+    if (Actions.pushSettingsToServer(values) !== null) {
+      this.setState({
+        openSnackbar: true,
+        msgSnackbar: 'Setting Change Successfull',
+      });
+    } else {
+      this.setState({
+        openSnackbar: true,
+        msgSnackbar: 'Setting Change Unsuccessfull',
+      });
+    }
     this.setState({ settingsChanged: false });
     this.props.history.push('/settings', { showLogin: true });
   };
@@ -1748,6 +1761,14 @@ class Settings extends Component {
             </div>
           </Paper>
         </div>
+        <Snackbar
+          open={this.state.openSnackbar}
+          message={this.state.msgSnackbar}
+          autoHideDuration={2000}
+          onRequestClose={() => {
+            this.setState({ openSnackbar: false });
+          }}
+        />
         <div className="footer-wrapper">
           <Footer />
         </div>
