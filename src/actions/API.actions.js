@@ -46,6 +46,7 @@ export function makeServerCall(url) {
     async: false,
     error: function(errorThrown) {
       console.log(errorThrown);
+      return null;
     },
   });
 }
