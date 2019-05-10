@@ -11,6 +11,7 @@ import enUS from 'antd/lib/locale-provider/en_US';
 import NotFound from '../../NotFound/NotFound.react';
 
 import urls from '../../../Utils/urls';
+import isMobileView from '../../../Utils/isMobileView.js';
 
 const cookies = new Cookies();
 
@@ -26,16 +27,19 @@ class SystemSettings extends Component {
       loading: true,
     };
 
+    let MobileView = isMobileView();
+
     this.keysColumns = [
       {
         title: 'S.No.',
         dataIndex: 'serialNum',
-        width: '10%',
+        width: MobileView ? '15vw' : '10%',
+        fixed: MobileView ? 'left' : null,
       },
       {
         title: 'Key Name',
         dataIndex: 'keyName',
-        width: '30%',
+        width: MobileView ? 'auto' : '30%',
       },
       {
         title: 'Value',
@@ -101,6 +105,10 @@ class SystemSettings extends Component {
       display: 'inline-block',
     };
 
+    const Scroll = { x: 1500, y: 300 };
+
+    let MobileView = isMobileView();
+
     return (
       <div>
         {cookies.get('showAdmin') === 'true' ? (
@@ -135,8 +143,9 @@ class SystemSettings extends Component {
                           loading={this.state.loading}
                           pagination={false}
                           style={{
-                            width: '50%',
+                            width: '100%',
                           }}
+                          scroll={MobileView ? Scroll : ''}
                         />
                       </LocaleProvider>
                     </div>
