@@ -16,6 +16,7 @@ import './ListSkills.css';
 import * as $ from 'jquery';
 
 import { urls } from '../../../Utils';
+import isMobileView from '../../../Utils/isMobileView';
 import ChatConstants from '../../../constants/ChatConstants';
 
 const cookies = new Cookies();
@@ -446,11 +447,15 @@ class ListSkills extends React.Component {
       textAlign: 'left',
       display: 'inline-block',
     };
+
+    let MobileView = isMobileView();
+
     let columns = [
       {
         title: 'Name',
         dataIndex: 'skillName',
-        width: '20%',
+        width: MobileView ? '30vw' : '20%',
+        fixed: MobileView ? 'left' : null,
       },
       {
         title: 'Group',
@@ -458,7 +463,7 @@ class ListSkills extends React.Component {
         filters: this.state.groups,
         onFilter: (value, record) => record.group.indexOf(value) === 0,
         sorter: (a, b) => a.group.length - b.group.length,
-        width: '10%',
+        width: MobileView ? 'auto' : '10%',
       },
       {
         title: 'Language',
@@ -571,12 +576,13 @@ class ListSkills extends React.Component {
       {
         title: 'Name',
         dataIndex: 'skillName',
-        width: '20%',
+        width: MobileView ? '30vw' : '20%',
+        fixed: MobileView ? 'fixed' : null,
       },
       {
         title: 'Model',
         dataIndex: 'model',
-        width: '10%',
+        width: MobileView ? 'auto' : '10%',
       },
       {
         title: 'Group',
@@ -617,6 +623,8 @@ class ListSkills extends React.Component {
         },
       },
     ];
+
+    const Scroll = { x: 1500, y: 300 };
 
     return (
       <div>
@@ -892,6 +900,7 @@ class ListSkills extends React.Component {
                                 rowKey={record => record.registered}
                                 dataSource={this.state.skillsData}
                                 loading={this.state.loading}
+                                scroll={MobileView ? Scroll : ''}
                               />
                             </LocaleProvider>
                           </TabPane>
@@ -905,6 +914,7 @@ class ListSkills extends React.Component {
                                 }}
                                 rowKey={record => record.registered}
                                 dataSource={this.state.deletedSkills}
+                                scroll={MobileView ? Scroll : ''}
                               />
                             </LocaleProvider>
                           </TabPane>
