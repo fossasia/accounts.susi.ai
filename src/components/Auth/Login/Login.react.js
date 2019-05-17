@@ -249,7 +249,7 @@ class Login extends Component {
         label="OK"
         backgroundColor={'#607D8B'}
         labelStyle={{ color: '#fff' }}
-        onTouchTap={this.handleClose}
+        onClick={this.handleClose}
       />
     );
 

@@ -111,7 +111,7 @@ class App extends Component {
             <Snackbar
               autoHideDuration={snackBarDuration}
               action={snackBarAction}
-              onActionTouchTap={snackBarActionHandler}
+              onActionClick={snackBarActionHandler}
               open={snackBarOpen}
               message={snackBarMessage}
               onRequestClose={this.closeSnackBar}

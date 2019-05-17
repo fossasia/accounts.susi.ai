@@ -555,13 +555,13 @@ export default class ListUser extends Component {
         key={1}
         label="Change"
         labelStyle={{ color: ChatConstants.standardBlue }}
-        onTouchTap={this.handleChange}
+        onClick={this.handleChange}
       />,
       <FlatButton
         key={2}
         label="Cancel"
         primary={false}
-        onTouchTap={this.handleClose}
+        onClick={this.handleClose}
       />,
     ];
 
@@ -570,13 +570,13 @@ export default class ListUser extends Component {
         key={1}
         label="Delete"
         labelStyle={{ color: ChatConstants.standardRed }}
-        onTouchTap={this.deleteUser}
+        onClick={this.deleteUser}
       />,
       <FlatButton
         key={2}
         label="Cancel"
         primary={false}
-        onTouchTap={this.handleClose}
+        onClick={this.handleClose}
       />,
     ];
 
@@ -585,13 +585,13 @@ export default class ListUser extends Component {
         key={1}
         label="Save"
         labelStyle={{ color: ChatConstants.standardBlue }}
-        onTouchTap={this.handleDevice}
+        onClick={this.handleDevice}
       />,
       <FlatButton
         key={2}
         label="Cancel"
         primary={false}
-        onTouchTap={this.handleClose}
+        onClick={this.handleClose}
       />,
     ];
 
@@ -737,7 +737,7 @@ export default class ListUser extends Component {
                               key={1}
                               label="Ok"
                               labelStyle={{ color: ChatConstants.standardBlue }}
-                              onTouchTap={this.handleSuccess}
+                              onClick={this.handleSuccess}
                             />
                           }
                           modal={true}
@@ -784,7 +784,7 @@ export default class ListUser extends Component {
                               key={1}
                               label="Ok"
                               labelStyle={{ color: ChatConstants.standardBlue }}
-                              onTouchTap={this.handleSuccess}
+                              onClick={this.handleSuccess}
                             />
                           }
                           modal={true}
@@ -807,7 +807,7 @@ export default class ListUser extends Component {
                               key={1}
                               label="Ok"
                               labelStyle={{ color: ChatConstants.standardBlue }}
-                              onTouchTap={this.handleClose}
+                              onClick={this.handleClose}
                             />
                           }
                           modal={true}
@@ -831,7 +831,7 @@ export default class ListUser extends Component {
                               key={1}
                               label="Ok"
                               labelStyle={{ color: ChatConstants.standardBlue }}
-                              onTouchTap={this.handleSuccess}
+                              onClick={this.handleSuccess}
                             />
                           }
                           modal={true}
@@ -856,7 +856,7 @@ export default class ListUser extends Component {
                               key={1}
                               label="Ok"
                               labelStyle={{ color: ChatConstants.standardBlue }}
-                              onTouchTap={this.handleClose}
+                              onClick={this.handleClose}
                             />
                           }
                           modal={true}

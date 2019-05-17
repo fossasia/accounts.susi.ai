@@ -236,7 +236,7 @@ class DeleteAccount extends Component {
                     label="Delete Account"
                     backgroundColor="red"
                     labelColor="#fff"
-                    onTouchTap={this.handleSubmit}
+                    onClick={this.handleSubmit}
                     disabled={!this.state.validForm}
                     style={{ marginRight: '10px' }}
                   />
@@ -244,7 +244,7 @@ class DeleteAccount extends Component {
                     label="Cancel"
                     backgroundColor={ChatConstants.standardBlue}
                     labelColor="#fff"
-                    onTouchTap={this.handleCancel}
+                    onClick={this.handleCancel}
                   />
                 </div>
               </form>
@@ -329,7 +329,7 @@ class DeleteAccount extends Component {
               <div style={{ textAlign: 'center' }}>
                 <RaisedButton
                   id="removeDeviceButton"
-                  onTouchTap={this.handleConfirm}
+                  onClick={this.handleConfirm}
                   label="I understand the consequences, Delete My Account."
                   backgroundColor="#cb2431"
                   style={{

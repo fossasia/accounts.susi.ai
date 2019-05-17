@@ -174,7 +174,7 @@ class ForgotPassword extends Component {
                     label="Cancel"
                     backgroundColor={ChatConstants.standardBlue}
                     labelColor="#fff"
-                    onTouchTap={this.closeModal}
+                    onClick={this.closeModal}
                   />
                 </div>
               </form>

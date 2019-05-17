@@ -286,7 +286,7 @@ class ThemeChanger extends Component {
           labelColor="#fff"
           width="200px"
           keyboardFocused={false}
-          onTouchTap={this.saveThemeSettings}
+          onClick={this.saveThemeSettings}
           style={{ margin: '0 5px' }}
         />
         <RaisedButton
@@ -295,7 +295,7 @@ class ThemeChanger extends Component {
           labelColor="#fff"
           width="200px"
           keyboardFocused={false}
-          onTouchTap={this.handleRestoreDefaultThemeClick}
+          onClick={this.handleRestoreDefaultThemeClick}
           style={{ margin: '0 5px' }}
         />
       </div>
@@ -562,7 +562,7 @@ class ThemeChanger extends Component {
           </div>
           <Close
             style={styles.closingStyle}
-            onTouchTap={this.props.onRequestClose()}
+            onClick={this.props.onRequestClose()}
           />
         </div>
       </Dialog>

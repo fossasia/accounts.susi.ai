@@ -401,13 +401,13 @@ class ListSkills extends React.Component {
         key={1}
         label="Change"
         labelStyle={{ color: ChatConstants.standardBlue }}
-        onTouchTap={this.handleChange}
+        onClick={this.handleChange}
       />,
       <FlatButton
         key={2}
         label="Cancel"
         primary={false}
-        onTouchTap={this.handleClose}
+        onClick={this.handleClose}
       />,
     ];
 
@@ -416,13 +416,13 @@ class ListSkills extends React.Component {
         key={1}
         label="Delete"
         labelStyle={{ color: ChatConstants.standardRed }}
-        onTouchTap={this.confirmDelete}
+        onClick={this.confirmDelete}
       />,
       <FlatButton
         key={2}
         label="Cancel"
         primary={false}
-        onTouchTap={this.handleClose}
+        onClick={this.handleClose}
       />,
     ];
 
@@ -431,13 +431,13 @@ class ListSkills extends React.Component {
         key={1}
         label="Restore"
         labelStyle={{ color: ChatConstants.standardBlue }}
-        onTouchTap={this.confirmRestore}
+        onClick={this.confirmRestore}
       />,
       <FlatButton
         key={2}
         label="Cancel"
         primary={false}
-        onTouchTap={this.handleClose}
+        onClick={this.handleClose}
       />,
     ];
 
@@ -762,7 +762,7 @@ class ListSkills extends React.Component {
                                   labelStyle={{
                                     color: ChatConstants.standardBlue,
                                   }}
-                                  onTouchTap={this.handleFinish}
+                                  onClick={this.handleFinish}
                                 />
                               }
                               modal={true}
@@ -785,7 +785,7 @@ class ListSkills extends React.Component {
                                   labelStyle={{
                                     color: ChatConstants.standardBlue,
                                   }}
-                                  onTouchTap={this.handleFinish}
+                                  onClick={this.handleFinish}
                                 />
                               }
                               modal={true}
@@ -808,7 +808,7 @@ class ListSkills extends React.Component {
                                   labelStyle={{
                                     color: ChatConstants.standardBlue,
                                   }}
-                                  onTouchTap={this.handleFinish}
+                                  onClick={this.handleFinish}
                                 />
                               }
                               modal={true}
@@ -831,7 +831,7 @@ class ListSkills extends React.Component {
                                   labelStyle={{
                                     color: ChatConstants.standardBlue,
                                   }}
-                                  onTouchTap={this.handleFinish}
+                                  onClick={this.handleFinish}
                                 />
                               }
                               modal={true}
@@ -855,7 +855,7 @@ class ListSkills extends React.Component {
                                   labelStyle={{
                                     color: ChatConstants.standardBlue,
                                   }}
-                                  onTouchTap={this.handleFinish}
+                                  onClick={this.handleFinish}
                                 />
                               }
                               modal={true}
@@ -878,7 +878,7 @@ class ListSkills extends React.Component {
                                   labelStyle={{
                                     color: ChatConstants.standardBlue,
                                   }}
-                                  onTouchTap={this.handleFinish}
+                                  onClick={this.handleFinish}
                                 />
                               }
                               modal={true}

@@ -33,7 +33,7 @@ export default class NotFound extends Component {
         }
         labelColor="#fff"
         keyboardFocused={true}
-        onTouchTap={this.handleClose}
+        onClick={this.handleClose}
       />
     );
     return (

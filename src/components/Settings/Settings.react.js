@@ -205,7 +205,7 @@ const AvatarRender = props => {
                 undefined
               )
             }
-            onTouchTap={e => props.handleAvatarSubmit(e)}
+            onClick={e => props.handleAvatarSubmit(e)}
           />
         </form>
       );
@@ -1514,7 +1514,7 @@ class Settings extends Component {
             devicename={removeDeviceName}
             handleRemove={this.handleRemove}
           />
-          <Close style={closingStyle} onTouchTap={this.handleClose} />
+          <Close style={closingStyle} onClick={this.handleClose} />
         </Dialog>
         <div className="app-bar" style={{ backgroundColor: '#F2F2F2' }}>
           <StaticAppBar />
@@ -1727,7 +1727,7 @@ class Settings extends Component {
                     backgroundColor={ChatConstants.standardBlue}
                     labelColor="#fff"
                     disabled={!settingsChanged || phoneNoError}
-                    onTouchTap={this.handleSave}
+                    onClick={this.handleSave}
                   />
                 )}
               </div>

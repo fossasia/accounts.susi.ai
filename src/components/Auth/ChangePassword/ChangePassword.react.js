@@ -7,7 +7,6 @@ import './ChangePassword.css';
 import PropTypes from 'prop-types';
 import PasswordField from 'material-ui-password-field';
 import Cookies from 'universal-cookie';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import ForgotPassword from '../ForgotPassword/ForgotPassword.react';
 
 import { urls } from '../../../Utils';
@@ -15,7 +14,6 @@ import ChatConstants from '../../../constants/ChatConstants';
 import zxcvbn from 'zxcvbn';
 
 const cookies = new Cookies();
-injectTapEventPlugin();
 
 export default class ChangePassword extends Component {
   constructor(props) {
