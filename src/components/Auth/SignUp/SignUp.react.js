@@ -26,11 +26,52 @@ import { urls } from '../../../Utils';
 import { CAPTCHA_KEY } from '../../../config.js';
 import Recaptcha from 'react-recaptcha';
 import zxcvbn from 'zxcvbn';
+import isMobileView from '../../../Utils/isMobileView';
 
 import './SignUp.css';
 import './SignupMobileFix.min.css';
 
 const cookies = new Cookies();
+
+const mobileView = isMobileView();
+
+const styles = {
+  emailStyle: {
+    height: '35px',
+    borderRadius: 4,
+    border: '1px solid #ced4da',
+    fontSize: 16,
+    padding: '0px 10px',
+    width: mobileView ? '90%' : '95%',
+    marginTop: '10px',
+  },
+  fieldStyle: {
+    height: '35px',
+    borderRadius: 4,
+    border: '1px solid #ced4da',
+    fontSize: 16,
+    padding: '0px 10px',
+    width: mobileView ? '90%' : '380px',
+    marginTop: '10px',
+  },
+  inputStyle: {
+    height: '35px',
+    marginBottom: '10px',
+    webkitTextFillColor: 'unset',
+  },
+  inputpassStyle: {
+    height: '35px',
+    marginBottom: '10px',
+    marginRight: '50px',
+    width: '100%',
+    webkitTextFillColor: 'unset',
+  },
+  buttonStyle: {
+    width: '100%',
+    marginTop: '0',
+  },
+};
+
 export default class SignUp extends Component {
   componentDidMount() {
     const isLoggedIn = !!cookies.get('loggedIn');
@@ -258,38 +299,13 @@ export default class SignUp extends Component {
   };
 
   render() {
-    const styles = {
-      emailStyle: {
-        height: '35px',
-        borderRadius: 4,
-        border: '1px solid #ced4da',
-        fontSize: 16,
-        padding: '0px 10px',
-        width: '95%',
-        marginTop: '10px',
-      },
-      fieldStyle: {
-        height: '35px',
-        borderRadius: 4,
-        border: '1px solid #ced4da',
-        fontSize: 16,
-        padding: '0px 10px',
-        width: '380px',
-        marginTop: '10px',
-      },
-      inputStyle: {
-        height: '35px',
-        marginBottom: '10px',
-        webkitTextFillColor: 'unset',
-      },
-      inputpassStyle: {
-        height: '35px',
-        marginBottom: '10px',
-        marginRight: '50px',
-        width: '90%',
-        webkitTextFillColor: 'unset',
-      },
-    };
+    const {
+      fieldStyle,
+      emailStyle,
+      inputpassStyle,
+      inputStyle,
+      buttonStyle,
+    } = styles;
 
     const {
       email,
@@ -302,11 +318,6 @@ export default class SignUp extends Component {
       isCaptchaVerified,
       captchaVerifyErrorMessage,
     } = this.state;
-
-    const button = {
-      width: '100%',
-      marginTop: '0',
-    };
 
     const actions = (
       <FlatButton
@@ -347,8 +358,8 @@ export default class SignUp extends Component {
                   type="email"
                   value={email}
                   onChange={this.handleChange}
-                  style={styles.emailStyle}
-                  inputStyle={styles.inputStyle}
+                  style={emailStyle}
+                  inputStyle={inputStyle}
                   labelText={{ color: '#878faf' }}
                   underlineStyle={{ display: 'none' }}
                   placeholder="Email"
@@ -358,8 +369,8 @@ export default class SignUp extends Component {
               <div className={PasswordClass}>
                 <PasswordField
                   name="password"
-                  style={styles.fieldStyle}
-                  inputStyle={styles.inputpassStyle}
+                  style={fieldStyle}
+                  inputStyle={inputpassStyle}
                   value={passwordValue}
                   placeholder="Password"
                   underlineStyle={{ display: 'none' }}
@@ -371,20 +382,17 @@ export default class SignUp extends Component {
                   visibilityIconStyle={{
                     marginTop: '-3px',
                   }}
-                  textFieldStyle={{ padding: '0px' }}
                 />
-                <div className="ReactPasswordStrength-strength-bar" />
-                <div>
-                  <span className="PasswordClassName">
-                    {this.state.passwordStrength}
-                  </span>
+                <div style={{ width: '400px', textAlign: 'center' }}>
+                  <div className="ReactPasswordStrength-strength-bar" />
+                  <span>{this.state.passwordStrength}</span>
                 </div>
               </div>
               <div>
                 <PasswordField
                   name="confirmPassword"
-                  style={styles.fieldStyle}
-                  inputStyle={styles.inputpassStyle}
+                  style={fieldStyle}
+                  inputStyle={inputpassStyle}
                   value={confirmPasswordValue}
                   placeholder="Confirm Password"
                   underlineStyle={{ display: 'none' }}
@@ -396,7 +404,10 @@ export default class SignUp extends Component {
                   visibilityIconStyle={{
                     marginTop: '-3px',
                   }}
-                  textFieldStyle={{ padding: '0px' }}
+                  textFieldStyle={{
+                    padding: '0px',
+                    width: mobileView ? '100%' : '380px',
+                  }}
                 />
               </div>
               <div style={{ width: '304px', margin: '10px auto 10px' }}>
@@ -418,7 +429,7 @@ export default class SignUp extends Component {
                 <RaisedButton
                   label="Sign Up"
                   type="submit"
-                  style={button}
+                  style={buttonStyle}
                   disabled={!validForm || !isCaptchaVerified}
                   backgroundColor={ChatConstants.standardBlue}
                   labelColor="#fff"
@@ -447,7 +458,7 @@ export default class SignUp extends Component {
                     <RaisedButton
                       // onTouchTap={this.handleOpen}
                       label="Login"
-                      style={button}
+                      style={buttonStyle}
                       backgroundColor={ChatConstants.standardBlue}
                       labelColor="#fff"
                     />
