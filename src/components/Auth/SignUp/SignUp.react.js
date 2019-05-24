@@ -313,7 +313,7 @@ export default class SignUp extends Component {
         label="OK"
         backgroundColor={ChatConstants.standardBlue}
         labelStyle={{ color: '#fff' }}
-        onTouchTap={this.handleClose}
+        onClick={this.handleClose}
       />
     );
 
@@ -445,7 +445,7 @@ export default class SignUp extends Component {
                 <Link to={'/'}>
                   <div className="loginButton">
                     <RaisedButton
-                      // onTouchTap={this.handleOpen}
+                      // onClick={this.handleOpen}
                       label="Login"
                       style={button}
                       backgroundColor={ChatConstants.standardBlue}
