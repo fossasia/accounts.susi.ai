@@ -33,7 +33,7 @@ Our chat channel is on gitter here: https://gitter.im/fossasia/susi_server
 * **Step 5:** Build locally by running : ```$ npm run build ```
 * **Step 6:** To deploy at a url use : ```$ npm run deploy ```
 
-### Running on [Surge](./docs/INSTALLATION_SURGE.md)
+### Running on [Surge](https://github.com/fossasia/chat.susi.ai/blob/master/docs/INSTALLATION_SURGE_ENGLISH.md)
 
 **Click this picture to see video about deploy!**
 [![Watch the video](https://i2.wp.com/blog.fossasia.org/wp-content/uploads/2017/08/surge_static_hosting.png)](https://www.youtube.com/watch?v=Gvc0uz13U1M)
