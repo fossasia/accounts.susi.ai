@@ -137,6 +137,7 @@
 
 .PasswordClassName { 
   margin: auto;
+  text-align: center;
   display: table;
  }
 
