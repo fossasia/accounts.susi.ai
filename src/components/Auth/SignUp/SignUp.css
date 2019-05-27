@@ -45,13 +45,21 @@
   float : right;
 }
 
+
+.signup-container h1:nth-child(2){
+  margin-top:10px;
+  font-weight:600;
+}
+
 .app-body{
+
   height: 80%;
   width : 50%;
   float : left;
   background-color : #EEE;
   min-height: 100vh;
 }
+
 
 .About{
   margin: 25vh 8% 0% 8%;
