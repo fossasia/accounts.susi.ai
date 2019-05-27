@@ -62,8 +62,18 @@
     line-height: 2;
 }
 
+.skillCountMobileView{
+    display: none;
+}
+
 @media screen and (max-width: 520px) {
   .flexCard {
     width: 310px;
+  }
+  .skillCount {
+      display: none;
+  }
+  .skillCountMobileView {
+      display: inline;
   }
 }
