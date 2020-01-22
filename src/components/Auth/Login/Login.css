@@ -236,8 +236,10 @@
   }
 
   .signup{
-   width: 450px;
-   margin:0 auto;
+    position: relative;
+    top : 10px;
+    width: 450px;
+    margin:0 auto;
   }
   
   .loginForm {
@@ -250,6 +252,8 @@
   }
 
   .login-div {
+    position: relative;
+    top:20px;
     width: 450px;
     margin: 0 auto;
   }
