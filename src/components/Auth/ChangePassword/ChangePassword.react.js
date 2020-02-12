@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import $ from 'jquery';
 import './ChangePassword.css';
 import PropTypes from 'prop-types';
-import PasswordField from 'material-ui-password-field';
+import TextField from 'material-ui/TextField';
 import Cookies from 'universal-cookie';
 import ForgotPassword from '../ForgotPassword/ForgotPassword.react';
 
@@ -198,7 +198,7 @@ export default class ChangePassword extends Component {
             <form onSubmit={this.handleSubmit}>
               <div style={labelStyle}>Current Password</div>
               <div>
-                <PasswordField
+                <TextField
                   name="currentPassword"
                   style={fieldStyle}
                   value={this.state.currentPassword}
@@ -209,12 +209,13 @@ export default class ChangePassword extends Component {
                   disableButton={true}
                   visibilityButtonStyle={{ display: 'none' }}
                   visibilityIconStyle={{ display: 'none' }}
+                  type="password"
                 />
               </div>
               <br />
               <div style={labelStyle}>New Password</div>
               <div className={PasswordClass.join(' ')}>
-                <PasswordField
+                <TextField
                   name="newPassword"
                   placeholder="Must be from 6 to 64 characters"
                   style={fieldStyle}
@@ -226,10 +227,9 @@ export default class ChangePassword extends Component {
                   disableButton={true}
                   visibilityButtonStyle={{ display: 'none' }}
                   visibilityIconStyle={{ display: 'none' }}
+                  type="password"
                 />
-
                 <div className="ReactPasswordStrength-strength-bar" />
-
                 <div className="is-strength-name">
                   {this.state.newPasswordStrength}
                 </div>
@@ -237,9 +237,8 @@ export default class ChangePassword extends Component {
               <br />
               <div>
                 <div style={labelStyle}>Verify Password</div>
-
                 <div>
-                  <PasswordField
+                  <TextField
                     name="confirmPassword"
                     placeholder="Must match the new password"
                     style={fieldStyle}
@@ -251,6 +250,7 @@ export default class ChangePassword extends Component {
                     disableButton={true}
                     visibilityButtonStyle={{ display: 'none' }}
                     visibilityIconStyle={{ display: 'none' }}
+                    type="password"
                   />
                 </div>
               </div>
