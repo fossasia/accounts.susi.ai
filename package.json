@@ -7,7 +7,7 @@
   "dependencies": {
     "add-px": "1.0.0",
     "antd": "2.13.14",
-    "axios": "0.16.2",
+    "axios": "0.19.0",
     "bootstrap": "3.3.7",
     "classnames": "2.2.6",
     "contrast": "1.0.1",
