@@ -10,12 +10,35 @@ import Tabs from 'antd/lib/tabs';
 import 'antd/lib/tabs/style/index.css';
 import Avatar from 'antd/lib/avatar';
 import NotFound from './../NotFound/NotFound.react';
+import isMobileView from '../../Utils/isMobileView';
 
 import { urls } from '../../Utils';
 
 const cookies = new Cookies();
 
 const TabPane = Tabs.TabPane;
+
+const styles = {
+  tabStyle: {
+    width: '100%',
+    animated: false,
+    textAlign: 'left',
+    display: 'inline-block',
+  },
+  skillCountStyle: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginTop: '50px',
+  },
+  skillCountMobileViewStyle: {
+    width: '300px',
+    height: '210px',
+    marginBottom: '20px',
+    fontSize: '18px',
+    fontWeight: 'bold',
+    lineHeight: '2',
+  },
+};
 
 class Admin extends Component {
   constructor(props) {
@@ -93,12 +116,14 @@ class Admin extends Component {
   };
 
   render() {
-    const tabStyle = {
-      width: '100%',
-      animated: false,
-      textAlign: 'left',
-      display: 'inline-block',
-    };
+    let MobileView = isMobileView();
+
+    const { skillStats } = this.state;
+    const {
+      totalSkills = 0,
+      reviewedSkills = 0,
+      nonReviewedSkills = 0,
+    } = skillStats;
 
     return (
       <div>
@@ -109,7 +134,7 @@ class Admin extends Component {
               <h2 className="h2">Admin Panel</h2>
             </div>
             <div className="tabs">
-              <Paper style={tabStyle} zDepth={0}>
+              <Paper style={styles.tabStyle} zDepth={0}>
                 <Tabs
                   onTabClick={this.handleTabChange}
                   tabPosition={this.state.tabPosition}
@@ -281,16 +306,24 @@ class Admin extends Component {
                             Skills
                           </span>
                         }
+                        style={
+                          MobileView ? styles.skillCountMobileViewStyle : null
+                        }
                       >
                         <span
-                          style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            marginTop: '50px',
-                          }}
+                          style={MobileView ? null : styles.skillCountStyle}
                         >
                           <span>
-                            <p>Total</p>
+                            <p>
+                              Total
+                              <span className="skillCountMobileView">: </span>
+                              <span
+                                className="skillCountMobileView"
+                                style={{ color: 'orange' }}
+                              >
+                                {totalSkills}
+                              </span>
+                            </p>
                             <Avatar
                               style={{
                                 backgroundColor: 'orange',
@@ -299,15 +332,22 @@ class Admin extends Component {
                               }}
                               size="large"
                               shape="square"
+                              className="skillCount"
                             >
-                              {this.state.skillStats &&
-                              this.state.skillStats.totalSkills
-                                ? this.state.skillStats.totalSkills
-                                : 0}
+                              {totalSkills}
                             </Avatar>
                           </span>
                           <span>
-                            <p>Reviewed</p>
+                            <p>
+                              Reviewed
+                              <span className="skillCountMobileView">: </span>
+                              <span
+                                className="skillCountMobileView"
+                                style={{ color: 'green' }}
+                              >
+                                {reviewedSkills}
+                              </span>
+                            </p>
                             <Avatar
                               style={{
                                 backgroundColor: 'green',
@@ -316,15 +356,22 @@ class Admin extends Component {
                               }}
                               size="large"
                               shape="square"
+                              className="skillCount"
                             >
-                              {this.state.skillStats &&
-                              this.state.skillStats.reviewedSkills
-                                ? this.state.skillStats.reviewedSkills
-                                : 0}
+                              {reviewedSkills}
                             </Avatar>
                           </span>
                           <span>
-                            <p>Not Reviewed</p>
+                            <p>
+                              Not Reviewed
+                              <span className="skillCountMobileView">: </span>
+                              <span
+                                className="skillCountMobileView"
+                                style={{ color: 'red' }}
+                              >
+                                {nonReviewedSkills}
+                              </span>
+                            </p>
                             <Avatar
                               style={{
                                 backgroundColor: 'red',
@@ -333,12 +380,10 @@ class Admin extends Component {
                               }}
                               size="large"
                               shape="square"
+                              className="skillCount"
                             >
                               {' '}
-                              {this.state.skillStats &&
-                              this.state.skillStats.nonReviewedSkills
-                                ? this.state.skillStats.nonReviewedSkills
-                                : 0}
+                              {nonReviewedSkills}
                             </Avatar>
                           </span>
                         </span>
